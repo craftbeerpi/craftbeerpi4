@@ -4,14 +4,21 @@ from core.api.property import Property
 
 
 class PluginAPI():
-
+    def register(self, name, clazz) -> None:
+        '''
+        Register a new actor type
+        :param name: actor name
+        :param clazz: actor class
+        :return: None
+        '''
+        self._parse_props(clazz)
+        self.types[name] = clazz
 
     def _parse_props(self, cls):
 
         name = cls.__name__
 
         result = {"name": name, "class": cls, "properties": [], "actions": []}
-
 
         tmpObj = cls()
         members = [attr for attr in dir(tmpObj) if not callable(getattr(tmpObj, attr)) and not attr.startswith("__")]
@@ -39,8 +46,8 @@ class PluginAPI():
                 result["properties"].append({"name": m, "label": t.label, "type": "kettle", "configurable": t.configurable, "description": t.description})
 
         for method_name, method in cls.__dict__.items():
-                if hasattr(method, "action"):
-                    key = method.__getattribute__("key")
-                    parameters = method.__getattribute__("parameters")
-                    result["actions"].append({"method": method_name, "label": key, "parameters": parameters})
+            if hasattr(method, "action"):
+                key = method.__getattribute__("key")
+                parameters = method.__getattribute__("parameters")
+                result["actions"].append({"method": method_name, "label": key, "parameters": parameters})
         pprint(result, width=200)

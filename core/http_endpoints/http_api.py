@@ -7,10 +7,10 @@ from core.helper.jsondump import json_dumps
 
 class HttpAPI():
 
-    def __init__(self, core):
+    def __init__(self,cbpi):
         self.logger = logging.getLogger(__name__)
         self.logger.info("WOOHOO MY ACTOR")
-        self.cbpi = core
+        self.cbpi =cbpi
 
     @request_mapping(path="/",  auth_required=False)
     async def http_get_all(self, request):

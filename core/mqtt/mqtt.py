@@ -8,7 +8,7 @@ from core.mqtt_matcher import MQTTMatcher
 
 
 class MQTT():
-    def __init__(self, core):
+    def __init__(self,cbpi):
 
         self.config = {
             'listeners': {
@@ -30,16 +30,16 @@ class MQTT():
             },
             'auth': {
                 'allow-anonymous': True,
-                'password-file': '/Users/manuelfritsch/github/aio_sample/core/user.txt'
+                'password-file': '/Users/manuelfritsch/github/aio_sample.cbpi/user.txt'
             }
         }
 
-        self.core = core
+        self.cbpi = cbpi
         self.broker = Broker(self.config, plugin_namespace="hbmqtt.broker.plugins")
         self.client = MQTTClient()
         self.matcher = MQTTMatcher()
         self.mqtt_methods = {"test": self.ok_msg, "$SYS/broker/#": self.sysmsg}
-        self.core.app.on_startup.append(self.start_broker)
+        self.cbpi.app.on_startup.append(self.start_broker)
         self.count = 0
 
     def sysmsg(self, msg):
@@ -52,7 +52,7 @@ class MQTT():
 
     def publish(self, topic, message):
         print("PUSH NOW", topic)
-        self.core.app.loop.create_task(self.client.publish(topic, str.encode(message), QOS_0))
+        self.cbpi.app.loop.create_task(self.client.publish(topic, str.encode(message), QOS_0))
 
     def register_callback(self, func: Callable, topic) -> None:
 

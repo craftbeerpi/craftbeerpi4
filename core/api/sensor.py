@@ -1,4 +1,7 @@
-class Sensor():
+from core.api.extension import CBPiExtension
+
+
+class CBPiSensor(CBPiExtension):
 
     def __init__(self):
         self.id = "";

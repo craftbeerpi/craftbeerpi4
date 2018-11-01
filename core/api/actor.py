@@ -1,8 +1,13 @@
 
+import logging
 
-class Actor():
+from core.api.extension import CBPiExtension
+from core.helper.utils import load_config as load
+logger = logging.getLogger(__file__)
 
-    def __init__(self):
+class CBPiActor(CBPiExtension):
+
+    def __init__(self, cbpi):
         self.id = "";
         self.name = ""
 

@@ -6,7 +6,7 @@ import json
 
 from hbmqtt.broker import Broker
 
-from core.cbpi import CraftBeerPi
+from core.craftbeerpi import CraftBeerPi
 from core.database.model import ActorModel
 
 

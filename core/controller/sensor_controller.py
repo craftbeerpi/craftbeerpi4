@@ -13,9 +13,9 @@ class SensorController(CRUDController, HttpAPI):
 
     model = SensorModel
 
-    def __init__(self, core):
-        self.core = core
-        self.core.register(self, "/sensor")
+    def __init__(self, cbpi):
+        self.cbpi = cbpi
+        self.cbpi.register(self, "/sensor")
         self.service = self
 
         self.sensors = {"S1": "S1", "S2": "S2"}

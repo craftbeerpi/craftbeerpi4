@@ -1,14 +1,13 @@
 from core.database.model import ActorModel
 from core.api.decorator import action, background_task
 from core.api.property import Property
-print("##################")
 
-from core.api.actor import Actor
+
+from core.api.actor import CBPiActor
 import logging
 
 
-class MyActor(Actor):
-
+class MyActor(CBPiActor):
 
     name = Property.Number(label="Test")
     name1 = Property.Text(label="Test")
@@ -20,7 +19,7 @@ class MyActor(Actor):
 
     @action(key="name", parameters={})
     def myAction(self):
-        print("HALLO")
+        pass
 
     def state(self):
         super().state()
@@ -31,13 +30,18 @@ class MyActor(Actor):
     def on(self, power=100):
         super().on(power)
 
-    def __init__(self):
-        pass
+    def __init__(self,cbpi=None):
 
-    def __init__(self, core=None):
-        self.logger = logging.getLogger(__name__)
-        self.logger.info("WOOHOO MY ACTOR")
-        self.core = None
+        if cbpi is None:
+            return
+
+        self.cfg = self.load_config()
+        print(self.cfg)
+        self.logger = logging.getLogger(__file__)
+        logging.basicConfig(level=logging.INFO)
+
+        self.logger.info("########WOOHOO MY ACTOR")
+        self.cbpi = cbpi
 
 
 def setup(cbpi):

@@ -4,8 +4,8 @@ class CRUDController(object):
     cache = {}
     caching = True
 
-    def __init__(self, core):
-        self.cbpi = core
+    def __init__(self, cbpi):
+        self.cbpi = cbpi
         self.cache = {}
 
     async def init(self):
@@ -54,7 +54,7 @@ class CRUDController(object):
         except:
             pass
         m = await self.model.update(**data)
-        #self.core.push_ws("UPDATE_%s" % self.key, m)
+        #self.cbpi.push_ws("UPDATE_%s" % self.key, m)
 
         await self._post_update_callback(m)
         if self.caching is True:
@@ -77,10 +77,10 @@ class CRUDController(object):
         except Exception as e:
             pass
 
-        #self.core.push("DELETE_%s" % self.key, id)
+        #self.cbpi.push("DELETE_%s" % self.key, id)
 
     async def delete_all(self):
         self.model.delete_all()
         if self.caching is True:
             self.cache = {}
-        #self.core.push_ws("DELETE_ALL_%s" % self.key, None)
+        #self.cbpi.push_ws("DELETE_ALL_%s" % self.key, None)

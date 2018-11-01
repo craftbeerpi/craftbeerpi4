@@ -12,13 +12,11 @@ from aiohttp_swagger import setup_swagger
 from aiojobs.aiohttp import setup, get_scheduler_from_app
 
 from core.controller.actor_controller import ActorController
+from core.controller.sensor_controller import SensorController
 from core.controller.system_controller import SystemController
 from core.database.model import DBModel
 from core.eventbus import EventBus
-
-
 from core.http_endpoints.http_login import Login
-from core.controller.sensor_controller import SensorController
 from core.websocket import WebSocket
 
 logger = logging.getLogger(__file__)
@@ -26,7 +24,6 @@ logging.basicConfig(level=logging.INFO)
 
 
 class CraftBeerPi():
-
     def __init__(self):
 
         logger.info("Init CraftBeerPI")
@@ -44,7 +41,7 @@ class CraftBeerPi():
 
     def register_events(self, obj):
 
-        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f),"eventbus")]:
+        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "eventbus")]:
             print(method.__getattribute__("topic"), method)
 
             doc = None
@@ -53,14 +50,13 @@ class CraftBeerPi():
                 doc["topic"] = method.__getattribute__("topic")
             self.bus.register(method.__getattribute__("topic"), method, doc)
 
-
     def register_background_task(self, obj):
         for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "background_task")]:
             name = method.__getattribute__("name")
             interval = method.__getattribute__("interval")
 
             async def job_loop(app, name, interval, method):
-                logger.info("Start Background Task %s Interval %s Method %s" % (name,interval, method))
+                logger.info("Start Background Task %s Interval %s Method %s" % (name, interval, method))
                 while True:
                     logger.info("Execute Task %s - interval(%s second(s)" % (name, interval))
                     await asyncio.sleep(interval)
@@ -70,16 +66,13 @@ class CraftBeerPi():
                 scheduler = get_scheduler_from_app(self.app)
                 await scheduler.spawn(job_loop(self.app, name, interval, method))
 
-
             self.app.on_startup.append(spawn_job)
-
-
 
     def register_ws(self, obj):
         if self.ws is None:
             return
 
-        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f),"ws")]:
+        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "ws")]:
             self.ws.add_callback(method, method.__getattribute__("key"))
 
     def register(self, obj, subapp=None):
@@ -88,13 +81,13 @@ class CraftBeerPi():
         self.register_ws(obj)
         self.register_background_task(obj)
 
-
     def register_http_endpoints(self, obj, subapp=None):
         routes = []
         for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "route")]:
-
             http_method = method.__getattribute__("method")
             path = method.__getattribute__("path")
+            class_name = method.__self__.__class__.__name__
+            logger.info("Register Endpoint : %s.%s %s %s%s " % (class_name, method.__name__, http_method, subapp, path))
 
             def add_post():
                 routes.append(web.post(method.__getattribute__("path"), method))
@@ -107,6 +100,7 @@ class CraftBeerPi():
 
             def add_put():
                 routes.append(web.put(path, method))
+
             switcher = {
                 "POST": add_post,
                 "GET": add_get,
@@ -131,7 +125,6 @@ class CraftBeerPi():
             my_module = importlib.import_module(extension)
             my_module.setup(self)
 
-
     def start(self):
 
         async def init_database(app):
@@ -140,13 +133,8 @@ class CraftBeerPi():
         async def init_controller(app):
             await self.actor.init()
 
-
-
-
         self.app.on_startup.append(init_database)
         self.app.on_startup.append(self._load_extensions)
         self.app.on_startup.append(init_controller)
         setup_swagger(self.app)
         web.run_app(self.app)
-
-

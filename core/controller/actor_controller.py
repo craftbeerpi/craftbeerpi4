@@ -8,11 +8,28 @@ from core.http_endpoints.http_api import HttpAPI
 from core.plugin import PluginAPI
 
 
-class ActorController(HttpAPI, CRUDController, PluginAPI):
+class ActorHttp(HttpAPI):
 
+    @request_mapping(path="/hallo", auth_required=False)
+    async def hello_world(self, request) -> web.Response:
+        print("HALLO")
+        return web.Response(status=200, text="OK")
+
+    @request_mapping(path="/{id}/on", auth_required=False)
+    async def http_on(self, request) -> web.Response:
+        """
+
+        :param request: 
+        :return: 
+        """
+        self.cbpi.bus.fire(event="actor/1/on", id=1, power=99)
+        return web.Response(status=204)
+
+
+
+class ActorController(ActorHttp, CRUDController, PluginAPI):
 
     model = ActorModel
-
 
     def __init__(self, cbpi):
         super(ActorController, self).__init__(cbpi)
@@ -22,7 +39,6 @@ class ActorController(HttpAPI, CRUDController, PluginAPI):
         self.cbpi.register(self, "/actor")
         self.types = {}
         self.actors = {}
-
 
     async def init(self):
 
@@ -38,33 +54,27 @@ class ActorController(HttpAPI, CRUDController, PluginAPI):
         print("CACHE", self.cache)
         print("ACTORS", self.actors)
 
-    @request_mapping(path="/{id}/on",auth_required=False)
-    async def http_on(self, request) -> web.Response:
-        self.cbpi.bus.fire(event="actor/1/on", id=1, power=99)
-        return web.Response(status=204)
+
 
     @on_event(topic="actor/+/on")
-    def on(self, id, power=100) -> None:
+    def on(self, id, power=100, **kwargs) -> None:
         print("ON-------------", id, power)
         if id in self.actors:
             i = self.actors[id]
             i.on(power)
 
-    @on_event(topic="actor/+/on")
-    def on2(self, id, **kwargs) -> None:
+    @on_event(topic="actor/+/off")
+    def off(self, id, **kwargs) -> None:
+        """
+
+        :param id: 
+        :param kwargs: 
+        """
         print("POWERED ON", id, kwargs)
 
 
 
-    def register(self, name, clazz) -> None:
-        '''
-        Register a new actor type
-        :param name: actor name
-        :param clazz: actor class
-        :return: None
-        '''
-        self._parse_props(clazz)
-        self.types[name] = clazz
+
 
 
 

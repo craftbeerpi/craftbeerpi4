@@ -11,12 +11,12 @@ from typing import Iterable, Callable
 
 class WebSocket:
 
-    def __init__(self, core) -> None:
-        self.core = core
+    def __init__(self, cbpi) -> None:
+        self.cbpi = cbpi
         self._callbacks = defaultdict(set)
         self._clients = weakref.WeakSet()
         self.logger = logging.getLogger(__name__)
-        self.core.app.add_routes([web.get('/ws', self.websocket_handler)])
+        self.cbpi.app.add_routes([web.get('/ws', self.websocket_handler)])
 
     def add_callback(self, func: Callable, event: str) -> None:
         self._callbacks[event].add(func)
@@ -51,7 +51,7 @@ class WebSocket:
 
 
 
-                        self.core.bus.fire(msg_obj["topic"], id=1, power=22)
+                        self.cbpi.bus.fire(msg_obj["topic"], id=1, power=22)
                         #await self.fire(msg_obj["key"], ws, msg)
 
                         #await ws.send_str(msg.data)
