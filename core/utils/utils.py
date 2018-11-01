@@ -1,7 +1,16 @@
 import json
 from json import JSONEncoder
 
+import yaml
+
 from core.database.model import DBModel, ActorModel
+
+
+def load_config(fname):
+    with open(fname, 'rt') as f:
+        data = yaml.load(f)
+    # TODO: add config validation
+    return data
 
 
 class ComplexEncoder(JSONEncoder):
@@ -21,6 +30,7 @@ class ComplexEncoder(JSONEncoder):
         except TypeError as e:
             pass
         return None
+
 
 def json_dumps(obj):
     return json.dumps(obj, cls=ComplexEncoder)

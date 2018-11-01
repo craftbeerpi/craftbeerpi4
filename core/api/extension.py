@@ -1,6 +1,9 @@
 import logging
+import os
 
-from core.helper.utils import load_config as load
+import sys
+
+from core.utils.utils import load_config as load
 logger = logging.getLogger(__file__)
 logging.basicConfig(level=logging.INFO)
 

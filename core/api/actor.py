@@ -2,7 +2,7 @@
 import logging
 
 from core.api.extension import CBPiExtension
-from core.helper.utils import load_config as load
+from core.utils.utils import load_config as load
 logger = logging.getLogger(__file__)
 
 class CBPiActor(CBPiExtension):

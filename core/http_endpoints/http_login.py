@@ -4,7 +4,7 @@ from aiohttp import web
 from aiohttp_auth import auth
 
 from core.api.decorator import request_mapping
-from core.helper.utils import load_config
+from core.utils.utils import load_config
 
 
 class Login():

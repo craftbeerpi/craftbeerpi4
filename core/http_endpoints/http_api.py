@@ -3,7 +3,7 @@ from aiohttp import web
 from aiojobs.aiohttp import get_scheduler_from_app
 
 from core.api.decorator import request_mapping
-from core.helper.jsondump import json_dumps
+from core.utils.utils import json_dumps
 
 class HttpAPI():
 
