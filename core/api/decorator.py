@@ -74,9 +74,19 @@ def background_task(name, interval):
     return real_decorator
 
 
+def on_startup(name, order=0):
+    def real_decorator(func):
+        func.on_startup = True
+        func.name = name
+        func.order = order
+        return func
+
+    return real_decorator
+
+
 def entry_exit(f):
     def new_f():
-        print("Entering", f.__name__)
+
         f()
-        print("Exited", f.__name__)
+
     return new_f

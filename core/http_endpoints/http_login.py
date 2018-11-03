@@ -1,10 +1,7 @@
-import pathlib
-
 from aiohttp import web
 from aiohttp_auth import auth
 
 from core.api.decorator import request_mapping
-from core.utils.utils import load_config
 
 
 class Login():
@@ -12,10 +9,9 @@ class Login():
     def __init__(self,cbpi):
         self.cbpi = cbpi
         self.cbpi.register(self)
-        cfg = load_config(str(pathlib.Path('.') / 'config' / 'config.yaml'))
 
-        print("######", cfg)
-        self.db = {'user': 'password', 'super_user': 'super_password'}
+
+        self.db = {cbpi.config.get("username", "cbpi"): cbpi.config.get("password", "cbpi")}
 
     @request_mapping(path="/logout", name="Logout", method="GET", auth_required=True)
     async def logout_view(self, request):
@@ -26,7 +22,7 @@ class Login():
     async def login_view(self, request):
         params = await request.post()
 
-        print(params.get('username', None), params.get('password', None))
+
         user = params.get('username', None)
         if (user in self.db and
             params.get('password', None) == self.db[user]):

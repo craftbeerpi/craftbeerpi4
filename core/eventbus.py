@@ -64,7 +64,7 @@ class EventBus(object):
         self.logger.info("EMIT EVENT %s", event)
         for methods in self.iter_match(event):
             for f in methods:
-                print("METHOD: ", f)
+
                 f(**kwargs)
 
     def iter_match(self, topic):

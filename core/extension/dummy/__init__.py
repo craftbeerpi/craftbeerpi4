@@ -1,10 +1,8 @@
-from core.database.model import ActorModel
-from core.api.decorator import action, background_task
-from core.api.property import Property
-
+import logging
 
 from core.api.actor import CBPiActor
-import logging
+from core.api.decorator import action, background_task
+from core.api.property import Property
 
 
 class MyActor(CBPiActor):
@@ -36,7 +34,7 @@ class MyActor(CBPiActor):
             return
 
         self.cfg = self.load_config()
-        print(self.cfg)
+
         self.logger = logging.getLogger(__file__)
         logging.basicConfig(level=logging.INFO)
 

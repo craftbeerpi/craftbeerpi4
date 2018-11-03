@@ -15,7 +15,7 @@ class SystemController():
     @request_mapping("/jobs", method="GET", name="get_jobs", auth_required=True)
     def get_all_jobs(self, request):
         scheduler = get_scheduler_from_app(self.cbpi.app)
-        print(scheduler.active_count, scheduler.pending_limit)
+
         for j in scheduler:
             print(j)
 

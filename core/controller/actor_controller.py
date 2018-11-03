@@ -1,19 +1,20 @@
 from aiohttp import web
-from aiohttp_auth.auth.decorators import auth_required
 
-from core.api.decorator import on_event, request_mapping
+from core.api.decorator import on_event, request_mapping, on_startup
 from core.controller.crud_controller import CRUDController
+from core.controller.plugin_controller import PluginController
 from core.database.model import ActorModel
 from core.http_endpoints.http_api import HttpAPI
-from core.plugin import PluginAPI
 
 
 class ActorHttp(HttpAPI):
 
+    count = 0
+
     @request_mapping(path="/hallo", auth_required=False)
     async def hello_world(self, request) -> web.Response:
-        print("HALLO")
-        return web.Response(status=200, text="OK")
+        self.count = self.count + 1
+        return web.Response(status=200, text=str(self.count))
 
     @request_mapping(path="/{id}/on", auth_required=False)
     async def http_on(self, request) -> web.Response:
@@ -27,7 +28,7 @@ class ActorHttp(HttpAPI):
 
 
 
-class ActorController(ActorHttp, CRUDController, PluginAPI):
+class ActorController(ActorHttp, CRUDController, PluginController):
 
     model = ActorModel
 
@@ -50,11 +51,21 @@ class ActorController(ActorHttp, CRUDController, PluginAPI):
             if value.type in self.types:
                 clazz = self.types[value.type];
                 self.actors[id]  = clazz(self.cbpi)
-            print(value.type)
-        print("CACHE", self.cache)
-        print("ACTORS", self.actors)
 
 
+
+
+    @on_startup(name="actor_init", order=2)
+    async def lets_go1(self):
+        pass
+
+    @on_startup(name="actor_init", order=99)
+    async def lets_go2(self):
+        pass
+
+    @on_startup(name="actor_init", order=-1)
+    async def lets_go(self):
+        pass
 
     @on_event(topic="actor/+/on")
     def on(self, id, power=100, **kwargs) -> None:
@@ -70,8 +81,7 @@ class ActorController(ActorHttp, CRUDController, PluginAPI):
         :param id: 
         :param kwargs: 
         """
-        print("POWERED ON", id, kwargs)
-
+        pass
 
 
 

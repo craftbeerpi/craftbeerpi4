@@ -1,1 +1,9 @@
-name: Manuel
+
+name: CraftBeerPi
+version: 4.1
+
+
+port: 8080
+
+username: cbpi
+password: 123

@@ -1,3 +1,5 @@
+__all__ = ['load_config',"json_dumps"]
+
 import json
 from json import JSONEncoder
 
@@ -9,7 +11,6 @@ from core.database.model import DBModel, ActorModel
 def load_config(fname):
     with open(fname, 'rt') as f:
         data = yaml.load(f)
-    # TODO: add config validation
     return data
 
 

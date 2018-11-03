@@ -1,10 +1,9 @@
 from aiojobs.aiohttp import get_scheduler_from_app
+from core.mqtt_matcher import MQTTMatcher
 from hbmqtt.broker import Broker
 from hbmqtt.client import MQTTClient
 from hbmqtt.mqtt.constants import QOS_1, QOS_0
 from typing import Callable
-
-from core.mqtt_matcher import MQTTMatcher
 
 
 class MQTT():
@@ -44,14 +43,14 @@ class MQTT():
 
     def sysmsg(self, msg):
 
-        print("SYS", msg)
+        pass
 
     def ok_msg(self, msg):
         self.count = self.count + 1
-        print("MSFG", msg, self.count)
+
 
     def publish(self, topic, message):
-        print("PUSH NOW", topic)
+
         self.cbpi.app.loop.create_task(self.client.publish(topic, str.encode(message), QOS_0))
 
     def register_callback(self, func: Callable, topic) -> None:
@@ -64,12 +63,12 @@ class MQTT():
             message = await self.client.deliver_message()
             matched = False
             packet = message.publish_packet
-            print(message.topic)
+
             #print(message.topic.split('/'))
             data = packet.payload.data.decode("utf-8")
 
             for callback in self.matcher.iter_match(message.topic):
-                print("MATCH")
+
                 callback(data)
                 matched = True
 
@@ -84,7 +83,7 @@ class MQTT():
         # await self.client.connect('mqtt://broker.hivemq.com:1883')
 
         for k, v in self.mqtt_methods.items():
-            print("############MQTT Subscribe:", k, v)
+
             await self.client.subscribe([(k, QOS_1)])
             self.matcher[k] = v
         await get_scheduler_from_app(app).spawn(self.on_message())

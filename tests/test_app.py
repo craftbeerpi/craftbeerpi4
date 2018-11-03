@@ -1,13 +1,6 @@
-from pprint import pprint
-
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from aiohttp import web
-import json
-
-from hbmqtt.broker import Broker
 
 from core.craftbeerpi import CraftBeerPi
-from core.database.model import ActorModel
 
 
 class MyAppTestCase(AioHTTPTestCase):
@@ -23,16 +16,16 @@ class MyAppTestCase(AioHTTPTestCase):
     @unittest_run_loop
     async def test_example(self):
 
-        resp = await self.client.request("GET", "/actor/1/on")
-        print(resp.status)
-        assert resp.status == 204
+        #resp = await self.client.request("GET", "/actor/1/on")
+        #print(resp.status)
+        #assert resp.status == 204
+        for i in range(1000):
+            resp = await self.client.request("GET", "/actor/hallo")
 
-        resp = await self.client.request("GET", "/actor/")
-        print(resp.status)
-        assert resp.status == 200
+            assert resp.status == 200
 
-        text = await resp.json()
-        pprint(text)
+        #text = await resp.json()
+        #pprint(text)
         '''
         resp = await self.client.request("GET", "/actor/2")
         print(resp.status)

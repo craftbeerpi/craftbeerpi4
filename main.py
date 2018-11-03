@@ -1,13 +1,12 @@
-import aiohttp
 import aiosqlite
 from aiohttp import web
 from aiohttp_swagger import *
 from aiojobs.aiohttp import setup, spawn, get_scheduler_from_app
+from core.matcher import MQTTMatcher
 from hbmqtt.broker import Broker
 from hbmqtt.client import MQTTClient
 from hbmqtt.mqtt.constants import QOS_1
 
-from core.matcher import MQTTMatcher
 from core.websocket import websocket_handler
 
 TEST_DB = "test.db"
@@ -55,7 +54,7 @@ async def handle(request):
 
 async def test_connection():
     async with aiosqlite.connect(TEST_DB) as db:
-        print("DB OK")
+
         assert isinstance(db, aiosqlite.Connection)
 
 
@@ -76,19 +75,19 @@ async def listen_to_redis(app):
 async def myjob(app):
     while True:
         await asyncio.sleep(1)
-        print("JOB")
+
 
 
 def ok_msg(msg):
-    print("OK", msg)
+    pass
 
 
 def ok_msg1(msg):
-    print("OK1", msg)
+    pass
 
 
 def ok_msg2(msg):
-    print("OK2", msg)
+    pass
 
 
 mqtt_methods = {"test": ok_msg, "test/+/ab": ok_msg1, "test/+": ok_msg2}
@@ -104,7 +103,7 @@ async def on_message():
         data = packet.payload.data.decode("utf-8")
 
         for callback in matcher.iter_match(message.topic):
-            print("MATCH")
+
             callback(data)
             matched = True
 
@@ -120,7 +119,7 @@ async def start_background_tasks(app):
 
 
 async def start_broker(app):
-    print(app)
+
     await broker.start()
 
     await c.connect('mqtt://localhost:1885')

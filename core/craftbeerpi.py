@@ -1,5 +1,4 @@
 import asyncio
-import importlib
 import logging
 from os import urandom
 
@@ -12,11 +11,13 @@ from aiohttp_swagger import setup_swagger
 from aiojobs.aiohttp import setup, get_scheduler_from_app
 
 from core.controller.actor_controller import ActorController
+from core.controller.plugin_controller import PluginController
 from core.controller.sensor_controller import SensorController
 from core.controller.system_controller import SystemController
 from core.database.model import DBModel
 from core.eventbus import EventBus
 from core.http_endpoints.http_login import Login
+from core.utils import *
 from core.websocket import WebSocket
 
 logger = logging.getLogger(__file__)
@@ -24,25 +25,29 @@ logging.basicConfig(level=logging.INFO)
 
 
 class CraftBeerPi():
+
     def __init__(self):
+        self.config = load_config("./config/config.yaml")
 
         logger.info("Init CraftBeerPI")
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
         middlewares = [session_middleware(EncryptedCookieStorage(urandom(32))), auth.auth_middleware(policy)]
         self.app = web.Application(middlewares=middlewares)
+        self.initializer = []
 
         setup(self.app)
         self.bus = EventBus()
         self.ws = WebSocket(self)
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
+        self.plugin = PluginController(self)
         self.system = SystemController(self)
+
         self.login = Login(self)
 
     def register_events(self, obj):
 
         for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "eventbus")]:
-            print(method.__getattribute__("topic"), method)
 
             doc = None
             if method.__doc__ is not None:
@@ -68,6 +73,18 @@ class CraftBeerPi():
 
             self.app.on_startup.append(spawn_job)
 
+
+    def register_on_startup(self, obj):
+
+        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "on_startup")]:
+
+            name = method.__getattribute__("name")
+            order = method.__getattribute__("order")
+
+            self.initializer.append(dict(name=name, method=method, order=order))
+
+
+
     def register_ws(self, obj):
         if self.ws is None:
             return
@@ -80,6 +97,7 @@ class CraftBeerPi():
         self.register_events(obj)
         self.register_ws(obj)
         self.register_background_task(obj)
+        self.register_on_startup(obj)
 
     def register_http_endpoints(self, obj, subapp=None):
         routes = []
@@ -117,24 +135,51 @@ class CraftBeerPi():
         else:
             self.app.add_routes(routes)
 
-    async def _load_extensions(self, app):
-        extension_list = ["core.extension.dummy"]
+    def _swagger_setup(self):
 
-        for extension in extension_list:
-            logger.info("LOADING PUGIN %s" % extension)
-            my_module = importlib.import_module(extension)
-            my_module.setup(self)
+        long_description = """
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula, metus et sodales fringilla, purus leo aliquet odio, non tempor ante urna aliquet nibh. Integer accumsan laoreet tincidunt. Vestibulum semper vehicula sollicitudin. Suspendisse dapibus neque vitae mattis bibendum. Morbi eu pulvinar turpis, quis malesuada ex. Vestibulum sed maximus diam. Proin semper fermentum suscipit. Duis at suscipit diam. Integer in augue elementum, auctor orci ac, elementum est. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas condimentum id arcu quis volutpat. Vestibulum sit amet nibh sodales, iaculis nibh eget, scelerisque justo.
+
+        Nunc eget mauris lectus. Proin sit amet volutpat risus. Aliquam auctor nunc sit amet feugiat tempus. Maecenas nec ex dolor. Nam fermentum, mauris ut suscipit varius, odio purus luctus mauris, pretium interdum felis sem vel est. Proin a turpis vitae nunc volutpat tristique ac in erat. Pellentesque consequat rhoncus libero, ac sollicitudin odio tempus a. Sed vestibulum leo erat, ut auctor turpis mollis id. Ut nec nunc ex. Maecenas eu turpis in nibh placerat ullamcorper ac nec dui. Integer ac lacus neque. Donec dictum tellus lacus, a vulputate justo venenatis at. Morbi malesuada tellus quis orci aliquet, at vulputate lacus imperdiet. Nulla eu diam quis orci aliquam vulputate ac imperdiet elit. Quisque varius mollis dolor in interdum.
+        """
+
+        setup_swagger(self.app,
+                      description=long_description,
+                      title=self.config.get("name", "CraftBeerPi"),
+                      api_version=self.config.get("version", ""),
+                      contact="info@craftbeerpi.com")
+
+
 
     def start(self):
 
+        from pyfiglet import Figlet
+        f = Figlet(font='big')
+        print(f.renderText("%s %s" % (self.config.get("name"), self.config.get("version"))))
+
+            #  self.cache["init"] = sorted(self.cache["init"], key=lambda k: k['order'])
         async def init_database(app):
             await DBModel.test_connection()
 
         async def init_controller(app):
             await self.actor.init()
 
+        async def load_plugins(app):
+            await PluginController.load_plugin_list()
+            await PluginController.load_plugins()
+
+        async def call_initializer(app):
+
+            self.initializer = sorted(self.initializer, key=lambda k: k['order'])
+            for i in self.initializer:
+                logger.info("CALL INITIALIZER %s - %s " % (i["name"], i["method"].__name__))
+
+                await i["method"]()
+
+
         self.app.on_startup.append(init_database)
-        self.app.on_startup.append(self._load_extensions)
+        self.app.on_startup.append(call_initializer)
         self.app.on_startup.append(init_controller)
-        setup_swagger(self.app)
-        web.run_app(self.app)
+        self.app.on_startup.append(load_plugins)
+        self._swagger_setup()
+        web.run_app(self.app, port=self.config.get("port", 8080))

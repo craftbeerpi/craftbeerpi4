@@ -33,7 +33,7 @@ class DBModel(object):
     @classmethod
     async def test_connection(self):
 
-        print("CREATE DATABSE")
+
         async with aiosqlite.connect(TEST_DB) as db:
 
             assert isinstance(db, aiosqlite.Connection)
@@ -42,7 +42,7 @@ class DBModel(object):
 
     @classmethod
     async def get_all(cls):
-        print("GET ALL")
+
         if cls.__as_array__ is True:
             result = []
         else:
@@ -113,7 +113,7 @@ class DBModel(object):
                     else:
                         data = data + (kwargs.get(f),)
 
-            print(query, data)
+
             cursor = await db.execute(query, data)
             await db.commit()
 

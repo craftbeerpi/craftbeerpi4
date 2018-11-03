@@ -1,9 +1,83 @@
+import logging
+import os
+from importlib import import_module
 from pprint import pprint
 
+import aiohttp
+import yaml
+from aiohttp import web
+
+from core.api.decorator import request_mapping
 from core.api.property import Property
+from core.utils.utils import load_config, json_dumps
+
+logger = logging.getLogger(__file__)
+logging.basicConfig(level=logging.INFO)
+
+class PluginController():
+
+    modules = {}
+
+    def __init__(self, cbpi):
+
+        self.cbpi = cbpi
+        self.cbpi.register(self, "/plugin")
+
+    @classmethod
+    async def load_plugin_list(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.get('https://raw.githubusercontent.com/Manuel83/craftbeerpi-plugins/master/plugins.yaml') as resp:
+
+                if(resp.status == 200):
+
+                    data = yaml.load(await resp.text())
+                    return data
+
+    @classmethod
+    async def load_plugins(self):
+
+        for filename in os.listdir("./core/extension"):
+
+            if os.path.isdir("./core/extension/" + filename) is False or filename == "__pycache__":
+                continue
+            try:
+
+                logger.info("Trying to load plugin %s" % filename)
+
+                data = load_config("./core/extension/%s/config.yaml" % filename)
 
 
-class PluginAPI():
+                if(data.get("version") == 4):
+
+                    self.modules[filename] = import_module("core.extension.%s" % (filename))
+                    logger.info("Plugin %s loaded successful" % filename)
+                else:
+                    logger.warning("Plguin %s is not supporting version 4" % filename)
+
+
+
+            except Exception as e:
+                logger.error(e)
+
+    @request_mapping(path="/", method="GET", auth_required=False)
+    async def get_plugins(self, request):
+        """
+            ---
+            description: This end-point allow to test that service is up.
+            tags:
+            - Health check
+            produces:
+            - text/plain
+            responses:
+                "200":
+                    description: successful operation. Return "pong" text
+                "405":
+                    description: invalid HTTP Method
+            """
+        return web.json_response(await self.load_plugin_list(), dumps=json_dumps)
+
+
+
     def register(self, name, clazz) -> None:
         '''
         Register a new actor type

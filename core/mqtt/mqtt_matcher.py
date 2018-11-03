@@ -38,7 +38,7 @@ class MQTTMatcher(object):
                 parent, node = node, node._children[k]
                 lst.append((parent, k, node))
             # TODO
-            print(node._content)
+
             if method is not None:
                 node._content = None
             else:
@@ -58,9 +58,9 @@ class MQTTMatcher(object):
         print("...",key, value)
         node = self._root
         for sym in key.split('/'):
-            print(sym)
+
             node = node._children.setdefault(sym, self.Node())
-            print(node)
+
         if not isinstance(node._content, list):
             #print("new array")
             node._content = []
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     m.register("actor/1/on", test_name)
     m.register("actor/1/on", test_name)
 
-    print(m.get_callbacks("actor/1/on"))
+
 
 
     m.unregister("actor/1/on")
