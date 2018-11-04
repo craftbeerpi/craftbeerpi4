@@ -1,6 +1,6 @@
 from aiohttp import web
 
-from core.api.decorator import on_event, request_mapping, on_startup
+from core.api.decorator import on_event, request_mapping
 from core.controller.crud_controller import CRUDController
 from core.controller.plugin_controller import PluginController
 from core.database.model import ActorModel
@@ -8,7 +8,6 @@ from core.http_endpoints.http_api import HttpAPI
 
 
 class ActorHttp(HttpAPI):
-
     count = 0
 
     @request_mapping(path="/hallo", auth_required=False)
@@ -27,9 +26,7 @@ class ActorHttp(HttpAPI):
         return web.Response(status=204)
 
 
-
 class ActorController(ActorHttp, CRUDController, PluginController):
-
     model = ActorModel
 
     def __init__(self, cbpi):
@@ -50,22 +47,7 @@ class ActorController(ActorHttp, CRUDController, PluginController):
 
             if value.type in self.types:
                 clazz = self.types[value.type];
-                self.actors[id]  = clazz(self.cbpi)
-
-
-
-
-    @on_startup(name="actor_init", order=2)
-    async def lets_go1(self):
-        pass
-
-    @on_startup(name="actor_init", order=99)
-    async def lets_go2(self):
-        pass
-
-    @on_startup(name="actor_init", order=-1)
-    async def lets_go(self):
-        pass
+                self.actors[id] = clazz(self.cbpi)
 
     @on_event(topic="actor/+/on")
     def on(self, id, power=100, **kwargs) -> None:
@@ -82,10 +64,3 @@ class ActorController(ActorHttp, CRUDController, PluginController):
         :param kwargs: 
         """
         pass
-
-
-
-
-
-
-

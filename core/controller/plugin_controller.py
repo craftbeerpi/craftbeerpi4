@@ -59,7 +59,7 @@ class PluginController():
             except Exception as e:
                 logger.error(e)
 
-    @request_mapping(path="/", method="GET", auth_required=False)
+    @request_mapping(path="/plugins", method="GET", auth_required=False)
     async def get_plugins(self, request):
         """
             ---

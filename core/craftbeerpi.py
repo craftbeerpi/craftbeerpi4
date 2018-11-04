@@ -56,22 +56,24 @@ class CraftBeerPi():
             self.bus.register(method.__getattribute__("topic"), method, doc)
 
     def register_background_task(self, obj):
-        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "background_task")]:
-            name = method.__getattribute__("name")
-            interval = method.__getattribute__("interval")
 
-            async def job_loop(app, name, interval, method):
-                logger.info("Start Background Task %s Interval %s Method %s" % (name, interval, method))
-                while True:
-                    logger.info("Execute Task %s - interval(%s second(s)" % (name, interval))
-                    await asyncio.sleep(interval)
-                    await method()
 
-            async def spawn_job(app):
-                scheduler = get_scheduler_from_app(self.app)
+        async def job_loop(app, name, interval, method):
+            logger.info("Start Background Task %s Interval %s Method %s" % (name, interval, method))
+            while True:
+                logger.info("Execute Task %s - interval(%s second(s)" % (name, interval))
+                await asyncio.sleep(interval)
+                await method()
+
+        async def spawn_job(app):
+            scheduler = get_scheduler_from_app(self.app)
+            for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "background_task")]:
+                name = method.__getattribute__("name")
+                interval = method.__getattribute__("interval")
+
                 await scheduler.spawn(job_loop(self.app, name, interval, method))
 
-            self.app.on_startup.append(spawn_job)
+        self.app.on_startup.append(spawn_job)
 
 
     def register_on_startup(self, obj):
@@ -157,7 +159,6 @@ class CraftBeerPi():
         f = Figlet(font='big')
         print(f.renderText("%s %s" % (self.config.get("name"), self.config.get("version"))))
 
-            #  self.cache["init"] = sorted(self.cache["init"], key=lambda k: k['order'])
         async def init_database(app):
             await DBModel.test_connection()
 

@@ -1,10 +1,8 @@
 import logging
 from logging.handlers import TimedRotatingFileHandler
 
-
 from core.api.decorator import background_task
 from core.controller.crud_controller import CRUDController
-
 from core.database.model import SensorModel
 from core.http_endpoints.http_api import HttpAPI
 
@@ -31,6 +29,10 @@ class SensorController(CRUDController, HttpAPI):
 
     async def pre_get_one(self, id):
         pass
+
+    @background_task(name="test2", interval=0.1)
+    async def hallo2(self):
+        print("WOOHOO")
 
     @background_task(name="test", interval=1)
     async def hallo(self):

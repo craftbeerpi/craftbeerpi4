@@ -7,10 +7,7 @@ from aiohttp import web
 from typing import Iterable, Callable
 
 
-
-
 class WebSocket:
-
     def __init__(self, cbpi) -> None:
         self.cbpi = cbpi
         self._callbacks = defaultdict(set)
@@ -49,12 +46,10 @@ class WebSocket:
                     else:
                         msg_obj = msg.json()
 
-
-
                         self.cbpi.bus.fire(msg_obj["topic"], id=1, power=22)
-                        #await self.fire(msg_obj["key"], ws, msg)
+                        # await self.fire(msg_obj["key"], ws, msg)
 
-                        #await ws.send_str(msg.data)
+                        # await ws.send_str(msg.data)
                 elif msg.type == aiohttp.WSMsgType.ERROR:
                     self.logger.error('ws connection closed with exception %s' % ws.exception())
 
