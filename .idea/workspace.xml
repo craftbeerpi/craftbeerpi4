@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/index.rst" afterPath="$PROJECT_DIR$/docs_src/source/index.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/copy_docs.sh" afterPath="$PROJECT_DIR$/docs_src/copy_docs.sh" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -77,7 +78,7 @@
         <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
-              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -87,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/docs_src/source/sensor.rst">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
-              <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -98,18 +99,19 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-560">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/extension/dummy/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="54" column="31" lean-forward="false" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <marker date="1542401694741" expanded="true" signature="2526:2703" ph="..." />
+                <marker date="1542401694741" expanded="true" signature="2555:2696" ph="..." />
+                <marker date="1542401694741" expanded="true" signature="2562:2690" ph="..." />
+                <marker date="1542401694741" expanded="true" signature="2604:2685" ph="..." />
+                <marker date="1542401694741" expanded="false" signature="2732:2745" ph="..." />
+                <marker date="1542401694741" expanded="true" signature="2760:3110" ph="..." />
+                <marker date="1542401694741" expanded="true" signature="2820:3103" ph="..." />
+                <marker date="1542401694741" expanded="true" signature="2880:3092" ph="..." />
+                <marker date="1542401694741" expanded="true" signature="3281:3586" ph="..." />
+                <marker date="1542401694741" expanded="false" signature="3289:3295" ph="©" />
+                <marker date="1542401694741" expanded="false" signature="3405:3410" ph="&amp;" />
+                <marker date="1542401694741" expanded="true" signature="3535:3575" ph="..." />
               </folding>
             </state>
           </provider>
@@ -167,7 +169,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -176,6 +178,16 @@
                 <folding />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="copy_docs.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="14" lean-forward="false" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -281,13 +293,13 @@
         <option value="$PROJECT_DIR$/core/controller/actor_controller.py" />
         <option value="$PROJECT_DIR$/docs/index.html" />
         <option value="$PROJECT_DIR$/docs_src/Makefile" />
-        <option value="$PROJECT_DIR$/docs_src/copy_docs.sh" />
         <option value="$PROJECT_DIR$/docs_src/source/sensor.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/actor.rst" />
         <option value="$PROJECT_DIR$/core/extension/dummy/__init__.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/docs_src/source/index.rst" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/docs_src/copy_docs.sh" />
       </list>
     </option>
   </component>
@@ -1080,14 +1092,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/source/picture.jpeg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1226,14 +1230,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-560">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1542401694741" expanded="true" signature="2526:2703" ph="..." />
+            <marker date="1542401694741" expanded="true" signature="2555:2696" ph="..." />
+            <marker date="1542401694741" expanded="true" signature="2562:2690" ph="..." />
+            <marker date="1542401694741" expanded="true" signature="2604:2685" ph="..." />
+            <marker date="1542401694741" expanded="false" signature="2732:2745" ph="..." />
+            <marker date="1542401694741" expanded="true" signature="2760:3110" ph="..." />
+            <marker date="1542401694741" expanded="true" signature="2820:3103" ph="..." />
+            <marker date="1542401694741" expanded="true" signature="2880:3092" ph="..." />
+            <marker date="1542401694741" expanded="true" signature="3281:3586" ph="..." />
+            <marker date="1542401694741" expanded="false" signature="3289:3295" ph="©" />
+            <marker date="1542401694741" expanded="false" signature="3405:3410" ph="&amp;" />
+            <marker date="1542401694741" expanded="true" signature="3535:3575" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1241,7 +1258,7 @@
     <entry file="file://$PROJECT_DIR$/docs_src/source/sensor.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1254,6 +1271,14 @@
             <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="14" lean-forward="false" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
