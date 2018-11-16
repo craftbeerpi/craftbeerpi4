@@ -2,124 +2,107 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/ajax-loader.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/comment-bright.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/comment-close.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/comment.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/down-pressed.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/down.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/file.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/minus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/plus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/up-pressed.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/up.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/objects.inv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/actor.doctree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/environment.pickle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/hello.doctree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/index.doctree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/sensor.doctree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/step.doctree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/ajax-loader.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/comment-bright.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/comment-close.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/comment.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/down-pressed.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/down.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/file.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/minus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/plus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/up-pressed.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/up.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/objects.inv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/controller/notification_controller.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/extension/comp/config.yaml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/.buildinfo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_sources/actor.rst.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_sources/hello.rst.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_sources/index.rst.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_sources/sensor.rst.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_sources/step.rst.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/alabaster.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/basic.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/custom.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/doctools.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/documentation_options.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/jquery-3.2.1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/jquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/pygments.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/searchtools.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/underscore-1.3.1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/underscore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_static/websupport.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/actor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/genindex.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/hello.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/py-modindex.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/search.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/searchindex.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sensor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/step.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/.buildinfo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/actor.rst.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/hello.rst.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/index.rst.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/alabaster.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/basic.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/custom.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/doctools.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/documentation_options.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/jquery-3.2.1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/jquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/pygments.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/searchtools.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/underscore-1.3.1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/underscore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/websupport.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/actor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/genindex.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/hello.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/py-modindex.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/search.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/searchindex.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/sensor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/build/html/step.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/source/actor.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/source/sensor.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/source/step.rst" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/source/actor.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/first_logfile2.log.2018-11-04_00-57" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/first_logfile2.log.2018-11-04_00-58" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/first_logfile2.log.2018-11-04_01-00" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/Makefile" afterPath="$PROJECT_DIR$/docs_src/Makefile" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/make.bat" afterPath="$PROJECT_DIR$/docs_src/make.bat" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/conf.py" afterPath="$PROJECT_DIR$/docs_src/source/conf.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/index.rst" afterPath="$PROJECT_DIR$/docs_src/source/index.rst" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/sensor.rst" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/sensor.rst.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/step.rst" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/step.rst.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/craftbeerpi.db" afterPath="$PROJECT_DIR$/craftbeerpi.db" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/.buildinfo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_sources/actor.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_sources/hello.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_sources/index.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_sources/sensor.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_sources/step.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/ajax-loader.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/alabaster.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/basic.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/comment-bright.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/comment-close.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/comment.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/custom.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/doctools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/documentation_options.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/down-pressed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/down.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/file.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/jquery-3.2.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/minus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/plus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/pygments.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/searchtools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/underscore-1.3.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/underscore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/up-pressed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/up.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/websupport.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/actor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/genindex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/hello.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/objects.inv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/py-modindex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/search.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/searchindex.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/sensor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/step.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/actor.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/environment.pickle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/hello.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/index.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/sensor.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/step.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/.buildinfo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_sources/actor.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_sources/hello.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_sources/index.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_sources/sensor.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_sources/step.rst.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/ajax-loader.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/alabaster.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/basic.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/comment-bright.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/comment-close.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/comment.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/custom.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/doctools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/documentation_options.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/down-pressed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/down.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/file.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/jquery-3.2.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/minus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/plus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/pygments.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/searchtools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/underscore-1.3.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/underscore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/up-pressed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/up.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/_static/websupport.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/actor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/genindex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/hello.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/objects.inv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/py-modindex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/search.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/searchindex.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/sensor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/build/html/step.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-29" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-30" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-31" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-32" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-33" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/Makefile" afterPath="$PROJECT_DIR$/docs/Makefile" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/craftbeerpi.db" afterPath="$PROJECT_DIR$/docs/craftbeerpi.db" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/logs/first_logfile2.log" afterPath="$PROJECT_DIR$/docs/logs/first_logfile2.log" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/make.bat" afterPath="$PROJECT_DIR$/docs/make.bat" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/source/actor.rst" afterPath="$PROJECT_DIR$/docs/source/actor.rst" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/source/conf.py" afterPath="$PROJECT_DIR$/docs/source/conf.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/source/index.rst" afterPath="$PROJECT_DIR$/docs/source/index.rst" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/source/sensor.rst" afterPath="$PROJECT_DIR$/docs/source/sensor.rst" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs_src/source/step.rst" afterPath="$PROJECT_DIR$/docs/source/step.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/__init__.py" afterPath="$PROJECT_DIR$/core/api/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/actor.py" afterPath="$PROJECT_DIR$/core/api/actor.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/decorator.py" afterPath="$PROJECT_DIR$/core/api/decorator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/extension.py" afterPath="$PROJECT_DIR$/core/api/extension.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/property.py" afterPath="$PROJECT_DIR$/core/api/property.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/actor_controller.py" afterPath="$PROJECT_DIR$/core/controller/actor_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/crud_controller.py" afterPath="$PROJECT_DIR$/core/controller/crud_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/plugin_controller.py" afterPath="$PROJECT_DIR$/core/controller/plugin_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/sensor_controller.py" afterPath="$PROJECT_DIR$/core/controller/sensor_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/craftbeerpi.py" afterPath="$PROJECT_DIR$/core/craftbeerpi.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/database/orm_framework.py" afterPath="$PROJECT_DIR$/core/database/orm_framework.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/eventbus.py" afterPath="$PROJECT_DIR$/core/eventbus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummy/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummy/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/http_endpoints/http_api.py" afterPath="$PROJECT_DIR$/core/http_endpoints/http_api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/utils/utils.py" afterPath="$PROJECT_DIR$/core/utils/utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/websocket.py" afterPath="$PROJECT_DIR$/core/websocket.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/first_logfile2.log" afterPath="$PROJECT_DIR$/logs/first_logfile2.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run.py" afterPath="$PROJECT_DIR$/run.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_app.py" afterPath="$PROJECT_DIR$/tests/test_app.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logger.conf" afterPath="$PROJECT_DIR$/logger.conf" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -200,16 +183,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="http_login.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/http_endpoints/http_login.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="13" column="28" lean-forward="false" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/extension/comp/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -241,7 +214,7 @@
         </entry>
       </file>
       <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/Makefile">
+        <entry file="file://$PROJECT_DIR$/docs/Makefile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
               <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
@@ -250,11 +223,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="step.rst.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docs/_sources/step.rst.txt">
+      <file leaf-file-name=".nojekyll" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/.nojekyll">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -369,7 +352,6 @@
         <option value="$PROJECT_DIR$/docs/source/hello.rst" />
         <option value="$PROJECT_DIR$/docs/source/sensor.rst" />
         <option value="$PROJECT_DIR$/docs/source/step.rst" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/docs/source/conf.py" />
         <option value="$PROJECT_DIR$/core/controller/sensor_controller.py" />
         <option value="$PROJECT_DIR$/docs/source/actor.rst" />
@@ -396,6 +378,7 @@
         <option value="$PROJECT_DIR$/core/http_endpoints/http_api.py" />
         <option value="$PROJECT_DIR$/core/controller/actor_controller.py" />
         <option value="$PROJECT_DIR$/docs_src/Makefile" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -447,79 +430,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="docs_src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="docs_src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="docs_src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="docs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="docs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_sources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -977,20 +888,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docs_src/make.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="25" lean-forward="false" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/controller/step_controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -998,7 +895,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/conf.py">
+    <entry file="file://$PROJECT_DIR$/docs/source/conf.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-17">
           <caret line="17" column="41" lean-forward="false" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
@@ -1006,14 +903,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/sensor.rst">
+    <entry file="file://$PROJECT_DIR$/docs/source/sensor.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-17">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
+    <entry file="file://$PROJECT_DIR$/docs/source/actor.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-17">
           <caret line="10" column="11" lean-forward="false" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
@@ -1092,7 +989,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/logs/first_logfile2.log">
+    <entry file="file://$PROJECT_DIR$/docs/logs/first_logfile2.log">
       <provider selected="true" editor-type-id="LogFileEditorProvider">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1232,7 +1129,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
+    <entry file="file://$PROJECT_DIR$/docs/source/index.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
@@ -1356,7 +1253,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/Makefile">
+    <entry file="file://$PROJECT_DIR$/docs/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
@@ -1368,6 +1265,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/.nojekyll">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
