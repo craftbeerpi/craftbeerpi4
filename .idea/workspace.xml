@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/copy_docs.sh" afterPath="$PROJECT_DIR$/docs_src/copy_docs.sh" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -100,18 +99,18 @@
             <state relative-caret-position="-560">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <marker date="1542401694741" expanded="true" signature="2526:2703" ph="..." />
-                <marker date="1542401694741" expanded="true" signature="2555:2696" ph="..." />
-                <marker date="1542401694741" expanded="true" signature="2562:2690" ph="..." />
-                <marker date="1542401694741" expanded="true" signature="2604:2685" ph="..." />
-                <marker date="1542401694741" expanded="false" signature="2732:2745" ph="..." />
-                <marker date="1542401694741" expanded="true" signature="2760:3110" ph="..." />
-                <marker date="1542401694741" expanded="true" signature="2820:3103" ph="..." />
-                <marker date="1542401694741" expanded="true" signature="2880:3092" ph="..." />
-                <marker date="1542401694741" expanded="true" signature="3281:3586" ph="..." />
-                <marker date="1542401694741" expanded="false" signature="3289:3295" ph="©" />
-                <marker date="1542401694741" expanded="false" signature="3405:3410" ph="&amp;" />
-                <marker date="1542401694741" expanded="true" signature="3535:3575" ph="..." />
+                <marker date="1542401714975" expanded="true" signature="2526:2703" ph="..." />
+                <marker date="1542401714975" expanded="true" signature="2555:2696" ph="..." />
+                <marker date="1542401714975" expanded="true" signature="2562:2690" ph="..." />
+                <marker date="1542401714975" expanded="true" signature="2604:2685" ph="..." />
+                <marker date="1542401714975" expanded="false" signature="2732:2745" ph="..." />
+                <marker date="1542401714975" expanded="true" signature="2760:3110" ph="..." />
+                <marker date="1542401714975" expanded="true" signature="2820:3103" ph="..." />
+                <marker date="1542401714975" expanded="true" signature="2880:3092" ph="..." />
+                <marker date="1542401714975" expanded="true" signature="3281:3586" ph="..." />
+                <marker date="1542401714975" expanded="false" signature="3289:3295" ph="©" />
+                <marker date="1542401714975" expanded="false" signature="3405:3410" ph="&amp;" />
+                <marker date="1542401714975" expanded="true" signature="3535:3575" ph="..." />
               </folding>
             </state>
           </provider>
@@ -185,8 +184,8 @@
       <file leaf-file-name="copy_docs.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="14" lean-forward="false" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+            <state relative-caret-position="75">
+              <caret line="5" column="21" lean-forward="false" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -1231,18 +1230,18 @@
         <state relative-caret-position="-560">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1542401694741" expanded="true" signature="2526:2703" ph="..." />
-            <marker date="1542401694741" expanded="true" signature="2555:2696" ph="..." />
-            <marker date="1542401694741" expanded="true" signature="2562:2690" ph="..." />
-            <marker date="1542401694741" expanded="true" signature="2604:2685" ph="..." />
-            <marker date="1542401694741" expanded="false" signature="2732:2745" ph="..." />
-            <marker date="1542401694741" expanded="true" signature="2760:3110" ph="..." />
-            <marker date="1542401694741" expanded="true" signature="2820:3103" ph="..." />
-            <marker date="1542401694741" expanded="true" signature="2880:3092" ph="..." />
-            <marker date="1542401694741" expanded="true" signature="3281:3586" ph="..." />
-            <marker date="1542401694741" expanded="false" signature="3289:3295" ph="©" />
-            <marker date="1542401694741" expanded="false" signature="3405:3410" ph="&amp;" />
-            <marker date="1542401694741" expanded="true" signature="3535:3575" ph="..." />
+            <marker date="1542401714975" expanded="true" signature="2526:2703" ph="..." />
+            <marker date="1542401714975" expanded="true" signature="2555:2696" ph="..." />
+            <marker date="1542401714975" expanded="true" signature="2562:2690" ph="..." />
+            <marker date="1542401714975" expanded="true" signature="2604:2685" ph="..." />
+            <marker date="1542401714975" expanded="false" signature="2732:2745" ph="..." />
+            <marker date="1542401714975" expanded="true" signature="2760:3110" ph="..." />
+            <marker date="1542401714975" expanded="true" signature="2820:3103" ph="..." />
+            <marker date="1542401714975" expanded="true" signature="2880:3092" ph="..." />
+            <marker date="1542401714975" expanded="true" signature="3281:3586" ph="..." />
+            <marker date="1542401714975" expanded="false" signature="3289:3295" ph="©" />
+            <marker date="1542401714975" expanded="false" signature="3405:3410" ph="&amp;" />
+            <marker date="1542401714975" expanded="true" signature="3535:3575" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1276,8 +1275,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="14" lean-forward="false" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+        <state relative-caret-position="75">
+          <caret line="5" column="21" lean-forward="false" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
           <folding />
         </state>
       </provider>
