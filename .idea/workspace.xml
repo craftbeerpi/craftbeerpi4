@@ -2,67 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-45" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-46" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-47" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-48" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-16_20-49" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/.nojekyll" afterPath="$PROJECT_DIR$/docs_src/.nojekyll" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/Makefile" afterPath="$PROJECT_DIR$/docs_src/Makefile" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/doctrees/actor.doctree" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/actor.doctree" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/environment.pickle" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/doctrees/index.doctree" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/index.doctree" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/doctrees/sensor.doctree" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/sensor.doctree" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/doctrees/step.doctree" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/step.doctree" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/.buildinfo" afterPath="$PROJECT_DIR$/docs_src/build/html/.buildinfo" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/.nojekyll" afterPath="$PROJECT_DIR$/docs_src/build/html/.nojekyll" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_sources/actor.rst.txt" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/actor.rst.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_sources/index.rst.txt" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/index.rst.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_sources/sensor.rst.txt" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/sensor.rst.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_sources/step.rst.txt" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/step.rst.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/ajax-loader.gif" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/ajax-loader.gif" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/alabaster.css" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/alabaster.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/basic.css" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/basic.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/comment-bright.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/comment-bright.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/comment-close.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/comment-close.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/comment.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/comment.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/custom.css" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/custom.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/doctools.js" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/doctools.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/documentation_options.js" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/documentation_options.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/down-pressed.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/down-pressed.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/down.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/down.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/file.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/file.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/jquery-3.2.1.js" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/jquery-3.2.1.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/jquery.js" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/jquery.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/minus.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/minus.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/plus.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/plus.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/pygments.css" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/pygments.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/searchtools.js" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/searchtools.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/underscore-1.3.1.js" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/underscore-1.3.1.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/underscore.js" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/underscore.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/up-pressed.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/up-pressed.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/up.png" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/up.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/_static/websupport.js" afterPath="$PROJECT_DIR$/docs_src/build/html/_static/websupport.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/actor.html" afterPath="$PROJECT_DIR$/docs_src/build/html/actor.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/genindex.html" afterPath="$PROJECT_DIR$/docs_src/build/html/genindex.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/index.html" afterPath="$PROJECT_DIR$/docs_src/build/html/index.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/objects.inv" afterPath="$PROJECT_DIR$/docs_src/build/html/objects.inv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/py-modindex.html" afterPath="$PROJECT_DIR$/docs_src/build/html/py-modindex.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/search.html" afterPath="$PROJECT_DIR$/docs_src/build/html/search.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/searchindex.js" afterPath="$PROJECT_DIR$/docs_src/build/html/searchindex.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/sensor.html" afterPath="$PROJECT_DIR$/docs_src/build/html/sensor.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/build/html/step.html" afterPath="$PROJECT_DIR$/docs_src/build/html/step.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/craftbeerpi.db" afterPath="$PROJECT_DIR$/docs_src/craftbeerpi.db" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs_src/index.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/logs/first_logfile2.log" afterPath="$PROJECT_DIR$/docs_src/logs/first_logfile2.log" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/make.bat" afterPath="$PROJECT_DIR$/docs_src/make.bat" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/actor.rst" afterPath="$PROJECT_DIR$/docs_src/source/actor.rst" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/conf.py" afterPath="$PROJECT_DIR$/docs_src/source/conf.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/index.rst" afterPath="$PROJECT_DIR$/docs_src/source/index.rst" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/sensor.rst" afterPath="$PROJECT_DIR$/docs_src/source/sensor.rst" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/source/step.rst" afterPath="$PROJECT_DIR$/docs_src/source/step.rst" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/.nojekyll" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/craftbeerpi.db" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs_src/index.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/actor.doctree" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/actor.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/environment.pickle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/index.doctree" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/index.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/sensor.doctree" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/sensor.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/doctrees/step.doctree" afterPath="$PROJECT_DIR$/docs_src/build/doctrees/step.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/objects.inv" afterPath="$PROJECT_DIR$/docs_src/build/html/objects.inv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logger.conf" afterPath="$PROJECT_DIR$/logger.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummy/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummy/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/_sources/actor.rst.txt" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/actor.rst.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/_sources/sensor.rst.txt" afterPath="$PROJECT_DIR$/docs_src/build/html/_sources/sensor.rst.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/actor.html" afterPath="$PROJECT_DIR$/docs_src/build/html/actor.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/genindex.html" afterPath="$PROJECT_DIR$/docs_src/build/html/genindex.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/index.html" afterPath="$PROJECT_DIR$/docs_src/build/html/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/py-modindex.html" afterPath="$PROJECT_DIR$/docs_src/build/html/py-modindex.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/search.html" afterPath="$PROJECT_DIR$/docs_src/build/html/search.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/searchindex.js" afterPath="$PROJECT_DIR$/docs_src/build/html/searchindex.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/build/html/sensor.html" afterPath="$PROJECT_DIR$/docs_src/build/html/sensor.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/actor.rst" afterPath="$PROJECT_DIR$/docs_src/source/actor.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/sensor.rst" afterPath="$PROJECT_DIR$/docs_src/source/sensor.rst" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -133,32 +94,54 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/extension/comp/__init__.py">
+      <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+            <state relative-caret-position="267">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="decorator.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/api/decorator.py">
+      <file leaf-file-name="actor.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="125" lean-forward="false" selection-start-line="0" selection-start-column="125" selection-end-line="0" selection-end-column="125" />
+            <state relative-caret-position="227">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/api/__init__.py">
+        <entry file="file://$PROJECT_DIR$/core/extension/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="164" lean-forward="false" selection-start-line="0" selection-start-column="164" selection-end-line="0" selection-end-column="164" />
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/extension/dummy/config.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/extension/dummy/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="302">
+              <caret line="54" column="31" lean-forward="false" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -173,61 +156,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="copy_docs.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
+      <file leaf-file-name="conf.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/conf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="147">
+              <caret line="74" column="11" lean-forward="false" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/index.html">
+      <file leaf-file-name="sensor.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/sensor.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="49" lean-forward="false" selection-start-line="2" selection-start-column="49" selection-end-line="2" selection-end-column="49" />
+            <state relative-caret-position="90">
+              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".nojekyll" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/.nojekyll">
+      <file leaf-file-name="sensor_controller.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="374">
+              <caret line="32" column="33" lean-forward="false" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".nojekyll" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/build/html/.nojekyll">
+      <file leaf-file-name="actor_controller.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/controller/actor_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="make.bat" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/make.bat">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="453">
+              <caret line="72" column="32" lean-forward="false" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -328,7 +291,6 @@
         <option value="$PROJECT_DIR$/core/api/property.py" />
         <option value="$PROJECT_DIR$/core/api/decorator.py" />
         <option value="$PROJECT_DIR$/core/api/__init__.py" />
-        <option value="$PROJECT_DIR$/core/extension/dummy/__init__.py" />
         <option value="$PROJECT_DIR$/core/extension/comp/__init__.py" />
         <option value="$PROJECT_DIR$/docs/source/index.rst" />
         <option value="$PROJECT_DIR$/core/http_endpoints/http_api.py" />
@@ -337,6 +299,9 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/docs_src/Makefile" />
         <option value="$PROJECT_DIR$/docs_src/copy_docs.sh" />
+        <option value="$PROJECT_DIR$/docs_src/source/sensor.rst" />
+        <option value="$PROJECT_DIR$/docs_src/source/actor.rst" />
+        <option value="$PROJECT_DIR$/core/extension/dummy/__init__.py" />
       </list>
     </option>
   </component>
@@ -388,7 +353,119 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="docs" />
+              <option name="myItemId" value="docs_src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs_src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs_src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="build" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dummy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="comp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -453,6 +530,10 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs_src/source" />
+      <recent name="$PROJECT_DIR$/docs_src/source/_images" />
+      <recent name="$PROJECT_DIR$/docs_src/source/nstatic" />
+      <recent name="$PROJECT_DIR$/docs_src" />
       <recent name="$PROJECT_DIR$/core/controller" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -797,16 +878,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="35" width="1680" height="923" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39166668" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286945" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1797619" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26112413" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286945" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36065573" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39166668" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1797619" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32786885" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24957556" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36065573" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39905858" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -815,7 +898,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280318" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -846,63 +928,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/aioenv/lib/python3.6/site-packages/aiojobs/aiohttp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="27" column="44" lean-forward="false" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/Cellar/python3/3.6.1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/eventlet/greenpool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="72" column="36" lean-forward="true" selection-start-line="72" selection-start-column="36" selection-end-line="72" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/aioenv/lib/python3.6/site-packages/aiojobs/_scheduler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-347">
-          <caret line="69" column="14" lean-forward="false" selection-start-line="69" selection-start-column="14" selection-end-line="69" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="168" column="54" lean-forward="false" selection-start-line="168" selection-start-column="20" selection-end-line="168" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/fermentation_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/aioenv/lib/python3.6/site-packages/aiosqlite/core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="279" column="8" lean-forward="false" selection-start-line="279" selection-start-column="8" selection-end-line="279" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/aioenv/lib/python3.6/site-packages/aiosqlite/context.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2017.1/python_stubs/1865081991/_sqlite3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="942" column="6" lean-forward="false" selection-start-line="942" selection-start-column="6" selection-end-line="942" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/aioenv/lib/python3.6/site-packages/aiosqlite/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -915,6 +940,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="638">
           <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1541452615405" expanded="true" signature="1476:1509" ph="SELECT * FRO... missing_value" />
+            <marker date="1541452615405" expanded="true" signature="1613:1627" ph="SELECT * FRO... missing_value" />
+            <marker date="1541452615405" expanded="true" signature="2266:2295" ph="SELECT * FRO... missing_value" />
+            <marker date="1541452615405" expanded="true" signature="2664:2691" ph="DELETE FROM " />
+            <marker date="1541452615405" expanded="true" signature="2992:3030" ph="INSERT INTO missing_value... " />
+            <marker date="1541452615405" expanded="true" signature="3622:3653" ph="INSERT INTO missing_value... " />
+            <marker date="1541452615405" expanded="true" signature="4403:4432" ph="UPDATE missi... " />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -985,6 +1020,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1009,6 +1047,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1058,31 +1097,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/extension/comp/config.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/dummy/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="36" lean-forward="false" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/dummy/config.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1132,24 +1147,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/actor_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-349">
-          <caret line="72" column="32" lean-forward="false" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#23#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="32" column="33" lean-forward="false" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/craftbeerpi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
@@ -1190,7 +1187,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/make.bat">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/build/html/.nojekyll">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1206,10 +1211,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/docs_src/make.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1222,11 +1227,131 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/build/html/.nojekyll">
+    <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/picture.jpeg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/build/html/_static/picture.jpeg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/build/html/actor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1542400277125" expanded="true" signature="12985:13001" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="12985:13006" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="12985:13012" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="12985:13019" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="12985:13514" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="12985:13527" ph="..." />
+            <marker date="1542400277125" expanded="false" signature="13048:13061" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="13076:13426" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="13136:13419" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="13196:13408" ph="..." />
+            <marker date="1542400277125" expanded="true" signature="13597:13902" ph="..." />
+            <marker date="1542400277125" expanded="false" signature="13605:13611" ph="©" />
+            <marker date="1542400277125" expanded="false" signature="13721:13726" ph="&amp;" />
+            <marker date="1542400277125" expanded="true" signature="13851:13891" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/build/html/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1542400277145" expanded="true" signature="11957:11973" ph="..." />
+            <marker date="1542400277145" expanded="true" signature="11957:11978" ph="..." />
+            <marker date="1542400277145" expanded="true" signature="11957:11984" ph="..." />
+            <marker date="1542400277145" expanded="true" signature="11957:11991" ph="..." />
+            <marker date="1542400277145" expanded="false" signature="12020:12033" ph="..." />
+            <marker date="1542400277145" expanded="true" signature="12048:12398" ph="..." />
+            <marker date="1542400277145" expanded="true" signature="12108:12391" ph="..." />
+            <marker date="1542400277145" expanded="true" signature="12168:12380" ph="..." />
+            <marker date="1542400277145" expanded="true" signature="12569:12874" ph="..." />
+            <marker date="1542400277145" expanded="false" signature="12577:12583" ph="©" />
+            <marker date="1542400277145" expanded="false" signature="12693:12698" ph="&amp;" />
+            <marker date="1542400277145" expanded="true" signature="12823:12863" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="32" column="33" lean-forward="false" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/actor_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="72" column="32" lean-forward="false" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/sensor.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/extension/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/extension/dummy/config.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/extension/dummy/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="54" column="31" lean-forward="false" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1238,10 +1363,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
+    <entry file="file://$PROJECT_DIR$/docs_src/source/conf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="147">
+          <caret line="74" column="11" lean-forward="false" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="11" />
           <folding />
         </state>
       </provider>

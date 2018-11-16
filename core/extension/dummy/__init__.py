@@ -4,7 +4,7 @@ from core.api import CBPiActor, Property, action, background_task
 
 
 
-class MyActor(CBPiActor):
+class CustomActor(CBPiActor):
 
     name = Property.Number(label="Test")
     name1 = Property.Text(label="Test")
@@ -48,4 +48,12 @@ class MyActor(CBPiActor):
 
 def setup(cbpi):
 
-    cbpi.plugin.register("MyActor", MyActor)
+    '''
+    This method is called by the server during startup 
+    Here you need to register your plugins at the server
+    
+    :param cbpi: the cbpi core 
+    :return: 
+    '''
+
+    cbpi.plugin.register("CustomActor", CustomActor)
