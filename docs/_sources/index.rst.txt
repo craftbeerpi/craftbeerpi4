@@ -12,7 +12,6 @@ Welcome to CraftBeerPi's documentation!
 
    actor
    sensor
-   step
 
 
 
