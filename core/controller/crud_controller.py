@@ -39,27 +39,38 @@ class CRUDController(object):
         self.cache[m.id] = m
         return m
 
-    async def _pre_update_callback(self, id):
+    async def _pre_update_callback(self, m):
         pass
 
     async def _post_update_callback(self, m):
         pass
 
-    async def update(self, id, **data):
-
-        await self._pre_update_callback(id)
+    async def update(self, id, data):
+        id = int(id)
         data["id"] = id
+
         try:
+            ### DELETE INSTANCE BEFORE UPDATE
             del data["instance"]
         except:
             pass
-        m = await self.model.update(**data)
-        #self.cbpi.push_ws("UPDATE_%s" % self.key, m)
 
-        await self._post_update_callback(m)
         if self.caching is True:
-            self.cache[m.id] = m
+            await self._pre_update_callback(self.cache[id])
+            self.cache[id].__dict__.update(**data)
+            m = await self.model.update(**self.cache[id].__dict__)
+            await self._post_update_callback(m)
+        else:
+            m = await self.model.update(**data)
+
         return m
+
+
+
+
+
+
+
 
     async def _pre_delete_callback(self, m):
         pass

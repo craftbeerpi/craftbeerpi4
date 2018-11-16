@@ -1,3 +1,5 @@
+__all__ = ["CBPiExtension"]
+
 import logging
 import os
 
@@ -10,8 +12,6 @@ logging.basicConfig(level=logging.INFO)
 class CBPiExtension():
 
     def load_config(self):
-
-
         path = os.path.dirname(sys.modules[self.__class__.__module__].__file__)
         try:
             return load("%s/config.yaml" % path)

@@ -1,3 +1,5 @@
+__all__ = ["request_mapping", "on_startup", "on_event", "on_mqtt_message", "on_websocket_message", "action", "background_task"]
+
 from aiohttp_auth import auth
 
 def composed(*decs):

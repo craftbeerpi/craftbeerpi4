@@ -1,3 +1,4 @@
+__all__ = ["CBPiActor"]
 
 import logging
 
@@ -8,7 +9,8 @@ logger = logging.getLogger(__file__)
 class CBPiActor(CBPiExtension):
 
     def __init__(self, cbpi):
-        self.id = "";
+        self.id = ""
+        self.state = None
         self.name = ""
 
     def on(self, power):

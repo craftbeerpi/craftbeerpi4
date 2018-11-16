@@ -7,7 +7,9 @@ import aiohttp
 import yaml
 from aiohttp import web
 
+from core.api.actor import CBPiActor
 from core.api.decorator import request_mapping
+from core.api.extension import CBPiExtension
 from core.api.property import Property
 from core.utils.utils import load_config, json_dumps
 
@@ -17,9 +19,9 @@ logging.basicConfig(level=logging.INFO)
 class PluginController():
 
     modules = {}
+    types = {}
 
     def __init__(self, cbpi):
-
         self.cbpi = cbpi
         self.cbpi.register(self, "/plugin")
 
@@ -33,7 +35,6 @@ class PluginController():
                     data = yaml.load(await resp.text())
                     return data
 
-    @classmethod
     async def load_plugins(self):
 
         for filename in os.listdir("./core/extension"):
@@ -50,6 +51,7 @@ class PluginController():
                 if(data.get("version") == 4):
 
                     self.modules[filename] = import_module("core.extension.%s" % (filename))
+                    self.modules[filename].setup(self.cbpi)
                     logger.info("Plugin %s loaded successful" % filename)
                 else:
                     logger.warning("Plguin %s is not supporting version 4" % filename)
@@ -63,11 +65,11 @@ class PluginController():
     async def get_plugins(self, request):
         """
             ---
-            description: This end-point allow to test that service is up.
+            description: Get a list of avialable plugins
             tags:
-            - Health check
+            - Plugin
             produces:
-            - text/plain
+            - application/json
             responses:
                 "200":
                     description: successful operation. Return "pong" text
@@ -85,8 +87,13 @@ class PluginController():
         :param clazz: actor class
         :return: None
         '''
-        self._parse_props(clazz)
-        self.types[name] = clazz
+
+        if issubclass(clazz, CBPiActor):
+            self.cbpi.actor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
+
+        if issubclass(clazz, CBPiExtension):
+            self.c  = clazz(self.cbpi)
+
 
     def _parse_props(self, cls):
 

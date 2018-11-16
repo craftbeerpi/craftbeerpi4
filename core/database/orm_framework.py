@@ -1,7 +1,7 @@
 import json
 
 import aiosqlite
-
+import os
 # Thats the name of the database file
 TEST_DB = "./craftbeerpi.db"
 
@@ -15,20 +15,23 @@ class DBModel(object):
 
     def __init__(self, args):
 
+
+
         self.__setattr__(self.__priamry_key__, args[self.__priamry_key__])
         for f in self.__fields__:
+
             if f in self.__json_fields__:
-                if args[f] is not None:
+                if args.get(f) is not None:
 
                     if isinstance(args[f], dict) or isinstance(args[f], list):
-                        self.__setattr__(f, args[f])
+                        self.__setattr__(f, args.get(f))
                     else:
-                        self.__setattr__(f, json.loads(args[f]))
+                        self.__setattr__(f, json.loads(args.get(f, "{}")))
                 else:
                     self.__setattr__(f, None)
             else:
 
-                self.__setattr__(f, args[f])
+                self.__setattr__(f, args.get(f))
 
     @classmethod
     async def test_connection(self):
@@ -37,7 +40,10 @@ class DBModel(object):
         async with aiosqlite.connect(TEST_DB) as db:
 
             assert isinstance(db, aiosqlite.Connection)
-            qry = open('./core/sql/create_table_user.sql', 'r').read()
+            this_directory = os.path.dirname(__file__)
+
+
+            qry = open(os.path.join(this_directory, '../sql/create_table_user.sql'), 'r').read()
             cursor = await db.executescript(qry)
 
     @classmethod
@@ -54,13 +60,14 @@ class DBModel(object):
             else:
                 sql = "SELECT * FROM %s" % cls.__table_name__
 
-            db.row_factory = aiosqlite.Row
+            db.row_factory = DBModel.dict_factory
             async with db.execute(sql) as cursor:
                 async for row in cursor:
+
                     if cls.__as_array__ is True:
                         result.append(cls(row))
                     else:
-                        result[row[0]] = cls(row)
+                        result[row.get("id")] = cls(row)
                 await cursor.close()
 
         return result
@@ -69,6 +76,7 @@ class DBModel(object):
     async def get_one(cls, id):
         async with aiosqlite.connect(TEST_DB) as db:
             db.row_factory = aiosqlite.Row
+            db.row_factory = DBModel.dict_factory
             async with db.execute("SELECT * FROM %s WHERE %s = ?" % (cls.__table_name__, cls.__priamry_key__), (id,)) as cursor:
                 row = await cursor.fetchone()
                 if row is not None:
@@ -139,4 +147,10 @@ class DBModel(object):
             await db.commit()
             return cls(kwargs)
 
+    @classmethod
+    def dict_factory(cls, cursor, row):
+        d = {}
+        for idx, col in enumerate(cursor.description):
+            d[col[0]] = row[idx]
+        return d
 

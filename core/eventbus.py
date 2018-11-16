@@ -60,12 +60,13 @@ class EventBus(object):
         self._root = self.Node()
         self.docs = {}
 
-    def fire(self, event: str, **kwargs) -> None:
-        self.logger.info("EMIT EVENT %s", event)
-        for methods in self.iter_match(event):
+    def fire(self, topic: str, **kwargs) -> None:
+
+        self.logger.info("EMIT EVENT %s", topic)
+        for methods in self.iter_match(topic):
             for f in methods:
 
-                f(**kwargs)
+                f(**kwargs, topic = topic)
 
     def iter_match(self, topic):
 

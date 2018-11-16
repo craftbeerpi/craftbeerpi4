@@ -1,8 +1,7 @@
 import logging
 
-from core.api.actor import CBPiActor
-from core.api.decorator import action, background_task
-from core.api.property import Property
+from core.api import CBPiActor, Property, action, background_task
+
 
 
 class MyActor(CBPiActor):
@@ -23,16 +22,21 @@ class MyActor(CBPiActor):
         super().state()
 
     def off(self):
-        super().off()
+        print("OFF")
+        self.state = False
 
     def on(self, power=100):
-        super().on(power)
 
-    def __init__(self,cbpi=None):
+        print("ON")
+        self.state = True
+
+
+    def __init__(self, cbpi=None):
 
         if cbpi is None:
             return
 
+        print("INIT MY ACTOR111111")
         self.cfg = self.load_config()
 
         self.logger = logging.getLogger(__file__)
@@ -44,4 +48,4 @@ class MyActor(CBPiActor):
 
 def setup(cbpi):
 
-    cbpi.actor.register("MyActor", MyActor)
+    cbpi.plugin.register("MyActor", MyActor)

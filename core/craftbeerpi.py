@@ -1,6 +1,7 @@
 import asyncio
 import logging
 from os import urandom
+import os
 
 import yaml
 from aiohttp import web
@@ -11,6 +12,7 @@ from aiohttp_swagger import setup_swagger
 from aiojobs.aiohttp import setup, get_scheduler_from_app
 
 from core.controller.actor_controller import ActorController
+from core.controller.notification_controller import NotificationController
 from core.controller.plugin_controller import PluginController
 from core.controller.sensor_controller import SensorController
 from core.controller.system_controller import SystemController
@@ -24,10 +26,19 @@ logger = logging.getLogger(__file__)
 logging.basicConfig(level=logging.INFO)
 
 
+"""
+This is a module docstring
+"""
+
 class CraftBeerPi():
+    """
+    This is a Hello class docstring
+    """
 
     def __init__(self):
-        self.config = load_config("./config/config.yaml")
+        this_directory = os.path.dirname(__file__)
+
+        self.config = load_config(os.path.join(this_directory, '../config/config.yaml'))
 
         logger.info("Init CraftBeerPI")
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
@@ -42,8 +53,10 @@ class CraftBeerPi():
         self.sensor = SensorController(self)
         self.plugin = PluginController(self)
         self.system = SystemController(self)
+        self.notification = NotificationController(self)
 
         self.login = Login(self)
+
 
     def register_events(self, obj):
 
@@ -56,12 +69,18 @@ class CraftBeerPi():
             self.bus.register(method.__getattribute__("topic"), method, doc)
 
     def register_background_task(self, obj):
-
+        '''
+        This method parses all method for the @background_task decorator and registers the background job
+        which will be launched during start up of the server
+        
+        :param obj: the object to parse
+        :return: 
+        '''
 
         async def job_loop(app, name, interval, method):
             logger.info("Start Background Task %s Interval %s Method %s" % (name, interval, method))
             while True:
-                logger.info("Execute Task %s - interval(%s second(s)" % (name, interval))
+                logger.debug("Execute Task %s - interval(%s second(s)" % (name, interval))
                 await asyncio.sleep(interval)
                 await method()
 
@@ -94,20 +113,35 @@ class CraftBeerPi():
         for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "ws")]:
             self.ws.add_callback(method, method.__getattribute__("key"))
 
-    def register(self, obj, subapp=None):
-        self.register_http_endpoints(obj, subapp)
+    def register(self, obj, url_prefix=None):
+
+        '''
+        This method parses the provided object
+        
+        :param obj: the object wich will be parsed for registration 
+        :param url_prefix: that prefix for HTTP Endpoints
+        :return: None
+        '''
+        self.register_http_endpoints(obj, url_prefix)
         self.register_events(obj)
         self.register_ws(obj)
         self.register_background_task(obj)
         self.register_on_startup(obj)
 
-    def register_http_endpoints(self, obj, subapp=None):
+    def register_http_endpoints(self, obj, url_prefix=None):
+        '''
+        This method parses the provided object for @request_mapping decorator
+        
+        :param obj: the object which will be analyzed 
+        :param url_prefix: the prefix which will be used for the all http endpoints of the object
+        :return: 
+        '''
         routes = []
         for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "route")]:
             http_method = method.__getattribute__("method")
             path = method.__getattribute__("path")
             class_name = method.__self__.__class__.__name__
-            logger.info("Register Endpoint : %s.%s %s %s%s " % (class_name, method.__name__, http_method, subapp, path))
+            logger.info("Register Endpoint : %s.%s %s %s%s " % (class_name, method.__name__, http_method, url_prefix, path))
 
             def add_post():
                 routes.append(web.post(method.__getattribute__("path"), method))
@@ -130,15 +164,19 @@ class CraftBeerPi():
 
             switcher[http_method]()
 
-        if subapp is not None:
+        if url_prefix is not None:
             sub = web.Application()
             sub.add_routes(routes)
-            self.app.add_subapp(subapp, sub)
+            self.app.add_subapp(url_prefix, sub)
         else:
             self.app.add_routes(routes)
 
     def _swagger_setup(self):
-
+        '''
+        Internatl method to expose REST API documentation by swagger
+        
+        :return: 
+        '''
         long_description = """
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula, metus et sodales fringilla, purus leo aliquet odio, non tempor ante urna aliquet nibh. Integer accumsan laoreet tincidunt. Vestibulum semper vehicula sollicitudin. Suspendisse dapibus neque vitae mattis bibendum. Morbi eu pulvinar turpis, quis malesuada ex. Vestibulum sed maximus diam. Proin semper fermentum suscipit. Duis at suscipit diam. Integer in augue elementum, auctor orci ac, elementum est. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas condimentum id arcu quis volutpat. Vestibulum sit amet nibh sodales, iaculis nibh eget, scelerisque justo.
 
@@ -151,9 +189,26 @@ class CraftBeerPi():
                       api_version=self.config.get("version", ""),
                       contact="info@craftbeerpi.com")
 
+    def notify(self, key, message, type="info"):
+        '''
+        This is a convinience method to send notification to the client
+        
+        :param key: notification key
+        :param message: notification message
+        :param type: notification type (info,warning,danger,successs)
+        :return: 
+        '''
+        self.bus.fire(topic="notification/1", key=key, message=message, type=type)
 
 
-    def start(self):
+    def setup(self):
+        '''
+        This method will start the server
+        
+        :return: 
+        '''
+
+        print("INIT CONTROLLER")
 
         from pyfiglet import Figlet
         f = Figlet(font='big')
@@ -167,7 +222,7 @@ class CraftBeerPi():
 
         async def load_plugins(app):
             await PluginController.load_plugin_list()
-            await PluginController.load_plugins()
+            await self.plugin.load_plugins()
 
         async def call_initializer(app):
 
@@ -180,7 +235,11 @@ class CraftBeerPi():
 
         self.app.on_startup.append(init_database)
         self.app.on_startup.append(call_initializer)
-        self.app.on_startup.append(init_controller)
+
         self.app.on_startup.append(load_plugins)
+        self.app.on_startup.append(init_controller)
+
         self._swagger_setup()
+
+    def start(self):
         web.run_app(self.app, port=self.config.get("port", 8080))

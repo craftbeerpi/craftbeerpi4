@@ -1,3 +1,5 @@
+__all__ = ["PropertyType", "Property"]
+
 class PropertyType(object):
     pass
 

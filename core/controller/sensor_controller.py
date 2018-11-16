@@ -1,4 +1,5 @@
 import logging
+import os
 from logging.handlers import TimedRotatingFileHandler
 
 from core.api.decorator import background_task
@@ -17,7 +18,11 @@ class SensorController(CRUDController, HttpAPI):
         self.service = self
 
         self.sensors = {"S1": "S1", "S2": "S2"}
-        handler = TimedRotatingFileHandler("./logs/first_logfile2.log", when="m", interval=1, backupCount=5)
+
+        this_directory = os.path.dirname(__file__)
+        # __file__ is the absolute path to the current python file.
+
+        handler = TimedRotatingFileHandler(os.path.join(this_directory, '../../logger.conf'), when="m", interval=1, backupCount=5)
         #handler = RotatingFileHandler("first_logfile.log", mode='a', maxBytes=300, backupCount=2, encoding=None, delay=0)
         formatter = logging.Formatter('%(asctime)s,%(sensor)s,%(message)s')
         handler.setFormatter(formatter)
@@ -30,9 +35,7 @@ class SensorController(CRUDController, HttpAPI):
     async def pre_get_one(self, id):
         pass
 
-    @background_task(name="test2", interval=0.1)
-    async def hallo2(self):
-        print("WOOHOO")
+
 
     @background_task(name="test", interval=1)
     async def hallo(self):

@@ -15,6 +15,15 @@ class WebSocket:
         self.logger = logging.getLogger(__name__)
         self.cbpi.app.add_routes([web.get('/ws', self.websocket_handler)])
 
+    def send(self, data):
+
+        for ws in self._clients:
+
+            async def send_data(ws, data):
+                await ws.send_str(data)
+            self.cbpi.app.loop.create_task(send_data(ws, data))
+
+
     def add_callback(self, func: Callable, event: str) -> None:
         self._callbacks[event].add(func)
 
@@ -60,7 +69,7 @@ class WebSocket:
 
         return ws
 
-
+'''
 async def websocket_handler(request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
@@ -85,3 +94,4 @@ async def websocket_handler(request):
     print('websocket connection closed')
 
     return ws
+'''

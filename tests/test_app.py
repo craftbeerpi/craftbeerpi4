@@ -10,29 +10,35 @@ class MyAppTestCase(AioHTTPTestCase):
 
     async def get_application(self):
         self.cbpi = CraftBeerPi()
+        self.cbpi.setup()
         return self.cbpi.app
 
 
     @unittest_run_loop
     async def test_example(self):
 
-        #resp = await self.client.request("GET", "/actor/1/on")
-        #print(resp.status)
-        #assert resp.status == 204
-        for i in range(1000):
-            resp = await self.client.request("GET", "/actor/hallo")
+        resp = await self.client.request("GET", "/actor/1/on")
 
-            assert resp.status == 200
+        assert resp.status == 204
+        i = await self.cbpi.actor.get_one(1)
+        assert i.instance.state is True
 
-        #text = await resp.json()
-        #pprint(text)
-        '''
-        resp = await self.client.request("GET", "/actor/2")
-        print(resp.status)
-        assert resp.status == 200
-        text = await resp.json()
-        pprint(text)
-        '''
+        resp = await self.client.request("GET", "/actor/1/off")
+        assert resp.status == 204
+        i = await self.cbpi.actor.get_one(1)
+        assert i.instance.state is False
+
+        resp = await self.client.request("GET", "/actor/1/toggle")
+
+        assert resp.status == 204
+        i = await self.cbpi.actor.get_one(1)
+        assert i.instance.state is True
+
+        resp = await self.client.request("GET", "/actor/1/toggle")
+        assert resp.status == 204
+        i = await self.cbpi.actor.get_one(1)
+        assert i.instance.state is False
+
         #ws =  await self.client.ws_connect("/ws");
         #await ws.send_str(json.dumps({"key": "test"}))
 
