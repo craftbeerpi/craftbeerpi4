@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/copy_docs.sh" afterPath="$PROJECT_DIR$/docs_src/copy_docs.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/index.rst" afterPath="$PROJECT_DIR$/docs_src/source/index.rst" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -73,11 +73,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.rst" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="150">
+              <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -99,49 +99,19 @@
             <state relative-caret-position="-560">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <marker date="1542401714975" expanded="true" signature="2526:2703" ph="..." />
-                <marker date="1542401714975" expanded="true" signature="2555:2696" ph="..." />
-                <marker date="1542401714975" expanded="true" signature="2562:2690" ph="..." />
-                <marker date="1542401714975" expanded="true" signature="2604:2685" ph="..." />
-                <marker date="1542401714975" expanded="false" signature="2732:2745" ph="..." />
-                <marker date="1542401714975" expanded="true" signature="2760:3110" ph="..." />
-                <marker date="1542401714975" expanded="true" signature="2820:3103" ph="..." />
-                <marker date="1542401714975" expanded="true" signature="2880:3092" ph="..." />
-                <marker date="1542401714975" expanded="true" signature="3281:3586" ph="..." />
-                <marker date="1542401714975" expanded="false" signature="3289:3295" ph="©" />
-                <marker date="1542401714975" expanded="false" signature="3405:3410" ph="&amp;" />
-                <marker date="1542401714975" expanded="true" signature="3535:3575" ph="..." />
+                <marker date="1542401827340" expanded="true" signature="2526:2703" ph="..." />
+                <marker date="1542401827340" expanded="true" signature="2555:2696" ph="..." />
+                <marker date="1542401827340" expanded="true" signature="2562:2690" ph="..." />
+                <marker date="1542401827340" expanded="true" signature="2604:2685" ph="..." />
+                <marker date="1542401827340" expanded="false" signature="2732:2745" ph="..." />
+                <marker date="1542401827340" expanded="true" signature="2760:3110" ph="..." />
+                <marker date="1542401827340" expanded="true" signature="2820:3103" ph="..." />
+                <marker date="1542401827340" expanded="true" signature="2880:3092" ph="..." />
+                <marker date="1542401827340" expanded="true" signature="3281:3586" ph="..." />
+                <marker date="1542401827340" expanded="false" signature="3289:3295" ph="©" />
+                <marker date="1542401827340" expanded="false" signature="3405:3410" ph="&amp;" />
+                <marker date="1542401827340" expanded="true" signature="3535:3575" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/Makefile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="16" lean-forward="false" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="conf.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/conf.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="74" column="11" lean-forward="false" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -181,11 +151,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="copy_docs.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="copy_docs.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs_src/copy_docs.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
               <caret line="5" column="21" lean-forward="false" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="actor.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="step.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/step.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="core.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/core.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -296,9 +296,10 @@
         <option value="$PROJECT_DIR$/docs_src/source/actor.rst" />
         <option value="$PROJECT_DIR$/core/extension/dummy/__init__.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/docs_src/source/index.rst" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/docs_src/copy_docs.sh" />
+        <option value="$PROJECT_DIR$/docs_src/source/core.rst" />
+        <option value="$PROJECT_DIR$/docs_src/source/index.rst" />
       </list>
     </option>
   </component>
@@ -454,6 +455,7 @@
       <recent name="$PROJECT_DIR$/core/controller" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs_src/source" />
       <recent name="$PROJECT_DIR$/docs/build/html" />
       <recent name="$PROJECT_DIR$/docs" />
       <recent name="$PROJECT_DIR$/core/extension/comp" />
@@ -845,21 +847,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/controller/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/crud_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-629">
-          <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/websocket.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
@@ -1149,14 +1136,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/extension/dummy/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
@@ -1230,27 +1209,19 @@
         <state relative-caret-position="-560">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1542401714975" expanded="true" signature="2526:2703" ph="..." />
-            <marker date="1542401714975" expanded="true" signature="2555:2696" ph="..." />
-            <marker date="1542401714975" expanded="true" signature="2562:2690" ph="..." />
-            <marker date="1542401714975" expanded="true" signature="2604:2685" ph="..." />
-            <marker date="1542401714975" expanded="false" signature="2732:2745" ph="..." />
-            <marker date="1542401714975" expanded="true" signature="2760:3110" ph="..." />
-            <marker date="1542401714975" expanded="true" signature="2820:3103" ph="..." />
-            <marker date="1542401714975" expanded="true" signature="2880:3092" ph="..." />
-            <marker date="1542401714975" expanded="true" signature="3281:3586" ph="..." />
-            <marker date="1542401714975" expanded="false" signature="3289:3295" ph="©" />
-            <marker date="1542401714975" expanded="false" signature="3405:3410" ph="&amp;" />
-            <marker date="1542401714975" expanded="true" signature="3535:3575" ph="..." />
+            <marker date="1542401827340" expanded="true" signature="2526:2703" ph="..." />
+            <marker date="1542401827340" expanded="true" signature="2555:2696" ph="..." />
+            <marker date="1542401827340" expanded="true" signature="2562:2690" ph="..." />
+            <marker date="1542401827340" expanded="true" signature="2604:2685" ph="..." />
+            <marker date="1542401827340" expanded="false" signature="2732:2745" ph="..." />
+            <marker date="1542401827340" expanded="true" signature="2760:3110" ph="..." />
+            <marker date="1542401827340" expanded="true" signature="2820:3103" ph="..." />
+            <marker date="1542401827340" expanded="true" signature="2880:3092" ph="..." />
+            <marker date="1542401827340" expanded="true" signature="3281:3586" ph="..." />
+            <marker date="1542401827340" expanded="false" signature="3289:3295" ph="©" />
+            <marker date="1542401827340" expanded="false" signature="3405:3410" ph="&amp;" />
+            <marker date="1542401827340" expanded="true" signature="3535:3575" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1277,6 +1248,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="21" lean-forward="false" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/step.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/core.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
           <folding />
         </state>
       </provider>
