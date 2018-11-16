@@ -6,27 +6,6 @@
 Welcome to CraftBeerPi's documentation!
 =======================================
 
-Documentation
-^^^^^^^^^^^^^
-
-.. automodule:: core.craftbeerpi
-  :members:
-
-.. automodule:: core.controller.notification_controller
-  :members:
-
-Example Component
-^^^^^^^^^^^^^^^^^
-
-.. literalinclude:: ../../core/extension/comp/__init__.py
-   :language: python
-
-
-Config YAML
-^^^^^^^^^^^
-
-.. literalinclude:: ../../core/extension/comp/config.yaml
-   :language: yaml
 
 .. toctree::
    :maxdepth: 1

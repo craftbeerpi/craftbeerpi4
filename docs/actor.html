@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Actor API &#8212; CraftBeerPi 4.0 documentation</title>
+    <title>Actor &#8212; CraftBeerPi 4.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,7 +16,7 @@
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Sensor API" href="sensor.html" />
+    <link rel="next" title="Sensor" href="sensor.html" />
     <link rel="prev" title="Welcome to CraftBeerPi’s documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -34,12 +34,15 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="actor-api">
-<h1>Actor API<a class="headerlink" href="#actor-api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="test">
-<h2>Test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
-<p>HELLO WORLD</p>
-<span class="target" id="module-core.controller.actor_controller"></span><dl class="class">
+  <div class="section" id="actor">
+<h1>Actor<a class="headerlink" href="#actor" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/picture.jpeg"><img alt="_images/picture.jpeg" src="_images/picture.jpeg" style="width: 512.0px; height: 326.5px;" /></a>
+</div>
+<div class="section" id="module-core.controller.actor_controller">
+<span id="actorcontroller"></span><h2>ActorController<a class="headerlink" href="#module-core.controller.actor_controller" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
 <dt id="core.controller.actor_controller.ActorController">
 <em class="property">class </em><code class="descclassname">core.controller.actor_controller.</code><code class="descname">ActorController</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.actor_controller.ActorController" title="Permalink to this definition">¶</a></dt>
 <dd><p>The main actor controller</p>
@@ -86,6 +89,137 @@
 </dd></dl>
 
 </div>
+<div class="section" id="custom-actor">
+<h2>Custom Actor<a class="headerlink" href="#custom-actor" title="Permalink to this headline">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="init-py">
+<div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#init-py" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">core.api</span> <span class="kn">import</span> <span class="n">CBPiActor</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">background_task</span>
+
+
+
+<span class="k">class</span> <span class="nc">CustomActor</span><span class="p">(</span><span class="n">CBPiActor</span><span class="p">):</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+    <span class="n">name1</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+    <span class="n">name2</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Kettle</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+
+    <span class="nd">@background_task</span><span class="p">(</span><span class="s2">&quot;s1&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">bg_job</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;WOOH BG&quot;</span><span class="p">)</span>
+
+    <span class="nd">@action</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{})</span>
+    <span class="k">def</span> <span class="nf">myAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;OFF&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;ON&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">True</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cbpi</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">cbpi</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;INIT MY ACTOR111111&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_config</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;########WOOHOO MY ACTOR&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cbpi</span> <span class="o">=</span> <span class="n">cbpi</span>
+
+
+<span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cbpi</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This method is called by the server during startup </span>
+<span class="sd">    Here you need to register your plugins at the server</span>
+<span class="sd">    </span>
+<span class="sd">    :param cbpi: the cbpi core </span>
+<span class="sd">    :return: </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">cbpi</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;CustomActor&quot;</span><span class="p">,</span> <span class="n">CustomActor</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>config.yaml</p>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Manuel</span>
+<span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4</span>
+</pre></div>
+</td></tr></table></div>
+</div>
 </div>
 
 
@@ -106,8 +240,8 @@
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Actor API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sensor.html">Sensor API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Actor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor.html">Sensor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="step.html">Step API</a></li>
 </ul>
 
@@ -116,7 +250,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">Welcome to CraftBeerPi’s documentation!</a></li>
-      <li>Next: <a href="sensor.html" title="next chapter">Sensor API</a></li>
+      <li>Next: <a href="sensor.html" title="next chapter">Sensor</a></li>
   </ul></li>
 </ul>
 </div>
