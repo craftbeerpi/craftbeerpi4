@@ -2,53 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/api/kettle_logic.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/extension/dummylogic/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/extension/dummylogic/config.yaml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/extension/dummysensor/config.yaml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/job/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/job/_scheduler.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs_src/source/install.rst" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/alabaster.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/custom.css" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/extension/dummy/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/extension/dummy/config.yaml" afterPath="$PROJECT_DIR$/core/extension/dummyactor/config.yaml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-18_14-05" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-18_14-07" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-18_14-10" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-18_14-11" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logger.conf.2018-11-18_14-12" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/craftbeerpi.db" afterPath="$PROJECT_DIR$/craftbeerpi.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/objects.inv" afterPath="$PROJECT_DIR$/docs/objects.inv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/craftbeerpi4.iml" afterPath="$PROJECT_DIR$/.idea/craftbeerpi4.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/actor.py" afterPath="$PROJECT_DIR$/core/api/actor.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/extension.py" afterPath="$PROJECT_DIR$/core/api/extension.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/sensor.py" afterPath="$PROJECT_DIR$/core/api/sensor.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/kettle_logic.py" afterPath="$PROJECT_DIR$/core/api/kettle_logic.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/actor_controller.py" afterPath="$PROJECT_DIR$/core/controller/actor_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/crud_controller.py" afterPath="$PROJECT_DIR$/core/controller/crud_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/plugin_controller.py" afterPath="$PROJECT_DIR$/core/controller/plugin_controller.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/kettle_controller.py" afterPath="$PROJECT_DIR$/core/controller/kettle_controller.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/sensor_controller.py" afterPath="$PROJECT_DIR$/core/controller/sensor_controller.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/system_controller.py" afterPath="$PROJECT_DIR$/core/controller/system_controller.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/craftbeerpi.py" afterPath="$PROJECT_DIR$/core/craftbeerpi.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/database/model.py" afterPath="$PROJECT_DIR$/core/database/model.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/http_endpoints/http_api.py" afterPath="$PROJECT_DIR$/core/http_endpoints/http_api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/utils/utils.py" afterPath="$PROJECT_DIR$/core/utils/utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/.buildinfo" afterPath="$PROJECT_DIR$/docs/.buildinfo" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_sources/actor.rst.txt" afterPath="$PROJECT_DIR$/docs/_sources/actor.rst.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_sources/index.rst.txt" afterPath="$PROJECT_DIR$/docs/_sources/index.rst.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_static/pygments.css" afterPath="$PROJECT_DIR$/docs/_static/pygments.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/actor.html" afterPath="$PROJECT_DIR$/docs/actor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core.html" afterPath="$PROJECT_DIR$/docs/core.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/genindex.html" afterPath="$PROJECT_DIR$/docs/genindex.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/py-modindex.html" afterPath="$PROJECT_DIR$/docs/py-modindex.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/search.html" afterPath="$PROJECT_DIR$/docs/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/searchindex.js" afterPath="$PROJECT_DIR$/docs/searchindex.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/sensor.html" afterPath="$PROJECT_DIR$/docs/sensor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/step.html" afterPath="$PROJECT_DIR$/docs/step.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/actor.rst" afterPath="$PROJECT_DIR$/docs_src/source/actor.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/conf.py" afterPath="$PROJECT_DIR$/docs_src/source/conf.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/index.rst" afterPath="$PROJECT_DIR$/docs_src/source/index.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_app.py" afterPath="$PROJECT_DIR$/tests/test_app.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/eventbus.py" afterPath="$PROJECT_DIR$/core/eventbus.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/comp/__init__.py" afterPath="$PROJECT_DIR$/core/extension/comp/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummylogic/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummylogic/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logger.conf" afterPath="$PROJECT_DIR$/logger.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_kettle.py" afterPath="$PROJECT_DIR$/tests/test_kettle.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,8 +34,8 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/craftbeerpi4$py_test_in_tests.coverage" NAME="py.test in tests Coverage Results" MODIFIED="1542544313367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test_app.coverage" NAME="test_app Coverage Results" MODIFIED="1542463852422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1542546607951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/craftbeerpi4$test_kettle.coverage" NAME="test kettle Coverage Results" MODIFIED="1542545100193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1542578892294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$test_kettle.coverage" NAME="test kettle Coverage Results" MODIFIED="1542557240768" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -109,6 +83,24 @@
         <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
+        <option name="myItemId" value="kettle" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="craftbeerpi.db" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="main" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
         <option name="myItemId" value="actor" />
         <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
       </PATH_ELEMENT>
@@ -120,55 +112,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="craftbeerpi.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/craftbeerpi.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="233" column="29" lean-forward="false" selection-start-line="233" selection-start-column="29" selection-end-line="233" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config_controller.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/controller/config_controller.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="26" lean-forward="true" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#58#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="actor_controller.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/controller/actor_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="70" column="3" lean-forward="true" selection-start-line="70" selection-start-column="3" selection-end-line="76" selection-end-column="49" />
+            <state relative-caret-position="-914">
+              <caret line="41" column="8" lean-forward="false" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="crud_controller.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/controller/crud_controller.py">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/extension/dummyactor/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="10" column="14" lean-forward="false" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sensor_controller.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="54" column="16" lean-forward="false" selection-start-line="54" selection-start-column="16" selection-end-line="55" selection-end-column="129" />
+            <state relative-caret-position="301">
+              <caret line="25" column="22" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -176,25 +134,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kettle_controller.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/extension/comp/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="23" column="60" lean-forward="false" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kettle_controller.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/controller/kettle_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state relative-caret-position="317">
+              <caret line="94" column="49" lean-forward="false" selection-start-line="94" selection-start-column="49" selection-end-line="94" selection-end-column="49" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_kettle.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/test_kettle.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -215,12 +173,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin_controller.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/controller/plugin_controller.py">
+      <file leaf-file-name="sensor_controller.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="56">
-              <caret line="84" column="8" lean-forward="false" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
-              <folding />
+            <state relative-caret-position="414">
+              <caret line="47" column="23" lean-forward="false" selection-start-line="47" selection-start-column="14" selection-end-line="47" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -228,11 +188,48 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/extension/dummylogic/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+            <state relative-caret-position="255">
+              <caret line="17" column="34" lean-forward="false" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kettle_logic.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/api/kettle_logic.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="29" lean-forward="false" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="extension.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/api/extension.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.sensor" pinned="false" current-in-tab="false">
+        <entry file="dbDummy://dbtable:/a57e2371/5067e7fe-480d-4433-bc40-f2d1c38362a2/main.sensor">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
             </state>
           </provider>
         </entry>
@@ -248,7 +245,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>get_scheduler_from_request</find>
       <find>get_scheduler_</find>
       <find>get_scheduler</find>
       <find>get_sche</find>
@@ -278,6 +274,7 @@
       <find>####### GET SCHED</find>
       <find>load</find>
       <find>init</find>
+      <find>create</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -295,17 +292,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/controller/NotificationController.py" />
         <option value="$PROJECT_DIR$/core/websocket.py" />
         <option value="$PROJECT_DIR$/core/controller/notification_controller.py" />
         <option value="$PROJECT_DIR$/core/controller/BaseController.py" />
         <option value="$PROJECT_DIR$/core/database/orm_framework.py" />
         <option value="$PROJECT_DIR$/run.py" />
-        <option value="$PROJECT_DIR$/core/eventbus.py" />
         <option value="$PROJECT_DIR$/core/api/property.py" />
         <option value="$PROJECT_DIR$/core/api/decorator.py" />
         <option value="$PROJECT_DIR$/core/api/__init__.py" />
-        <option value="$PROJECT_DIR$/core/extension/comp/__init__.py" />
         <option value="$PROJECT_DIR$/docs/source/index.rst" />
         <option value="$PROJECT_DIR$/docs_src/Makefile" />
         <option value="$PROJECT_DIR$/docs_src/source/sensor.rst" />
@@ -327,25 +321,28 @@
         <option value="$PROJECT_DIR$/core/job/aiohttp.py" />
         <option value="$PROJECT_DIR$/core/job/_scheduler.py" />
         <option value="$PROJECT_DIR$/core/job/_job.py" />
-        <option value="$PROJECT_DIR$/core/controller/system_controller.py" />
         <option value="$PROJECT_DIR$/core/api/sensor.py" />
-        <option value="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" />
-        <option value="$PROJECT_DIR$/core/controller/sensor_controller.py" />
         <option value="$PROJECT_DIR$/core/api/actor.py" />
         <option value="$PROJECT_DIR$/core/extension/dummy/__init__.py" />
         <option value="$PROJECT_DIR$/core/controller/config_controller.py" />
         <option value="$PROJECT_DIR$/core/database/model.py" />
         <option value="$PROJECT_DIR$/core/controller/plugin_controller.py" />
-        <option value="$PROJECT_DIR$/core/api/kettle_logic.py" />
         <option value="$PROJECT_DIR$/core/utils/config.py" />
         <option value="$PROJECT_DIR$/core/utils/utils.py" />
         <option value="$PROJECT_DIR$/core/utils/encoder.py" />
-        <option value="$PROJECT_DIR$/core/api/extension.py" />
+        <option value="$PROJECT_DIR$/core/controller/system_controller.py" />
         <option value="$PROJECT_DIR$/tests/test_kettle.py" />
-        <option value="$PROJECT_DIR$/core/controller/actor_controller.py" />
         <option value="$PROJECT_DIR$/core/craftbeerpi.py" />
-        <option value="$PROJECT_DIR$/core/extension/dummylogic/__init__.py" />
+        <option value="$PROJECT_DIR$/core/eventbus.py" />
+        <option value="$PROJECT_DIR$/core/controller/sensor_controller.py" />
+        <option value="$PROJECT_DIR$/core/api/kettle_logic.py" />
+        <option value="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" />
+        <option value="$PROJECT_DIR$/core/api/extension.py" />
+        <option value="$PROJECT_DIR$/core/controller/actor_controller.py" />
         <option value="$PROJECT_DIR$/core/controller/kettle_controller.py" />
+        <option value="$PROJECT_DIR$/core/extension/dummylogic/__init__.py" />
+        <option value="$PROJECT_DIR$/core/extension/comp/__init__.py" />
+        <option value="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" />
       </list>
     </option>
   </component>
@@ -386,15 +383,9 @@
               <option name="myItemId" value="External Libraries" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="&lt; Python 3.6.1 virtualenv at ~/cbpi41 &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -403,19 +394,93 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="&lt; Python 3.6.1 virtualenv at ~/cbpi41 &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site-packages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="&lt; Python 3.6.1 virtualenv at ~/cbpi41 &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site-packages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
+              <option name="myItemId" value="aiohttp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="&lt; Python 3.6.1 virtualenv at ~/cbpi41 &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site-packages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test_kettle.py" />
+              <option name="myItemId" value="aiohttp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web_urldispatcher.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="&lt; Python 3.6.1 virtualenv at ~/cbpi41 &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site-packages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aiohttp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web_urldispatcher.py" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="MyAppTestCase" />
+              <option name="myItemId" value="UrlDispatcher" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -425,12 +490,48 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="&lt; Python 3.6.1 virtualenv at ~/cbpi41 &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site-packages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aiohttp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test_utils.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="craftbeerpi4" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="main.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -461,12 +562,30 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi.py" />
+              <option name="myItemId" value="eventbus.py" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="CraftBeerPi" />
+              <option name="myItemId" value="EventBus" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="http_endpoints" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -485,6 +604,84 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="extension" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dummysensor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dummysensor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="__init__.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dummysensor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="__init__.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CustomSensor" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -579,8 +776,216 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dummyactor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dummyactor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="__init__.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dummyactor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="__init__.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CustomActor" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="comp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="comp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="__init__.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="comp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="__init__.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MyComp" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sensor_controller.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SensorController" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plugin_controller.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PluginController" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -623,37 +1028,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="crud_controller.py" />
+              <option name="myItemId" value="kettle_controller.py" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="CRUDController" />
-              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config_controller.py" />
-              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ConfigController" />
+              <option name="myItemId" value="KettleController" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -677,6 +1056,10 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="actor_controller.py" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActorHttp" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -703,6 +1086,134 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="ActorController" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sensor.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CBPiSensor" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kettle_logic.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CBPiExtension" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".pytest_cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".pytest_cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="v" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -792,7 +1303,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.run">
+  <component name="RunManager" selected="Python tests.test kettle">
     <configuration default="false" name="run" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -1129,24 +1640,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="test_kettle - 2018.11.18 at 13h 37m 17s.xml">
-      <configuration name="test kettle" configurationId="tests" />
-    </history-entry>
-    <history-entry file="test_kettle - 2018.11.18 at 13h 38m 00s.xml">
-      <configuration name="test kettle" configurationId="tests" />
-    </history-entry>
-    <history-entry file="test_kettle - 2018.11.18 at 13h 39m 08s.xml">
-      <configuration name="test kettle" configurationId="tests" />
-    </history-entry>
-    <history-entry file="test_kettle - 2018.11.18 at 13h 39m 39s.xml">
-      <configuration name="test kettle" configurationId="tests" />
-    </history-entry>
-    <history-entry file="test_kettle - 2018.11.18 at 13h 40m 18s.xml">
-      <configuration name="test kettle" configurationId="tests" />
-    </history-entry>
-    <history-entry file="test_kettle - 2018.11.18 at 13h 42m 31s.xml">
-      <configuration name="test kettle" configurationId="tests" />
-    </history-entry>
     <history-entry file="test_kettle - 2018.11.18 at 13h 42m 49s.xml">
       <configuration name="test kettle" configurationId="tests" />
     </history-entry>
@@ -1157,6 +1650,24 @@
       <configuration name="test kettle" configurationId="tests" />
     </history-entry>
     <history-entry file="test_kettle - 2018.11.18 at 13h 45m 01s.xml">
+      <configuration name="test kettle" configurationId="tests" />
+    </history-entry>
+    <history-entry file="test_kettle - 2018.11.18 at 17h 03m 48s.xml">
+      <configuration name="test kettle" configurationId="tests" />
+    </history-entry>
+    <history-entry file="test_kettle - 2018.11.18 at 17h 04m 21s.xml">
+      <configuration name="test kettle" configurationId="tests" />
+    </history-entry>
+    <history-entry file="test_kettle - 2018.11.18 at 17h 06m 13s.xml">
+      <configuration name="test kettle" configurationId="tests" />
+    </history-entry>
+    <history-entry file="test_kettle - 2018.11.18 at 17h 06m 19s.xml">
+      <configuration name="test kettle" configurationId="tests" />
+    </history-entry>
+    <history-entry file="test_kettle - 2018.11.18 at 17h 06m 56s.xml">
+      <configuration name="test kettle" configurationId="tests" />
+    </history-entry>
+    <history-entry file="test_kettle - 2018.11.18 at 17h 07m 22s.xml">
       <configuration name="test kettle" configurationId="tests" />
     </history-entry>
   </component>
@@ -1177,7 +1688,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43208432" sideWeight="0.2720238" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286945" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43208432" sideWeight="0.7279762" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31381732" sideWeight="0.7279762" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36065573" sideWeight="0.49761903" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22619048" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1797619" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1221,34 +1732,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docs/core.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/core.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/install.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="10" lean-forward="false" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
@@ -1295,14 +1778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/comp/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/api/decorator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -1315,24 +1790,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="42" column="21" lean-forward="false" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#65#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="41" column="13" lean-forward="false" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1355,29 +1812,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/dummysensor/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="23" column="12" lean-forward="false" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/a57e2371/5067e7fe-480d-4433-bc40-f2d1c38362a2/main.sensor">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/job/_job.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1392,26 +1826,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="73">
           <caret line="72" column="16" lean-forward="false" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/system_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="30" column="19" lean-forward="false" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/dummyactor/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -1473,14 +1887,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/http_endpoints/http_api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="40" column="4" lean-forward="false" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1498,14 +1904,6 @@
           <folding>
             <element signature="e#167#195#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/api/sensor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1549,47 +1947,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/api/kettle_logic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/api/extension.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-12">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/controller/step_controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/plugin_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="84" column="8" lean-forward="false" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="54" column="16" lean-forward="false" selection-start-line="54" selection-start-column="16" selection-end-line="55" selection-end-column="129" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1599,6 +1961,179 @@
           <caret line="15" column="26" lean-forward="true" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/crud_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="25" column="30" lean-forward="false" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/http_endpoints/http_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="40" column="28" lean-forward="false" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/system_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="32" column="48" lean-forward="true" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/cbpi41/lib/python3.6/site-packages/aiohttp/web_urldispatcher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="858" column="0" lean-forward="false" selection-start-line="858" selection-start-column="0" selection-end-line="858" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/cbpi41/lib/python3.6/site-packages/aiohttp/test_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="381" column="4" lean-forward="false" selection-start-line="381" selection-start-column="4" selection-end-line="381" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="42" column="14" lean-forward="false" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_kettle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="12" lean-forward="false" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.pytest_cache/v/cache/nodeids">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="117" column="28" lean-forward="true" selection-start-line="117" selection-start-column="28" selection-end-line="117" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/craftbeerpi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="52" column="25" lean-forward="false" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/eventbus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="70" column="38" lean-forward="false" selection-start-line="70" selection-start-column="38" selection-end-line="70" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/plugin_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="84" column="8" lean-forward="false" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/api/sensor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="6" lean-forward="false" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/extension/dummysensor/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="29" column="42" lean-forward="true" selection-start-line="29" selection-start-column="42" selection-end-line="29" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/a57e2371/5067e7fe-480d-4433-bc40-f2d1c38362a2/main.sensor">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/api/extension.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="47" column="23" lean-forward="false" selection-start-line="47" selection-start-column="14" selection-end-line="47" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/api/kettle_logic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="29" lean-forward="false" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/kettle_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="94" column="49" lean-forward="false" selection-start-line="94" selection-start-column="49" selection-end-line="94" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1616,58 +2151,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/crud_controller.py">
+    <entry file="file://$PROJECT_DIR$/core/extension/dummylogic/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="10" column="14" lean-forward="false" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-          <folding />
+        <state relative-caret-position="255">
+          <caret line="17" column="34" lean-forward="false" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/extension/comp/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="23" column="60" lean-forward="false" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/controller/actor_controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="70" column="3" lean-forward="true" selection-start-line="70" selection-start-column="3" selection-end-line="76" selection-end-column="49" />
+        <state relative-caret-position="-914">
+          <caret line="41" column="8" lean-forward="false" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/craftbeerpi.py">
+    <entry file="file://$PROJECT_DIR$/core/extension/dummyactor/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="233" column="29" lean-forward="false" selection-start-line="233" selection-start-column="29" selection-end-line="233" selection-end-column="29" />
+        <state relative-caret-position="301">
+          <caret line="25" column="22" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_kettle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/dummylogic/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/kettle_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>

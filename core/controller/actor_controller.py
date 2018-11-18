@@ -10,7 +10,7 @@ from core.utils import parse_props
 
 class ActorHttp(HttpAPI):
 
-    @request_mapping(path="/{id}/on", auth_required=False)
+    @request_mapping(path="/{id:\d+}/on", auth_required=False)
     async def http_on(self, request) -> web.Response:
         """
         :param request: 
@@ -21,7 +21,7 @@ class ActorHttp(HttpAPI):
         return web.Response(status=204)
 
 
-    @request_mapping(path="/{id}/off", auth_required=False)
+    @request_mapping(path="/{id:\d+}/off", auth_required=False)
     async def http_off(self, request) -> web.Response:
         """
         :param request: 
@@ -31,7 +31,7 @@ class ActorHttp(HttpAPI):
         self.cbpi.bus.fire(topic="actor/%s/off" % id, id=id)
         return web.Response(status=204)
 
-    @request_mapping(path="/{id}/toggle", auth_required=False)
+    @request_mapping(path="/{id:\d+}/toggle", auth_required=False)
     async def http_toggle(self, request) -> web.Response:
         """
         :param request: 
@@ -83,7 +83,7 @@ class ActorController(ActorHttp, CRUDController):
 
             if value.type in self.types:
                 cfg = value.config.copy()
-                print(cfg)
+
                 cfg.update(dict(cbpi=self.cbpi, id=id, name=value.name))
                 clazz = self.types[value.type]["class"];
 

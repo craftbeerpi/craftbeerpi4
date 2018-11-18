@@ -13,8 +13,9 @@ logging.basicConfig(level=logging.INFO)
 class CBPiExtension():
 
     def __init__(self, *args, **kwds):
+
         for a in kwds:
-            print(a)
+
             super(CBPiExtension, self).__setattr__(a, kwds.get(a))
         self.cbpi = kwds.get("cbpi")
         self.id = kwds.get("id")

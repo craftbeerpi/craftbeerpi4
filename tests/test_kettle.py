@@ -3,9 +3,7 @@ from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from core.craftbeerpi import CraftBeerPi
 
 
-class MyAppTestCase(AioHTTPTestCase):
-
-
+class KettleTestCase(AioHTTPTestCase):
 
 
     async def get_application(self):
@@ -16,5 +14,6 @@ class MyAppTestCase(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_example(self):
-
-        await self.cbpi.kettle.toggle_automtic(1)
+        assert await self.cbpi.kettle.toggle_automtic(1) is True
+        assert await self.cbpi.kettle.toggle_automtic(1) is True
+        assert await self.cbpi.kettle.toggle_automtic(99) is False

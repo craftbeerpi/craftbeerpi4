@@ -6,7 +6,8 @@ from core.api.kettle_logic import CBPiKettleLogic
 
 class CustomLogic(CBPiKettleLogic):
 
-    name = Property.Number(label="Test")
+    test = Property.Number(label="Test")
+
 
     running = True
 
@@ -14,8 +15,14 @@ class CustomLogic(CBPiKettleLogic):
 
         while self.running:
 
-            print("RUN")
+            print("RUN", self.test)
+            value = await self.cbpi.sensor.get_value(1)
+            print(value)
+            if value >= 10:
+                break
             await asyncio.sleep(1)
+
+        print("STOP LOGIC")
 
 def setup(cbpi):
 

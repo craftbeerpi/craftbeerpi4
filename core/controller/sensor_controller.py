@@ -20,20 +20,9 @@ class SensorController(CRUDController, HttpAPI):
         self.service = self
         self.types = {}
 
-        self.sensors = {"S1": "S1", "S2": "S2"}
+        self.sensors = {}
 
-        this_directory = os.path.dirname(__file__)
-        # __file__ is the absolute path to the current python file.
 
-        handler = TimedRotatingFileHandler(os.path.join(this_directory, '../../logger.conf'), when="m", interval=1, backupCount=5)
-        #handler = RotatingFileHandler("first_logfile.log", mode='a', maxBytes=300, backupCount=2, encoding=None, delay=0)
-        formatter = logging.Formatter('%(asctime)s,%(sensor)s,%(message)s')
-        handler.setFormatter(formatter)
-
-        self.logger = logging.getLogger("SensorController")
-        self.logger.setLevel(logging.INFO)
-        self.logger.propagate = False
-        self.logger.addHandler(handler)
 
     async def init(self):
         '''
@@ -56,7 +45,6 @@ class SensorController(CRUDController, HttpAPI):
                 self.cache[id].instance.job = await scheduler.spawn(self.cache[id].instance.run(self.cbpi), value.name, "sensor")
         print("------------")
 
-    @background_task(name="test", interval=1)
-    async def hallo(self):
-        print("AHLLO")
-        self.logger.info("WOOHO", extra={"sensor": 1})
+    async def get_value(self, id):
+
+        return self.cache[id].instance.value

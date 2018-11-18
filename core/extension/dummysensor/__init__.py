@@ -12,6 +12,7 @@ class CustomSensor(CBPiSensor):
     interval = Property.Number(label="interval")
     name2 = Property.Kettle(label="Test")
 
+    value = 0
 
     @action(key="name", parameters={})
     def myAction(self):
@@ -24,8 +25,11 @@ class CustomSensor(CBPiSensor):
         pass
 
     async def run(self, cbpi):
+        self.value = 0
         while True:
             await asyncio.sleep(self.interval)
+
+            self.value = self.value + 1
             print("SENSOR IS RUNNING")
 
 

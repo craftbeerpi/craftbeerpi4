@@ -1,3 +1,4 @@
+import inspect
 import logging
 
 
@@ -55,18 +56,22 @@ class EventBus(object):
                     break
                 del parent._children[k]
 
-    def __init__(self):
+    def __init__(self, cbpi):
         self.logger = logging.getLogger(__name__)
         self._root = self.Node()
         self.docs = {}
+        self.cbpi = cbpi
 
     def fire(self, topic: str, **kwargs) -> None:
 
         self.logger.info("EMIT EVENT %s", topic)
         for methods in self.iter_match(topic):
             for f in methods:
-
-                f(**kwargs, topic = topic)
+                if inspect.iscoroutinefunction(f):
+                    print("ITS ASYNC")
+                    self.cbpi.app.loop.create_task(f(**kwargs, topic = topic))
+                else:
+                    f(**kwargs, topic = topic)
 
     def iter_match(self, topic):
 

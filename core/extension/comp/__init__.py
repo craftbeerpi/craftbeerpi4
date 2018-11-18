@@ -17,6 +17,12 @@ class MyComp(CBPiExtension):
     def listen(self, **kwargs):
         print("Test", kwargs)
 
+    @on_event(topic="kettle/+/automatic")
+    def listen2(self, **kwargs):
+        print("HANDLE AUTOMATIC", kwargs)
+
+        self.cbpi.bus.fire(topic="actor/%s/toggle" % 1, id=1)
+
 def setup(cbpi):
     '''
     Setup method is invoked during startup
