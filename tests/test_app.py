@@ -39,6 +39,8 @@ class MyAppTestCase(AioHTTPTestCase):
         i = await self.cbpi.actor.get_one(1)
         assert i.instance.state is False
 
+        i = await self.cbpi.actor.get_all()
+        assert len(i) == 2
         #ws =  await self.client.ws_connect("/ws");
         #await ws.send_str(json.dumps({"key": "test"}))
 

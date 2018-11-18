@@ -14,18 +14,28 @@ class HttpAPI():
     @request_mapping(path="/", auth_required=False)
     async def http_get_all(self, request):
         """
-                    ---
-                    description: This end-point allow to test that service is up.
-                    tags:
-                    - REST API
-                    produces:
-                    - application/json
-                    responses:
-                        "200":
-                            description: successful operation. Return "pong" text
-                        "405":
-                            description: invalid HTTP Method
-                    """
+       
+        ---
+        
+        description: This end-point allow to test that service is up.
+        tags:
+        - REST API
+        produces:
+        - application/json
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of object to return"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation. Return "pong" text
+            "405":
+                description: invalid HTTP Met
+        """
+
         return web.json_response(await self.get_all(force_db_update=True), dumps=json_dumps)
 
     @request_mapping(path="/{id:\d+}", auth_required=False)

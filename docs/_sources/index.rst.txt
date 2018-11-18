@@ -10,6 +10,7 @@ Welcome to CraftBeerPi's documentation!
 .. toctree::
    :maxdepth: 3
 
+   install
    core
    actor
    sensor

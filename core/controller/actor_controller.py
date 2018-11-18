@@ -58,13 +58,9 @@ class ActorController(ActorHttp, CRUDController):
         self.types = {}
         self.actors = {}
 
+
     def register(self, name, clazz) -> None:
-        '''
-        Register a new actor type
-        :param name: actor name
-        :param clazz: actor class
-        :return: None
-        '''
+
         print("REGISTER", name)
         if issubclass(clazz, CBPiActor):
             print("ITS AN ACTOR")
@@ -79,29 +75,51 @@ class ActorController(ActorHttp, CRUDController):
         :return: 
         '''
         await super(ActorController, self).init()
-        print("INIT ACTOR")
+
         for name, clazz in self.types.items():
             print("Type", name)
+
         for id, value in self.cache.items():
 
             if value.type in self.types:
+                cfg = value.config.copy()
+                print(cfg)
+                cfg.update(dict(cbpi=self.cbpi, id=id, name=value.name))
                 clazz = self.types[value.type]["class"];
-                print(self.cache[id])
-                self.cache[id].instance = clazz(self.cbpi)
+
+                self.cache[id].instance = clazz(**cfg)
+                print("gpIO", self.cache[id].instance, self.cache[id].instance.gpio)
 
 
 
     @on_event(topic="actor/+/on")
     def on(self, id, power=100, **kwargs) -> None:
-        print(id)
+        '''
+        Method to switch an actor on.
+        Supporting Event Topic "actor/+/on"
+        
+        :param id: the actor id
+        :param power: as integer value between 1 and 100
+        :param kwargs: 
+        :return: 
+        '''
+
         id = int(id)
         if id in self.cache:
             print("POWER ON")
             actor = self.cache[id].instance
+            print("ONNNNN", actor)
             actor.on(power)
 
     @on_event(topic="actor/+/toggle")
     def toggle(self, id, power=100, **kwargs) -> None:
+        '''
+        Method to toggle an actor on or off
+        Supporting Event Topic "actor/+/toggle"
+        
+        :param power: 
+        :return: 
+        '''
 
         id = int(id)
         if id in self.cache:
@@ -114,7 +132,10 @@ class ActorController(ActorHttp, CRUDController):
     @on_event(topic="actor/+/off")
     def off(self, id, **kwargs) -> None:
         """
-
+        
+        Method to switch and actor off
+        Supporting Event Topic "actor/+/off"
+        
         :param id: 
         :param kwargs: 
         """

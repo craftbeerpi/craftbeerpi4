@@ -1,6 +1,8 @@
 from pprint import pprint
 
+
 from core.api.property import Property
+from core.utils.encoder import ComplexEncoder
 
 __all__ = ['load_config',"json_dumps", "parse_props"]
 
@@ -21,23 +23,6 @@ def load_config(fname):
         pass
 
 
-class ComplexEncoder(JSONEncoder):
-    def default(self, obj):
-
-        try:
-            if isinstance(obj, DBModel):
-                return obj.__dict__
-
-            elif isinstance(obj, ActorModel):
-                return None
-
-            elif hasattr(obj, "callback"):
-                return obj()
-            else:
-                return None
-        except TypeError as e:
-            pass
-        return None
 
 
 def json_dumps(obj):

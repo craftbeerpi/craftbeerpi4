@@ -13,6 +13,7 @@ ActorController
 
 .. automodule:: core.controller.actor_controller
   :members:
+  :inherited-members:
 
 Custom Actor
 ^^^^^^^^^^^^^

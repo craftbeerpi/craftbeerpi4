@@ -9,7 +9,10 @@ from aiohttp_auth import auth
 from aiohttp_session import session_middleware
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 from aiohttp_swagger import setup_swagger
-from aiojobs.aiohttp import setup, get_scheduler_from_app
+
+from core.controller.config_controller import ConfigController
+from core.controller.kettle_controller import KettleController
+from core.job.aiohttp import setup, get_scheduler_from_app
 
 from core.controller.actor_controller import ActorController
 from core.controller.notification_controller import NotificationController
@@ -53,6 +56,8 @@ class CraftBeerPi():
         self.sensor = SensorController(self)
         self.plugin = PluginController(self)
         self.system = SystemController(self)
+        self.config2 = ConfigController(self)
+        self.kettle = KettleController(self)
         self.notification = NotificationController(self)
 
         self.login = Login(self)
@@ -64,8 +69,11 @@ class CraftBeerPi():
 
             doc = None
             if method.__doc__ is not None:
-                doc = yaml.load(method.__doc__)
-                doc["topic"] = method.__getattribute__("topic")
+                try:
+                    doc = yaml.load(method.__doc__)
+                    doc["topic"] = method.__getattribute__("topic")
+                except:
+                    pass
             self.bus.register(method.__getattribute__("topic"), method, doc)
 
     def register_background_task(self, obj):
@@ -89,8 +97,8 @@ class CraftBeerPi():
             for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "background_task")]:
                 name = method.__getattribute__("name")
                 interval = method.__getattribute__("interval")
+                job = await scheduler.spawn(job_loop(self.app, name, interval, method),name, "background")
 
-                await scheduler.spawn(job_loop(self.app, name, interval, method))
 
         self.app.on_startup.append(spawn_job)
 
@@ -171,6 +179,11 @@ class CraftBeerPi():
         else:
             self.app.add_routes(routes)
 
+
+    async def start_job(self, method, name, type):
+        scheduler = get_scheduler_from_app(self.app)
+        return await scheduler.spawn(method, name, type)
+
     def _swagger_setup(self):
         '''
         Internatl method to expose REST API documentation by swagger
@@ -178,9 +191,7 @@ class CraftBeerPi():
         :return: 
         '''
         long_description = """
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula, metus et sodales fringilla, purus leo aliquet odio, non tempor ante urna aliquet nibh. Integer accumsan laoreet tincidunt. Vestibulum semper vehicula sollicitudin. Suspendisse dapibus neque vitae mattis bibendum. Morbi eu pulvinar turpis, quis malesuada ex. Vestibulum sed maximus diam. Proin semper fermentum suscipit. Duis at suscipit diam. Integer in augue elementum, auctor orci ac, elementum est. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas condimentum id arcu quis volutpat. Vestibulum sit amet nibh sodales, iaculis nibh eget, scelerisque justo.
-
-        Nunc eget mauris lectus. Proin sit amet volutpat risus. Aliquam auctor nunc sit amet feugiat tempus. Maecenas nec ex dolor. Nam fermentum, mauris ut suscipit varius, odio purus luctus mauris, pretium interdum felis sem vel est. Proin a turpis vitae nunc volutpat tristique ac in erat. Pellentesque consequat rhoncus libero, ac sollicitudin odio tempus a. Sed vestibulum leo erat, ut auctor turpis mollis id. Ut nec nunc ex. Maecenas eu turpis in nibh placerat ullamcorper ac nec dui. Integer ac lacus neque. Donec dictum tellus lacus, a vulputate justo venenatis at. Morbi malesuada tellus quis orci aliquet, at vulputate lacus imperdiet. Nulla eu diam quis orci aliquam vulputate ac imperdiet elit. Quisque varius mollis dolor in interdum.
+        This is the api for CraftBeerPi
         """
 
         setup_swagger(self.app,
@@ -218,7 +229,9 @@ class CraftBeerPi():
             await DBModel.test_connection()
 
         async def init_controller(app):
+            await self.sensor.init()
             await self.actor.init()
+            await self.kettle.init()
 
         async def load_plugins(app):
             await PluginController.load_plugin_list()

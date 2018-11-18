@@ -10,7 +10,9 @@ from aiohttp import web
 from core.api.actor import CBPiActor
 from core.api.decorator import request_mapping
 from core.api.extension import CBPiExtension
+from core.api.kettle_logic import CBPiKettleLogic
 from core.api.property import Property
+from core.api.sensor import CBPiSensor
 from core.utils.utils import load_config, json_dumps
 
 logger = logging.getLogger(__file__)
@@ -87,9 +89,18 @@ class PluginController():
         :param clazz: actor class
         :return: None
         '''
-
+        print("REGISTER", name, clazz)
         if issubclass(clazz, CBPiActor):
             self.cbpi.actor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
+
+
+        if issubclass(clazz, CBPiSensor):
+            self.cbpi.sensor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
+
+
+        if issubclass(clazz, CBPiKettleLogic):
+            self.cbpi.kettle.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
+
 
         if issubclass(clazz, CBPiExtension):
             self.c  = clazz(self.cbpi)

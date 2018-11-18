@@ -13,7 +13,11 @@ class CRUDController(object):
             self.cache = await self.model.get_all()
 
     async def get_all(self, force_db_update=False):
-
+        '''
+        
+        :param force_db_update: 
+        :return: 
+        '''
         if self.caching is False or force_db_update:
             self.cache = await self.model.get_all()
 

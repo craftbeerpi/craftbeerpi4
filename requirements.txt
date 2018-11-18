@@ -35,3 +35,4 @@ ticket-auth==0.1.4
 transitions==0.6.8
 websockets==6.0
 yarl==1.2.6
+pyfiglet
