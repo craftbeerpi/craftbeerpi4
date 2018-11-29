@@ -5,7 +5,14 @@ class PropertyType(object):
 
 class Property(object):
     class Select(PropertyType):
+
         def __init__(self, label, options, description=""):
+            '''
+            
+            :param label: 
+            :param options: 
+            :param description: 
+            '''
             PropertyType.__init__(self)
             self.label = label
             self.options = options
@@ -13,6 +20,16 @@ class Property(object):
 
     class Number(PropertyType):
         def __init__(self, label, configurable=False, default_value=None, unit="", description=""):
+            '''
+            Test
+            
+            
+            :param label: 
+            :param configurable: 
+            :param default_value: 
+            :param unit: 
+            :param description: 
+            '''
             PropertyType.__init__(self)
             self.label = label
             self.configurable = configurable
@@ -21,6 +38,13 @@ class Property(object):
 
     class Text(PropertyType):
         def __init__(self, label, configurable=False, default_value="", description=""):
+            '''
+            
+            :param label: 
+            :param configurable: 
+            :param default_value: 
+            :param description: 
+            '''
             PropertyType.__init__(self)
             self.label = label
             self.configurable = configurable
@@ -29,6 +53,11 @@ class Property(object):
 
     class Actor(PropertyType):
         def __init__(self, label, description=""):
+            '''
+            
+            :param label: 
+            :param description: 
+            '''
             PropertyType.__init__(self)
             self.label = label
             self.configurable = True
@@ -36,6 +65,11 @@ class Property(object):
 
     class Sensor(PropertyType):
         def __init__(self, label, description=""):
+            '''
+            
+            :param label: 
+            :param description: 
+            '''
             PropertyType.__init__(self)
             self.label = label
             self.configurable = True
@@ -43,6 +77,12 @@ class Property(object):
 
     class Kettle(PropertyType):
         def __init__(self, label, description=""):
+            '''
+            
+            :param label: 
+            :param description: 
+            '''
+
             PropertyType.__init__(self)
             self.label = label
             self.configurable = True

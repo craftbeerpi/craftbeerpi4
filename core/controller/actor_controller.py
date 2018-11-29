@@ -90,15 +90,22 @@ class ActorController(ActorHttp, CRUDController):
                 self.cache[id].instance = clazz(**cfg)
                 print("gpIO", self.cache[id].instance, self.cache[id].instance.gpio)
 
+    @on_event(topic="actor/1/on")
+    def on1(self, **kwargs) -> None:
+        print("WOOOOHOOO111111")
+
+    @on_event(topic="actor/1/on")
+    def on3(self, **kwargs) -> None:
+        print("WOOOOHOOO22222")
 
 
     @on_event(topic="actor/+/on")
-    def on(self, id, power=100, **kwargs) -> None:
+    def on(self, id , power=100, **kwargs) -> None:
         '''
         Method to switch an actor on.
         Supporting Event Topic "actor/+/on"
         
-        :param id: the actor id
+        :param actor_id: the actor id
         :param power: as integer value between 1 and 100
         :param kwargs: 
         :return: 
@@ -107,7 +114,7 @@ class ActorController(ActorHttp, CRUDController):
         id = int(id)
         if id in self.cache:
             print("POWER ON")
-            actor = self.cache[id].instance
+            actor = self.cache[id   ].instance
             print("ONNNNN", actor)
             actor.on(power)
 

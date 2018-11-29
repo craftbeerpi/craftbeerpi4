@@ -9,6 +9,10 @@ class CRUDController(object):
         self.cache = {}
 
     async def init(self):
+        '''
+        
+        :return: 
+        '''
         if self.caching is True:
             self.cache = await self.model.get_all()
 
@@ -24,19 +28,35 @@ class CRUDController(object):
         return self.cache
 
     async def get_one(self, id):
-
+        '''
+        
+        :param id: 
+        :return: 
+        '''
         return self.cache.get(id)
 
-
-
-
     async def _pre_add_callback(self, data):
+        '''
+        
+        :param data: 
+        :return: 
+        '''
         pass
 
     async def _post_add_callback(self, m):
+        '''
+        
+        :param m: 
+        :return: 
+        '''
         pass
 
     async def add(self, **data):
+        '''
+        
+        :param data: 
+        :return: 
+        '''
         await self._pre_add_callback(data)
         m = await self.model.insert(**data)
         await self._post_add_callback(m)
@@ -50,6 +70,12 @@ class CRUDController(object):
         pass
 
     async def update(self, id, data):
+        '''
+        
+        :param id: 
+        :param data: 
+        :return: 
+        '''
         id = int(id)
         data["id"] = id
 
@@ -71,18 +97,29 @@ class CRUDController(object):
 
 
 
-
-
-
-
-
     async def _pre_delete_callback(self, m):
+        '''
+        
+        :param m: 
+        :return: 
+        '''
         pass
 
     async def _post_delete_callback(self, id):
+        '''
+        
+        :param id: 
+        :return: 
+        '''
         pass
 
     async def delete(self, id):
+
+        '''
+        
+        :param id: 
+        :return: 
+        '''
         await self._pre_delete_callback(id)
         m = await self.model.delete(id)
         await self._post_delete_callback(id)
@@ -95,6 +132,10 @@ class CRUDController(object):
         #self.cbpi.push("DELETE_%s" % self.key, id)
 
     async def delete_all(self):
+        '''
+        
+        :return: 
+        '''
         self.model.delete_all()
         if self.caching is True:
             self.cache = {}

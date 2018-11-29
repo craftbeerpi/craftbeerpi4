@@ -14,7 +14,8 @@ Welcome to CraftBeerPi's documentation!
    core
    actor
    sensor
-
+   kettle_controller
+   properties
 
 
 ..

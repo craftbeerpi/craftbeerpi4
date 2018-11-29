@@ -11,12 +11,12 @@ class KettleHttp(HttpAPI):
 
     @request_mapping(path="/types", auth_required=False)
     async def get_types(self, request):
-        web.json_response(data=self.types, dumps=json_dumps)
+        web.json_response(data=self.cbpi.kettle.types, dumps=json_dumps)
 
     @request_mapping(path="/{id:\d+}/automatic", auth_required=False)
     async def start2(self, request):
         id = int(request.match_info['id'])
-        result = await self.toggle_automtic(id)
+        result = await self.cbpi.kettle.toggle_automtic(id)
         if result[0] is True:
             return web.Response(text="OK")
         else:
@@ -25,15 +25,15 @@ class KettleHttp(HttpAPI):
     @request_mapping(path="/{id:\d+}/heater", auth_required=False)
     async def start(self, request):
         id = int(request.match_info['id'])
-        result = await self.heater_on(id)
+        result = await self.cbpi.kettle.heater_on(id)
         if  result[0] is True:
             return web.Response(text="OK")
         else:
             return web.Response(status=404, text=result[1])
 
-class KettleController(CRUDController, KettleHttp):
+class KettleController(CRUDController):
     '''
-    The main actor controller
+    The main kettle controller
     '''
     model = KettleModel
 
@@ -41,7 +41,9 @@ class KettleController(CRUDController, KettleHttp):
         super(KettleController, self).__init__(cbpi)
         self.cbpi = cbpi
         self.types = {}
-        self.cbpi.register(self, "/kettle")
+        self.cbpi.register(self, None)
+        self.http = KettleHttp(cbpi)
+        self.cbpi.register(self.http, "/kettle")
 
 
 
@@ -56,8 +58,10 @@ class KettleController(CRUDController, KettleHttp):
     async def toggle_automtic(self, id):
         '''
         
-        :param id: 
-        :return: 
+        Convenience Method to toggle automatic
+        
+        :param id: kettle id as int
+        :return: (boolean, string) 
         '''
         kettle = await self.get_one(id)
         if kettle is None:

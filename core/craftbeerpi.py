@@ -74,7 +74,7 @@ class CraftBeerPi():
                     doc["topic"] = method.__getattribute__("topic")
                 except:
                     pass
-            self.bus.register(method.__getattribute__("topic"), method, doc)
+            self.bus.register(method.__getattribute__("topic"), method)
 
     def register_background_task(self, obj):
         '''
@@ -234,7 +234,7 @@ class CraftBeerPi():
             await self.kettle.init()
 
         async def load_plugins(app):
-            await PluginController.load_plugin_list()
+            #await PluginController.load_plugin_list()
             await self.plugin.load_plugins()
 
         async def call_initializer(app):

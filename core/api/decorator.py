@@ -44,6 +44,7 @@ def on_event(topic):
     def real_decorator(func):
         func.eventbus = True
         func.topic = topic
+        func.c = None
         return func
 
     return real_decorator
@@ -51,6 +52,7 @@ def on_event(topic):
 def action(key, parameters):
     def real_decorator(func):
         func.action = True
+
         func.key = key
         func.parameters = parameters
         return func
