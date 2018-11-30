@@ -13,9 +13,10 @@ else:  # pragma: no cover
 
 
 class Scheduler(*bases):
-    def __init__(self, *, close_timeout, limit, pending_limit,
+    def __init__(self, cbpi, *, close_timeout, limit, pending_limit,
                  exception_handler, loop):
         self._loop = loop
+        self.cbpi = cbpi
         self._jobs = set()
         self._close_timeout = close_timeout
         self._limit = limit
@@ -111,6 +112,9 @@ class Scheduler(*bases):
         return self._exception_handler
 
     def _done(self, job):
+
+        print("JOB DONE")
+        self.cbpi.bus.fire("job/done", key=job.name)
         self._jobs.discard(job)
         if not self.pending_count:
             return
@@ -126,6 +130,13 @@ class Scheduler(*bases):
                 continue
             new_job._start()
             i += 1
+
+    def is_running(self, name):
+
+        for j in self._jobs:
+            if name == j.name:
+                return True
+        return False
 
     async def _wait_failed(self):
         # a coroutine for waiting failed tasks

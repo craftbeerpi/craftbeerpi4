@@ -40,9 +40,9 @@ def atomic(coro):
     return wrapper
 
 
-def setup(app, **kwargs):
+def setup(app, cbpi, **kwargs):
     async def on_startup(app):
-        app['AIOJOBS_SCHEDULER'] = await create_scheduler(**kwargs)
+        app['AIOJOBS_SCHEDULER'] = await create_scheduler(cbpi, **kwargs)
 
     async def on_cleanup(app):
         await app['AIOJOBS_SCHEDULER'].close()

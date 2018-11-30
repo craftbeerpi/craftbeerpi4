@@ -36,3 +36,7 @@ class SystemController():
                 pass
             # await j.close()
         return web.json_response(data=result)
+
+    @request_mapping("/events", method="GET", name="get_all_events", auth_required=False)
+    def get_all_events(self, request):
+        return web.json_response(data=self.cbpi.bus.dump())

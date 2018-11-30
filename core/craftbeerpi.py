@@ -49,8 +49,8 @@ class CraftBeerPi():
         self.app = web.Application(middlewares=middlewares)
         self.initializer = []
 
-        setup(self.app)
-        self.bus = EventBus(self)
+        setup(self.app, self)
+        self.bus = EventBus(self.app.loop)
         self.ws = WebSocket(self)
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
@@ -232,6 +232,8 @@ class CraftBeerPi():
             await self.sensor.init()
             await self.actor.init()
             await self.kettle.init()
+            import pprint
+            pprint.pprint(self.bus.dump())
 
         async def load_plugins(app):
             #await PluginController.load_plugin_list()

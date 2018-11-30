@@ -1,6 +1,6 @@
 import asyncio
 
-from core.eventbus import EventBus
+from core.eventbus3 import EventBus
 
 
 async def waiter(event):

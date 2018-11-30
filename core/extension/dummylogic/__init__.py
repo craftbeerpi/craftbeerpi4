@@ -12,36 +12,29 @@ class CustomLogic(CBPiKettleLogic):
     running = True
 
 
-    async def wait_for_event(self, topic, timeout=None):
+    async def wait_for_event(self, topic, callback=None, timeout=None):
 
 
         future_obj = self.cbpi.app.loop.create_future()
 
-        async def callback(id, **kwargs):
-            print("---------------------------------- CALLBACK ----------------")
-            print(kwargs)
 
 
-
-            if int(id) == 1:
-                self.cbpi.bus.unregister(callback)
-                future_obj.set_result("HELLO")
-            elif int(id) == 2:
-                self.cbpi.bus.unregister(callback)
-            else:
-                print("ID", id)
+        async def default_callback(id, **kwargs):
+            future_obj.set_result("HELLO")
 
 
-
-        print("TOPIC", topic)
-        self.cbpi.bus.register(topic=topic, method=callback)
+        if callback is None:
+            self.cbpi.bus.register(topic=topic, method=default_callback)
+        else:
+            callback.future = future_obj
+            self.cbpi.bus.register(topic=topic, method=callback)
 
         if timeout is not None:
 
             try:
                 print("----> WAIT FOR FUTURE")
-                await asyncio.wait_for(future_obj, timeout=10.0)
-                print("------> RETURN RESULT")
+                await asyncio.wait_for(future_obj, timeout=timeout)
+                print("------> TIMEOUT")
                 return future_obj.result()
             except asyncio.TimeoutError:
                 print('timeout!')
@@ -54,7 +47,13 @@ class CustomLogic(CBPiKettleLogic):
 
     async def run(self):
 
-        result = await self.wait_for_event("actor/+/on")
+
+        async def my_callback(id, **kwargs):
+            self.cbpi.bus.unregister(my_callback)
+            kwargs["future"].set_result("AMAZING")
+            return "OK"
+
+        result = await self.wait_for_event("actor/+/on", callback=my_callback)
         print("THE RESULT", result)
 
 

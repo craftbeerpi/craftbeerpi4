@@ -1,9 +1,15 @@
-import asyncio
 import inspect
 import logging
 
-
 class EventBus(object):
+
+    def __init__(self, cbpi):
+        self.logger = logging.getLogger(__name__)
+        self._root = self.Node()
+        self.registry = {}
+        self.docs = {}
+        self.cbpi = cbpi
+
     class Node(object):
         __slots__ = '_children', '_content'
 
@@ -11,8 +17,10 @@ class EventBus(object):
             self._children = {}
             self._content = None
 
+
     class Content(object):
         def __init__(self, parent, topic, method, once):
+
             self.parent = parent
             self.method = method
             self.name = method.__name__
@@ -20,10 +28,11 @@ class EventBus(object):
             self.topic = topic
 
     def register(self, topic, method, once=False):
-
+        print("REGISTER", topic, method)
         if method in self.registry:
             raise RuntimeError("Method %s already registerd. Please unregister first!" % method.__name__)
         self.logger.info("Topic %s", topic)
+
         node = self._root
         for sym in topic.split('/'):
             node = node._children.setdefault(sym, self.Node())
@@ -31,9 +40,15 @@ class EventBus(object):
         if not isinstance(node._content, list):
             node._content = []
 
+
         c = self.Content(node, topic, method, once)
+
+
         node._content.append(c)
+        print(c, node._content, topic)
         self.registry[method] = c
+
+
 
     def get_callbacks(self, key):
         try:
@@ -45,6 +60,7 @@ class EventBus(object):
             return node._content
         except KeyError:
             raise KeyError(key)
+
 
     def unregister(self, method):
         self.logger.info("Unregister %s", method.__name__)
@@ -58,67 +74,38 @@ class EventBus(object):
             if clean_idx is not None:
                 del content.parent._content[clean_idx]
 
-    def __init__(self, loop):
-        self.logger = logging.getLogger(__name__)
-        self._root = self.Node()
-        self.registry = {}
-        self.docs = {}
-        if loop is not None:
-            self.loop = loop
-        else:
-            self.loop = asyncio.get_event_loop()
 
-        print(self.loop)
 
     def fire(self, topic: str, **kwargs) -> None:
+
         self.logger.info("EMIT EVENT %s", topic)
 
-        trx = dict(i=0)
-        for e in self.iter_match(topic):
-            content_array = e
-            keep_idx = []
+        cleanup_methods = []
+        for content_array in self.iter_match(topic):
+
+            print(content_array)
+            cleanup = []
             for idx, content_obj in enumerate(content_array):
 
                 if inspect.iscoroutinefunction(content_obj.method):
                     if hasattr(content_obj.method, "future"):
 
-                        self.loop.create_task(content_obj.method(**kwargs, future=content_obj.method.future, topic=topic))
+                        self.cbpi.app.loop.create_task(content_obj.method(**kwargs, future=content_obj.method.future, topic=topic))
                     else:
-                        self.loop.create_task(content_obj.method(**kwargs, topic = topic))
+                        self.cbpi.app.loop.create_task(content_obj.method(**kwargs, topic = topic))
                 else:
                     if hasattr(content_obj.method, "future"):
                         content_obj.method(**kwargs, future=content_obj.method.future, topic=topic)
                     else:
                         content_obj.method(**kwargs, topic = topic)
 
-                #if inspect.iscoroutinefunction(content_obj.method):
-                #    self.loop.create_task(content_obj.method(**kwargs, trx=trx, topic=topic))
-                #else:
-                #    content_obj.method(**kwargs, trx=trx, topic=topic)
-                if content_obj.once is False:
-                    keep_idx.append(idx)
+                if content_obj.once is True:
+                    cleanup.append(idx)
+            for idx in cleanup:
+                del content_array[idx]
 
-            # FILTER only elements with are required
-            if len(keep_idx) < len(e):
-                e[0].parent._content = [e[0].parent._content[i] for i in keep_idx]
 
-            print("DONE", trx)
 
-    def dump(self):
-        def rec(node, i=0):
-            result = []
-            if node._content is not None:
-                for c in node._content:
-                    result.append(dict(topic=c.topic, method=c.method.__name__, path=c.method.__module__, once=c.once))
-
-            if node._children is not None:
-                for c in node._children:
-                    result = result + rec(node._children[c], i + 1)
-            return result
-
-        result = rec(self._root)
-
-        return result
 
     def iter_match(self, topic):
 

@@ -4,6 +4,7 @@ from core.api import request_mapping, on_event
 from core.controller.crud_controller import CRUDController
 from core.database.model import KettleModel
 from core.http_endpoints.http_api import HttpAPI
+from core.job.aiohttp import get_scheduler_from_app
 from core.utils import json_dumps
 
 
@@ -72,6 +73,15 @@ class KettleController(CRUDController):
         self.cbpi.bus.fire(topic="kettle/%s/automatic" % id, id=id)
         return (True, "Logic switched on switched")
 
+    @on_event(topic="job/done")
+    def job_stop(self, key, **kwargs) -> None:
+
+        name = key.split("_")
+        kettle = self.cache[int(name[2])]
+        kettle.instance = None
+
+        print("STOP KETTLE LOGIC", int(name[2]))
+
     @on_event(topic="kettle/+/automatic")
     async def handle_automtic_event(self, id, **kwargs):
 
@@ -90,7 +100,7 @@ class KettleController(CRUDController):
 
             if hasattr(kettle, "instance") is False:
                 kettle.instance = None
-
+            self._is_logic_running(id)
             if kettle.instance is None:
                 if kettle.logic in self.types:
                     clazz = self.types.get("CustomKettleLogic")["class"]
@@ -98,13 +108,15 @@ class KettleController(CRUDController):
                     cfg.update(dict(cbpi=self.cbpi))
                     kettle.instance = clazz(**cfg)
                 print("START LOGIC")
-                await self.cbpi.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic")
+                await self.cbpi.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic%s"%id)
             else:
                 kettle.instance.running = False
                 kettle.instance = None
 
 
-
+    def _is_logic_running(self, kettle_id):
+        scheduler = get_scheduler_from_app(self.cbpi.app)
+        print("JOB KETTLE RUNNING", scheduler.is_running("Kettle_logic_%s"%kettle_id))
 
     async def heater_on(self, id):
         '''
