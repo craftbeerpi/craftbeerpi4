@@ -71,7 +71,7 @@ class EventBus(object):
         print(self.loop)
 
     def fire(self, topic: str, **kwargs) -> None:
-        self.logger.info("EMIT EVENT %s", topic)
+        self.logger.info("EMIT EVENT %s Data: %s", topic, kwargs)
 
         trx = dict(i=0)
         for e in self.iter_match(topic):
@@ -91,10 +91,7 @@ class EventBus(object):
                     else:
                         content_obj.method(**kwargs, topic = topic)
 
-                #if inspect.iscoroutinefunction(content_obj.method):
-                #    self.loop.create_task(content_obj.method(**kwargs, trx=trx, topic=topic))
-                #else:
-                #    content_obj.method(**kwargs, trx=trx, topic=topic)
+                
                 if content_obj.once is False:
                     keep_idx.append(idx)
 
@@ -102,7 +99,7 @@ class EventBus(object):
             if len(keep_idx) < len(e):
                 e[0].parent._content = [e[0].parent._content[i] for i in keep_idx]
 
-            print("DONE", trx)
+
 
     def dump(self):
         def rec(node, i=0):

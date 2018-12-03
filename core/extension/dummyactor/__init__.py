@@ -23,7 +23,7 @@ class CustomActor(CBPiActor):
 
     def on(self, power=100):
 
-        print("###### ON", self.gpio)
+
         self.state = True
 
 

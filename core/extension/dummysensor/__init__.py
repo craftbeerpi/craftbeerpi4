@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import random
 
 from core.api import CBPiActor, Property, action, background_task
 from core.api.sensor import CBPiSensor
@@ -27,10 +28,12 @@ class CustomSensor(CBPiSensor):
     async def run(self, cbpi):
         self.value = 0
         while True:
-            await asyncio.sleep(self.interval)
+            #await asyncio.sleep(self.interval)
+            await asyncio.sleep(random.uniform(0, 1))
 
             self.value = self.value + 1
-            print("SENSOR IS RUNNING")
+            cbpi.bus.fire("sensor/%s" % self.id, value=self.value)
+            print("SENSOR IS RUNNING", self.value)
 
 
 

@@ -17,7 +17,7 @@ class ActorHttp(HttpAPI):
         :return: 
         """
         id = int(request.match_info['id'])
-        self.cbpi.bus.fire(topic="actor/%s/on" % id, id=id, power=99)
+        self.cbpi.bus.fire(topic="actor/%s/switch/on" % id, id=id, power=99)
         return web.Response(status=204)
 
 
@@ -90,16 +90,10 @@ class ActorController(ActorHttp, CRUDController):
                 self.cache[id].instance = clazz(**cfg)
                 print("gpIO", self.cache[id].instance, self.cache[id].instance.gpio)
 
-    @on_event(topic="actor/1/on")
-    def on1(self, **kwargs) -> None:
-        print("WOOOOHOOO111111")
-
-    @on_event(topic="actor/1/on")
-    def on3(self, **kwargs) -> None:
-        print("WOOOOHOOO22222")
 
 
-    @on_event(topic="actor/+/on")
+
+    @on_event(topic="actor/+/switch/on")
     def on(self, id , power=100, **kwargs) -> None:
         '''
         Method to switch an actor on.
@@ -115,7 +109,7 @@ class ActorController(ActorHttp, CRUDController):
         if id in self.cache:
             print("POWER ON")
             actor = self.cache[id   ].instance
-            print("ONNNNN", actor)
+            self.cbpi.bus.fire("actor/%s/on/ok" % id)
             actor.on(power)
 
     @on_event(topic="actor/+/toggle")

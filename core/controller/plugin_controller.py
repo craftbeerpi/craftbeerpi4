@@ -13,6 +13,7 @@ from core.api.extension import CBPiExtension
 from core.api.kettle_logic import CBPiKettleLogic
 from core.api.property import Property
 from core.api.sensor import CBPiSensor
+from core.api.step import Step
 from core.utils.utils import load_config, json_dumps
 
 logger = logging.getLogger(__file__)
@@ -101,13 +102,16 @@ class PluginController():
         if issubclass(clazz, CBPiKettleLogic):
             self.cbpi.kettle.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
 
+        if issubclass(clazz, Step):
+            print("NAME", name)
+            self.cbpi.step.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
 
         if issubclass(clazz, CBPiExtension):
             self.c  = clazz(self.cbpi)
 
 
     def _parse_props(self, cls):
-
+        print("PARSE", cls)
         name = cls.__name__
 
         result = {"name": name, "class": cls, "properties": [], "actions": []}

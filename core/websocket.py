@@ -1,10 +1,12 @@
 import logging
 import weakref
 from collections import defaultdict
-
+import json
 import aiohttp
 from aiohttp import web
 from typing import Iterable, Callable
+
+from core.api import on_event
 
 
 class WebSocket:
@@ -14,6 +16,13 @@ class WebSocket:
         self._clients = weakref.WeakSet()
         self.logger = logging.getLogger(__name__)
         self.cbpi.app.add_routes([web.get('/ws', self.websocket_handler)])
+
+    @on_event(topic="#")
+    async def listen(self, topic, **kwargs):
+        print("WS", topic)
+
+        self.send(json.dumps(dict(topic=topic, data=dict(**kwargs))))
+
 
     def send(self, data):
 

@@ -1,4 +1,5 @@
 import asyncio
+import re
 
 from core.eventbus3 import EventBus
 
@@ -66,6 +67,9 @@ id2 = bus.register("test/name", test2)
 print(id1, id2)
 
 
+from gtts import gTTS
+
+
 
 print(hex(id(test2)))
 
@@ -78,3 +82,9 @@ bus.fire("test/name")
 bus.unregister(test2)
 
 bus.fire("test/name")
+
+
+m0 = re.match("kettle_logic_(\d+)", "kettle_1logic_22")
+print(m0)
+#print(m0.group(1))
+

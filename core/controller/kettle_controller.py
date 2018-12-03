@@ -1,3 +1,5 @@
+import re
+
 from aiohttp import web
 
 from core.api import request_mapping, on_event
@@ -76,11 +78,13 @@ class KettleController(CRUDController):
     @on_event(topic="job/done")
     def job_stop(self, key, **kwargs) -> None:
 
-        name = key.split("_")
-        kettle = self.cache[int(name[2])]
-        kettle.instance = None
+        match = re.match("kettle_logic_(\d+)", key)
+        if match is not None:
+            kid = match.group(1)
+            kettle = self.cache[int(kid)]
+            kettle.instance = None
 
-        print("STOP KETTLE LOGIC", int(name[2]))
+            print("STOP KETTLE LOGIC", kid)
 
     @on_event(topic="kettle/+/automatic")
     async def handle_automtic_event(self, id, **kwargs):

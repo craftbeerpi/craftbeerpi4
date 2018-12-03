@@ -12,6 +12,7 @@ from aiohttp_swagger import setup_swagger
 
 from core.controller.config_controller import ConfigController
 from core.controller.kettle_controller import KettleController
+from core.controller.step_controller import StepController
 from core.job.aiohttp import setup, get_scheduler_from_app
 
 from core.controller.actor_controller import ActorController
@@ -58,9 +59,12 @@ class CraftBeerPi():
         self.system = SystemController(self)
         self.config2 = ConfigController(self)
         self.kettle = KettleController(self)
+        self.step = StepController(self)
         self.notification = NotificationController(self)
 
         self.login = Login(self)
+
+        self.register_events(self.ws)
 
 
     def register_events(self, obj):
@@ -173,6 +177,7 @@ class CraftBeerPi():
             switcher[http_method]()
 
         if url_prefix is not None:
+            print("Prefx", url_prefix)
             sub = web.Application()
             sub.add_routes(routes)
             self.app.add_subapp(url_prefix, sub)
@@ -230,10 +235,13 @@ class CraftBeerPi():
 
         async def init_controller(app):
             await self.sensor.init()
+            await self.step.init()
             await self.actor.init()
             await self.kettle.init()
+
             import pprint
             pprint.pprint(self.bus.dump())
+
 
         async def load_plugins(app):
             #await PluginController.load_plugin_list()

@@ -14,6 +14,17 @@ class KettleTestCase(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_example(self):
-        assert await self.cbpi.kettle.toggle_automtic(1) is True
-        assert await self.cbpi.kettle.toggle_automtic(1) is True
-        assert await self.cbpi.kettle.toggle_automtic(99) is False
+        result = await self.cbpi.kettle.toggle_automtic(1)
+        print("#### RESULT", result)
+        assert result[0] is True
+        print("FIRE")
+
+
+        await asyncio.sleep(1)
+
+        self.cbpi.bus.fire("actor/1/on", id=1)
+
+
+        await asyncio.sleep(5)
+        #assert await self.cbpi.kettle.toggle_automtic(1) is True
+        #assert await self.cbpi.kettle.toggle_automtic(99) is False

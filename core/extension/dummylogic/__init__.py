@@ -48,12 +48,15 @@ class CustomLogic(CBPiKettleLogic):
     async def run(self):
 
 
-        async def my_callback(id, **kwargs):
-            self.cbpi.bus.unregister(my_callback)
-            kwargs["future"].set_result("AMAZING")
-            return "OK"
+        async def my_callback(value, **kwargs):
 
-        result = await self.wait_for_event("actor/+/on", callback=my_callback)
+            if value == 5:
+                self.cbpi.bus.unregister(my_callback)
+                kwargs["future"].set_result("AMAZING")
+            else:
+                print("OTHER VALUE", value)
+
+        result = await self.wait_for_event("sensor/1", callback=my_callback)
         print("THE RESULT", result)
 
 
@@ -68,7 +71,7 @@ class CustomLogic(CBPiKettleLogic):
                 break
             await asyncio.sleep(1)
         '''
-        print("STOP LOGIC")
+        print("YES IM FINISHED STOP LOGIC")
 
 def setup(cbpi):
 
