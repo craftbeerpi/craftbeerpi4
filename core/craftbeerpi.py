@@ -51,7 +51,7 @@ class CraftBeerPi():
         self.initializer = []
 
         setup(self.app, self)
-        self.bus = EventBus(self.app.loop)
+        self.bus = EventBus(self.app.loop, self)
         self.ws = WebSocket(self)
         self.actor = ActorController(self)
         self.sensor = SensorController(self)

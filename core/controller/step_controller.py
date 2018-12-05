@@ -6,6 +6,7 @@ class StepController():
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
+        self.current_task = None
         self.types = {}
         self.steps = {
             1: dict(name="S1", config=dict(time=1), type="CustomStep", state=None),
@@ -34,21 +35,45 @@ class StepController():
         self.start()
 
     @on_event("step/reset")
-    def handle_rest(self, topic, **kwargs):
+    def handle_reset(self, topic, **kwargs):
+        if self.current_step is not None:
+            self.current_task.cancel()
+            self.current_step.reset()
+            print("rESeT", self.current_step.id, self.steps)
+            self.steps[self.current_step.id]["state"] = None
+            self.current_step = None
+            self.current_task = None
+            self.start()
+
+    @on_event("step/stop")
+    def handle_stop(self, topic, **kwargs):
+        if self.current_step is not None:
+            self.current_step.stop()
+
         for key, step in self.steps.items():
             step["state"] = None
 
-        self.current_step = Nonecd
+        self.current_step = None
 
     @on_event("step/+/done")
     def handle(self, topic, **kwargs):
         self.start()
 
     def _step_done(self, task):
-        self.steps[self.current_step.id]["state"] = "D"
-        step_id = self.current_step.id
-        self.current_step = None
-        self.cbpi.bus.fire("step/%s/done" % step_id)
+
+        if task.cancelled() == False:
+            self.steps[self.current_step.id]["state"] = "D"
+            step_id = self.current_step.id
+            self.current_step = None
+            self.cbpi.bus.fire("step/%s/done" % step_id)
+
+    def get_manged_fields_as_array(self, type_cfg):
+        print("tYPE", type_cfg)
+        result = []
+        for f in type_cfg.get("properties"):
+            result.append(f.get("name"))
+
+        return result
 
     def start(self):
 
@@ -57,10 +82,14 @@ class StepController():
             open_step = False
             for key, step in self.steps.items():
                 if step["state"] is None:
-                    type = self.types.get(step["type"])
-                    self.current_step = type["class"](key, self.cbpi)
-                    task = loop.create_task(self.current_step.run())
-                    task.add_done_callback(self._step_done)
+                    step_type = self.types["CustomStep"]
+                    print("----------")
+                    print(step_type)
+                    print("----------")
+                    config = dict(cbpi = self.cbpi, id=key, name="Manuel", managed_fields=self.get_manged_fields_as_array(step_type))
+                    self.current_step = step_type["class"](**config)
+                    self.current_task = loop.create_task(self.current_step._run())
+                    self.current_task.add_done_callback(self._step_done)
                     open_step = True
                     break
             if open_step == False:

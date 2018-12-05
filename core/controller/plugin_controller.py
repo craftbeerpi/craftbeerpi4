@@ -103,11 +103,10 @@ class PluginController():
             self.cbpi.kettle.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
 
         if issubclass(clazz, Step):
-            print("NAME", name)
-            self.cbpi.step.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
-
-        if issubclass(clazz, CBPiExtension):
-            self.c  = clazz(self.cbpi)
+            self.cbpi.step.types[name] = self._parse_props(clazz)
+            print(self.cbpi.step.types)
+        #if issubclass(clazz, CBPiExtension):
+        #    self.c  = clazz(self.cbpi)
 
 
     def _parse_props(self, cls):
@@ -146,4 +145,5 @@ class PluginController():
                 key = method.__getattribute__("key")
                 parameters = method.__getattribute__("parameters")
                 result["actions"].append({"method": method_name, "label": key, "parameters": parameters})
-        pprint(result, width=200)
+        pprint(result)
+        return result

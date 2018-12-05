@@ -1,7 +1,7 @@
 import asyncio
 import inspect
 import logging
-
+import json
 
 class EventBus(object):
     class Node(object):
@@ -58,8 +58,9 @@ class EventBus(object):
             if clean_idx is not None:
                 del content.parent._content[clean_idx]
 
-    def __init__(self, loop):
+    def __init__(self, loop, cbpi):
         self.logger = logging.getLogger(__name__)
+        self.cbpi = cbpi
         self._root = self.Node()
         self.registry = {}
         self.docs = {}
@@ -73,6 +74,7 @@ class EventBus(object):
     def fire(self, topic: str, **kwargs) -> None:
         self.logger.info("EMIT EVENT %s Data: %s", topic, kwargs)
 
+        #self.cbpi.ws.send(json.dumps(dict(topic=topic, data=dict(**kwargs))))
         trx = dict(i=0)
         for e in self.iter_match(topic):
             content_array = e
@@ -91,7 +93,7 @@ class EventBus(object):
                     else:
                         content_obj.method(**kwargs, topic = topic)
 
-                
+
                 if content_obj.once is False:
                     keep_idx.append(idx)
 

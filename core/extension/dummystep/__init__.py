@@ -1,16 +1,19 @@
 import asyncio
 
+from core.api import Property
 from core.api.step import Step
 
 
 class CustomStep(Step):
 
+    name = Property.Number(label="Test")
+
+
     async def run(self):
-        i = 0
-        while i < 3:
-            await asyncio.sleep(1)
-            print("RUN STEP")
-            i = i + 1
+        self.name = "HELLO WORLD"
+        #await asyncio.sleep(1)
+        raise Exception("OH O")
+        print("RUN STEP", self.id, self.name, self.__dict__)
 
 
 def setup(cbpi):
