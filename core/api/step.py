@@ -27,7 +27,7 @@ class Step(object):
 
     async def _run(self):
         i = 0
-        while i < 5:
+        while i < 20:
             try:
                 await self.run()
             except Exception as e:

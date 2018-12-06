@@ -13,6 +13,7 @@ from aiohttp_swagger import setup_swagger
 from core.controller.config_controller import ConfigController
 from core.controller.kettle_controller import KettleController
 from core.controller.step_controller import StepController
+from core.extension.comp import MyComp
 from core.job.aiohttp import setup, get_scheduler_from_app
 
 from core.controller.actor_controller import ActorController
@@ -61,6 +62,7 @@ class CraftBeerPi():
         self.kettle = KettleController(self)
         self.step = StepController(self)
         self.notification = NotificationController(self)
+        self.dummy = MyComp(self)
 
         self.login = Login(self)
 

@@ -1,7 +1,19 @@
-from core.api.decorator import on_event
-from core.api.extension import CBPiExtension
+from aiohttp import web
 
-class MyComp(CBPiExtension):
+from core.api.decorator import on_event, request_mapping
+from core.api.extension import CBPiExtension
+from core.controller.crud_controller import CRUDController
+from core.database.orm_framework import DBModel
+from core.http_endpoints.http_api import HttpAPI
+
+
+class DummyModel(DBModel):
+    __fields__ = ["name"]
+    __table_name__ = "dummy"
+
+
+class MyComp(CBPiExtension, CRUDController, HttpAPI):
+    model = DummyModel
 
     def __init__(self, cbpi):
         '''
@@ -11,7 +23,9 @@ class MyComp(CBPiExtension):
         '''
         self.cbpi = cbpi
         # register for bus events
-        self.cbpi.register_events(self)
+        self.cbpi.register(self, "/dummy")
+
+
 
     @on_event(topic="actor/#")
     def listen(self, **kwargs):
@@ -23,6 +37,9 @@ class MyComp(CBPiExtension):
 
         self.cbpi.bus.fire(topic="actor/%s/toggle" % 1, id=1)
 
+
+
+
 def setup(cbpi):
     '''
     Setup method is invoked during startup
@@ -31,4 +48,5 @@ def setup(cbpi):
     :return: 
     '''
     # regsiter the component to the core
-    cbpi.plugin.register("MyComp", MyComp)
+    #cbpi.plugin.register("MyComp", MyComp)
+    pass

@@ -102,3 +102,10 @@ CREATE TABLE IF NOT EXISTS translation
     text VARCHAR(100) NOT NULL,
     PRIMARY KEY (language_code, key)
 );
+
+CREATE TABLE IF NOT EXISTS dummy
+(
+    id INTEGER PRIMARY KEY NOT NULL,
+    name VARCHAR(80)
+
+);

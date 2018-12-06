@@ -105,8 +105,9 @@ class PluginController():
         if issubclass(clazz, Step):
             self.cbpi.step.types[name] = self._parse_props(clazz)
             print(self.cbpi.step.types)
-        #if issubclass(clazz, CBPiExtension):
-        #    self.c  = clazz(self.cbpi)
+        if issubclass(clazz, CBPiExtension):
+            self.c  = clazz(self.cbpi)
+            self.cbpi.register(self.c, "/dummy")
 
 
     def _parse_props(self, cls):

@@ -20,6 +20,12 @@ class StepController():
         #self.start()
         pass
 
+    @request_mapping(path="/action", auth_required=False)
+    async def http_action(self, request):
+        self.cbpi.bus.fire("step/action", action="test")
+        return web.Response(text="OK")
+
+
     @request_mapping(path="/start", auth_required=False)
     async def http_start(self, request):
         self.cbpi.bus.fire("step/start")
@@ -29,6 +35,14 @@ class StepController():
     async def http_reset(self, request):
         self.cbpi.bus.fire("step/reset")
         return web.Response(text="OK")
+
+    @on_event("step/action")
+    def handle_action(self, topic, action, **kwargs):
+        print("process action")
+        if self.current_step is not None:
+            self.current_step.__getattribute__(action)()
+            pass
+
 
     @on_event("step/start")
     def handle_start(self, topic, **kwargs):
