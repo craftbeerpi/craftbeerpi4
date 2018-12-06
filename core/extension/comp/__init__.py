@@ -23,8 +23,7 @@ class MyComp(CBPiExtension, CRUDController, HttpAPI):
         '''
         self.cbpi = cbpi
         # register for bus events
-        self.cbpi.register(self, "/dummy")
-
+        self.cbpi.register(self, "/dummy", static="./core/extension/comp/static")
 
 
     @on_event(topic="actor/#")
@@ -48,5 +47,5 @@ def setup(cbpi):
     :return: 
     '''
     # regsiter the component to the core
-    #cbpi.plugin.register("MyComp", MyComp)
+    cbpi.plugin.register("MyComp", MyComp)
     pass

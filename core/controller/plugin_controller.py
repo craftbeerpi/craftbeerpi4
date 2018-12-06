@@ -38,7 +38,7 @@ class PluginController():
                     data = yaml.load(await resp.text())
                     return data
 
-    async def load_plugins(self):
+    def load_plugins(self):
 
         for filename in os.listdir("./core/extension"):
 
@@ -107,7 +107,8 @@ class PluginController():
             print(self.cbpi.step.types)
         if issubclass(clazz, CBPiExtension):
             self.c  = clazz(self.cbpi)
-            self.cbpi.register(self.c, "/dummy")
+            print("D###### DUMMY")
+            #self.cbpi.register(self.c, "/dummy")
 
 
     def _parse_props(self, cls):

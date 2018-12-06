@@ -62,10 +62,12 @@ class CraftBeerPi():
         self.kettle = KettleController(self)
         self.step = StepController(self)
         self.notification = NotificationController(self)
-        self.dummy = MyComp(self)
+        #self.dummy = MyComp(self)
+
 
         self.login = Login(self)
 
+        self.plugin.load_plugins()
         self.register_events(self.ws)
 
 
@@ -127,7 +129,7 @@ class CraftBeerPi():
         for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "ws")]:
             self.ws.add_callback(method, method.__getattribute__("key"))
 
-    def register(self, obj, url_prefix=None):
+    def register(self, obj, url_prefix=None, static=None):
 
         '''
         This method parses the provided object
@@ -136,13 +138,13 @@ class CraftBeerPi():
         :param url_prefix: that prefix for HTTP Endpoints
         :return: None
         '''
-        self.register_http_endpoints(obj, url_prefix)
+        self.register_http_endpoints(obj, url_prefix, static)
         self.register_events(obj)
         self.register_ws(obj)
         self.register_background_task(obj)
         self.register_on_startup(obj)
 
-    def register_http_endpoints(self, obj, url_prefix=None):
+    def register_http_endpoints(self, obj, url_prefix=None, static=None):
         '''
         This method parses the provided object for @request_mapping decorator
         
@@ -178,10 +180,14 @@ class CraftBeerPi():
 
             switcher[http_method]()
 
+
+
         if url_prefix is not None:
             print("Prefx", url_prefix)
             sub = web.Application()
             sub.add_routes(routes)
+            if static is not None:
+                sub.add_routes([web.static('/static', static, show_index=True)])
             self.app.add_subapp(url_prefix, sub)
         else:
             self.app.add_routes(routes)
@@ -247,7 +253,8 @@ class CraftBeerPi():
 
         async def load_plugins(app):
             #await PluginController.load_plugin_list()
-            await self.plugin.load_plugins()
+            #self.plugin.load_plugins()
+            pass
 
         async def call_initializer(app):
 
