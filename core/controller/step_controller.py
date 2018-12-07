@@ -36,12 +36,25 @@ class StepController():
         self.cbpi.bus.fire("step/reset")
         return web.Response(text="OK")
 
+    @request_mapping(path="/next", auth_required=False)
+    async def http_reset(self, request):
+        self.cbpi.bus.fire("step/next")
+        return web.Response(text="OK")
+
     @on_event("step/action")
     def handle_action(self, topic, action, **kwargs):
         print("process action")
         if self.current_step is not None:
             self.current_step.__getattribute__(action)()
             pass
+
+    @on_event("step/next")
+    def handle_next(self, **kwargs):
+        print("process action")
+        if self.current_step is not None:
+            self.current_step.next()
+            pass
+
 
 
     @on_event("step/start")
@@ -53,7 +66,7 @@ class StepController():
         if self.current_step is not None:
             self.current_task.cancel()
             self.current_step.reset()
-            print("rESeT", self.current_step.id, self.steps)
+
             self.steps[self.current_step.id]["state"] = None
             self.current_step = None
             self.current_task = None
@@ -102,7 +115,7 @@ class StepController():
                     print("----------")
                     config = dict(cbpi = self.cbpi, id=key, name="Manuel", managed_fields=self.get_manged_fields_as_array(step_type))
                     self.current_step = step_type["class"](**config)
-                    self.current_task = loop.create_task(self.current_step._run())
+                    self.current_task = loop.create_task(self.current_step.run())
                     self.current_task.add_done_callback(self._step_done)
                     open_step = True
                     break

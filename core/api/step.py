@@ -9,43 +9,54 @@ class Step(object):
 
     __dirty = False
     managed_fields = []
-    _interval = 0.1
+    _interval = 1
+    _max_exceptions = 2
+    _exception_count = 0
 
     def __init__(self, *args, **kwargs):
         self.logger = logging.getLogger(__name__)
         for a in kwargs:
             super(Step, self).__setattr__(a, kwargs.get(a))
         self.id = kwargs.get("id")
-        self.stop = False
+        self.is_stopped = False
+        self.is_next = False
         self.start = time.time()
 
     def running(self):
-        if self.stop is False:
+        if self.is_next is True:
+            return False
+
+        if self.is_stopped is True:
             return False
 
         return True
 
-    async def _run(self):
-        i = 0
-        while i < 20:
+    async def run(self):
+
+        while self.running():
             try:
-                await self.run()
+                await self.run_cycle()
             except Exception as e:
-                pass
-                #logging.exception("Step Error")
+                logging.exception("Step Error")
+                self._exception_count = self._exception_count + 1
+                if self._exception_count == self._max_exceptions:
+                    self.stop()
             print("INTER",self._interval)
             await asyncio.sleep(self._interval)
-            i = i + 1
+
             if self.is_dirty():
                 # Now we have to store the managed props
                 self.reset_dirty()
 
-    async def run(self):
+    async def run_cycle(self):
         print("NOTING IMPLEMENTED")
         pass
 
+    def next(self):
+        self.is_next = True
+
     def stop(self):
-        pass
+        self.is_stopped = True
 
     def reset(self):
         pass

@@ -8,14 +8,19 @@ class CustomStep(Step):
 
     name = Property.Number(label="Test")
     _interval = 1
+    i = 0
     
     @action(key="name", parameters=None)
     def test(self, **kwargs):
         self.name="WOOHOO"
 
-    async def run(self):
+    async def run_cycle(self):
+
 
         #await asyncio.sleep(1)
+        self.i = self.i + 1
+
+
 
         print("RUN STEP", self.id, self.name, self.__dict__)
 
