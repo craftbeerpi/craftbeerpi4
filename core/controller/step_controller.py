@@ -1,23 +1,29 @@
 import asyncio
 from aiohttp import web
 from core.api import on_event, request_mapping
+from core.controller.crud_controller import CRUDController
+from core.database.model import StepModel
+from core.http_endpoints.http_api import HttpAPI
 
-class StepController():
+
+class StepController(HttpAPI, CRUDController):
+
+    model = StepModel
 
     def __init__(self, cbpi):
+        super(StepController, self).__init__(cbpi)
+
         self.cbpi = cbpi
         self.current_task = None
         self.types = {}
-        self.steps = {
-            1: dict(name="S1", config=dict(time=1), type="CustomStep", state=None),
-            2: dict(name="S2", config=dict(time=1), type="CustomStep", state=None),
-            3: dict(name="S3", config=dict(time=1), type="CustomStep", state=None)
-        }
+
         self.current_step = None
         self.cbpi.register(self, "/step")
 
     async def init(self):
         #self.start()
+
+        await super(StepController, self).init()
         pass
 
     @request_mapping(path="/action", auth_required=False)
@@ -77,8 +83,8 @@ class StepController():
         if self.current_step is not None:
             self.current_step.stop()
 
-        for key, step in self.steps.items():
-            step["state"] = None
+        for key, step in self.cache.items():
+            step.state = None
 
         self.current_step = None
 
@@ -89,7 +95,7 @@ class StepController():
     def _step_done(self, task):
 
         if task.cancelled() == False:
-            self.steps[self.current_step.id]["state"] = "D"
+            self.cache[self.current_step.id].state = "D"
             step_id = self.current_step.id
             self.current_step = None
             self.cbpi.bus.fire("step/%s/done" % step_id)
@@ -107,13 +113,13 @@ class StepController():
         if self.current_step is None:
             loop = asyncio.get_event_loop()
             open_step = False
-            for key, step in self.steps.items():
-                if step["state"] is None:
+            for key, step in self.cache.items():
+                if step.state is None:
                     step_type = self.types["CustomStep"]
                     print("----------")
                     print(step_type)
                     print("----------")
-                    config = dict(cbpi = self.cbpi, id=key, name="Manuel", managed_fields=self.get_manged_fields_as_array(step_type))
+                    config = dict(cbpi = self.cbpi, id=key, name=step.name, managed_fields=self.get_manged_fields_as_array(step_type))
                     self.current_step = step_type["class"](**config)
                     self.current_task = loop.create_task(self.current_step.run())
                     self.current_task.add_done_callback(self._step_done)

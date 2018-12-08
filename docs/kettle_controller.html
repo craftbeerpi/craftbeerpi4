@@ -1,0 +1,488 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Kettle &#8212; CraftBeerPi 4.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Properties" href="properties.html" />
+    <link rel="prev" title="Brewing Step" href="step.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="kettle">
+<h1>Kettle<a class="headerlink" href="#kettle" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="kettlecontroller">
+<h2>KettleController<a class="headerlink" href="#kettlecontroller" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.controller.kettle_controller.KettleController">
+<em class="property">class </em><code class="descclassname">core.controller.kettle_controller.</code><code class="descname">KettleController</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">core.controller.crud_controller.CRUDController</span></code></p>
+<p>The main kettle controller</p>
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController._is_logic_running">
+<code class="descname">_is_logic_running</code><span class="sig-paren">(</span><em>kettle_id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController._is_logic_running" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.agitator_off">
+<code class="descname">agitator_off</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.agitator_off" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.agitator_on">
+<code class="descname">agitator_on</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.agitator_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.get_temp">
+<code class="descname">get_temp</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.get_temp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.get_traget_temp">
+<code class="descname">get_traget_temp</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.get_traget_temp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.handle_automtic_event">
+<code class="descname">handle_automtic_event</code><span class="sig-paren">(</span><em>id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.handle_automtic_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to handle the event ‘kettle/+/automatic’</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> – The kettle id</li>
+<li><strong>kwargs</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.heater_off">
+<code class="descname">heater_off</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.heater_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience Method to switch the heater of a kettle off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.heater_on">
+<code class="descname">heater_on</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.heater_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience Method to switch the heater of a kettle on</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> – the kettle id</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(boolean, string)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method initializes all actors during startup. It creates actor instances</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.job_stop">
+<code class="descname">job_stop</code><span class="sig-paren">(</span><em>key</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#core.controller.kettle_controller.KettleController.job_stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.controller.kettle_controller.KettleController.model">
+<code class="descname">model</code><a class="headerlink" href="#core.controller.kettle_controller.KettleController.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">core.database.model.KettleModel</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.controller.kettle_controller.KettleController.toggle_automtic">
+<code class="descname">toggle_automtic</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.toggle_automtic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience Method to toggle automatic</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> – kettle id as int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(boolean, string)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cbpikettlelogic">
+<h2>CBPiKettleLogic<a class="headerlink" href="#cbpikettlelogic" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.api.kettle_logic.CBPiKettleLogic">
+<em class="property">class </em><code class="descclassname">core.api.kettle_logic.</code><code class="descname">CBPiKettleLogic</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.kettle_logic.CBPiKettleLogic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">core.api.extension.CBPiExtension</span></code></p>
+<p>Base Class for a Kettle logic.</p>
+<dl class="method">
+<dt id="core.api.kettle_logic.CBPiKettleLogic.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.kettle_logic.CBPiKettleLogic.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code which will be executed when the logic is initialised. Needs to be overwritten by the implementing logic</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.api.kettle_logic.CBPiKettleLogic.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.kettle_logic.CBPiKettleLogic.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is running as background process when logic is started.
+Typically a while loop responsible that the method keeps running</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>while self.running:</dt>
+<dd>await asyncio.sleep(1)</dd>
+</dl>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.api.kettle_logic.CBPiKettleLogic.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.kettle_logic.CBPiKettleLogic.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code which will be executed when the logic is stopped. Needs to be overwritten by the implementing logic</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="custom-logic">
+<h2>Custom Logic<a class="headerlink" href="#custom-logic" title="Permalink to this headline">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="init-py">
+<div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#init-py" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">core.api</span> <span class="kn">import</span> <span class="n">Property</span><span class="p">,</span> <span class="n">on_event</span>
+<span class="kn">from</span> <span class="nn">core.api.kettle_logic</span> <span class="kn">import</span> <span class="n">CBPiKettleLogic</span>
+
+
+<span class="k">class</span> <span class="nc">CustomLogic</span><span class="p">(</span><span class="n">CBPiKettleLogic</span><span class="p">):</span>
+
+    <span class="n">test</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+
+    <span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+
+
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">wait_for_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+
+        <span class="n">future_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cbpi</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">create_future</span><span class="p">()</span>
+
+        <span class="n">async</span> <span class="k">def</span> <span class="nf">default_callback</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">future_obj</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="s2">&quot;HELLO&quot;</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cbpi</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">topic</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">default_callback</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">callback</span><span class="o">.</span><span class="n">future</span> <span class="o">=</span> <span class="n">future_obj</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cbpi</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">topic</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;----&gt; WAIT FOR FUTURE&quot;</span><span class="p">)</span>
+                <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">future_obj</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;------&gt; TIMEOUT&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">future_obj</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;timeout!&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;----&gt; WAIT FOR FUTURE&quot;</span><span class="p">)</span>
+            <span class="n">await</span> <span class="n">future_obj</span>
+            <span class="k">return</span> <span class="n">future_obj</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+
+
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+
+        <span class="n">async</span> <span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cbpi</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">my_callback</span><span class="p">)</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;future&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="s2">&quot;AMAZING&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;OTHER VALUE&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_event</span><span class="p">(</span><span class="s2">&quot;sensor/1&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">my_callback</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;THE RESULT&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        while self.running:</span>
+<span class="sd">            </span>
+<span class="sd">            </span>
+<span class="sd">            print(&quot;RUN&quot;, self.test)</span>
+<span class="sd">            value = await self.cbpi.sensor.get_value(1)</span>
+<span class="sd">            print(value)</span>
+<span class="sd">            if value &gt;= 10:</span>
+<span class="sd">                break</span>
+<span class="sd">            await asyncio.sleep(1)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;YES IM FINISHED STOP LOGIC&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cbpi</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This method is called by the server during startup </span>
+<span class="sd">    Here you need to register your plugins at the server</span>
+<span class="sd">    </span>
+<span class="sd">    :param cbpi: the cbpi core </span>
+<span class="sd">    :return: </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">cbpi</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;CustomKettleLogic&quot;</span><span class="p">,</span> <span class="n">CustomLogic</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>config.yaml</p>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">DummyKettleLogic</span>
+<span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">CraftBeerPi</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="actor.html">Actor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor.html">Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step.html">Brewing Step</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Kettle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#kettlecontroller">KettleController</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cbpikettlelogic">CBPiKettleLogic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-logic">Custom Logic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="step.html" title="previous chapter">Brewing Step</a></li>
+      <li>Next: <a href="properties.html" title="next chapter">Properties</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Manuel Fritsch.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/kettle_controller.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

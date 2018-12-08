@@ -8,7 +8,6 @@ class CustomLogic(CBPiKettleLogic):
 
     test = Property.Number(label="Test")
 
-
     running = True
 
 
@@ -16,8 +15,6 @@ class CustomLogic(CBPiKettleLogic):
 
 
         future_obj = self.cbpi.app.loop.create_future()
-
-
 
         async def default_callback(id, **kwargs):
             future_obj.set_result("HELLO")

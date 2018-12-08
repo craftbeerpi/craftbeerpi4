@@ -1,13 +1,13 @@
 import asyncio
 
 from core.api import Property, action
-from core.api.step import Step
+from core.api.step import SimpleStep
 
 
-class CustomStep(Step):
+class CustomStep(SimpleStep):
 
     name = Property.Number(label="Test")
-    _interval = 1
+
     i = 0
     
     @action(key="name", parameters=None)
@@ -19,8 +19,6 @@ class CustomStep(Step):
 
         #await asyncio.sleep(1)
         self.i = self.i + 1
-
-
 
         print("RUN STEP", self.id, self.name, self.__dict__)
 

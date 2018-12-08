@@ -1,12 +1,11 @@
 import logging
 
-from core.api import CBPiActor, Property, action, background_task
-
+from core.api import CBPiActor, Property, action
 
 
 class CustomActor(CBPiActor):
 
-
+    # Custom property which can be configured by the user
     gpio = Property.Number(label="Test")
 
 
@@ -19,10 +18,15 @@ class CustomActor(CBPiActor):
 
     def off(self):
         print("OFF", self.gpio)
+
+        # Code to swtich the actor off goes here
+
         self.state = False
 
     def on(self, power=100):
+        print("ON", self.gpio)
 
+        # Code to swtich the actor on goes here
 
         self.state = True
 

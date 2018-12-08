@@ -8,6 +8,9 @@ from core.http_endpoints.http_api import HttpAPI
 
 
 class DummyModel(DBModel):
+    '''
+    Cumstom Data Model which will is stored in the database
+    '''
     __fields__ = ["name"]
     __table_name__ = "dummy"
 
@@ -22,7 +25,8 @@ class MyComp(CBPiExtension, CRUDController, HttpAPI):
         :param cbpi: 
         '''
         self.cbpi = cbpi
-        # register for bus events
+        # register component for http, events
+        # In addtion the sub folder static is exposed to access static content via http
         self.cbpi.register(self, "/dummy", static="./core/extension/comp/static")
 
 
@@ -35,8 +39,6 @@ class MyComp(CBPiExtension, CRUDController, HttpAPI):
         print("HANDLE AUTOMATIC", kwargs)
 
         self.cbpi.bus.fire(topic="actor/%s/toggle" % 1, id=1)
-
-
 
 
 def setup(cbpi):

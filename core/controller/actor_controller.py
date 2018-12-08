@@ -118,7 +118,8 @@ class ActorController(ActorHttp, CRUDController):
         Method to toggle an actor on or off
         Supporting Event Topic "actor/+/toggle"
         
-        :param power: 
+        :param id: the actor id 
+        :param power: the power as interger between 0 and 100
         :return: 
         '''
 
@@ -137,7 +138,7 @@ class ActorController(ActorHttp, CRUDController):
         Method to switch and actor off
         Supporting Event Topic "actor/+/off"
         
-        :param id: 
+        :param id: the actor id 
         :param kwargs: 
         """
 

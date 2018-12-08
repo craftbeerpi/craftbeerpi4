@@ -7,13 +7,20 @@ class CBPiKettleLogic(CBPiExtension):
     Base Class for a Kettle logic. 
     '''
 
+    def init(self):
+        '''
+        Code which will be executed when the logic is initialised. Needs to be overwritten by the implementing logic
+        
+        :return: None
+        '''
+        pass
 
     def stop(self):
         '''
-        test
+        Code which will be executed when the logic is stopped. Needs to be overwritten by the implementing logic
         
         
-        :return: 
+        :return: None
         '''
         pass
 
@@ -25,7 +32,7 @@ class CBPiKettleLogic(CBPiExtension):
             while self.running:
                 await asyncio.sleep(1)
         
-        :return: 
+        :return: None
         '''
 
         pass

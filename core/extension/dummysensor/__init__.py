@@ -8,15 +8,21 @@ from core.api.sensor import CBPiSensor
 
 class CustomSensor(CBPiSensor):
 
-    name = Property.Number(label="Test")
-    name1 = Property.Text(label="Test")
-    interval = Property.Number(label="interval")
-    name2 = Property.Kettle(label="Test")
+    # Custom Properties which will can be configured by the user
 
+    p1 = Property.Number(label="Test")
+    p2 = Property.Text(label="Test")
+    interval = Property.Number(label="interval")
+
+    # Internal runtime variable
     value = 0
 
     @action(key="name", parameters={})
     def myAction(self):
+        '''
+        Custom Action Exampel
+        :return: None
+        '''
         pass
 
     def state(self):
@@ -28,8 +34,7 @@ class CustomSensor(CBPiSensor):
     async def run(self, cbpi):
         self.value = 0
         while True:
-            #await asyncio.sleep(self.interval)
-            await asyncio.sleep(random.uniform(0, 1))
+            await asyncio.sleep(self.interval)
 
             self.value = self.value + 1
             cbpi.bus.fire("sensor/%s" % self.id, value=self.value)

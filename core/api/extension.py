@@ -12,6 +12,12 @@ logging.basicConfig(level=logging.INFO)
 
 class CBPiExtension():
 
+    def init(self):
+        pass
+
+    def stop(self):
+        pass
+
     def __init__(self, *args, **kwds):
 
         for a in kwds:

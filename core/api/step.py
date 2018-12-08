@@ -5,7 +5,7 @@ import asyncio
 import logging
 
 
-class Step(object):
+class SimpleStep(object):
 
     __dirty = False
     managed_fields = []
@@ -16,7 +16,7 @@ class Step(object):
     def __init__(self, *args, **kwargs):
         self.logger = logging.getLogger(__name__)
         for a in kwargs:
-            super(Step, self).__setattr__(a, kwargs.get(a))
+            super(SimpleStep, self).__setattr__(a, kwargs.get(a))
         self.id = kwargs.get("id")
         self.is_stopped = False
         self.is_next = False
@@ -37,15 +37,18 @@ class Step(object):
             try:
                 await self.run_cycle()
             except Exception as e:
-                logging.exception("Step Error")
+                logging.exception("SimpleStep Error")
                 self._exception_count = self._exception_count + 1
                 if self._exception_count == self._max_exceptions:
+                    self.logger.error("Step Exception limit exceeded. Stopping Step")
                     self.stop()
             print("INTER",self._interval)
             await asyncio.sleep(self._interval)
 
             if self.is_dirty():
                 # Now we have to store the managed props
+
+
                 self.reset_dirty()
 
     async def run_cycle(self):
@@ -70,6 +73,6 @@ class Step(object):
     def __setattr__(self, name, value):
         if name != "_Step__dirty" and name in self.managed_fields:
             self.__dirty = True
-            super(Step, self).__setattr__(name, value)
+            super(SimpleStep, self).__setattr__(name, value)
         else:
-            super(Step, self).__setattr__(name, value)
+            super(SimpleStep, self).__setattr__(name, value)
