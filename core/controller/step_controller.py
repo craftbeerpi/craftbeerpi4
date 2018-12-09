@@ -7,6 +7,11 @@ from core.http_endpoints.http_api import HttpAPI
 
 
 class StepController(HttpAPI, CRUDController):
+    '''
+    The Step Controller. This controller is responsible to start and stop the brewing steps.
+    
+    '''
+
 
     model = StepModel
 
@@ -21,42 +26,87 @@ class StepController(HttpAPI, CRUDController):
         self.cbpi.register(self, "/step")
 
     async def init(self):
-        #self.start()
-
+        '''
+        Initializer of the the Step Controller. 
+        :return: 
+        '''
         await super(StepController, self).init()
         pass
 
     @request_mapping(path="/action", auth_required=False)
     async def http_action(self, request):
+
+        '''
+        HTTP Endpoint to call an action on the current step. 
+        
+        :param request: web requset
+        :return: web.Response(text="OK"
+        '''
         self.cbpi.bus.fire("step/action", action="test")
         return web.Response(text="OK")
 
 
     @request_mapping(path="/start", auth_required=False)
     async def http_start(self, request):
+
+        '''
+        HTTP Endpoint to start the brewing process.
+        
+        :param request: 
+        :return: 
+        '''
+
         self.cbpi.bus.fire("step/start")
         return web.Response(text="OK")
 
     @request_mapping(path="/reset", auth_required=False)
     async def http_reset(self, request):
+        '''
+        HTTP Endpoint to call reset on the current step.
+        
+        :param request: 
+        :return: 
+        '''
         self.cbpi.bus.fire("step/reset")
         return web.Response(text="OK")
 
     @request_mapping(path="/next", auth_required=False)
-    async def http_reset(self, request):
+    async def http_next(self, request):
+
+        '''
+        HTTP Endpoint to start the next step. The current step will be stopped
+        
+        :param request: 
+        :return: 
+        '''
         self.cbpi.bus.fire("step/next")
         return web.Response(text="OK")
 
     @on_event("step/action")
-    def handle_action(self, topic, action, **kwargs):
-        print("process action")
+    def handle_action(self, action, **kwargs):
+
+        '''
+        Event Handler for "step/action".
+        It invokes the provided method name on the current step
+        
+        
+        :param action: the method name which will be invoked
+        :param kwargs: 
+        :return: None
+        '''
         if self.current_step is not None:
             self.current_step.__getattribute__(action)()
-            pass
+
 
     @on_event("step/next")
     def handle_next(self, **kwargs):
-        print("process action")
+        '''
+        Event Handler for "step/next".
+        It start the next step
+        
+        :param kwargs: 
+        :return: None
+        '''
         if self.current_step is not None:
             self.current_step.next()
             pass
@@ -64,11 +114,27 @@ class StepController(HttpAPI, CRUDController):
 
 
     @on_event("step/start")
-    def handle_start(self, topic, **kwargs):
+    def handle_start(self, **kwargs):
+        '''
+        Event Handler for "step/start".
+        It starts the brewing process
+        
+        :param kwargs: 
+        :return: None
+        '''
         self.start()
 
     @on_event("step/reset")
-    def handle_reset(self, topic, **kwargs):
+    def handle_reset(self, **kwargs):
+        '''
+        Event Handler for "step/reset".
+        Resets the current step
+        
+        :param kwargs: 
+        :return: None
+        '''
+
+
         if self.current_step is not None:
             self.current_task.cancel()
             self.current_step.reset()
@@ -79,7 +145,15 @@ class StepController(HttpAPI, CRUDController):
             self.start()
 
     @on_event("step/stop")
-    def handle_stop(self, topic, **kwargs):
+    def handle_stop(self,  **kwargs):
+        '''
+        Event Handler for "step/stop".
+        Stops the current step
+        
+        
+        :param kwargs: 
+        :return: None
+        '''
         if self.current_step is not None:
             self.current_step.stop()
 
@@ -89,7 +163,16 @@ class StepController(HttpAPI, CRUDController):
         self.current_step = None
 
     @on_event("step/+/done")
-    def handle(self, topic, **kwargs):
+    def handle_done(self, topic, **kwargs):
+
+        '''
+        Event Handler for "step/+/done".
+        Starts the next step
+        
+        :param topic: 
+        :param kwargs: 
+        :return: 
+        '''
         self.start()
 
     def _step_done(self, task):
@@ -100,7 +183,7 @@ class StepController(HttpAPI, CRUDController):
             self.current_step = None
             self.cbpi.bus.fire("step/%s/done" % step_id)
 
-    def get_manged_fields_as_array(self, type_cfg):
+    def _get_manged_fields_as_array(self, type_cfg):
         print("tYPE", type_cfg)
         result = []
         for f in type_cfg.get("properties"):
@@ -109,6 +192,12 @@ class StepController(HttpAPI, CRUDController):
         return result
 
     def start(self):
+
+        '''
+        Start the first step 
+        
+        :return:None  
+        '''
 
         if self.current_step is None:
             loop = asyncio.get_event_loop()
@@ -119,7 +208,7 @@ class StepController(HttpAPI, CRUDController):
                     print("----------")
                     print(step_type)
                     print("----------")
-                    config = dict(cbpi = self.cbpi, id=key, name=step.name, managed_fields=self.get_manged_fields_as_array(step_type))
+                    config = dict(cbpi = self.cbpi, id=key, name=step.name, managed_fields=self._get_manged_fields_as_array(step_type))
                     self.current_step = step_type["class"](**config)
                     self.current_task = loop.create_task(self.current_step.run())
                     self.current_task.add_done_callback(self._step_done)
@@ -127,5 +216,6 @@ class StepController(HttpAPI, CRUDController):
                     break
             if open_step == False:
                 self.cbpi.bus.fire("step/berwing/finished")
+
     async def stop(self):
         pass

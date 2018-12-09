@@ -3,6 +3,7 @@ import time
 import asyncio
 
 import logging
+from abc import abstractmethod
 
 
 class SimpleStep(object):
@@ -23,6 +24,12 @@ class SimpleStep(object):
         self.start = time.time()
 
     def running(self):
+        '''
+        Method checks if the step should continue running. 
+        The method will return False if the step is requested to stop or the next step should start
+        
+        :return: True if the step is running. Otherwise False.
+        '''
         if self.is_next is True:
             return False
 
@@ -32,6 +39,14 @@ class SimpleStep(object):
         return True
 
     async def run(self):
+
+        '''
+        This method in running in the background. It invokes the run_cycle method in the configured interval
+        It checks if a managed variable was modified in the last exection cycle. If yes, the method will persisit the new value of the
+        managed property
+        
+        :return: None 
+        '''
 
         while self.running():
             try:
@@ -51,23 +66,61 @@ class SimpleStep(object):
 
                 self.reset_dirty()
 
+    @abstractmethod
     async def run_cycle(self):
+        '''
+        This method is executed in the defined interval. 
+        That the place to put your step logic.
+        The method need to be overwritten in the Ccstom step implementaion
+        
+        :return: None 
+        '''
+
         print("NOTING IMPLEMENTED")
         pass
 
     def next(self):
+
+        '''
+        Request to stop the the step
+        
+        :return: None 
+        '''
+
         self.is_next = True
 
     def stop(self):
+        '''
+        Request to stop the step
+        
+        :return: None 
+        '''
         self.is_stopped = True
 
     def reset(self):
+        '''
+        Reset the step. This method needs to be overwritten by the custom step implementation
+        
+        :return: None 
+        '''
         pass
 
     def is_dirty(self):
+
+        '''
+        Check if a managed variable has a new value
+        
+        :return: True if at least one managed variable has a new value assigend. Otherwise False
+        '''
         return self.__dirty
 
     def reset_dirty(self):
+        '''
+        Reset the dirty flag
+        
+        :return: 
+        '''
+
         self.__dirty = False
 
     def __setattr__(self, name, value):

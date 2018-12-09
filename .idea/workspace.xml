@@ -2,84 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="Lots of changes">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/css/badge_only.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/css/theme.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Inconsolata-Bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Inconsolata-Regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Inconsolata.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato-Bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato-Regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bold.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bold.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bold.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bolditalic.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bolditalic.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bolditalic.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bolditalic.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-italic.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-italic.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-italic.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-italic.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-regular.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-regular.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-regular.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab-Bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab-Regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-bold.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-bold.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-bold.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-regular.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-regular.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-regular.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/fontawesome-webfont.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/fontawesome-webfont.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/fontawesome-webfont.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/fontawesome-webfont.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/fonts/fontawesome-webfont.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/js/modernizr.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_static/js/theme.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/craftbeerpi.db" afterPath="$PROJECT_DIR$/craftbeerpi.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/objects.inv" afterPath="$PROJECT_DIR$/docs/objects.inv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/actor.py" afterPath="$PROJECT_DIR$/core/api/actor.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/extension.py" afterPath="$PROJECT_DIR$/core/api/extension.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/kettle_logic.py" afterPath="$PROJECT_DIR$/core/api/kettle_logic.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/sensor.py" afterPath="$PROJECT_DIR$/core/api/sensor.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/property.py" afterPath="$PROJECT_DIR$/core/api/property.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/api/step.py" afterPath="$PROJECT_DIR$/core/api/step.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/actor_controller.py" afterPath="$PROJECT_DIR$/core/controller/actor_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/plugin_controller.py" afterPath="$PROJECT_DIR$/core/controller/plugin_controller.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/controller/step_controller.py" afterPath="$PROJECT_DIR$/core/controller/step_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/database/model.py" afterPath="$PROJECT_DIR$/core/database/model.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/comp/__init__.py" afterPath="$PROJECT_DIR$/core/extension/comp/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/comp/config.yaml" afterPath="$PROJECT_DIR$/core/extension/comp/config.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummyactor/config.yaml" afterPath="$PROJECT_DIR$/core/extension/dummyactor/config.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummylogic/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummylogic/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummylogic/config.yaml" afterPath="$PROJECT_DIR$/core/extension/dummylogic/config.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummysensor/config.yaml" afterPath="$PROJECT_DIR$/core/extension/dummysensor/config.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummystep/__init__.py" afterPath="$PROJECT_DIR$/core/extension/dummystep/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/extension/dummystep/config.yaml" afterPath="$PROJECT_DIR$/core/extension/dummystep/config.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/.buildinfo" afterPath="$PROJECT_DIR$/docs/.buildinfo" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_sources/actor.rst.txt" afterPath="$PROJECT_DIR$/docs/_sources/actor.rst.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_sources/index.rst.txt" afterPath="$PROJECT_DIR$/docs/_sources/index.rst.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_sources/step.rst.txt" afterPath="$PROJECT_DIR$/docs/_sources/step.rst.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_static/pygments.css" afterPath="$PROJECT_DIR$/docs/_static/pygments.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/actor.html" afterPath="$PROJECT_DIR$/docs/actor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core.html" afterPath="$PROJECT_DIR$/docs/core.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/genindex.html" afterPath="$PROJECT_DIR$/docs/genindex.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/install.html" afterPath="$PROJECT_DIR$/docs/install.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/py-modindex.html" afterPath="$PROJECT_DIR$/docs/py-modindex.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/search.html" afterPath="$PROJECT_DIR$/docs/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/searchindex.js" afterPath="$PROJECT_DIR$/docs/searchindex.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/sensor.html" afterPath="$PROJECT_DIR$/docs/sensor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/step.html" afterPath="$PROJECT_DIR$/docs/step.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/index.rst" afterPath="$PROJECT_DIR$/docs_src/source/index.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/conf.py" afterPath="$PROJECT_DIR$/docs_src/source/conf.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/properties.rst" afterPath="$PROJECT_DIR$/docs_src/source/properties.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/sensor.rst" afterPath="$PROJECT_DIR$/docs_src/source/sensor.rst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs_src/source/step.rst" afterPath="$PROJECT_DIR$/docs_src/source/step.rst" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -92,7 +20,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/craftbeerpi4$py_test_in_tests.coverage" NAME="py.test in tests Coverage Results" MODIFIED="1542544313367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test_app.coverage" NAME="test_app Coverage Results" MODIFIED="1542463852422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1544274014837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1544389875531" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test_kettle.coverage" NAME="test kettle Coverage Results" MODIFIED="1543666720847" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$main2.coverage" NAME="main2 Coverage Results" MODIFIED="1543663949310" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -153,130 +81,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/extension/dummysensor/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sensor.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/api/sensor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="extension.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/api/extension.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="actor_controller.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/controller/actor_controller.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="actor.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs_src/build/html/actor.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-317">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <marker date="1544275015349" expanded="true" signature="7212:9772" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="7330:9764" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="7365:7684" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="7689:9759" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="7847:8399" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="7886:8090" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8095:8394" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8192:8388" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8267:8379" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8296:8370" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8420:9175" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8458:8674" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8679:9170" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8811:9164" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8886:9155" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="8915:9042" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9072:9146" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9196:9752" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9237:9445" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9450:9747" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9549:9741" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9624:9732" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9653:9723" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9812:14672" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="9985:14122" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10186:14115" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10216:14109" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10220:14101" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10240:10419" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10263:10414" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10268:10408" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10436:14096" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10459:14090" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="10464:14084" ph="..." />
-                <marker date="1544275015349" expanded="false" signature="11243:11249" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="11253:11259" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="11419:11425" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="11429:11435" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="12221:12227" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="12230:12236" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="12908:12914" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="12916:12922" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="13433:13438" ph="'" />
-                <marker date="1544275015349" expanded="false" signature="13438:13443" ph="'" />
-                <marker date="1544275015349" expanded="false" signature="13443:13448" ph="'" />
-                <marker date="1544275015349" expanded="false" signature="13761:13766" ph="'" />
-                <marker date="1544275015349" expanded="false" signature="13766:13771" ph="'" />
-                <marker date="1544275015349" expanded="false" signature="13771:13776" ph="'" />
-                <marker date="1544275015349" expanded="false" signature="13965:13971" ph="&quot;" />
-                <marker date="1544275015349" expanded="false" signature="13982:13988" ph="&quot;" />
-                <marker date="1544275015349" expanded="true" signature="14182:14665" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14212:14659" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14216:14651" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14236:14284" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14259:14279" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14264:14273" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14301:14646" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14324:14640" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14329:14634" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14818:16817" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14861:16804" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="14969:16017" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="15180:15636" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="15240:15630" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="16042:16309" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="16071:16302" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="16078:16296" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="16129:16291" ph="..." />
-                <marker date="1544275015349" expanded="false" signature="16338:16351" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="16366:16716" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="16426:16709" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="16486:16698" ph="..." />
-                <marker date="1544275015349" expanded="true" signature="16887:17192" ph="..." />
-                <marker date="1544275015349" expanded="false" signature="16895:16901" ph="©" />
-                <marker date="1544275015349" expanded="false" signature="17011:17016" ph="&amp;" />
-                <marker date="1544275015349" expanded="true" signature="17141:17181" ph="..." />
+                <element signature="e#282#289#0" expanded="true" />
+                <element signature="e#3397#3404#0" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#13600#13606#0" expanded="true" />
+                <element signature="e#13610#13616#0" expanded="true" />
+                <element signature="e#13776#13782#0" expanded="true" />
+                <element signature="e#13786#13792#0" expanded="true" />
+                <element signature="e#14578#14584#0" expanded="true" />
+                <element signature="e#14587#14593#0" expanded="true" />
+                <element signature="e#15265#15271#0" expanded="true" />
+                <element signature="e#15273#15279#0" expanded="true" />
+                <element signature="e#15790#15795#0" expanded="true" />
+                <element signature="e#15795#15800#0" expanded="true" />
+                <element signature="e#15800#15805#0" expanded="true" />
+                <element signature="e#16118#16123#0" expanded="true" />
+                <element signature="e#16123#16128#0" expanded="true" />
+                <element signature="e#16128#16133#0" expanded="true" />
+                <element signature="e#16322#16328#0" expanded="true" />
+                <element signature="e#16339#16345#0" expanded="true" />
+                <element signature="e#17601#17607#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -285,51 +115,114 @@
       <file leaf-file-name="actor.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="10" />
+            <state relative-caret-position="450">
+              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kettle_controller.rst" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/kettle_controller.rst">
+      <file leaf-file-name="sensor.rst" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/sensor.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="properties.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/build/html/properties.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kettle_logic.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/api/kettle_logic.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/extension/dummyactor/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="24" lean-forward="false" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <marker date="1544388359273" expanded="true" signature="136:12780" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="802:12772" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="839:12173" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="902:2356" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="937:2356" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="1604:2356" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="1717:2356" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11443:11449" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11443:11469" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11443:11498" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11443:12134" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11443:12147" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11443:12163" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11517:12118" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11606:11802" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11842:11915" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="11850:11906" ph="..." />
+                <marker date="1544388359273" expanded="false" signature="11860:11866" ph="©" />
+                <marker date="1544388359273" expanded="true" signature="12663:12762" ph="..." />
+                <marker date="1544388359273" expanded="true" signature="12690:12749" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="actor.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/api/actor.py">
+      <file leaf-file-name="conf.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/conf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="12" column="61" lean-forward="false" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
+            <state relative-caret-position="177">
+              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="step.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_src/source/step.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="27" column="144" lean-forward="false" selection-start-line="27" selection-start-column="144" selection-end-line="27" selection-end-column="144" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="step.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/api/step.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sensor_controller.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="property.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/api/property.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="46" column="29" lean-forward="false" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="step_controller.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/controller/step_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -345,8 +238,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>0x1048b31d0</find>
-      <find>Content</find>
       <find>asyncio</find>
       <find>_done</find>
       <find>_jobs</find>
@@ -375,6 +266,8 @@
       <find>_run</find>
       <find>steps</find>
       <find>StepBase</find>
+      <find>theme</find>
+      <find>handle(</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -393,18 +286,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/job/_job.py" />
         <option value="$PROJECT_DIR$/core/extension/dummy/__init__.py" />
         <option value="$PROJECT_DIR$/core/controller/config_controller.py" />
         <option value="$PROJECT_DIR$/core/utils/config.py" />
         <option value="$PROJECT_DIR$/core/utils/utils.py" />
         <option value="$PROJECT_DIR$/core/utils/encoder.py" />
-        <option value="$PROJECT_DIR$/docs_src/source/conf.py" />
         <option value="$PROJECT_DIR$/core/controller/crud_controller.py" />
         <option value="$PROJECT_DIR$/docs_src/source/kettle_controller.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/actor.rst" />
-        <option value="$PROJECT_DIR$/docs_src/source/properties.rst" />
-        <option value="$PROJECT_DIR$/core/api/property.py" />
         <option value="$PROJECT_DIR$/core/api/decorator.py" />
         <option value="$PROJECT_DIR$/core/job/aiohttp.py" />
         <option value="$PROJECT_DIR$/core/job/__init__.py" />
@@ -422,14 +311,11 @@
         <option value="$PROJECT_DIR$/core/extension/comp/static/index.html" />
         <option value="$PROJECT_DIR$/core/craftbeerpi.py" />
         <option value="$PROJECT_DIR$/core/extension/comp/static/index2.html" />
-        <option value="$PROJECT_DIR$/core/api/step.py" />
         <option value="$PROJECT_DIR$/core/extension/dummystep/__init__.py" />
         <option value="$PROJECT_DIR$/core/api/simplestep.py" />
         <option value="$PROJECT_DIR$/core/database/model.py" />
-        <option value="$PROJECT_DIR$/core/controller/step_controller.py" />
         <option value="$PROJECT_DIR$/core/controller/plugin_controller.py" />
         <option value="$PROJECT_DIR$/docs_src/source/index.rst" />
-        <option value="$PROJECT_DIR$/docs_src/source/step.rst" />
         <option value="$PROJECT_DIR$/core/extension/dummystep/config.yaml" />
         <option value="$PROJECT_DIR$/core/extension/dummysensor/config.yaml" />
         <option value="$PROJECT_DIR$/core/extension/dummylogic/config.yaml" />
@@ -444,6 +330,13 @@
         <option value="$PROJECT_DIR$/core/api/actor.py" />
         <option value="$PROJECT_DIR$/core/controller/actor_controller.py" />
         <option value="$PROJECT_DIR$/core/api/kettle_logic.py" />
+        <option value="$PROJECT_DIR$/docs_src/source/conf.py" />
+        <option value="$PROJECT_DIR$/core/api/property.py" />
+        <option value="$PROJECT_DIR$/docs_src/source/properties.rst" />
+        <option value="$PROJECT_DIR$/core/controller/step_controller.py" />
+        <option value="$PROJECT_DIR$/docs_src/source/step.rst" />
+        <option value="$PROJECT_DIR$/core/api/step.py" />
+        <option value="$PROJECT_DIR$/docs_src/source/sensor.rst" />
       </list>
     </option>
   </component>
@@ -454,7 +347,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="249" />
+    <option name="x" value="522" />
     <option name="y" value="154" />
     <option name="width" value="2415" />
     <option name="height" value="1447" />
@@ -570,28 +463,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="core" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craftbeerpi4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventbus.py" />
-              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EventBus" />
-              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1000,6 +871,58 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="step_controller.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StepController" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sensor_controller.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SensorController" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="plugin_controller.py" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
             </PATH_ELEMENT>
@@ -1077,6 +1000,10 @@
               <option name="myItemId" value="step.py" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SimpleStep" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1121,6 +1048,92 @@
               <option name="myItemId" value="api" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="property.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="property.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Property" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Text" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="property.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Property" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kettle_logic.py" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CBPiKettleLogic" />
+              <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1146,6 +1159,24 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="CBPiExtension" />
               <option name="myItemType" value="com.jetbrains.python.projectView.PyElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="craftbeerpi4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1674,14 +1705,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="249" y="154" width="2415" height="1447" extended-state="0" />
+    <frame x="522" y="154" width="2415" height="1447" extended-state="0" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286945" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43208432" sideWeight="0.2720238" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23004355" sideWeight="0.7279762" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286945" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290398" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41654572" sideWeight="0.49761903" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1640058" sideWeight="0.49761903" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1573499" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20414078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32616752" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1739,67 +1770,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/eventbus3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="99" column="67" lean-forward="false" selection-start-line="89" selection-start-column="16" selection-end-line="99" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/logging/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="1372" column="8" lean-forward="false" selection-start-line="1372" selection-start-column="8" selection-end-line="1372" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2017.1/python_stubs/1959656778/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="2901" column="8" lean-forward="false" selection-start-line="2901" selection-start-column="8" selection-end-line="2901" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logger.conf.2018-11-18_20-46">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/a57e2371/5067e7fe-480d-4433-bc40-f2d1c38362a2/main.config">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/job/_job.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="981">
-          <caret line="115" column="33" lean-forward="false" selection-start-line="115" selection-start-column="33" selection-end-line="115" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2017.1/python_stubs/1959656778/_asyncio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="231" column="8" lean-forward="false" selection-start-line="231" selection-start-column="8" selection-end-line="231" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1843,14 +1813,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1952,16 +1914,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/api/step.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-62">
-          <caret line="22" column="29" lean-forward="true" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/database/model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
@@ -2018,16 +1970,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/step_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="102" column="40" lean-forward="false" selection-start-line="102" selection-start-column="40" selection-end-line="102" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/controller/plugin_controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="554">
@@ -2049,22 +1991,14 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1544274690457" expanded="false" signature="18730:18743" ph="..." />
-            <marker date="1544274690457" expanded="true" signature="18758:19108" ph="..." />
-            <marker date="1544274690457" expanded="true" signature="18818:19101" ph="..." />
-            <marker date="1544274690457" expanded="true" signature="18878:19090" ph="..." />
-            <marker date="1544274690457" expanded="true" signature="19279:19583" ph="..." />
-            <marker date="1544274690457" expanded="false" signature="19287:19293" ph="©" />
-            <marker date="1544274690457" expanded="false" signature="19403:19408" ph="&amp;" />
+            <marker date="1544389893209" expanded="false" signature="18730:18743" ph="..." />
+            <marker date="1544389893209" expanded="true" signature="18758:19108" ph="..." />
+            <marker date="1544389893209" expanded="true" signature="18818:19101" ph="..." />
+            <marker date="1544389893209" expanded="true" signature="18878:19090" ph="..." />
+            <marker date="1544389893209" expanded="true" signature="19279:19583" ph="..." />
+            <marker date="1544389893209" expanded="false" signature="19287:19293" ph="©" />
+            <marker date="1544389893209" expanded="false" signature="19403:19408" ph="&amp;" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/step.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2178,99 +2112,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/build/html/actor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1544275015349" expanded="true" signature="7212:9772" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="7330:9764" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="7365:7684" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="7689:9759" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="7847:8399" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="7886:8090" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8095:8394" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8192:8388" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8267:8379" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8296:8370" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8420:9175" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8458:8674" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8679:9170" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8811:9164" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8886:9155" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="8915:9042" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9072:9146" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9196:9752" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9237:9445" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9450:9747" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9549:9741" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9624:9732" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9653:9723" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9812:14672" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="9985:14122" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10186:14115" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10216:14109" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10220:14101" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10240:10419" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10263:10414" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10268:10408" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10436:14096" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10459:14090" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="10464:14084" ph="..." />
-            <marker date="1544275015349" expanded="false" signature="11243:11249" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="11253:11259" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="11419:11425" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="11429:11435" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="12221:12227" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="12230:12236" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="12908:12914" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="12916:12922" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="13433:13438" ph="'" />
-            <marker date="1544275015349" expanded="false" signature="13438:13443" ph="'" />
-            <marker date="1544275015349" expanded="false" signature="13443:13448" ph="'" />
-            <marker date="1544275015349" expanded="false" signature="13761:13766" ph="'" />
-            <marker date="1544275015349" expanded="false" signature="13766:13771" ph="'" />
-            <marker date="1544275015349" expanded="false" signature="13771:13776" ph="'" />
-            <marker date="1544275015349" expanded="false" signature="13965:13971" ph="&quot;" />
-            <marker date="1544275015349" expanded="false" signature="13982:13988" ph="&quot;" />
-            <marker date="1544275015349" expanded="true" signature="14182:14665" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14212:14659" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14216:14651" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14236:14284" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14259:14279" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14264:14273" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14301:14646" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14324:14640" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14329:14634" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14818:16817" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14861:16804" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="14969:16017" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="15180:15636" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="15240:15630" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="16042:16309" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="16071:16302" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="16078:16296" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="16129:16291" ph="..." />
-            <marker date="1544275015349" expanded="false" signature="16338:16351" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="16366:16716" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="16426:16709" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="16486:16698" ph="..." />
-            <marker date="1544275015349" expanded="true" signature="16887:17192" ph="..." />
-            <marker date="1544275015349" expanded="false" signature="16895:16901" ph="©" />
-            <marker date="1544275015349" expanded="false" signature="17011:17016" ph="&amp;" />
-            <marker date="1544275015349" expanded="true" signature="17141:17181" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/source/kettle_controller.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -2279,10 +2120,160 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/api/kettle_logic.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
+        <state relative-caret-position="165">
+          <caret line="11" column="53" lean-forward="false" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/build/html/py-modindex.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/build/html/properties.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1544388359273" expanded="true" signature="136:12780" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="802:12772" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="839:12173" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="902:2356" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="937:2356" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="1604:2356" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="1717:2356" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11443:11449" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11443:11469" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11443:11498" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11443:12134" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11443:12147" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11443:12163" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11517:12118" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11606:11802" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11842:11915" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="11850:11906" ph="..." />
+            <marker date="1544388359273" expanded="false" signature="11860:11866" ph="©" />
+            <marker date="1544388359273" expanded="true" signature="12663:12762" ph="..." />
+            <marker date="1544388359273" expanded="true" signature="12690:12749" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/build/html/actor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-317">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#282#289#0" expanded="true" />
+            <element signature="e#3397#3404#0" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#13600#13606#0" expanded="true" />
+            <element signature="e#13610#13616#0" expanded="true" />
+            <element signature="e#13776#13782#0" expanded="true" />
+            <element signature="e#13786#13792#0" expanded="true" />
+            <element signature="e#14578#14584#0" expanded="true" />
+            <element signature="e#14587#14593#0" expanded="true" />
+            <element signature="e#15265#15271#0" expanded="true" />
+            <element signature="e#15273#15279#0" expanded="true" />
+            <element signature="e#15790#15795#0" expanded="true" />
+            <element signature="e#15795#15800#0" expanded="true" />
+            <element signature="e#15800#15805#0" expanded="true" />
+            <element signature="e#16118#16123#0" expanded="true" />
+            <element signature="e#16123#16128#0" expanded="true" />
+            <element signature="e#16128#16133#0" expanded="true" />
+            <element signature="e#16322#16328#0" expanded="true" />
+            <element signature="e#16339#16345#0" expanded="true" />
+            <element signature="e#17601#17607#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/properties.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="13" lean-forward="true" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/api/property.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="46" column="29" lean-forward="false" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/step.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="144" lean-forward="false" selection-start-line="27" selection-start-column="144" selection-end-line="27" selection-end-column="144" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/step_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/api/step.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/controller/sensor_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/sensor.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
