@@ -13,7 +13,7 @@ from core.api.extension import CBPiExtension
 from core.api.kettle_logic import CBPiKettleLogic
 from core.api.property import Property
 from core.api.sensor import CBPiSensor
-from core.api.step import SimpleStep
+from core.api.step import CBPiSimpleStep
 from core.utils.utils import load_config, json_dumps
 
 logger = logging.getLogger(__file__)
@@ -31,7 +31,7 @@ class PluginController():
     @classmethod
     async def load_plugin_list(self):
         async with aiohttp.ClientSession() as session:
-            async with session.get('https://raw.githubusercontent.com/Manuel83/craftbeerpi-plugins/master/plugins.yaml') as resp:
+            async with session.get('https://raw.githubusercontent.com/Manuel83/craftbeerpi-plugins/master/plugins_v4.yaml') as resp:
 
                 if(resp.status == 200):
 
@@ -101,7 +101,7 @@ class PluginController():
         if issubclass(clazz, CBPiKettleLogic):
             self.cbpi.kettle.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
 
-        if issubclass(clazz, SimpleStep):
+        if issubclass(clazz, CBPiSimpleStep):
             self.cbpi.step.types[name] = self._parse_props(clazz)
             print(self.cbpi.step.types)
         if issubclass(clazz, CBPiExtension):

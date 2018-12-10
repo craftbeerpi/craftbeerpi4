@@ -13,17 +13,17 @@ StepController
   :show-inheritance:
 
 
-SimpleStep
-^^^^^^^^^^
+CBPiSimpleStep
+^^^^^^^^^^^^^^
 
-.. autoclass:: core.api.step.SimpleStep
+.. autoclass:: core.api.step.CBPiSimpleStep
   :members:
   :undoc-members:
   :show-inheritance:
 
 
 Custom Step
-^^^^^^^^^^^^^
+^^^^^^^^^^^
 
 This is an example of a custom step. The Step class need to extend Simple step. In addtion at least the run_cycle method needs to be overwritten
 

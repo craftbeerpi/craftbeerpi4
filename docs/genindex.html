@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="step.html">Brewing Step</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kettle_controller.html">Kettle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standards.html">Standard &amp; Guidelines</a></li>
 </ul>
 
             
@@ -195,11 +196,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="actor.html#core.api.actor.CBPiActor">CBPiActor (class in core.api.actor)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="kettle_controller.html#core.api.kettle_logic.CBPiKettleLogic">CBPiKettleLogic (class in core.api.kettle_logic)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sensor.html#core.api.sensor.CBPiSensor">CBPiSensor (class in core.api.sensor)</a>
+</li>
+      <li><a href="step.html#core.api.step.CBPiSimpleStep">CBPiSimpleStep (class in core.api.step)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -269,7 +272,7 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.api.step.SimpleStep.is_dirty">is_dirty() (core.api.step.SimpleStep method)</a>
+      <li><a href="step.html#core.api.step.CBPiSimpleStep.is_dirty">is_dirty() (core.api.step.CBPiSimpleStep method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -293,7 +296,7 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.api.step.SimpleStep.managed_fields">managed_fields (core.api.step.SimpleStep attribute)</a>
+      <li><a href="step.html#core.api.step.CBPiSimpleStep.managed_fields">managed_fields (core.api.step.CBPiSimpleStep attribute)</a>
 </li>
       <li><a href="actor.html#core.controller.actor_controller.ActorController.model">model (core.controller.actor_controller.ActorController attribute)</a>
 
@@ -309,7 +312,7 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.api.step.SimpleStep.next">next() (core.api.step.SimpleStep method)</a>
+      <li><a href="step.html#core.api.step.CBPiSimpleStep.next">next() (core.api.step.CBPiSimpleStep method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -361,23 +364,23 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="actor.html#core.controller.actor_controller.ActorController.register">register() (core.controller.actor_controller.ActorController method)</a>
 </li>
-      <li><a href="step.html#core.api.step.SimpleStep.reset">reset() (core.api.step.SimpleStep method)</a>
+      <li><a href="step.html#core.api.step.CBPiSimpleStep.reset">reset() (core.api.step.CBPiSimpleStep method)</a>
 </li>
-      <li><a href="step.html#core.api.step.SimpleStep.reset_dirty">reset_dirty() (core.api.step.SimpleStep method)</a>
+      <li><a href="step.html#core.api.step.CBPiSimpleStep.reset_dirty">reset_dirty() (core.api.step.CBPiSimpleStep method)</a>
 </li>
       <li><a href="kettle_controller.html#core.api.kettle_logic.CBPiKettleLogic.run">run() (core.api.kettle_logic.CBPiKettleLogic method)</a>
 
       <ul>
         <li><a href="sensor.html#core.api.sensor.CBPiSensor.run">(core.api.sensor.CBPiSensor method)</a>
 </li>
-        <li><a href="step.html#core.api.step.SimpleStep.run">(core.api.step.SimpleStep method)</a>
+        <li><a href="step.html#core.api.step.CBPiSimpleStep.run">(core.api.step.CBPiSimpleStep method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.api.step.SimpleStep.run_cycle">run_cycle() (core.api.step.SimpleStep method)</a>
+      <li><a href="step.html#core.api.step.CBPiSimpleStep.run_cycle">run_cycle() (core.api.step.CBPiSimpleStep method)</a>
 </li>
-      <li><a href="step.html#core.api.step.SimpleStep.running">running() (core.api.step.SimpleStep method)</a>
+      <li><a href="step.html#core.api.step.CBPiSimpleStep.running">running() (core.api.step.CBPiSimpleStep method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -386,8 +389,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sensor.html#core.controller.sensor_controller.SensorController">SensorController (class in core.controller.sensor_controller)</a>
-</li>
-      <li><a href="step.html#core.api.step.SimpleStep">SimpleStep (class in core.api.step)</a>
 </li>
       <li><a href="step.html#core.controller.step_controller.StepController.start">start() (core.controller.step_controller.StepController method)</a>
 </li>
@@ -404,7 +405,7 @@
       <li><a href="kettle_controller.html#core.api.kettle_logic.CBPiKettleLogic.stop">stop() (core.api.kettle_logic.CBPiKettleLogic method)</a>
 
       <ul>
-        <li><a href="step.html#core.api.step.SimpleStep.stop">(core.api.step.SimpleStep method)</a>
+        <li><a href="step.html#core.api.step.CBPiSimpleStep.stop">(core.api.step.CBPiSimpleStep method)</a>
 </li>
       </ul></li>
   </ul></td>

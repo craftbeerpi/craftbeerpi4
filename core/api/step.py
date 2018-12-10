@@ -1,12 +1,10 @@
 import time
-
 import asyncio
-
 import logging
-from abc import abstractmethod
+from abc import abstractmethod,ABCMeta
 
 
-class SimpleStep(object):
+class CBPiSimpleStep(metaclass=ABCMeta):
 
     __dirty = False
     managed_fields = []
@@ -17,7 +15,7 @@ class SimpleStep(object):
     def __init__(self, *args, **kwargs):
         self.logger = logging.getLogger(__name__)
         for a in kwargs:
-            super(SimpleStep, self).__setattr__(a, kwargs.get(a))
+            super(CBPiSimpleStep, self).__setattr__(a, kwargs.get(a))
         self.id = kwargs.get("id")
         self.is_stopped = False
         self.is_next = False
@@ -52,7 +50,7 @@ class SimpleStep(object):
             try:
                 await self.run_cycle()
             except Exception as e:
-                logging.exception("SimpleStep Error")
+                logging.exception("CBPiSimpleStep Error")
                 self._exception_count = self._exception_count + 1
                 if self._exception_count == self._max_exceptions:
                     self.logger.error("Step Exception limit exceeded. Stopping Step")
@@ -126,6 +124,6 @@ class SimpleStep(object):
     def __setattr__(self, name, value):
         if name != "_Step__dirty" and name in self.managed_fields:
             self.__dirty = True
-            super(SimpleStep, self).__setattr__(name, value)
+            super(CBPiSimpleStep, self).__setattr__(name, value)
         else:
-            super(SimpleStep, self).__setattr__(name, value)
+            super(CBPiSimpleStep, self).__setattr__(name, value)

@@ -204,7 +204,7 @@ class StepController(HttpAPI, CRUDController):
             open_step = False
             for key, step in self.cache.items():
                 if step.state is None:
-                    step_type = self.types["CustomStep"]
+                    step_type = self.types["CustomStepCBPi"]
                     print("----------")
                     print(step_type)
                     print("----------")

@@ -1,10 +1,10 @@
 import asyncio
 
 from core.api import Property, action
-from core.api.step import SimpleStep
+from core.api.step import CBPiSimpleStep
 
 
-class CustomStep(SimpleStep):
+class CustomStepCBPi(CBPiSimpleStep):
 
     name = Property.Number(label="Test")
 
@@ -19,7 +19,7 @@ class CustomStep(SimpleStep):
 
         #await asyncio.sleep(1)
         self.i = self.i + 1
-
+        self.cbpi.notify(key="step", message="OH YES")
         print("RUN STEP", self.id, self.name, self.__dict__)
 
 
@@ -32,4 +32,4 @@ def setup(cbpi):
     :return: 
     '''
 
-    cbpi.plugin.register("CustomStep", CustomStep)
+    cbpi.plugin.register("CustomStepCBPi", CustomStepCBPi)

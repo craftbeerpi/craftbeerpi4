@@ -1,4 +1,6 @@
-class CRUDController(object):
+from abc import abstractmethod,ABCMeta
+
+class CRUDController(metaclass=ABCMeta):
 
 
     cache = {}

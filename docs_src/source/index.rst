@@ -17,6 +17,7 @@ Welcome to CraftBeerPi's documentation!
    step
    kettle_controller
    properties
+   standards
 
 
 ..

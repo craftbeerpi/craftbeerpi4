@@ -222,7 +222,7 @@ class CraftBeerPi():
         :param type: notification type (info,warning,danger,successs)
         :return: 
         '''
-        self.bus.fire(topic="notification/1", key=key, message=message, type=type)
+        self.bus.fire(topic="notification/%s" % key, key=key, message=message, type=type)
 
 
     def setup(self):

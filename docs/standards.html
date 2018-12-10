@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Standard &amp; Guidelines &mdash; CraftBeerPi 4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Properties" href="properties.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CraftBeerPi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="actor.html">Actor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor.html">Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step.html">Brewing Step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kettle_controller.html">Kettle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Standard &amp; Guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#eventbus">EventBus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#web-user-interface">Web User Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rest-api">REST API</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CraftBeerPi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Standard &amp; Guidelines</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/standards.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="standard-guidelines">
+<h1>Standard &amp; Guidelines<a class="headerlink" href="#standard-guidelines" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<p>CraftBeerPi 4.x is based on Pyhton 3.7x. as main frameworks is <cite>aiohttp</cite> used.</p>
+<ul class="simple">
+<li>aioHTTP <a class="reference external" href="https://aiohttp.readthedocs.io/en/stable/">https://aiohttp.readthedocs.io/en/stable/</a></li>
+</ul>
+<div class="section" id="eventbus">
+<h3>EventBus<a class="headerlink" href="#eventbus" title="Permalink to this headline">¶</a></h3>
+<p>One core concept of CraftBeerPi 4.x is the EventBus.
+It should be avoided to call method on a controller directly. Events should be fired and listener methods should be used.
+This makes sure that all components are loosely coupled. New plugins can listen on events and extend or change the functionality easily.</p>
+<p>Here an example how to fire an event</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cbpi</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s2">&quot;notification/hello&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here an example how listen on an event.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@on_event</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s2">&quot;actor/+/switch/on&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span> <span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+   <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It’s imporante to add <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs as parameter to the listening method. This makes sure that maybe addtional event paramenter are not causing an exception.</p>
+</div>
+</div>
+</div>
+<div class="section" id="web-user-interface">
+<h2>Web User Interface<a class="headerlink" href="#web-user-interface" title="Permalink to this headline">¶</a></h2>
+<p>The Web UI is based on ReactJS + Redux.
+The build process is based on webpack and bable.</p>
+<ul class="simple">
+<li>ReactJS: <a class="reference external" href="https://reactjs.org/">https://reactjs.org/</a></li>
+<li>Redux: <a class="reference external" href="https://redux.js.org/">https://redux.js.org/</a></li>
+<li>WebPack: <a class="reference external" href="https://webpack.js.org/">https://webpack.js.org/</a></li>
+<li>Babel: <a class="reference external" href="https://babeljs.io">https://babeljs.io</a></li>
+</ul>
+</div>
+<div class="section" id="rest-api">
+<h2>REST API<a class="headerlink" href="#rest-api" title="Permalink to this headline">¶</a></h2>
+<p>The REST API of CraftBeerPi is documented using Swagger.io
+After server startup you can find the API documentaiton under: <cite>http://&lt;IP_ADDRESS&gt;:&lt;PORT&gt;/api/doc</cite></p>
+<p>To generate the swagger file <cite>aiohttp-swagger</cite> is used. for more information see: <a class="reference external" href="https://aiohttp-swagger.readthedocs.io/en/latest/">https://aiohttp-swagger.readthedocs.io/en/latest/</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="properties.html" class="btn btn-neutral" title="Properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Manuel Fritsch
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

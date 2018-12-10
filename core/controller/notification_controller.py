@@ -4,8 +4,6 @@ from core.api.decorator import on_event
 class NotificationController():
     '''
     This the notification controller
-    
-    
     '''
 
     def __init__(self, cbpi):
@@ -17,8 +15,7 @@ class NotificationController():
         self.cbpi = cbpi
         self.cbpi.register(self)
 
-    @on_event(topic="notification/#")
-    def on_event(self, key, message, type, **kwargs):
 
-        print("EVENT RECHEICVED", kwargs)
+    @on_event(topic="notification/#")
+    def _on_event(self, key, message, type, **kwargs):
         self.cbpi.ws.send("YES")
