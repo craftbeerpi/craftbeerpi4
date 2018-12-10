@@ -4,7 +4,8 @@ Standard & Guidelines
 Python
 ^^^^^^
 
-CraftBeerPi 4.x is based on Pyhton 3.7x. as main frameworks is `aiohttp` used.
+CraftBeerPi 4.x is based on Pyhton 3.7x.
+As a main framework CraftBeerPi is based on `aiohttp`
 
 * aioHTTP https://aiohttp.readthedocs.io/en/stable/
 
@@ -34,6 +35,49 @@ Here an example how listen on an event.
 .. note::
 
   It's imporante to add **kwargs as parameter to the listening method. This makes sure that maybe addtional event paramenter are not causing an exception.
+
+
+HTTP Endpoints
+--------------
+
+A new HTTP endpoints should be exposed by adding the `@request_mapping` decorator on top of an async method.
+The `path` parameter defines the URL path. The `auth_required` defines whether the endpoint should be accessible public or within a user session only.
+Typically you perform just some basing parameter validation and fire an event so that other components and controllers can perform some actions.
+
+.. code-block:: python
+
+    @request_mapping(path="/{id:\d+}/on", auth_required=False)
+    async def http_on(self, request) -> web.Response:
+        self.cbpi.bus.fire(topic="actor/%s/switch/on" % id, id=id, power=99)
+        return web.Response(status=204)
+
+.. note::
+
+  The Events are process in an async way. Results will be pushed to the client via WebSocket Event.
+
+
+WebSocket
+---------
+
+The WebSocket is listening on `http://<IP_ADDRESS>:<PORT>/ws`
+All events are forwarded to all connected web socket clients.
+
+The WebSocket Event is having the following structure.
+
+* topic -> is the bus topic
+* data -> the event data
+
+.. code-block:: json
+
+    {
+       "topic":"notification/step",
+       "data":{
+          "key":"step",
+          "message":"Hello World",
+          "type":"info"
+          }
+    }
+
 
 
 Web User Interface

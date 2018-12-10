@@ -88,6 +88,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Standard &amp; Guidelines</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#eventbus">EventBus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#http-endpoints">HTTP Endpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#websocket">WebSocket</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#web-user-interface">Web User Interface</a></li>
@@ -162,7 +164,8 @@
 <h1>Standard &amp; Guidelines<a class="headerlink" href="#standard-guidelines" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="python">
 <h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
-<p>CraftBeerPi 4.x is based on Pyhton 3.7x. as main frameworks is <cite>aiohttp</cite> used.</p>
+<p>CraftBeerPi 4.x is based on Pyhton 3.7x.
+As a main framework CraftBeerPi is based on <cite>aiohttp</cite></p>
 <ul class="simple">
 <li>aioHTTP <a class="reference external" href="https://aiohttp.readthedocs.io/en/stable/">https://aiohttp.readthedocs.io/en/stable/</a></li>
 </ul>
@@ -184,6 +187,42 @@ This makes sure that all components are loosely coupled. New plugins can listen 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">It’s imporante to add <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs as parameter to the listening method. This makes sure that maybe addtional event paramenter are not causing an exception.</p>
+</div>
+</div>
+<div class="section" id="http-endpoints">
+<h3>HTTP Endpoints<a class="headerlink" href="#http-endpoints" title="Permalink to this headline">¶</a></h3>
+<p>A new HTTP endpoints should be exposed by adding the <cite>&#64;request_mapping</cite> decorator on top of an async method.
+The <cite>path</cite> parameter defines the URL path. The <cite>auth_required</cite> defines whether the endpoint should be accessible public or within a user session only.
+Typically you perform just some basing parameter validation and fire an event so that other components and controllers can perform some actions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@request_mapping</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;/{id:\d+}/on&quot;</span><span class="p">,</span> <span class="n">auth_required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">http_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">web</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cbpi</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s2">&quot;actor/</span><span class="si">%s</span><span class="s2">/switch/on&quot;</span> <span class="o">%</span> <span class="nb">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">99</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">web</span><span class="o">.</span><span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">204</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Events are process in an async way. Results will be pushed to the client via WebSocket Event.</p>
+</div>
+</div>
+<div class="section" id="websocket">
+<h3>WebSocket<a class="headerlink" href="#websocket" title="Permalink to this headline">¶</a></h3>
+<p>The WebSocket is listening on <cite>http://&lt;IP_ADDRESS&gt;:&lt;PORT&gt;/ws</cite>
+All events are forwarded to all connected web socket clients.</p>
+<p>The WebSocket Event is having the following structure.</p>
+<ul class="simple">
+<li>topic -&gt; is the bus topic</li>
+<li>data -&gt; the event data</li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;topic&quot;</span><span class="p">:</span><span class="s2">&quot;notification/step&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;data&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="s2">&quot;step&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Hello World&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;info&quot;</span>
+      <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 </div>
