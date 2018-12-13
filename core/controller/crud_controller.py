@@ -1,4 +1,9 @@
+import json
+import pprint
 from abc import abstractmethod,ABCMeta
+
+from core.utils.encoder import ComplexEncoder
+
 
 class CRUDController(metaclass=ABCMeta):
 
@@ -61,8 +66,11 @@ class CRUDController(metaclass=ABCMeta):
         '''
         await self._pre_add_callback(data)
         m = await self.model.insert(**data)
-        await self._post_add_callback(m)
         self.cache[m.id] = m
+        await self._post_add_callback(m)
+
+        await self.cbpi.bus.fire(topic="actor/%s/added" % m.id, actor=m)
+
         return m
 
     async def _pre_update_callback(self, m):
@@ -117,21 +125,29 @@ class CRUDController(metaclass=ABCMeta):
 
     async def delete(self, id):
 
+
+
         '''
         
         :param id: 
         :return: 
         '''
         await self._pre_delete_callback(id)
+
+        if id not in self.cache:
+
+            return
         m = await self.model.delete(id)
         await self._post_delete_callback(id)
         try:
             if self.caching is True:
-                del self.cache[id]
+                print("DELTE FROM ACHE")
+                del self.cache[int(id)]
         except Exception as e:
+            print(e)
             pass
-
-        #self.cbpi.push("DELETE_%s" % self.key, id)
+        pprint.pprint(self.cache)
+        await self.cbpi.bus.fire(topic="actor/%s/deleted" % id, id=id)
 
     async def delete_all(self):
         '''

@@ -130,4 +130,4 @@ class HttpAPI():
                     """
         id = request.match_info['id']
         await self.delete(id)
-        return web.Response(str=204)
+        return web.Response(status=204)

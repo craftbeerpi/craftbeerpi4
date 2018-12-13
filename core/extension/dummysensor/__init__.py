@@ -37,7 +37,7 @@ class CustomSensor(CBPiSensor):
             await asyncio.sleep(self.interval)
 
             self.value = self.value + 1
-            cbpi.bus.fire("sensor/%s" % self.id, value=self.value)
+            await cbpi.bus.fire("sensor/%s" % self.id, value=self.value)
             print("SENSOR IS RUNNING", self.value)
 
 

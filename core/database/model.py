@@ -7,6 +7,8 @@ class ActorModel(DBModel):
     __json_fields__ = ["config"]
 
 
+
+
 class SensorModel(DBModel):
     __fields__ = ["name", "type", "config"]
     __table_name__ = "sensor"

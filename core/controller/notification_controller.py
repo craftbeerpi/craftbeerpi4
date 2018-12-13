@@ -17,5 +17,5 @@ class NotificationController():
 
 
     @on_event(topic="notification/#")
-    def _on_event(self, key, message, type, **kwargs):
+    async def _on_event(self, key, message, type, **kwargs):
         self.cbpi.ws.send("YES")

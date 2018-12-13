@@ -1,3 +1,6 @@
+import pprint
+from asyncio import Future
+import asyncio
 from aiohttp import web
 
 from core.api.actor import CBPiActor
@@ -17,7 +20,11 @@ class ActorHttp(HttpAPI):
         :return: 
         """
         id = int(request.match_info['id'])
-        self.cbpi.bus.fire(topic="actor/%s/switch/on" % id, id=id, power=99)
+        result = await self.cbpi.bus.fire2(topic="actor/%s/switch/on" % id, id=id, power=99)
+        print(result.timeout)
+
+        for key, value in result.results.items():
+            print(key, value.result)
         return web.Response(status=204)
 
 
@@ -28,7 +35,7 @@ class ActorHttp(HttpAPI):
         :return: 
         """
         id = int(request.match_info['id'])
-        self.cbpi.bus.fire(topic="actor/%s/off" % id, id=id)
+        await self.cbpi.bus.fire(topic="actor/%s/off" % id, id=id)
         return web.Response(status=204)
 
     @request_mapping(path="/{id:\d+}/toggle", auth_required=False)
@@ -39,7 +46,7 @@ class ActorHttp(HttpAPI):
         """
         id = int(request.match_info['id'])
         print("ID", id)
-        self.cbpi.bus.fire(topic="actor/%s/toggle" % id, id=id)
+        await self.cbpi.bus.fire(topic="actor/%s/toggle" % id, id=id)
         return web.Response(status=204)
 
 class ActorController(ActorHttp, CRUDController):
@@ -58,16 +65,6 @@ class ActorController(ActorHttp, CRUDController):
         self.types = {}
         self.actors = {}
 
-
-    def register(self, name, clazz) -> None:
-
-        print("REGISTER", name)
-        if issubclass(clazz, CBPiActor):
-            print("ITS AN ACTOR")
-
-        parse_props(clazz)
-        self.types[name] = clazz
-
     async def init(self):
         '''
         This method initializes all actors during startup. It creates actor instances
@@ -76,25 +73,28 @@ class ActorController(ActorHttp, CRUDController):
         '''
         await super(ActorController, self).init()
 
-        for name, clazz in self.types.items():
-            print("Type", name)
-
         for id, value in self.cache.items():
+            await self._init_actor(value)
 
-            if value.type in self.types:
-                cfg = value.config.copy()
+    async def _init_actor(self, actor):
+        if actor.type in self.types:
+            cfg = actor.config.copy()
+            cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
+            clazz = self.types[actor.type]["class"];
 
-                cfg.update(dict(cbpi=self.cbpi, id=id, name=value.name))
-                clazz = self.types[value.type]["class"];
+            self.cache[actor.id].instance = clazz(**cfg)
+            self.cache[actor.id].instance.init()
+            await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
 
-                self.cache[id].instance = clazz(**cfg)
-                print("gpIO", self.cache[id].instance, self.cache[id].instance.gpio)
 
+    async def _stop_actor(self, actor):
+        actor.instance.stop()
+        await self.cbpi.bus.fire(topic="actor/%s/stopped" % actor.id, id=actor.id)
 
 
 
     @on_event(topic="actor/+/switch/on")
-    def on(self, id , power=100, **kwargs) -> None:
+    async def on(self, id , future: Future, power=100,  **kwargs) -> None:
         '''
         Method to switch an actor on.
         Supporting Event Topic "actor/+/on"
@@ -109,11 +109,13 @@ class ActorController(ActorHttp, CRUDController):
         if id in self.cache:
             print("POWER ON")
             actor = self.cache[id   ].instance
-            self.cbpi.bus.fire("actor/%s/on/ok" % id)
+            await self.cbpi.bus.fire("actor/%s/on/ok" % id)
             actor.on(power)
 
+        future.set_result("OK")
+
     @on_event(topic="actor/+/toggle")
-    def toggle(self, id, power=100, **kwargs) -> None:
+    async def toggle(self, id, power=100, **kwargs) -> None:
         '''
         Method to toggle an actor on or off
         Supporting Event Topic "actor/+/toggle"
@@ -132,7 +134,7 @@ class ActorController(ActorHttp, CRUDController):
                 actor.on()
 
     @on_event(topic="actor/+/off")
-    def off(self, id, **kwargs) -> None:
+    async def off(self, id, **kwargs) -> None:
         """
         
         Method to switch and actor off
@@ -147,3 +149,27 @@ class ActorController(ActorHttp, CRUDController):
         if id in self.cache:
             actor = self.cache[id].instance
             actor.off()
+
+    async def _post_add_callback(self, m):
+        '''
+    
+        :param m: 
+        :return: 
+        '''
+        await self._init_actor(m)
+        pass
+
+    async def _pre_delete_callback(self, actor_id):
+        if int(actor_id) not in self.cache:
+            return
+
+        if self.cache[int(actor_id)].instance is not None:
+            await self._stop_actor(self.cache[int(actor_id)])
+
+    async def _pre_update_callback(self, actor):
+
+        if actor.instance is not None:
+            await self._stop_actor(actor)
+
+    async def _post_update_callback(self, actor):
+        self._init_actor(actor)

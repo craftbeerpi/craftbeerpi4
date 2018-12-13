@@ -72,11 +72,11 @@ class KettleController(CRUDController):
         if kettle.logic is None:
             return (False, "No Logic defined")
         id = kettle.heater
-        self.cbpi.bus.fire(topic="kettle/%s/automatic" % id, id=id)
+        await self.cbpi.bus.fire(topic="kettle/%s/automatic" % id, id=id)
         return (True, "Logic switched on switched")
 
     @on_event(topic="job/done")
-    def job_stop(self, key, **kwargs) -> None:
+    async def job_stop(self, key, **kwargs) -> None:
 
         match = re.match("kettle_logic_(\d+)", key)
         if match is not None:
@@ -136,7 +136,7 @@ class KettleController(CRUDController):
         if kettle.heater is None:
             return (False, "No Heater defined")
         id = kettle.heater
-        self.cbpi.bus.fire(topic="actor/%s/on" % id, id=id, power=99)
+        await self.cbpi.bus.fire(topic="actor/%s/on" % id, id=id, power=99)
         return (True,"Heater switched on")
 
     async def heater_off(self, id):
@@ -153,7 +153,7 @@ class KettleController(CRUDController):
         if kettle.heater is None:
             return (False, "No Heater defined")
         id = kettle.heater
-        self.cbpi.bus.fire(topic="actor/%s/off" % id, id=id, power=99)
+        await self.cbpi.bus.fire(topic="actor/%s/off" % id, id=id, power=99)
         return (True, "Heater switched off")
 
     async def agitator_on(self, id):

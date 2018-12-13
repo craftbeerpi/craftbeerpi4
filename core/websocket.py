@@ -21,8 +21,9 @@ class WebSocket:
     async def listen(self, topic, **kwargs):
         print("WS", topic)
 
-        self.send(json.dumps(dict(topic=topic, data=dict(**kwargs))))
+        from core.utils.encoder import ComplexEncoder
 
+        self.send(json.dumps(dict(topic=topic, data=dict(**kwargs)),skipkeys=True, check_circular=True, cls=ComplexEncoder))
 
     def send(self, data):
 
@@ -64,7 +65,7 @@ class WebSocket:
                     else:
                         msg_obj = msg.json()
 
-                        self.cbpi.bus.fire(msg_obj["topic"], id=1, power=22)
+                        await self.cbpi.bus.fire(msg_obj["topic"], id=1, power=22)
                         # await self.fire(msg_obj["key"], ws, msg)
 
                         # await ws.send_str(msg.data)

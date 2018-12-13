@@ -42,7 +42,7 @@ class StepController(HttpAPI, CRUDController):
         :param request: web requset
         :return: web.Response(text="OK"
         '''
-        self.cbpi.bus.fire("step/action", action="test")
+        await self.cbpi.bus.fire("step/action", action="test")
         return web.Response(text="OK")
 
 
@@ -56,7 +56,7 @@ class StepController(HttpAPI, CRUDController):
         :return: 
         '''
 
-        self.cbpi.bus.fire("step/start")
+        await self.cbpi.bus.fire("step/start")
         return web.Response(text="OK")
 
     @request_mapping(path="/reset", auth_required=False)
@@ -67,7 +67,7 @@ class StepController(HttpAPI, CRUDController):
         :param request: 
         :return: 
         '''
-        self.cbpi.bus.fire("step/reset")
+        await self.cbpi.bus.fire("step/reset")
         return web.Response(text="OK")
 
     @request_mapping(path="/next", auth_required=False)
@@ -79,11 +79,11 @@ class StepController(HttpAPI, CRUDController):
         :param request: 
         :return: 
         '''
-        self.cbpi.bus.fire("step/next")
+        await self.cbpi.bus.fire("step/next")
         return web.Response(text="OK")
 
     @on_event("step/action")
-    def handle_action(self, action, **kwargs):
+    async def handle_action(self, action, **kwargs):
 
         '''
         Event Handler for "step/action".
@@ -99,7 +99,7 @@ class StepController(HttpAPI, CRUDController):
 
 
     @on_event("step/next")
-    def handle_next(self, **kwargs):
+    async def handle_next(self, **kwargs):
         '''
         Event Handler for "step/next".
         It start the next step
@@ -114,7 +114,7 @@ class StepController(HttpAPI, CRUDController):
 
 
     @on_event("step/start")
-    def handle_start(self, **kwargs):
+    async def handle_start(self, **kwargs):
         '''
         Event Handler for "step/start".
         It starts the brewing process
@@ -122,10 +122,10 @@ class StepController(HttpAPI, CRUDController):
         :param kwargs: 
         :return: None
         '''
-        self.start()
+        await self.start()
 
     @on_event("step/reset")
-    def handle_reset(self, **kwargs):
+    async def handle_reset(self, **kwargs):
         '''
         Event Handler for "step/reset".
         Resets the current step
@@ -142,10 +142,10 @@ class StepController(HttpAPI, CRUDController):
             self.steps[self.current_step.id]["state"] = None
             self.current_step = None
             self.current_task = None
-            self.start()
+            await self.start()
 
     @on_event("step/stop")
-    def handle_stop(self,  **kwargs):
+    async def handle_stop(self,  **kwargs):
         '''
         Event Handler for "step/stop".
         Stops the current step
@@ -163,7 +163,7 @@ class StepController(HttpAPI, CRUDController):
         self.current_step = None
 
     @on_event("step/+/done")
-    def handle_done(self, topic, **kwargs):
+    async def handle_done(self, topic, **kwargs):
 
         '''
         Event Handler for "step/+/done".
@@ -173,7 +173,7 @@ class StepController(HttpAPI, CRUDController):
         :param kwargs: 
         :return: 
         '''
-        self.start()
+        await self.start()
 
     def _step_done(self, task):
 
@@ -181,7 +181,7 @@ class StepController(HttpAPI, CRUDController):
             self.cache[self.current_step.id].state = "D"
             step_id = self.current_step.id
             self.current_step = None
-            self.cbpi.bus.fire("step/%s/done" % step_id)
+            self.cbpi.bus.sync_fire("step/%s/done" % step_id)
 
     def _get_manged_fields_as_array(self, type_cfg):
         print("tYPE", type_cfg)
@@ -191,7 +191,7 @@ class StepController(HttpAPI, CRUDController):
 
         return result
 
-    def start(self):
+    async def start(self):
 
         '''
         Start the first step 
@@ -215,7 +215,7 @@ class StepController(HttpAPI, CRUDController):
                     open_step = True
                     break
             if open_step == False:
-                self.cbpi.bus.fire("step/berwing/finished")
+                await self.cbpi.bus.fire("step/berwing/finished")
 
     async def stop(self):
         pass

@@ -8,6 +8,12 @@ class CustomActor(CBPiActor):
     # Custom property which can be configured by the user
     gpio = Property.Number(label="Test")
 
+    def init(self):
+        print("#########INIT MY CUSTOM ACTOR")
+
+    def stop(self):
+        print("#########STOP MY CUSTOM ACTOR")
+
 
     @action(key="name", parameters={})
     def myAction(self):

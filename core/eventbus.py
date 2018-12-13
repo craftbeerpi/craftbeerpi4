@@ -3,6 +3,9 @@ import inspect
 import logging
 import json
 
+import time
+
+
 class EventBus(object):
     class Node(object):
         __slots__ = '_children', '_content'
@@ -12,14 +15,36 @@ class EventBus(object):
             self._content = None
 
     class Content(object):
-        def __init__(self, parent, topic, method, once):
+        def __init__(self, parent, topic, method, once, supports_future=False):
             self.parent = parent
             self.method = method
             self.name = method.__name__
             self.once = once
             self.topic = topic
+            self.supports_future = supports_future
+
+    class Result():
+
+        def __init__(self, result, timeout):
+            self.result = result
+            self.timeout = timeout
+
+    class ResultContainer():
+
+        def __init__(self, results, timeout=False):
+            self.results = {}
+            self.timeout = timeout
+            for key, value in results.items():
+                if value.done() is True:
+                    self.results[key] = EventBus.Result(value.result(), True)
+                else:
+                    self.results[key] = EventBus.Result(None, False)
+
+
 
     def register(self, topic, method, once=False):
+
+
 
         if method in self.registry:
             raise RuntimeError("Method %s already registerd. Please unregister first!" % method.__name__)
@@ -31,7 +56,14 @@ class EventBus(object):
         if not isinstance(node._content, list):
             node._content = []
 
-        c = self.Content(node, topic, method, once)
+        sig = inspect.signature(method)
+
+
+        if "future" in sig.parameters:
+            supports_future = True
+        else:
+            supports_future = False
+        c = self.Content(node, topic, method, once, supports_future)
         node._content.append(c)
         self.registry[method] = c
 
@@ -71,29 +103,36 @@ class EventBus(object):
 
         print(self.loop)
 
-    def fire(self, topic: str, **kwargs) -> None:
-        self.logger.info("EMIT EVENT %s Data: %s", topic, kwargs)
+    def sync_fire(self,topic: str,timeout=1, **kwargs):
+        self.loop.create_task(self.fire(topic=topic, timeout=timeout, **kwargs))
 
-        #self.cbpi.ws.send(json.dumps(dict(topic=topic, data=dict(**kwargs))))
-        trx = dict(i=0)
+    async def fire(self, topic: str, timeout=1, **kwargs):
+
+        futures = {}
+
+        async def wait(futures):
+            if(len(futures) > 0):
+                await asyncio.wait(futures.values())
+
+
         for e in self.iter_match(topic):
             content_array = e
             keep_idx = []
             for idx, content_obj in enumerate(content_array):
 
                 if inspect.iscoroutinefunction(content_obj.method):
-                    if hasattr(content_obj.method, "future"):
+                    if content_obj.supports_future is True:
 
-                        self.loop.create_task(content_obj.method(**kwargs, future=content_obj.method.future, topic=topic))
+                        fut = self.loop.create_future()
+
+                        futures["%s.%s" % (content_obj.method.__module__, content_obj.name)] = fut
+                        self.loop.create_task(content_obj.method(**kwargs, topic = topic, future=fut))
+
                     else:
-                        self.loop.create_task(content_obj.method(**kwargs, topic = topic))
+                        self.loop.create_task(content_obj.method(**kwargs, topic=topic))
                 else:
-                    if hasattr(content_obj.method, "future"):
-                        content_obj.method(**kwargs, future=content_obj.method.future, topic=topic)
-                    else:
-                        content_obj.method(**kwargs, topic = topic)
-
-
+                    # only asnyc
+                    pass
                 if content_obj.once is False:
                     keep_idx.append(idx)
 
@@ -101,6 +140,13 @@ class EventBus(object):
             if len(keep_idx) < len(e):
                 e[0].parent._content = [e[0].parent._content[i] for i in keep_idx]
 
+        if timeout is not None:
+            try:
+                await asyncio.wait_for(wait(futures), timeout=timeout)
+                is_timedout = False
+            except asyncio.TimeoutError:
+                is_timedout = True
+            return self.ResultContainer(futures, is_timedout)
 
 
     def dump(self):

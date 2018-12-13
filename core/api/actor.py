@@ -1,3 +1,5 @@
+from abc import ABCMeta
+
 __all__ = ["CBPiActor"]
 
 import logging
@@ -6,7 +8,13 @@ from core.api.extension import CBPiExtension
 
 logger = logging.getLogger(__file__)
 
-class CBPiActor(CBPiExtension):
+class CBPiActor(CBPiExtension, metaclass=ABCMeta):
+
+    def init(self):
+        pass
+
+    def stop(self):
+        pass
 
     def on(self, power):
         '''
@@ -35,3 +43,6 @@ class CBPiActor(CBPiExtension):
         '''
 
         pass
+
+    def reprJSON(self):
+        return dict(state=True)
