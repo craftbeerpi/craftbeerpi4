@@ -4,6 +4,7 @@ from core.api import on_event, request_mapping
 from core.controller.crud_controller import CRUDController
 from core.database.model import StepModel
 from core.http_endpoints.http_api import HttpAPI
+from core.job.aiohttp import get_scheduler_from_app
 
 
 class StepController(HttpAPI, CRUDController):
@@ -24,6 +25,8 @@ class StepController(HttpAPI, CRUDController):
 
         self.current_step = None
         self.cbpi.register(self, "/step")
+
+
 
     async def init(self):
         '''
@@ -136,7 +139,7 @@ class StepController(HttpAPI, CRUDController):
 
 
         if self.current_step is not None:
-            self.current_task.cancel()
+            self.current_job.stop()
             self.current_step.reset()
 
             self.steps[self.current_step.id]["state"] = None
@@ -162,8 +165,10 @@ class StepController(HttpAPI, CRUDController):
 
         self.current_step = None
 
-    @on_event("step/+/done")
-    async def handle_done(self, topic, **kwargs):
+
+
+    @on_event("job/step/done")
+    async def handle_step_done(self, topic, **kwargs):
 
         '''
         Event Handler for "step/+/done".
@@ -173,15 +178,15 @@ class StepController(HttpAPI, CRUDController):
         :param kwargs: 
         :return: 
         '''
+
+        print("JOB DONE STEP")
+        self.cache[self.current_step.id].state = "D"
+        step_id = self.current_step.id
+        self.current_step = None
+
         await self.start()
 
-    def _step_done(self, task):
 
-        if task.cancelled() == False:
-            self.cache[self.current_step.id].state = "D"
-            step_id = self.current_step.id
-            self.current_step = None
-            self.cbpi.bus.sync_fire("step/%s/done" % step_id)
 
     def _get_manged_fields_as_array(self, type_cfg):
         print("tYPE", type_cfg)
@@ -205,13 +210,14 @@ class StepController(HttpAPI, CRUDController):
             for key, step in self.cache.items():
                 if step.state is None:
                     step_type = self.types["CustomStepCBPi"]
-                    print("----------")
-                    print(step_type)
-                    print("----------")
+
                     config = dict(cbpi = self.cbpi, id=key, name=step.name, managed_fields=self._get_manged_fields_as_array(step_type))
                     self.current_step = step_type["class"](**config)
-                    self.current_task = loop.create_task(self.current_step.run())
-                    self.current_task.add_done_callback(self._step_done)
+
+                    self.current_job = await self.cbpi.start_job(self.current_step.run(), step.name, "step")
+                    await asyncio.sleep(4)
+                    await self.current_job.close()
+
                     open_step = True
                     break
             if open_step == False:

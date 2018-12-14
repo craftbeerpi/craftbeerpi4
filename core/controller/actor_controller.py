@@ -1,14 +1,11 @@
-import pprint
 from asyncio import Future
-import asyncio
+
 from aiohttp import web
 
-from core.api.actor import CBPiActor
 from core.api.decorator import on_event, request_mapping
 from core.controller.crud_controller import CRUDController
 from core.database.model import ActorModel
 from core.http_endpoints.http_api import HttpAPI
-from core.utils import parse_props
 
 
 class ActorHttp(HttpAPI):

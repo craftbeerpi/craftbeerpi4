@@ -114,7 +114,7 @@ class Scheduler(*bases):
     def _done(self, job):
 
         print("JOB DONE")
-        self.cbpi.bus.sync_fire("job/done", key=job.name)
+        self.cbpi.bus.sync_fire("job/%s/done" % job.type, type=job.type, key=job.name)
         self._jobs.discard(job)
         if not self.pending_count:
             return
