@@ -1,5 +1,9 @@
-from core.database.orm_framework import DBModel
+import json
 
+import aiosqlite
+
+from core.database.orm_framework import DBModel
+TEST_DB = "./craftbeerpi.db"
 
 class ActorModel(DBModel):
     __fields__ = ["name", "type", "config"]
@@ -31,6 +35,33 @@ class StepModel(DBModel):
     __table_name__ = "step"
     __json_fields__ = ["config", "stepstate"]
 
+    @classmethod
+    async def update_step_state(cls, step_id, state):
+        async with aiosqlite.connect(TEST_DB) as db:
+            cursor = await db.execute("UPDATE %s SET stepstate = ? WHERE id = ?" % cls.__table_name__, (json.dumps(state), step_id))
+            await db.commit()
+
+    @classmethod
+    async def get_by_state(cls, state, order=True):
+
+
+        async with aiosqlite.connect(TEST_DB) as db:
+            db.row_factory = aiosqlite.Row
+            db.row_factory = DBModel.dict_factory
+            async with db.execute("SELECT * FROM %s WHERE state = ? ORDER BY %s.'order'" %  (cls.__table_name__, cls.__table_name__,), state) as cursor:
+                row = await cursor.fetchone()
+                if row is not None:
+                    return cls(row)
+                else:
+                    return None
+
+    @classmethod
+    async def reset_all_steps(cls):
+        async with aiosqlite.connect(TEST_DB) as db:
+            cursor = await db.execute("UPDATE %s SET state = 'I', stepstate = NULL , start = NULL, end = NULL " % cls.__table_name__)
+            await db.commit()
+
+        
 
     '''
     @classmethod
@@ -63,11 +94,7 @@ class StepModel(DBModel):
         else:
             return None
 
-    @classmethod
-    def update_step_state(cls, id, state):
-        cur = get_db().cursor()
-        cur.execute("UPDATE %s SET stepstate = ? WHERE id =?" % cls.__table_name__, (json.dumps(state), id))
-        get_db().commit()
+    
 
     @classmethod
     def reset_all_steps(cls):

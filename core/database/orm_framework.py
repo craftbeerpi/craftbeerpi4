@@ -121,7 +121,7 @@ class DBModel(object):
                     else:
                         data = data + (kwargs.get(f),)
 
-
+            print("INSERT DATA", query, data)
             cursor = await db.execute(query, data)
             await db.commit()
 

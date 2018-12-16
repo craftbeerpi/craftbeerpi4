@@ -1,4 +1,6 @@
 import asyncio
+
+import time
 from aiohttp import web
 from core.api import on_event, request_mapping
 from core.controller.crud_controller import CRUDController
@@ -34,7 +36,33 @@ class StepController(HttpAPI, CRUDController):
         :return: 
         '''
         await super(StepController, self).init()
-        pass
+        print("INIT LAST STEP")
+        await self.init_after_startup()
+
+    async def init_after_startup(self):
+        step = await self.model.get_by_state('A')
+        # We have an active step
+
+
+        if step is not None:
+            print("INIT LAST STEP", step.__dict__)
+            # get the type
+            print(self.types)
+            step_type = self.types.get(step.type)
+
+            if step_type is None:
+                # step type not found. cant restart step
+                print("STEP TYPE NONT FOUND")
+                return
+
+            if step.stepstate is not None:
+                cfg = step.stepstate.copy()
+            else:
+                cfg = {}
+            cfg.update(dict(cbpi=self.cbpi, id=step.id, managed_fields=self._get_manged_fields_as_array(step_type)))
+
+            self.current_step = step_type["class"](**cfg)
+            self.current_job = await self.cbpi.start_job(self.current_step.run(), step.name, "step")
 
     @request_mapping(path="/action", auth_required=False)
     async def http_action(self, request):
@@ -111,6 +139,7 @@ class StepController(HttpAPI, CRUDController):
         :return: None
         '''
         if self.current_step is not None:
+
             self.current_step.next()
             pass
 
@@ -136,16 +165,9 @@ class StepController(HttpAPI, CRUDController):
         :param kwargs: 
         :return: None
         '''
+        await self.model.reset_all_steps()
 
 
-        if self.current_step is not None:
-            self.current_job.stop()
-            self.current_step.reset()
-
-            self.steps[self.current_step.id]["state"] = None
-            self.current_step = None
-            self.current_task = None
-            await self.start()
 
     @on_event("step/stop")
     async def handle_stop(self,  **kwargs):
@@ -179,6 +201,9 @@ class StepController(HttpAPI, CRUDController):
         :return: 
         '''
 
+        print("IS SHUTODONW", self.cbpi.shutdown)
+        if self.cbpi.shutdown:
+            return
         print("JOB DONE STEP")
         self.cache[self.current_step.id].state = "D"
         step_id = self.current_step.id
@@ -207,20 +232,31 @@ class StepController(HttpAPI, CRUDController):
         if self.current_step is None:
             loop = asyncio.get_event_loop()
             open_step = False
-            for key, step in self.cache.items():
-                if step.state is None:
-                    step_type = self.types["CustomStepCBPi"]
 
-                    config = dict(cbpi = self.cbpi, id=key, name=step.name, managed_fields=self._get_manged_fields_as_array(step_type))
-                    self.current_step = step_type["class"](**config)
+            inactive = await self.model.get_by_state("I")
+            active = await self.model.get_by_state("A")
 
-                    self.current_job = await self.cbpi.start_job(self.current_step.run(), step.name, "step")
-                    await asyncio.sleep(4)
-                    await self.current_job.close()
+            print("STEPES", inactive, active)
 
-                    open_step = True
-                    break
-            if open_step == False:
+            if active is not None:
+                active.state = 'D'
+                active.end = int(time.time())
+                # self.stop_step()
+                self.current_step = None
+                await self.model.update(**active.__dict__)
+
+            if inactive is not None:
+                step_type = self.types["CustomStepCBPi"]
+
+                config = dict(cbpi=self.cbpi, id=inactive.id, name=inactive.name, managed_fields=self._get_manged_fields_as_array(step_type))
+                self.current_step = step_type["class"](**config)
+
+                inactive.state = 'A'
+                inactive.stepstate = inactive.config
+                inactive.start = int(time.time())
+                await self.model.update(**inactive.__dict__)
+                self.current_job = await self.cbpi.start_job(self.current_step.run(), inactive.name, "step")
+            else:
                 await self.cbpi.bus.fire("step/berwing/finished")
 
     async def stop(self):

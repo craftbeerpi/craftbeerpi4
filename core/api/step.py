@@ -60,7 +60,12 @@ class CBPiSimpleStep(metaclass=ABCMeta):
 
             if self.is_dirty():
                 # Now we have to store the managed props
-
+                state = {}
+                for field in self.managed_fields:
+                    state[field] = self.__getattribute__(field)
+                    #step_controller.model.update_step_state(step_controller.current_step.id, state)
+                    print("STATE",state)
+                    await self.cbpi.step.model.update_step_state(self.id, state)
 
                 self.reset_dirty()
 

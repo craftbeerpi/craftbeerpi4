@@ -86,7 +86,7 @@ class Scheduler(*bases):
         if self._closed:
             return
         self._closed = True  # prevent adding new jobs
-
+        print("####### CLOSE")
         jobs = self._jobs
         if jobs:
             # cleanup pending queue

@@ -19,7 +19,10 @@ class CustomStepCBPi(CBPiSimpleStep):
 
         #await asyncio.sleep(1)
         self.i = self.i + 1
-        self.cbpi.notify(key="step", message="OH YES")
+        self.name="HALLO WELT"
+        if self.i == 20:
+            self.next()
+        self.cbpi.notify(key="step", message="HELLO FROM STEP")
         print("RUN STEP", self.id, self.name, self.__dict__)
 
 

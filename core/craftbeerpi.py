@@ -50,8 +50,18 @@ class CraftBeerPi():
         middlewares = [session_middleware(EncryptedCookieStorage(urandom(32))), auth.auth_middleware(policy)]
         self.app = web.Application(middlewares=middlewares)
         self.initializer = []
+        self.shutdown = False
+
+        async def on_cleanup(app):
+            self.shutdown = True
+
+
+        self.app.on_cleanup.append(on_cleanup)
+
 
         setup(self.app, self)
+
+
         self.bus = EventBus(self.app.loop, self)
         self.ws = WebSocket(self)
         self.actor = ActorController(self)
