@@ -1,7 +1,7 @@
 from aiohttp import web
 from aiohttp_auth import auth
 
-from core.api.decorator import request_mapping
+from cbpi_api import *
 
 
 class Login():

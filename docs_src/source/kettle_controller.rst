@@ -16,7 +16,7 @@ CBPiKettleLogic
 ^^^^^^^^^^^^^^^
 
 
-.. autoclass:: core.api.kettle_logic.CBPiKettleLogic
+.. autoclass:: cbpi_api.CBPiKettleLogic
   :members:
   :show-inheritance:
   :inherited-members:

@@ -86,7 +86,7 @@ class Scheduler(*bases):
         if self._closed:
             return
         self._closed = True  # prevent adding new jobs
-        print("####### CLOSE")
+
         jobs = self._jobs
         if jobs:
             # cleanup pending queue
@@ -113,7 +113,7 @@ class Scheduler(*bases):
 
     def _done(self, job):
 
-        print("JOB DONE")
+
         self.cbpi.bus.sync_fire("job/%s/done" % job.type, type=job.type, key=job.name)
         self._jobs.discard(job)
         if not self.pending_count:

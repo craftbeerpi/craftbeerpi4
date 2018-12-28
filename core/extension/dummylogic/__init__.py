@@ -1,8 +1,6 @@
 import asyncio
 
-from core.api import Property, on_event
-from core.api.kettle_logic import CBPiKettleLogic
-
+from cbpi_api import *
 
 class CustomLogic(CBPiKettleLogic):
 
@@ -29,14 +27,14 @@ class CustomLogic(CBPiKettleLogic):
         if timeout is not None:
 
             try:
-                print("----> WAIT FOR FUTURE")
+
                 await asyncio.wait_for(future_obj, timeout=timeout)
-                print("------> TIMEOUT")
+
                 return future_obj.result()
             except asyncio.TimeoutError:
-                print('timeout!')
+                pass
         else:
-            print("----> WAIT FOR FUTURE")
+
             await future_obj
             return future_obj.result()
 
@@ -51,10 +49,10 @@ class CustomLogic(CBPiKettleLogic):
                 self.cbpi.bus.unregister(my_callback)
                 kwargs["future"].set_result("AMAZING")
             else:
-                print("OTHER VALUE", value)
+                pass
 
         result = await self.wait_for_event("sensor/1", callback=my_callback)
-        print("THE RESULT", result)
+
 
 
         '''
@@ -68,7 +66,7 @@ class CustomLogic(CBPiKettleLogic):
                 break
             await asyncio.sleep(1)
         '''
-        print("YES IM FINISHED STOP LOGIC")
+
 
 def setup(cbpi):
 

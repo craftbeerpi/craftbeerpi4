@@ -7,3 +7,7 @@ port: 8080
 
 username: cbpi
 password: 123
+
+test:
+  name: Manuel
+  name2: Manuel

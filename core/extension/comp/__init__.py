@@ -1,7 +1,6 @@
 from aiohttp import web
 
-from core.api.decorator import on_event, request_mapping
-from core.api.extension import CBPiExtension
+from cbpi_api import *
 from core.controller.crud_controller import CRUDController
 from core.database.orm_framework import DBModel
 from core.http_endpoints.http_api import HttpAPI
@@ -32,12 +31,12 @@ class MyComp(CBPiExtension, CRUDController, HttpAPI):
 
     @on_event(topic="actor/#")
     async def listen(self, **kwargs):
-        print("Test", kwargs)
+        pass
 
 
     @on_event(topic="kettle/+/automatic")
     async def listen2(self, **kwargs):
-        print("HANDLE AUTOMATIC", kwargs)
+
 
         await self.cbpi.bus.fire(topic="actor/%s/toggle" % 1, id=1)
 

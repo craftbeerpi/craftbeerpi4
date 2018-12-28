@@ -1,10 +1,10 @@
+import json
 import logging
 import os
 from logging.handlers import TimedRotatingFileHandler
-
+from core.utils.encoder import ComplexEncoder
 from core.job.aiohttp import get_scheduler_from_app
-
-from core.api.decorator import background_task
+from cbpi_api import *
 from core.controller.crud_controller import CRUDController
 from core.database.model import SensorModel
 from core.http_endpoints.http_api import HttpAPI
@@ -22,7 +22,9 @@ class SensorController(CRUDController, HttpAPI):
 
         self.sensors = {}
 
+    def info(self):
 
+        return json.dumps(dict(name="SensorController", types=self.types), cls=ComplexEncoder)
 
     async def init(self):
         '''
@@ -31,9 +33,9 @@ class SensorController(CRUDController, HttpAPI):
         :return: 
         '''
         await super(SensorController, self).init()
-        print("INIT SENSOR")
+
         for name, clazz in self.types.items():
-            print("Type", name)
+            pass
 
         for id, value in self.cache.items():
             if value.type in self.types:
@@ -43,7 +45,7 @@ class SensorController(CRUDController, HttpAPI):
                 self.cache[id].instance = clazz(**cfg)
                 scheduler = get_scheduler_from_app(self.cbpi.app)
                 self.cache[id].instance.job = await scheduler.spawn(self.cache[id].instance.run(self.cbpi), value.name, "sensor")
-        print("------------")
+
 
     async def get_value(self, id):
 

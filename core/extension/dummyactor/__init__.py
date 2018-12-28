@@ -1,6 +1,6 @@
 import logging
 
-from core.api import CBPiActor, Property, action
+from cbpi_api import *
 
 
 class CustomActor(CBPiActor):
@@ -9,10 +9,10 @@ class CustomActor(CBPiActor):
     gpio = Property.Number(label="Test")
 
     def init(self):
-        print("#########INIT MY CUSTOM ACTOR")
+        pass
 
     def stop(self):
-        print("#########STOP MY CUSTOM ACTOR")
+        pass
 
 
     @action(key="name", parameters={})
@@ -23,14 +23,14 @@ class CustomActor(CBPiActor):
         super().state()
 
     def off(self):
-        print("OFF", self.gpio)
+
 
         # Code to swtich the actor off goes here
 
         self.state = False
 
     def on(self, power=100):
-        print("ON", self.gpio)
+
 
         # Code to swtich the actor on goes here
 

@@ -1,5 +1,8 @@
+import imp
+import importlib
 import logging
 import os
+import sys
 from importlib import import_module
 from pprint import pprint
 
@@ -7,17 +10,11 @@ import aiohttp
 import yaml
 from aiohttp import web
 
-from core.api.actor import CBPiActor
-from core.api.decorator import request_mapping
-from core.api.extension import CBPiExtension
-from core.api.kettle_logic import CBPiKettleLogic
-from core.api.property import Property
-from core.api.sensor import CBPiSensor
-from core.api.step import CBPiSimpleStep
+from cbpi_api import *
 from core.utils.utils import load_config, json_dumps
 
-logger = logging.getLogger(__file__)
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 class PluginController():
 
@@ -64,6 +61,18 @@ class PluginController():
             except Exception as e:
                 logger.error(e)
 
+    def load_plugins_from_evn(self):
+
+
+        plugins = ["cbpi-actor"]
+
+
+        for p in plugins:
+
+            self.modules[p] = import_module(p)
+            self.modules[p].setup(self.cbpi)
+
+
     @request_mapping(path="/plugins", method="GET", auth_required=False)
     async def get_plugins(self, request):
         """
@@ -90,7 +99,7 @@ class PluginController():
         :param clazz: actor class
         :return: None
         '''
-        print("REGISTER", name, clazz)
+
         if issubclass(clazz, CBPiActor):
             self.cbpi.actor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
 
@@ -103,12 +112,12 @@ class PluginController():
 
         if issubclass(clazz, CBPiSimpleStep):
             self.cbpi.step.types[name] = self._parse_props(clazz)
-            print(self.cbpi.step.types)
+
         if issubclass(clazz, CBPiExtension):
             self.c  = clazz(self.cbpi)
 
     def _parse_props(self, cls):
-        print("PARSE", cls)
+
         name = cls.__name__
 
         result = {"name": name, "class": cls, "properties": [], "actions": []}
@@ -143,5 +152,5 @@ class PluginController():
                 key = method.__getattribute__("key")
                 parameters = method.__getattribute__("parameters")
                 result["actions"].append({"method": method_name, "label": key, "parameters": parameters})
-        pprint(result)
+
         return result

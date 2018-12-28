@@ -1,7 +1,6 @@
 from pprint import pprint
 
-
-from core.api.property import Property
+from cbpi_api import *
 from core.utils.encoder import ComplexEncoder
 
 __all__ = ['load_config',"json_dumps", "parse_props"]
@@ -16,10 +15,13 @@ from core.database.model import DBModel, ActorModel
 
 def load_config(fname):
     try:
+
         with open(fname, 'rt') as f:
             data = yaml.load(f)
+
         return data
-    except:
+    except Exception as e:
+
         pass
 
 
@@ -63,7 +65,7 @@ def parse_props(self, cls):
             key = method.__getattribute__("key")
             parameters = method.__getattribute__("parameters")
             result["actions"].append({"method": method_name, "label": key, "parameters": parameters})
-    pprint(result, width=200)
+
 
 
 

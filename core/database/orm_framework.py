@@ -36,13 +36,9 @@ class DBModel(object):
     @classmethod
     async def test_connection(self):
 
-
         async with aiosqlite.connect(TEST_DB) as db:
-
             assert isinstance(db, aiosqlite.Connection)
             this_directory = os.path.dirname(__file__)
-
-
             qry = open(os.path.join(this_directory, '../sql/create_table_user.sql'), 'r').read()
             cursor = await db.executescript(qry)
 
@@ -67,7 +63,8 @@ class DBModel(object):
                     if cls.__as_array__ is True:
                         result.append(cls(row))
                     else:
-                        result[row.get("id")] = cls(row)
+
+                        result[row.get(cls.__priamry_key__)] = cls(row)
                 await cursor.close()
 
         return result
@@ -121,7 +118,7 @@ class DBModel(object):
                     else:
                         data = data + (kwargs.get(f),)
 
-            print("INSERT DATA", query, data)
+
             cursor = await db.execute(query, data)
             await db.commit()
 

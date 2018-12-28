@@ -1,5 +1,4 @@
-from core.api.decorator import on_event
-
+from cbpi_api import *
 
 class NotificationController():
     '''

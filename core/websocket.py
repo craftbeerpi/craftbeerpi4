@@ -5,8 +5,7 @@ import json
 import aiohttp
 from aiohttp import web
 from typing import Iterable, Callable
-
-from core.api import on_event
+from cbpi_api import *
 
 
 class WebSocket:
@@ -19,11 +18,12 @@ class WebSocket:
 
     @on_event(topic="#")
     async def listen(self, topic, **kwargs):
-        print("WS", topic)
-
         from core.utils.encoder import ComplexEncoder
+        data = json.dumps(dict(topic=topic, data=dict(**kwargs)),skipkeys=True, check_circular=True, cls=ComplexEncoder)
+        self.logger.info("PUSH %s " % data)
 
-        self.send(json.dumps(dict(topic=topic, data=dict(**kwargs)),skipkeys=True, check_circular=True, cls=ComplexEncoder))
+
+        self.send(data)
 
     def send(self, data):
 

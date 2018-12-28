@@ -1,9 +1,6 @@
 import asyncio
 import inspect
 import logging
-import json
-
-import time
 
 
 class EventBus(object):
@@ -101,13 +98,13 @@ class EventBus(object):
         else:
             self.loop = asyncio.get_event_loop()
 
-        print(self.loop)
+
 
     def sync_fire(self,topic: str,timeout=1, **kwargs):
         self.loop.create_task(self.fire(topic=topic, timeout=timeout, **kwargs))
 
     async def fire(self, topic: str, timeout=1, **kwargs):
-
+        print("FIRE")
         futures = {}
 
         async def wait(futures):

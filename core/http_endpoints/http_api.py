@@ -2,7 +2,9 @@ import logging
 
 from aiohttp import web
 
-from core.api.decorator import request_mapping
+
+from cbpi_api import *
+
 from core.utils.utils import json_dumps
 
 

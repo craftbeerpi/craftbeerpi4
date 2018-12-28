@@ -1,11 +1,13 @@
+import json
+import logging
 from asyncio import Future
 
 from aiohttp import web
-
-from core.api.decorator import on_event, request_mapping
+from cbpi_api import *
 from core.controller.crud_controller import CRUDController
 from core.database.model import ActorModel
 from core.http_endpoints.http_api import HttpAPI
+from utils.encoder import ComplexEncoder
 
 
 class ActorHttp(HttpAPI):
@@ -17,11 +19,11 @@ class ActorHttp(HttpAPI):
         :return: 
         """
         id = int(request.match_info['id'])
-        result = await self.cbpi.bus.fire2(topic="actor/%s/switch/on" % id, id=id, power=99)
-        print(result.timeout)
+        result = await self.cbpi.bus.fire(topic="actor/%s/switch/on" % id, id=id, power=99)
+
 
         for key, value in result.results.items():
-            print(key, value.result)
+            pass
         return web.Response(status=204)
 
 
@@ -42,7 +44,7 @@ class ActorHttp(HttpAPI):
         :return: 
         """
         id = int(request.match_info['id'])
-        print("ID", id)
+
         await self.cbpi.bus.fire(topic="actor/%s/toggle" % id, id=id)
         return web.Response(status=204)
 
@@ -57,10 +59,15 @@ class ActorController(ActorHttp, CRUDController):
         super(ActorController, self).__init__(cbpi)
         self.cbpi = cbpi
         self.state = False;
-
+        self.logger = logging.getLogger(__name__)
         self.cbpi.register(self, "/actor")
         self.types = {}
         self.actors = {}
+
+    def info(self):
+
+        return json.dumps(dict(name="ActorController", types=self.types), cls=ComplexEncoder)
+
 
     async def init(self):
         '''
@@ -104,8 +111,8 @@ class ActorController(ActorHttp, CRUDController):
 
         id = int(id)
         if id in self.cache:
-            print("POWER ON")
-            actor = self.cache[id   ].instance
+            self.logger.debug("ON %s" % id)
+            actor = self.cache[id].instance
             await self.cbpi.bus.fire("actor/%s/on/ok" % id)
             actor.on(power)
 
@@ -122,6 +129,7 @@ class ActorController(ActorHttp, CRUDController):
         :return: 
         '''
 
+        self.logger.debug("TOGGLE %s" % id)
         id = int(id)
         if id in self.cache:
             actor = self.cache[id].instance
@@ -141,6 +149,7 @@ class ActorController(ActorHttp, CRUDController):
         :param kwargs: 
         """
 
+        self.logger.debug("OFF %s" % id)
         id = int(id)
 
         if id in self.cache:

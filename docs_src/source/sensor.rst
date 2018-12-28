@@ -15,7 +15,7 @@ Sensor Controller
 CBPiSensor
 ^^^^^^^^^^
 
-.. autoclass:: core.api.sensor.CBPiSensor
+.. autoclass:: cbpi_api.CBPiSensor
   :members:
   :private-members:
   :undoc-members:

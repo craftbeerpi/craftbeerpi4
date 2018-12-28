@@ -21,7 +21,7 @@ ActorController
 CBPiActor
 ^^^^^^^^^
 
-.. autoclass:: core.api.actor.CBPiActor
+.. autoclass:: cbpi_api.CBPiActor
   :members:
   :private-members:
   :undoc-members:

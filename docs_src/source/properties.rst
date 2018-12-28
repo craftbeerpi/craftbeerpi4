@@ -23,7 +23,7 @@ Custom Actor
 
 
 
-.. autoclass:: core.api.property.Property
+.. autoclass:: cbpi_api.Property
   :members:
   :private-members:
   :undoc-members:

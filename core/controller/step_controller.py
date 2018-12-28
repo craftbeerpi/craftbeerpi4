@@ -2,7 +2,7 @@ import asyncio
 
 import time
 from aiohttp import web
-from core.api import on_event, request_mapping
+from cbpi_api import *
 from core.controller.crud_controller import CRUDController
 from core.database.model import StepModel
 from core.http_endpoints.http_api import HttpAPI
@@ -36,7 +36,7 @@ class StepController(HttpAPI, CRUDController):
         :return: 
         '''
         await super(StepController, self).init()
-        print("INIT LAST STEP")
+
         await self.init_after_startup()
 
     async def init_after_startup(self):
@@ -45,14 +45,14 @@ class StepController(HttpAPI, CRUDController):
 
 
         if step is not None:
-            print("INIT LAST STEP", step.__dict__)
+
             # get the type
-            print(self.types)
+
             step_type = self.types.get(step.type)
 
             if step_type is None:
                 # step type not found. cant restart step
-                print("STEP TYPE NONT FOUND")
+
                 return
 
             if step.stepstate is not None:
@@ -201,10 +201,10 @@ class StepController(HttpAPI, CRUDController):
         :return: 
         '''
 
-        print("IS SHUTODONW", self.cbpi.shutdown)
+
         if self.cbpi.shutdown:
             return
-        print("JOB DONE STEP")
+
         self.cache[self.current_step.id].state = "D"
         step_id = self.current_step.id
         self.current_step = None
@@ -214,7 +214,7 @@ class StepController(HttpAPI, CRUDController):
 
 
     def _get_manged_fields_as_array(self, type_cfg):
-        print("tYPE", type_cfg)
+
         result = []
         for f in type_cfg.get("properties"):
             result.append(f.get("name"))
@@ -236,7 +236,7 @@ class StepController(HttpAPI, CRUDController):
             inactive = await self.model.get_by_state("I")
             active = await self.model.get_by_state("A")
 
-            print("STEPES", inactive, active)
+
 
             if active is not None:
                 active.state = 'D'

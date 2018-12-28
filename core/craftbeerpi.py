@@ -26,8 +26,11 @@ from core.eventbus import EventBus
 from core.http_endpoints.http_login import Login
 from core.utils import *
 from core.websocket import WebSocket
+from core.utils.encoder import ComplexEncoder
 
-logger = logging.getLogger(__file__)
+
+
+logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
@@ -72,12 +75,14 @@ class CraftBeerPi():
         self.kettle = KettleController(self)
         self.step = StepController(self)
         self.notification = NotificationController(self)
-        #self.dummy = MyComp(self)
+
+
 
 
         self.login = Login(self)
 
         self.plugin.load_plugins()
+        self.plugin.load_plugins_from_evn()
         self.register_events(self.ws)
 
 
@@ -193,7 +198,7 @@ class CraftBeerPi():
 
 
         if url_prefix is not None:
-            print("Prefx", url_prefix)
+            logger.debug("URL Prefix: %s "  % (url_prefix,))
             sub = web.Application()
             sub.add_routes(routes)
             if static is not None:
@@ -242,12 +247,13 @@ class CraftBeerPi():
         :return: 
         '''
 
-        print("INIT CONTROLLER")
+
 
         from pyfiglet import Figlet
         f = Figlet(font='big')
+        print("")
         print(f.renderText("%s %s" % (self.config.get("name"), self.config.get("version"))))
-
+        print("")
         async def init_database(app):
             await DBModel.test_connection()
 
@@ -256,14 +262,22 @@ class CraftBeerPi():
             await self.step.init()
             await self.actor.init()
             await self.kettle.init()
+            await self.config2.init()
 
+
+            print(self.sensor.info())
+
+            print(self.actor.info())
             import pprint
-            pprint.pprint(self.bus.dump())
+            #pprint.pprint(self.bus.dump())
 
 
         async def load_plugins(app):
             #await PluginController.load_plugin_list()
             #self.plugin.load_plugins()
+
+
+
             pass
 
         async def call_initializer(app):

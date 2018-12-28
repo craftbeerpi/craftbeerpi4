@@ -1,8 +1,5 @@
-import json
 import pprint
-from abc import abstractmethod,ABCMeta
-
-from core.utils.encoder import ComplexEncoder
+from abc import ABCMeta
 
 
 class CRUDController(metaclass=ABCMeta):
@@ -141,10 +138,10 @@ class CRUDController(metaclass=ABCMeta):
         await self._post_delete_callback(id)
         try:
             if self.caching is True:
-                print("DELTE FROM ACHE")
+
                 del self.cache[int(id)]
         except Exception as e:
-            print(e)
+
             pass
         pprint.pprint(self.cache)
         await self.cbpi.bus.fire(topic="actor/%s/deleted" % id, id=id)

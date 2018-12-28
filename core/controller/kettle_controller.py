@@ -2,7 +2,8 @@ import re
 
 from aiohttp import web
 
-from core.api import request_mapping, on_event
+
+from cbpi_api import *
 from core.controller.crud_controller import CRUDController
 from core.database.model import KettleModel
 from core.http_endpoints.http_api import HttpAPI
@@ -84,7 +85,7 @@ class KettleController(CRUDController):
             kettle = self.cache[int(kid)]
             kettle.instance = None
 
-            print("STOP KETTLE LOGIC", kid)
+
 
     @on_event(topic="kettle/+/automatic")
     async def handle_automtic_event(self, id, **kwargs):
@@ -97,9 +98,9 @@ class KettleController(CRUDController):
         :return: None
         '''
         id = int(id)
-        print("WOOOHO", type(id), self.cache)
+
         if id in self.cache:
-            print("id", id)
+
             kettle = self.cache[id]
 
             if hasattr(kettle, "instance") is False:
@@ -111,7 +112,7 @@ class KettleController(CRUDController):
                     cfg = kettle.config.copy()
                     cfg.update(dict(cbpi=self.cbpi))
                     kettle.instance = clazz(**cfg)
-                print("START LOGIC")
+
                 await self.cbpi.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic%s"%id)
             else:
                 kettle.instance.running = False
@@ -120,7 +121,7 @@ class KettleController(CRUDController):
 
     def _is_logic_running(self, kettle_id):
         scheduler = get_scheduler_from_app(self.cbpi.app)
-        print("JOB KETTLE RUNNING", scheduler.is_running("Kettle_logic_%s"%kettle_id))
+
 
     async def heater_on(self, id):
         '''

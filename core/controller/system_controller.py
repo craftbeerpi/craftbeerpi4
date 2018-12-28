@@ -2,7 +2,7 @@ import datetime
 from aiohttp import web
 from aiojobs.aiohttp import get_scheduler_from_app
 
-from core.api.decorator import request_mapping
+from cbpi_api import *
 
 
 class SystemController():
@@ -28,9 +28,7 @@ class SystemController():
         result = []
         for j in scheduler:
             try:
-                print(datetime.datetime.fromtimestamp(
-                    j.start_time
-                ).strftime('%Y-%m-%d %H:%M:%S'))
+
                 result.append(dict(name=j.name, type=j.type, time=j.start_time))
             except:
                 pass

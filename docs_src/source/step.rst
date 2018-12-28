@@ -16,7 +16,7 @@ StepController
 CBPiSimpleStep
 ^^^^^^^^^^^^^^
 
-.. autoclass:: core.api.step.CBPiSimpleStep
+.. autoclass:: cbpi_api.CBPiSimpleStep
   :members:
   :undoc-members:
   :show-inheritance:
@@ -30,7 +30,6 @@ This is an example of a custom step. The Step class need to extend Simple step. 
 
 .. literalinclude:: ../../core/extension/dummystep/__init__.py
    :caption: __init__.py
-   :name: __init__-py
    :language: python
    :linenos:
 

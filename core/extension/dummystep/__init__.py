@@ -1,7 +1,6 @@
 import asyncio
 
-from core.api import Property, action
-from core.api.step import CBPiSimpleStep
+from cbpi_api import *
 
 
 class CustomStepCBPi(CBPiSimpleStep):
@@ -23,7 +22,7 @@ class CustomStepCBPi(CBPiSimpleStep):
         if self.i == 20:
             self.next()
         self.cbpi.notify(key="step", message="HELLO FROM STEP")
-        print("RUN STEP", self.id, self.name, self.__dict__)
+
 
 
 def setup(cbpi):

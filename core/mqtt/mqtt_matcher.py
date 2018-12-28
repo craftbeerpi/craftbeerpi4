@@ -55,7 +55,7 @@ class MQTTMatcher(object):
         self._root = self.Node()
 
     def __setitem__(self, key, value):
-        print("...",key, value)
+
         node = self._root
         for sym in key.split('/'):
 
