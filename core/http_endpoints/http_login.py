@@ -20,12 +20,16 @@ class Login():
 
     @request_mapping(path="/login",name="Login", method="POST", auth_required=False)
     async def login_view(self, request):
+
+        print("TRY LOGIN")
         params = await request.post()
 
 
         user = params.get('username', None)
+        password = params.get('password', None)
+        print("UUSEr", user, password, str(self.db[user]))
         if (user in self.db and
-            params.get('password', None) == self.db[user]):
+            params.get('password', None) == str(self.db[user])):
 
             # User is in our database, remember their login details
             await auth.remember(request, user)

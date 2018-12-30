@@ -78,30 +78,3 @@ class WebSocket:
         self.logger.info("Web Socket Close")
 
         return ws
-
-'''
-async def websocket_handler(request):
-    ws = web.WebSocketResponse()
-    await ws.prepare(request)
-
-    _ws.append(ws)
-
-    c = len(_ws) - 1
-
-    async for msg in ws:
-
-        if msg.type == aiohttp.WSMsgType.TEXT:
-            if msg.data == 'close':
-                await ws.close()
-            else:
-
-                await ws.send_str(msg.data)
-        elif msg.type == aiohttp.WSMsgType.ERROR:
-            print('ws connection closed with exception %s' %
-                  ws.exception())
-
-    del _ws[c]
-    print('websocket connection closed')
-
-    return ws
-'''

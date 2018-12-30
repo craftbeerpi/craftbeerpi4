@@ -22,7 +22,7 @@ from core.controller.plugin_controller import PluginController
 from core.controller.sensor_controller import SensorController
 from core.controller.system_controller import SystemController
 from core.database.model import DBModel
-from core.eventbus import EventBus
+from core.eventbus import CBPiEventBus
 from core.http_endpoints.http_login import Login
 from core.utils import *
 from core.websocket import WebSocket
@@ -50,7 +50,7 @@ class CraftBeerPi():
 
         logger.info("Init CraftBeerPI")
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
-        middlewares = [session_middleware(EncryptedCookieStorage(urandom(32))), auth.auth_middleware(policy)]
+        middlewares = [web.normalize_path_middleware(), session_middleware(EncryptedCookieStorage(urandom(32))), auth.auth_middleware(policy)]
         self.app = web.Application(middlewares=middlewares)
         self.initializer = []
         self.shutdown = False
@@ -65,7 +65,7 @@ class CraftBeerPi():
         setup(self.app, self)
 
 
-        self.bus = EventBus(self.app.loop, self)
+        self.bus = CBPiEventBus(self.app.loop, self)
         self.ws = WebSocket(self)
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
@@ -75,14 +75,7 @@ class CraftBeerPi():
         self.kettle = KettleController(self)
         self.step = StepController(self)
         self.notification = NotificationController(self)
-
-
-
-
         self.login = Login(self)
-
-        self.plugin.load_plugins()
-        self.plugin.load_plugins_from_evn()
         self.register_events(self.ws)
 
 
@@ -202,9 +195,11 @@ class CraftBeerPi():
             sub = web.Application()
             sub.add_routes(routes)
             if static is not None:
-                sub.add_routes([web.static('/static', static, show_index=True)])
+                sub.add_routes([web.static('/static', static, show_index=False)])
             self.app.add_subapp(url_prefix, sub)
         else:
+
+
             self.app.add_routes(routes)
 
 
@@ -249,53 +244,43 @@ class CraftBeerPi():
 
 
 
+        #async def init_database(app):
+
+
+
+
+        #self.app.on_startup.append(call_initializer)
+
+    async def call_initializer(self, app):
+        self.initializer = sorted(self.initializer, key=lambda k: k['order'])
+        for i in self.initializer:
+            logger.info("CALL INITIALIZER %s - %s " % (i["name"], i["method"].__name__))
+            await i["method"]()
+
+    def _print_logo(self):
         from pyfiglet import Figlet
         f = Figlet(font='big')
-        print("")
-        print(f.renderText("%s %s" % (self.config.get("name"), self.config.get("version"))))
-        print("")
-        async def init_database(app):
-            await DBModel.test_connection()
+        logger.info("\n%s" % f.renderText("%s %s" % (self.config.get("name"), self.config.get("version"))))
 
-        async def init_controller(app):
-            await self.sensor.init()
-            await self.step.init()
-            await self.actor.init()
-            await self.kettle.init()
-            await self.config2.init()
+    async def init_serivces(self):
 
+        self._print_logo()
+        await DBModel.test_connection()
+        await self.config2.init()
+        self.plugin.load_plugins()
+        self.plugin.load_plugins_from_evn()
+        await self.sensor.init()
+        await self.step.init()
+        await self.actor.init()
+        await self.kettle.init()
+        await self.call_initializer(self.app)
 
-            print(self.sensor.info())
-
-            print(self.actor.info())
-            import pprint
-            #pprint.pprint(self.bus.dump())
-
-
-        async def load_plugins(app):
-            #await PluginController.load_plugin_list()
-            #self.plugin.load_plugins()
-
-
-
-            pass
-
-        async def call_initializer(app):
-
-            self.initializer = sorted(self.initializer, key=lambda k: k['order'])
-            for i in self.initializer:
-                logger.info("CALL INITIALIZER %s - %s " % (i["name"], i["method"].__name__))
-
-                await i["method"]()
-
-
-        self.app.on_startup.append(init_database)
-        self.app.on_startup.append(call_initializer)
-
-        self.app.on_startup.append(load_plugins)
-        self.app.on_startup.append(init_controller)
+        logger.info(self.sensor.info())
+        logger.info(self.actor.info())
 
         self._swagger_setup()
 
+        return self.app
+
     def start(self):
-        web.run_app(self.app, port=self.config.get("port", 8080))
+        web.run_app(self.init_serivces(), port=self.config.get("port", 8080))

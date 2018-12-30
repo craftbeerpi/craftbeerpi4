@@ -87,7 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Standard &amp; Guidelines</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#eventbus">EventBus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eventbus">CBPiEventBus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#http-endpoints">HTTP Endpoints</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#websocket">WebSocket</a></li>
 </ul>
@@ -170,8 +170,8 @@ As a main framework CraftBeerPi is based on <cite>aiohttp</cite></p>
 <li>aioHTTP <a class="reference external" href="https://aiohttp.readthedocs.io/en/stable/">https://aiohttp.readthedocs.io/en/stable/</a></li>
 </ul>
 <div class="section" id="eventbus">
-<h3>EventBus<a class="headerlink" href="#eventbus" title="Permalink to this headline">¶</a></h3>
-<p>One core concept of CraftBeerPi 4.x is the EventBus.
+<h3>CBPiEventBus<a class="headerlink" href="#eventbus" title="Permalink to this headline">¶</a></h3>
+<p>One core concept of CraftBeerPi 4.x is the CBPiEventBus.
 It should be avoided to call method on a controller directly. Events should be fired and listener methods should be used.
 This makes sure that all components are loosely coupled. New plugins can listen on events and extend or change the functionality easily.</p>
 <p>Here an example how to fire an event</p>

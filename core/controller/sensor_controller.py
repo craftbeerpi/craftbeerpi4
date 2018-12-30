@@ -48,5 +48,4 @@ class SensorController(CRUDController, HttpAPI):
 
 
     async def get_value(self, id):
-
         return self.cache[id].instance.value

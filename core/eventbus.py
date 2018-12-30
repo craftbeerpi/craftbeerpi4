@@ -3,7 +3,7 @@ import inspect
 import logging
 
 
-class EventBus(object):
+class CBPiEventBus(object):
     class Node(object):
         __slots__ = '_children', '_content'
 
@@ -33,9 +33,9 @@ class EventBus(object):
             self.timeout = timeout
             for key, value in results.items():
                 if value.done() is True:
-                    self.results[key] = EventBus.Result(value.result(), True)
+                    self.results[key] = CBPiEventBus.Result(value.result(), True)
                 else:
-                    self.results[key] = EventBus.Result(None, False)
+                    self.results[key] = CBPiEventBus.Result(None, False)
 
 
 
@@ -104,7 +104,7 @@ class EventBus(object):
         self.loop.create_task(self.fire(topic=topic, timeout=timeout, **kwargs))
 
     async def fire(self, topic: str, timeout=1, **kwargs):
-        print("FIRE")
+
         futures = {}
 
         async def wait(futures):

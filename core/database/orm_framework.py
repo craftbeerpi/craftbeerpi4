@@ -1,10 +1,8 @@
 import json
-
 import aiosqlite
 import os
-# Thats the name of the database file
-TEST_DB = "./craftbeerpi.db"
 
+DATABASE_FILE = "./craftbeerpi.db"
 
 
 class DBModel(object):
@@ -36,7 +34,7 @@ class DBModel(object):
     @classmethod
     async def test_connection(self):
 
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
             assert isinstance(db, aiosqlite.Connection)
             this_directory = os.path.dirname(__file__)
             qry = open(os.path.join(this_directory, '../sql/create_table_user.sql'), 'r').read()
@@ -49,7 +47,7 @@ class DBModel(object):
             result = []
         else:
             result = {}
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
 
             if cls.__order_by__ is not None:
                 sql = "SELECT * FROM %s ORDER BY %s.'%s'" % (cls.__table_name__, cls.__table_name__, cls.__order_by__)
@@ -71,7 +69,7 @@ class DBModel(object):
 
     @classmethod
     async def get_one(cls, id):
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
             db.row_factory = aiosqlite.Row
             db.row_factory = DBModel.dict_factory
             async with db.execute("SELECT * FROM %s WHERE %s = ?" % (cls.__table_name__, cls.__priamry_key__), (id,)) as cursor:
@@ -83,14 +81,14 @@ class DBModel(object):
 
     @classmethod
     async def delete(cls, id):
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
             await db.execute("DELETE FROM %s WHERE %s = ? " % (cls.__table_name__, cls.__priamry_key__), (id,))
             await db.commit()
 
     @classmethod
     async def insert(cls, **kwargs):
 
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
             if cls.__priamry_key__ is not None and cls.__priamry_key__ in kwargs:
                 query = "INSERT INTO %s (%s, %s) VALUES (?, %s)" % (
                     cls.__table_name__,
@@ -129,7 +127,7 @@ class DBModel(object):
 
     @classmethod
     async def update(cls, **kwargs):
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
             query = 'UPDATE %s SET %s WHERE %s = ?' % (cls.__table_name__, ', '.join("'%s' = ?" % str(x) for x in cls.__fields__), cls.__priamry_key__)
 
             data = ()
@@ -150,4 +148,3 @@ class DBModel(object):
         for idx, col in enumerate(cursor.description):
             d[col[0]] = row[idx]
         return d
-

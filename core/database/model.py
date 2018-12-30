@@ -1,16 +1,12 @@
 import json
-
 import aiosqlite
-
 from core.database.orm_framework import DBModel
-TEST_DB = "./craftbeerpi.db"
+DATABASE_FILE = "./craftbeerpi.db"
 
 class ActorModel(DBModel):
     __fields__ = ["name", "type", "config"]
     __table_name__ = "actor"
     __json_fields__ = ["config"]
-
-
 
 
 class SensorModel(DBModel):
@@ -37,7 +33,7 @@ class StepModel(DBModel):
 
     @classmethod
     async def update_step_state(cls, step_id, state):
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
             cursor = await db.execute("UPDATE %s SET stepstate = ? WHERE id = ?" % cls.__table_name__, (json.dumps(state), step_id))
             await db.commit()
 
@@ -45,7 +41,7 @@ class StepModel(DBModel):
     async def get_by_state(cls, state, order=True):
 
 
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
             db.row_factory = aiosqlite.Row
             db.row_factory = DBModel.dict_factory
             async with db.execute("SELECT * FROM %s WHERE state = ? ORDER BY %s.'order'" %  (cls.__table_name__, cls.__table_name__,), state) as cursor:
@@ -57,48 +53,7 @@ class StepModel(DBModel):
 
     @classmethod
     async def reset_all_steps(cls):
-        async with aiosqlite.connect(TEST_DB) as db:
+        async with aiosqlite.connect(DATABASE_FILE) as db:
             cursor = await db.execute("UPDATE %s SET state = 'I', stepstate = NULL , start = NULL, end = NULL " % cls.__table_name__)
             await db.commit()
 
-        
-
-    '''
-    @classmethod
-    def sort(cls, new_order):
-        cur = get_db().cursor()
-        for key, value in new_order.items():
-            cur.execute("UPDATE %s SET '%s' = ? WHERE id = ?" % (cls.__table_name__, "order"), (value, key))
-        get_db().commit()
-
-    @classmethod
-    def get_max_order(cls):
-        cur = get_db().cursor()
-        cur.execute("SELECT max(step.'order') as 'order' FROM %s" % cls.__table_name__)
-        r = cur.fetchone()
-        return r.get("order")
-
-    @classmethod
-    def delete_all(cls):
-        cur = get_db().cursor()
-        cur.execute("DELETE FROM %s" % cls.__table_name__)
-        get_db().commit()
-
-    @classmethod
-    def get_by_state(cls, state, order=True):
-        cur = get_db().cursor()
-        cur.execute("SELECT * FROM %s WHERE state = ? ORDER BY %s.'order'" % (cls.__table_name__, cls.__table_name__,), state)
-        r = cur.fetchone()
-        if r is not None:
-            return cls(r)
-        else:
-            return None
-
-    
-
-    @classmethod
-    def reset_all_steps(cls):
-        cur = get_db().cursor()
-        cur.execute("UPDATE %s SET state = 'I', stepstate = NULL , start = NULL, end = NULL " % cls.__table_name__)
-        get_db().commit()
-    '''

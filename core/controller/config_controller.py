@@ -51,7 +51,7 @@ class ConfigController(ConfigHTTPController):
             self.cache[value.name] = value
 
 
-    async def get(self, name, default=None):
+    def get(self, name, default=None):
         self.logger.info("GET CONFIG VALUE %s (default %s)" % (name,default))
         if name in self.cache and self.cache[name].value is not None:
             return self.cache[name].value

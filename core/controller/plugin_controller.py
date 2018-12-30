@@ -1,16 +1,12 @@
-import imp
-import importlib
 import logging
 import os
-import sys
 from importlib import import_module
-from pprint import pprint
 
 import aiohttp
 import yaml
 from aiohttp import web
-
 from cbpi_api import *
+
 from core.utils.utils import load_config, json_dumps
 
 logger = logging.getLogger(__name__)
@@ -42,20 +38,17 @@ class PluginController():
             if os.path.isdir("./core/extension/" + filename) is False or filename == "__pycache__":
                 continue
             try:
-
                 logger.info("Trying to load plugin %s" % filename)
-
                 data = load_config("./core/extension/%s/config.yaml" % filename)
-
 
                 if(data.get("version") == 4):
 
                     self.modules[filename] = import_module("core.extension.%s" % (filename))
                     self.modules[filename].setup(self.cbpi)
+
                     logger.info("Plugin %s loaded successful" % filename)
                 else:
-                    logger.warning("Plguin %s is not supporting version 4" % filename)
-
+                    logger.warning("Plugin %s is not supporting version 4" % filename)
 
 
             except Exception as e:
@@ -63,14 +56,25 @@ class PluginController():
 
     def load_plugins_from_evn(self):
 
+        plugins = []
 
-        plugins = ["cbpi-actor"]
-
+        with open('./config/plugin_list.txt') as f:
+            plugins = f.read().splitlines()
+            plugins = list(set(plugins))
 
         for p in plugins:
+            logger.debug("Load Plugin %s" % p)
+            try:
+                logger.info("Try to load plugin:  %s " % p)
+                self.modules[p] = import_module(p)
+                self.modules[p].setup(self.cbpi)
 
-            self.modules[p] = import_module(p)
-            self.modules[p].setup(self.cbpi)
+
+
+                logger.info("Plugin  %s loaded successfully" % p)
+            except Exception as e:
+                logger.error("FAILED to load plugin %s " % p)
+                logger.error(e)
 
 
     @request_mapping(path="/plugins", method="GET", auth_required=False)
@@ -99,10 +103,9 @@ class PluginController():
         :param clazz: actor class
         :return: None
         '''
-
+        logger.info("Register %s Class %s" % (name, clazz.__name__))
         if issubclass(clazz, CBPiActor):
             self.cbpi.actor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
-
 
         if issubclass(clazz, CBPiSensor):
             self.cbpi.sensor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}

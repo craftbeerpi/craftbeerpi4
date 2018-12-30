@@ -9,10 +9,10 @@ As a main framework CraftBeerPi is based on `aiohttp`
 
 * aioHTTP https://aiohttp.readthedocs.io/en/stable/
 
-EventBus
+CBPiEventBus
 --------
 
-One core concept of CraftBeerPi 4.x is the EventBus.
+One core concept of CraftBeerPi 4.x is the CBPiEventBus.
 It should be avoided to call method on a controller directly. Events should be fired and listener methods should be used.
 This makes sure that all components are loosely coupled. New plugins can listen on events and extend or change the functionality easily.
 

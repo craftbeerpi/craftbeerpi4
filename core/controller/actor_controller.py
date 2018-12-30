@@ -9,10 +9,11 @@ from core.database.model import ActorModel
 from core.http_endpoints.http_api import HttpAPI
 from utils.encoder import ComplexEncoder
 
+auth = True
 
 class ActorHttp(HttpAPI):
 
-    @request_mapping(path="/{id:\d+}/on", auth_required=False)
+    @request_mapping(path="/{id:\d+}/on", auth_required=auth)
     async def http_on(self, request) -> web.Response:
         """
         :param request: 
@@ -27,7 +28,7 @@ class ActorHttp(HttpAPI):
         return web.Response(status=204)
 
 
-    @request_mapping(path="/{id:\d+}/off", auth_required=False)
+    @request_mapping(path="/{id:\d+}/off", auth_required=auth)
     async def http_off(self, request) -> web.Response:
         """
         :param request: 
@@ -37,7 +38,7 @@ class ActorHttp(HttpAPI):
         await self.cbpi.bus.fire(topic="actor/%s/off" % id, id=id)
         return web.Response(status=204)
 
-    @request_mapping(path="/{id:\d+}/toggle", auth_required=False)
+    @request_mapping(path="/{id:\d+}/toggle", auth_required=auth)
     async def http_toggle(self, request) -> web.Response:
         """
         :param request: 
@@ -78,6 +79,7 @@ class ActorController(ActorHttp, CRUDController):
         await super(ActorController, self).init()
 
         for id, value in self.cache.items():
+
             await self._init_actor(value)
 
     async def _init_actor(self, actor):
@@ -85,10 +87,13 @@ class ActorController(ActorHttp, CRUDController):
             cfg = actor.config.copy()
             cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
             clazz = self.types[actor.type]["class"];
-
             self.cache[actor.id].instance = clazz(**cfg)
             self.cache[actor.id].instance.init()
             await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
+        else:
+
+            self.logger.error("Actor type '%s' not found (Available Actor Types: %s)" % (actor.type, ', '.join(self.types.keys())))
+
 
 
     async def _stop_actor(self, actor):

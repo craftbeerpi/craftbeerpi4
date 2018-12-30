@@ -1,12 +1,7 @@
 import logging
-
 from aiohttp import web
-
-
 from cbpi_api import *
-
 from core.utils.utils import json_dumps
-
 
 class HttpAPI():
     def __init__(self, cbpi):
