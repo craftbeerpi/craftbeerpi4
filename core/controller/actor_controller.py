@@ -83,7 +83,9 @@ class ActorController(ActorHttp, CRUDController):
             await self._init_actor(value)
 
     async def _init_actor(self, actor):
+        print("INIT ACXTOR")
         if actor.type in self.types:
+            print("INIT ONE ACTOT")
             cfg = actor.config.copy()
             cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
             clazz = self.types[actor.type]["class"];
@@ -91,7 +93,7 @@ class ActorController(ActorHttp, CRUDController):
             self.cache[actor.id].instance.init()
             await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
         else:
-
+            print("NOT FOUND")
             self.logger.error("Actor type '%s' not found (Available Actor Types: %s)" % (actor.type, ', '.join(self.types.keys())))
 
 

@@ -185,3 +185,15 @@ class CBPiEventBus(object):
                     yield content
 
         return rec(self._root)
+
+    def register_object(self, obj):
+
+        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "eventbus")]:
+            doc = None
+            if method.__doc__ is not None:
+                try:
+                    doc = yaml.load(method.__doc__)
+                    doc["topic"] = method.__getattribute__("topic")
+                except:
+                    pass
+            self.register(method.__getattribute__("topic"), method)

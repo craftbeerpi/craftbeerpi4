@@ -89,7 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#eventbus">CBPiEventBus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#http-endpoints">HTTP Endpoints</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#websocket">WebSocket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#websocket">CBPiWebSocket</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#web-user-interface">Web User Interface</a></li>
@@ -202,14 +202,14 @@ Typically you perform just some basing parameter validation and fire an event so
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The Events are process in an async way. Results will be pushed to the client via WebSocket Event.</p>
+<p class="last">The Events are process in an async way. Results will be pushed to the client via CBPiWebSocket Event.</p>
 </div>
 </div>
 <div class="section" id="websocket">
-<h3>WebSocket<a class="headerlink" href="#websocket" title="Permalink to this headline">¶</a></h3>
-<p>The WebSocket is listening on <cite>http://&lt;IP_ADDRESS&gt;:&lt;PORT&gt;/ws</cite>
+<h3>CBPiWebSocket<a class="headerlink" href="#websocket" title="Permalink to this headline">¶</a></h3>
+<p>The CBPiWebSocket is listening on <cite>http://&lt;IP_ADDRESS&gt;:&lt;PORT&gt;/ws</cite>
 All events are forwarded to all connected web socket clients.</p>
-<p>The WebSocket Event is having the following structure.</p>
+<p>The CBPiWebSocket Event is having the following structure.</p>
 <ul class="simple">
 <li>topic -&gt; is the bus topic</li>
 <li>data -&gt; the event data</li>

@@ -8,21 +8,20 @@ from typing import Iterable, Callable
 from cbpi_api import *
 
 
-class WebSocket:
+class CBPiWebSocket:
     def __init__(self, cbpi) -> None:
         self.cbpi = cbpi
         self._callbacks = defaultdict(set)
         self._clients = weakref.WeakSet()
         self.logger = logging.getLogger(__name__)
         self.cbpi.app.add_routes([web.get('/ws', self.websocket_handler)])
+        self.cbpi.bus.register_object(self)
 
     @on_event(topic="#")
     async def listen(self, topic, **kwargs):
         from core.utils.encoder import ComplexEncoder
         data = json.dumps(dict(topic=topic, data=dict(**kwargs)),skipkeys=True, check_circular=True, cls=ComplexEncoder)
         self.logger.info("PUSH %s " % data)
-
-
         self.send(data)
 
     def send(self, data):
@@ -33,9 +32,12 @@ class WebSocket:
                 await ws.send_str(data)
             self.cbpi.app.loop.create_task(send_data(ws, data))
 
-
     def add_callback(self, func: Callable, event: str) -> None:
         self._callbacks[event].add(func)
+
+    def register_object(self, obj):
+        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "ws")]:
+            self.add_callback(method, method.__getattribute__("key"))
 
     async def emit(self, event: str, *args, **kwargs) -> None:
         for func in self._event_funcs(event):

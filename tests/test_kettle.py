@@ -8,19 +8,33 @@ class KettleTestCase(AioHTTPTestCase):
 
     async def get_application(self):
         self.cbpi = CraftBeerPi()
-        self.cbpi.setup()
+        await self.cbpi.init_serivces()
         return self.cbpi.app
 
+    @unittest_run_loop
+    async def test_get(self):
+
+        resp = await self.client.request("GET", "/kettle")
+        assert resp.status == 200
+        print(await resp.json())
 
     @unittest_run_loop
-    async def test_example(self):
-        await asyncio.sleep(10)
-        for i in range(100):
-            resp = await self.client.request("GET", "/actor/")
-            print(resp)
-            resp = await self.client.post(path="/actor/", json={ "name": "Test", "type": "CustomActor", "config": {"gpio": 22 }})
-            print(resp)
+    async def test_add(self):
+        data = {
+            "name": "Test",
+            "sensor": None,
+            "heater": "1",
+            "automatic": None,
+            "logic": "CustomKettleLogic",
+            "config": {
+                "test": "WOOHO"
+            },
+            "agitator": None,
+            "target_temp": None
+        }
 
+        resp = await self.client.post(path="/kettle/", json=data)
+        assert resp.status == 200
 
         '''
         result = await self.cbpi.kettle.toggle_automtic(1)

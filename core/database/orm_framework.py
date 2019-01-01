@@ -12,9 +12,6 @@ class DBModel(object):
     __json_fields__ = []
 
     def __init__(self, args):
-
-
-
         self.__setattr__(self.__priamry_key__, args[self.__priamry_key__])
         for f in self.__fields__:
 
@@ -32,7 +29,7 @@ class DBModel(object):
                 self.__setattr__(f, args.get(f))
 
     @classmethod
-    async def test_connection(self):
+    async def setup(self):
 
         async with aiosqlite.connect(DATABASE_FILE) as db:
             assert isinstance(db, aiosqlite.Connection)

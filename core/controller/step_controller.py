@@ -62,7 +62,7 @@ class StepController(HttpAPI, CRUDController):
             cfg.update(dict(cbpi=self.cbpi, id=step.id, managed_fields=self._get_manged_fields_as_array(step_type)))
 
             self.current_step = step_type["class"](**cfg)
-            self.current_job = await self.cbpi.start_job(self.current_step.run(), step.name, "step")
+            self.current_job = await self.cbpi.job.start_job(self.current_step.run(), step.name, "step")
 
     @request_mapping(path="/action", auth_required=False)
     async def http_action(self, request):
@@ -255,7 +255,7 @@ class StepController(HttpAPI, CRUDController):
                 inactive.stepstate = inactive.config
                 inactive.start = int(time.time())
                 await self.model.update(**inactive.__dict__)
-                self.current_job = await self.cbpi.start_job(self.current_step.run(), inactive.name, "step")
+                self.current_job = await self.cbpi.job.start_job(self.current_step.run(), inactive.name, "step")
             else:
                 await self.cbpi.bus.fire("step/berwing/finished")
 

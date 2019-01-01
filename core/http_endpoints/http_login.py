@@ -11,7 +11,7 @@ class Login():
         self.cbpi.register(self)
 
 
-        self.db = {cbpi.config.get("username", "cbpi"): cbpi.config.get("password", "cbpi")}
+        self.db = {cbpi.static_config.get("username", "cbpi"): cbpi.static_config.get("password", "cbpi")}
 
     @request_mapping(path="/logout", name="Logout", method="GET", auth_required=True)
     async def logout_view(self, request):

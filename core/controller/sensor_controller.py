@@ -1,13 +1,11 @@
 import json
 import logging
-import os
-from logging.handlers import TimedRotatingFileHandler
-from core.utils.encoder import ComplexEncoder
-from core.job.aiohttp import get_scheduler_from_app
-from cbpi_api import *
+
 from core.controller.crud_controller import CRUDController
 from core.database.model import SensorModel
 from core.http_endpoints.http_api import HttpAPI
+from core.job.aiohttp import get_scheduler_from_app
+from core.utils.encoder import ComplexEncoder
 
 
 class SensorController(CRUDController, HttpAPI):
@@ -19,7 +17,7 @@ class SensorController(CRUDController, HttpAPI):
         self.cbpi.register(self, "/sensor")
         self.service = self
         self.types = {}
-
+        self.logger = logging.getLogger(__name__)
         self.sensors = {}
 
     def info(self):
@@ -34,8 +32,7 @@ class SensorController(CRUDController, HttpAPI):
         '''
         await super(SensorController, self).init()
 
-        for name, clazz in self.types.items():
-            pass
+
 
         for id, value in self.cache.items():
             if value.type in self.types:
@@ -45,7 +42,8 @@ class SensorController(CRUDController, HttpAPI):
                 self.cache[id].instance = clazz(**cfg)
                 scheduler = get_scheduler_from_app(self.cbpi.app)
                 self.cache[id].instance.job = await scheduler.spawn(self.cache[id].instance.run(self.cbpi), value.name, "sensor")
-
+            else:
+                self.logger.error("Sensor type '%s' not found (Available Sensor Types: %s)" % (value.type, ', '.join(self.types.keys())))
 
     async def get_value(self, id):
         return self.cache[id].instance.value

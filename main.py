@@ -7,7 +7,7 @@ from hbmqtt.broker import Broker
 from hbmqtt.client import MQTTClient
 from hbmqtt.mqtt.constants import QOS_1
 
-from core.websocket import websocket_handler
+from core.cbpiwebsocket import websocket_handler
 
 TEST_DB = "test.db"
 c = MQTTClient()

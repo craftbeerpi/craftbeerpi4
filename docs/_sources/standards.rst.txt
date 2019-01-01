@@ -53,16 +53,16 @@ Typically you perform just some basing parameter validation and fire an event so
 
 .. note::
 
-  The Events are process in an async way. Results will be pushed to the client via WebSocket Event.
+  The Events are process in an async way. Results will be pushed to the client via CBPiWebSocket Event.
 
 
-WebSocket
+CBPiWebSocket
 ---------
 
-The WebSocket is listening on `http://<IP_ADDRESS>:<PORT>/ws`
+The CBPiWebSocket is listening on `http://<IP_ADDRESS>:<PORT>/ws`
 All events are forwarded to all connected web socket clients.
 
-The WebSocket Event is having the following structure.
+The CBPiWebSocket Event is having the following structure.
 
 * topic -> is the bus topic
 * data -> the event data

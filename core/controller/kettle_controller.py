@@ -35,7 +35,7 @@ class KettleHttp(HttpAPI):
         else:
             return web.Response(status=404, text=result[1])
 
-class KettleController(CRUDController):
+class KettleController(CRUDController, KettleHttp):
     '''
     The main kettle controller
     '''
@@ -45,9 +45,8 @@ class KettleController(CRUDController):
         super(KettleController, self).__init__(cbpi)
         self.cbpi = cbpi
         self.types = {}
-        self.cbpi.register(self, None)
-        self.http = KettleHttp(cbpi)
-        self.cbpi.register(self.http, "/kettle")
+        self.cbpi.register(self, "/kettle")
+
 
 
 
@@ -113,7 +112,7 @@ class KettleController(CRUDController):
                     cfg.update(dict(cbpi=self.cbpi))
                     kettle.instance = clazz(**cfg)
 
-                await self.cbpi.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic%s"%id)
+                await self.cbpi.job.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic%s"%id)
             else:
                 kettle.instance.running = False
                 kettle.instance = None
