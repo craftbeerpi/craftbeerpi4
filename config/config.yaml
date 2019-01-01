@@ -2,12 +2,10 @@
 name: CraftBeerPi
 version: 4.1
 
+#index_url: /myext
 
 port: 8080
 
 username: cbpi
 password: 123
 
-test:
-  name: Manuel
-  name2: Manuel

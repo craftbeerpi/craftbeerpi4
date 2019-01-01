@@ -54,4 +54,4 @@ class ConfigTestCase(AioHTTPTestCase):
     async def test_http_get(self):
         resp = await self.client.request("GET", "/config/")
         assert resp.status == 200
-        #print(await eresp.json())
+

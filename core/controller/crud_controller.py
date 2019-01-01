@@ -138,12 +138,10 @@ class CRUDController(metaclass=ABCMeta):
         await self._post_delete_callback(id)
         try:
             if self.caching is True:
-
                 del self.cache[int(id)]
         except Exception as e:
-
             pass
-        pprint.pprint(self.cache)
+
         await self.cbpi.bus.fire(topic="actor/%s/deleted" % id, id=id)
 
     async def delete_all(self):

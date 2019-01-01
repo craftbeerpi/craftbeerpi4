@@ -3,6 +3,7 @@ import os
 
 from aiohttp import web
 from cbpi_api import request_mapping
+from cbpi_api.exceptions import CBPiException
 
 from core.controller.crud_controller import CRUDController
 from core.database.model import ConfigModel
@@ -13,8 +14,19 @@ class ConfigHTTPController():
     @request_mapping(path="/{name}/", method="POST", auth_required=False)
     async def http_post(self, request) -> web.Response:
         """
-        :param request:
-        :return:
+        ---
+        description: Set config parameter
+        tags:
+        - Config
+        parameters:
+        - name: "name"
+          in: "path"
+          description: "Parameter name"
+          required: true
+          type: "string"
+        responses:
+            "204":
+                description: successful operation
         """
         name = request.match_info['name']
         data = await request.json()
@@ -25,10 +37,38 @@ class ConfigHTTPController():
     @request_mapping(path="/", auth_required=False)
     async def http_get_all(self, request) -> web.Response:
         """
-        :param request:
-        :return:
+        ---
+        description: Get all config parameters
+        tags:
+        - Config
+        responses:
+            "200":
+                description: successful operation
         """
         return web.json_response(self.cache, dumps=json_dumps)
+
+    @request_mapping(path="/{name}/", auth_required=False)
+    async def http_paramter(self, request) -> web.Response:
+        """
+        ---
+        description: Get all config parameters
+        tags:
+        - Config
+        parameters:
+        - name: "name"
+          in: "path"
+          description: "Parameter name"
+          required: true
+          type: "string"
+        responses:
+            "200":
+                description: successful operation
+        """
+        name = request.match_info['name']
+        if name not in self.cache:
+            raise CBPiException("Parameter %s not found" % name)
+
+        return web.json_response(self.cache.get(name), dumps=json_dumps)
 
 class ConfigController(ConfigHTTPController):
 

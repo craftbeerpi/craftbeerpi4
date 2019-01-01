@@ -19,7 +19,7 @@ class KettleTestCase(AioHTTPTestCase):
         print(await resp.json())
 
     @unittest_run_loop
-    async def test_add(self):
+    async def test_crud(self):
         data = {
             "name": "Test",
             "sensor": None,
@@ -33,22 +33,26 @@ class KettleTestCase(AioHTTPTestCase):
             "target_temp": None
         }
 
+        # Add new sensor
         resp = await self.client.post(path="/kettle/", json=data)
         assert resp.status == 200
 
-        '''
-        result = await self.cbpi.kettle.toggle_automtic(1)
-        print("#### RESULT", result)
-        assert result[0] is True
-        print("FIRE")
+        m = await resp.json()
+        sensor_id = m["id"]
+
+        # Get sensor
+        resp = await self.client.get(path="/kettle/%s" % sensor_id)
+        assert resp.status == 200
+
+        m2 = await resp.json()
+        sensor_id = m2["id"]
+
+        # Update Sensor
+        resp = await self.client.put(path="/kettle/%s" % sensor_id, json=m)
+        assert resp.status == 200
+
+        # # Delete Sensor
+        resp = await self.client.delete(path="/kettle/%s" % sensor_id)
+        assert resp.status == 204
 
 
-        await asyncio.sleep(1)
-
-        self.cbpi.bus.fire("actor/1/on", id=1)
-
-
-        await asyncio.sleep(5)
-        #assert await self.cbpi.kettle.toggle_automtic(1) is True
-        #assert await self.cbpi.kettle.toggle_automtic(99) is False
-        '''

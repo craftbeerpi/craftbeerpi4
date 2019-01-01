@@ -7,9 +7,10 @@ from aiohttp_auth import auth
 from aiohttp_session import session_middleware
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 from aiohttp_swagger import setup_swagger
+from cbpi_api.exceptions import CBPiException
 
 from controller.job_controller import JobController
-from core.cbpiwebsocket import CBPiWebSocket
+from core.websocket import CBPiWebSocket
 from core.controller.actor_controller import ActorController
 from core.controller.config_controller import ConfigController
 from core.controller.kettle_controller import KettleController
@@ -26,18 +27,35 @@ from core.utils import *
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+
+
+@web.middleware
+async def error_middleware(request, handler):
+    try:
+        response = await handler(request)
+        if response.status != 404:
+            return response
+        message = response.message
+    except web.HTTPException as ex:
+        if ex.status != 404:
+            raise
+        message = ex.reason
+    except CBPiException as ex:
+        message = str(ex)
+        return web.json_response(status=500, data={'error': message})
+    return web.json_response({'error': message})
+
 class CraftBeerPi():
 
 
     def __init__(self):
         self.static_config = load_config(os.path.join(os.path.dirname(__file__), '../config/config.yaml'))
-
+        self.database_file = "./craftbeerpi.db"
         logger.info("Init CraftBeerPI")
 
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
-        middlewares = [web.normalize_path_middleware(), session_middleware(EncryptedCookieStorage(urandom(32))), auth.auth_middleware(policy)]
+        middlewares = [web.normalize_path_middleware(), session_middleware(EncryptedCookieStorage(urandom(32))), auth.auth_middleware(policy), error_middleware]
         self.app = web.Application(middlewares=middlewares)
-
 
         self._setup_shutdownhook()
         self.initializer = []
@@ -97,7 +115,7 @@ class CraftBeerPi():
                 routes.append(web.post(method.__getattribute__("path"), method))
 
             def add_get():
-                routes.append(web.get(method.__getattribute__("path"), method))
+                routes.append(web.get(method.__getattribute__("path"), method, allow_head=False))
 
             def add_delete():
                 routes.append(web.delete(path, method))
@@ -161,6 +179,17 @@ class CraftBeerPi():
         f = Figlet(font='big')
         logger.info("\n%s" % f.renderText("%s %s" % (self.static_config.get("name"), self.static_config.get("version"))))
 
+
+    def _setup_http_index(self):
+        async def http_index(request):
+            url = self.config.static.get("index_url")
+            if url is not None:
+                raise web.HTTPFound(url)
+            else:
+                return web.Response(text="Hello, world")
+
+        self.app.add_routes([web.get('/', http_index)])
+
     async def init_serivces(self):
 
         self._print_logo()
@@ -168,6 +197,8 @@ class CraftBeerPi():
         await self.job.init()
         await DBModel.setup()
         await self.config.init()
+
+        self._setup_http_index()
         self.plugin.load_plugins()
         self.plugin.load_plugins_from_evn()
         await self.sensor.init()

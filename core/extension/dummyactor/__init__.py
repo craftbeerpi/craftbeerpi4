@@ -24,14 +24,14 @@ class CustomActor(CBPiActor):
 
     def off(self):
 
-
+        print("OFF")
         # Code to swtich the actor off goes here
 
         self.state = False
 
     def on(self, power=100):
 
-
+        print("ON")
         # Code to swtich the actor on goes here
 
         self.state = True

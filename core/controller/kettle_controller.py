@@ -1,39 +1,54 @@
 import re
 
 from aiohttp import web
-
-
 from cbpi_api import *
+from cbpi_api.exceptions import KettleException, ActorException, SensorException
+
 from core.controller.crud_controller import CRUDController
 from core.database.model import KettleModel
 from core.http_endpoints.http_api import HttpAPI
 from core.job.aiohttp import get_scheduler_from_app
-from core.utils import json_dumps
 
 
 class KettleHttp(HttpAPI):
 
-    @request_mapping(path="/types", auth_required=False)
-    async def get_types(self, request):
-        web.json_response(data=self.cbpi.kettle.types, dumps=json_dumps)
-
     @request_mapping(path="/{id:\d+}/automatic", auth_required=False)
-    async def start2(self, request):
-        id = int(request.match_info['id'])
-        result = await self.cbpi.kettle.toggle_automtic(id)
-        if result[0] is True:
-            return web.Response(text="OK")
-        else:
-            return web.Response(status=404, text=result[1])
+    async def http_automatic(self, request):
+        await self.cbpi.kettle.toggle_automtic(int(request.match_info['id']))
+        return web.Response(status=204)
 
-    @request_mapping(path="/{id:\d+}/heater", auth_required=False)
-    async def start(self, request):
-        id = int(request.match_info['id'])
-        result = await self.cbpi.kettle.heater_on(id)
-        if  result[0] is True:
-            return web.Response(text="OK")
-        else:
-            return web.Response(status=404, text=result[1])
+    @request_mapping(path="/{id:\d+}/heater/on", auth_required=False)
+    async def http_heater_on(self, request):
+        await self.cbpi.kettle.heater_on(int(request.match_info['id']))
+        return web.Response(status=204)
+
+    @request_mapping(path="/{id:\d+}/heater/off", auth_required=False)
+    async def http_heater_off(self, request):
+        await self.cbpi.kettle.heater_off(int(request.match_info['id']))
+        return web.Response(status=204)
+
+    @request_mapping(path="/{id:\d+}/agitator/on", auth_required=False)
+    async def http_agitator_on(self, request):
+        await self.cbpi.kettle.agitator_on(int(request.match_info['id']))
+        return web.Response(status=204)
+
+    @request_mapping(path="/{id:\d+}/agitator/off", auth_required=False)
+    async def http_agitator_off(self, request):
+        await self.cbpi.kettle.agitator_off(int(request.match_info['id']))
+        return web.Response(status=204)
+
+    @request_mapping(path="/{id:\d+}/targettemp", auth_required=False)
+    async def http_taget_temp(self, request):
+        kettle_id = int(request.match_info['id'])
+        temp = await self.cbpi.kettle.get_traget_temp(kettle_id)
+        return web.json_response(data=dict(target_temp=temp, kettle_id=kettle_id))
+
+    @request_mapping(path="/{id:\d+}/temp", auth_required=False)
+    async def http_temp(self, request):
+        kettle_id = int(request.match_info['id'])
+        temp = await self.cbpi.kettle.get_temp(kettle_id)
+        return web.json_response(data=dict(temp=temp, kettle_id=kettle_id))
+
 
 class KettleController(CRUDController, KettleHttp):
     '''
@@ -46,9 +61,6 @@ class KettleController(CRUDController, KettleHttp):
         self.cbpi = cbpi
         self.types = {}
         self.cbpi.register(self, "/kettle")
-
-
-
 
     async def init(self):
         '''
@@ -68,12 +80,11 @@ class KettleController(CRUDController, KettleHttp):
         '''
         kettle = await self.get_one(id)
         if kettle is None:
-            return (False, "Kettle Not Found")
+            raise KettleException("Kettle not found")
         if kettle.logic is None:
-            return (False, "No Logic defined")
-        id = kettle.heater
+            raise CBPiExtension("Logic not found for kettle id: %s" % id)
+
         await self.cbpi.bus.fire(topic="kettle/%s/automatic" % id, id=id)
-        return (True, "Logic switched on switched")
 
     @on_event(topic="job/done")
     async def job_stop(self, key, **kwargs) -> None:
@@ -83,8 +94,6 @@ class KettleController(CRUDController, KettleHttp):
             kid = match.group(1)
             kettle = self.cache[int(kid)]
             kettle.instance = None
-
-
 
     @on_event(topic="kettle/+/automatic")
     async def handle_automtic_event(self, id, **kwargs):
@@ -112,15 +121,13 @@ class KettleController(CRUDController, KettleHttp):
                     cfg.update(dict(cbpi=self.cbpi))
                     kettle.instance = clazz(**cfg)
 
-                await self.cbpi.job.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic%s"%id)
+                await self.cbpi.job.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic%s" % id)
             else:
                 kettle.instance.running = False
                 kettle.instance = None
 
-
     def _is_logic_running(self, kettle_id):
         scheduler = get_scheduler_from_app(self.cbpi.app)
-
 
     async def heater_on(self, id):
         '''
@@ -132,12 +139,11 @@ class KettleController(CRUDController, KettleHttp):
         '''
         kettle = await self.get_one(id)
         if kettle is None:
-            return (False, "Kettle Not Found")
-        if kettle.heater is None:
-            return (False, "No Heater defined")
+            raise KettleException("Kettle not found")
+        if kettle.sensor is None:
+            raise ActorException("Actor not defined for kettle id %s" % id)
         id = kettle.heater
-        await self.cbpi.bus.fire(topic="actor/%s/on" % id, id=id, power=99)
-        return (True,"Heater switched on")
+        await self.cbpi.bus.fire(topic="actor/%s/switch/on" % id, id=id, power=99)
 
     async def heater_off(self, id):
         '''
@@ -149,23 +155,44 @@ class KettleController(CRUDController, KettleHttp):
         '''
         kettle = await self.get_one(id)
         if kettle is None:
-            return (False, "Kettle Not Found")
-        if kettle.heater is None:
-            return (False, "No Heater defined")
+            raise KettleException("Kettle not found")
+        if kettle.sensor is None:
+            raise ActorException("Actor not defined for kettle id %s" % id)
         id = kettle.heater
-        await self.cbpi.bus.fire(topic="actor/%s/off" % id, id=id, power=99)
-        return (True, "Heater switched off")
+        await self.cbpi.bus.fire(topic="actor/%s/switch/off" % id, id=id, power=99)
 
     async def agitator_on(self, id):
-        pass
+        kettle = await self.get_one(id)
+        if kettle is None:
+            raise KettleException("Kettle not found")
+        if kettle.sensor is None:
+            raise ActorException("Actor not defined for kettle id %s" % id)
+        agitator_id = kettle.agitator
+        await self.cbpi.bus.fire(topic="actor/%s/switch/on" % agitator_id, id=agitator_id, power=99)
 
     async def agitator_off(self, id):
-        pass
+        kettle = await self.get_one(id)
+        if kettle is None:
+            raise KettleException("Kettle not found")
+        if kettle.sensor is None:
+            raise ActorException("Actor not defined for kettle id %s" % id)
+        agitator_id = kettle.agitator
+        await self.cbpi.bus.fire(topic="actor/%s/switch/off" % agitator_id, id=agitator_id, power=99)
 
     async def get_traget_temp(self, id):
         kettle = await self.get_one(id)
+        if kettle is None:
+            raise KettleException("Kettle Not Found")
         return kettle.target_temp
 
     async def get_temp(self, id):
 
-        pass
+        kettle = await self.get_one(id)
+        if kettle is None:
+            raise KettleException("Kettle Not Found")
+        if kettle.sensor is None:
+            raise SensorException("Sensor not defined for kettle id %s" % id)
+
+        sensor_id = kettle.sensor
+
+        return await self.cbpi.sensor.get_value(sensor_id)

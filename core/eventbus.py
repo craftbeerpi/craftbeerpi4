@@ -2,6 +2,8 @@ import asyncio
 import inspect
 import logging
 
+from cbpi_api.exceptions import CBPiException
+
 
 class CBPiEventBus(object):
     class Node(object):
@@ -37,11 +39,14 @@ class CBPiEventBus(object):
                 else:
                     self.results[key] = CBPiEventBus.Result(None, False)
 
+        def get(self, key):
+            r = self.results.get(key)
+            if r is None:
+                raise CBPiException("Event Key %s not found." % key)
+            return (r.result, r.timeout)
 
 
     def register(self, topic, method, once=False):
-
-
 
         if method in self.registry:
             raise RuntimeError("Method %s already registerd. Please unregister first!" % method.__name__)
@@ -151,7 +156,8 @@ class CBPiEventBus(object):
             result = []
             if node._content is not None:
                 for c in node._content:
-                    result.append(dict(topic=c.topic, method=c.method.__name__, path=c.method.__module__, once=c.once))
+
+                    result.append(dict(topic=c.topic, supports_future=c.supports_future, method=c.method.__name__, path=c.method.__module__, once=c.once))
 
             if node._children is not None:
                 for c in node._children:

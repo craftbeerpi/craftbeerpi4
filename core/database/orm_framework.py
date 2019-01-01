@@ -34,7 +34,7 @@ class DBModel(object):
         async with aiosqlite.connect(DATABASE_FILE) as db:
             assert isinstance(db, aiosqlite.Connection)
             this_directory = os.path.dirname(__file__)
-            qry = open(os.path.join(this_directory, '../sql/create_table_user.sql'), 'r').read()
+            qry = open(os.path.join(this_directory, '../../config/create_database.sql'), 'r').read()
             cursor = await db.executescript(qry)
 
     @classmethod

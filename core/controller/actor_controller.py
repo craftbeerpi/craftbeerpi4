@@ -9,40 +9,223 @@ from core.database.model import ActorModel
 from core.http_endpoints.http_api import HttpAPI
 from utils.encoder import ComplexEncoder
 
-auth = True
+auth = False
 
 class ActorHttp(HttpAPI):
 
-    @request_mapping(path="/{id:\d+}/on", auth_required=auth)
+    @request_mapping(path="/types", auth_required=False)
+    async def get_types(self, request):
+        """
+        ---
+        description: Get all actor types
+        tags:
+        - Actor
+        responses:
+            "200":
+                description: successful operation
+        """
+        return await super().get_types(request)
+
+    @request_mapping(path="/", auth_required=False)
+    async def http_get_all(self, request):
+        """
+
+        ---
+        description: Switch actor on
+        tags:
+        - Actor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "204":
+                description: successful operation
+            "405":
+                description: invalid HTTP Met
+        """
+        return await super().http_get_all(request)
+
+    @request_mapping(path="/{id:\d+}", auth_required=False)
+    async def http_get_one(self, request):
+        """
+        ---
+        description: Get one Actor
+        tags:
+        - Actor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "204":
+                description: successful operation
+            "405":
+                description: invalid HTTP Met
+        """
+        return await super().http_get_one(request)
+
+    @request_mapping(path="/", method="POST", auth_required=False)
+    async def http_add(self, request):
+        """
+        ---
+        description: Get one Actor
+        tags:
+        - Actor
+        parameters:
+        - in: body
+          name: body
+          description: Created an actor
+          required: false
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              config:
+                type: object
+        responses:
+            "204":
+                description: successful operation
+        """
+        return await super().http_add(request)
+
+    @request_mapping(path="/{id}", method="PUT", auth_required=False)
+    async def http_update(self, request):
+        """
+        ---
+        description: Update an actor
+        tags:
+        - Actor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: Update an actor
+          required: false
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              config:
+                type: object
+        responses:
+            "200":
+                description: successful operation
+        """
+        return await super().http_update(request)
+
+    @request_mapping(path="/{id}", method="DELETE", auth_required=False)
+    async def http_delete_one(self, request):
+        """
+        ---
+        description: Delete an actor
+        tags:
+        - Actor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "204":
+                description: successful operation
+        """
+        return await super().http_delete_one(request)
+
+    @request_mapping(path="/{id:\d+}/on", method="POST", auth_required=auth)
     async def http_on(self, request) -> web.Response:
         """
-        :param request: 
-        :return: 
+
+        ---
+        description: Switch actor on
+        tags:
+        - Actor
+
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "204":
+                description: successful operation
+            "405":
+                description: invalid HTTP Met
         """
         id = int(request.match_info['id'])
         result = await self.cbpi.bus.fire(topic="actor/%s/switch/on" % id, id=id, power=99)
-
-
         for key, value in result.results.items():
             pass
         return web.Response(status=204)
 
 
-    @request_mapping(path="/{id:\d+}/off", auth_required=auth)
+    @request_mapping(path="/{id:\d+}/off", method="POST", auth_required=auth)
     async def http_off(self, request) -> web.Response:
         """
-        :param request: 
-        :return: 
+
+        ---
+        description: Switch actor off
+        tags:
+        - Actor
+
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "204":
+                description: successful operation
+            "405":
+                description: invalid HTTP Met
         """
         id = int(request.match_info['id'])
         await self.cbpi.bus.fire(topic="actor/%s/off" % id, id=id)
         return web.Response(status=204)
 
-    @request_mapping(path="/{id:\d+}/toggle", auth_required=auth)
+    @request_mapping(path="/{id:\d+}/toggle", method="POST", auth_required=auth)
     async def http_toggle(self, request) -> web.Response:
         """
-        :param request: 
-        :return: 
+
+        ---
+        description: Toogle an actor on or off
+        tags:
+        - Actor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "204":
+                description: successful operation
+            "405":
+                description: invalid HTTP Met
         """
         id = int(request.match_info['id'])
 
@@ -79,13 +262,12 @@ class ActorController(ActorHttp, CRUDController):
         await super(ActorController, self).init()
 
         for id, value in self.cache.items():
-
             await self._init_actor(value)
 
     async def _init_actor(self, actor):
-        print("INIT ACXTOR")
+
         if actor.type in self.types:
-            print("INIT ONE ACTOT")
+
             cfg = actor.config.copy()
             cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
             clazz = self.types[actor.type]["class"];

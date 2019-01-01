@@ -1,6 +1,9 @@
 import asyncio
 import logging
 
+from aiohttp import web
+from cbpi_api import request_mapping
+
 from job.aiohttp import setup, get_scheduler_from_app
 
 logger = logging.getLogger(__name__)
