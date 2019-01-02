@@ -1,0 +1,36 @@
+from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
+
+from core.craftbeerpi import CraftBeerPi
+
+
+class IndexTestCase(AioHTTPTestCase):
+
+    async def get_application(self):
+        self.cbpi = CraftBeerPi()
+        await self.cbpi.init_serivces()
+        return self.cbpi.app
+
+    @unittest_run_loop
+    async def test_index(self):
+
+
+        # Test Index Page
+        resp = await self.client.get(path="/")
+        assert resp.status == 200
+
+    @unittest_run_loop
+    async def test_wrong_login(self):
+        resp = await self.client.post(path="/login", data={"username": "beer", "password": "123"})
+        print("REPONSE STATUS", resp.status)
+        assert resp.status == 403
+
+    @unittest_run_loop
+    async def test_login(self):
+
+        resp = await self.client.post(path="/login", data={"username": "cbpi", "password": "123"})
+        print("REPONSE STATUS", resp.status)
+        assert resp.status == 200
+
+        resp = await self.client.get(path="/logout")
+        print("REPONSE STATUS LGOUT", resp.status)
+        assert resp.status == 200

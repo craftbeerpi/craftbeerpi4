@@ -2,6 +2,9 @@ import json
 import aiosqlite
 import os
 
+from cbpi_api.exceptions import CBPiException
+from voluptuous import MultipleInvalid, Schema
+
 DATABASE_FILE = "./craftbeerpi.db"
 
 
@@ -10,6 +13,7 @@ class DBModel(object):
     __as_array__ = False
     __order_by__ = None
     __json_fields__ = []
+    __validation_schema__ = None
 
     def __init__(self, args):
         self.__setattr__(self.__priamry_key__, args[self.__priamry_key__])
@@ -36,6 +40,15 @@ class DBModel(object):
             this_directory = os.path.dirname(__file__)
             qry = open(os.path.join(this_directory, '../../config/create_database.sql'), 'r').read()
             cursor = await db.executescript(qry)
+
+    @classmethod
+    def validate(cls, data):
+        if cls.__validation_schema__ is not None:
+            try:
+                schema = Schema(cls.__validation_schema__)
+                schema(data)
+            except MultipleInvalid as e:
+                raise CBPiException(str(e))
 
     @classmethod
     async def get_all(cls):
@@ -84,6 +97,9 @@ class DBModel(object):
 
     @classmethod
     async def insert(cls, **kwargs):
+
+
+        cls.validate(kwargs)
 
         async with aiosqlite.connect(DATABASE_FILE) as db:
             if cls.__priamry_key__ is not None and cls.__priamry_key__ in kwargs:

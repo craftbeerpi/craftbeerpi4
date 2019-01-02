@@ -28,11 +28,9 @@ class SystemController():
         result = []
         for j in scheduler:
             try:
-
                 result.append(dict(name=j.name, type=j.type, time=j.start_time))
             except:
                 pass
-            # await j.close()
         return web.json_response(data=result)
 
     @request_mapping("/events", method="GET", name="get_all_events", auth_required=False)

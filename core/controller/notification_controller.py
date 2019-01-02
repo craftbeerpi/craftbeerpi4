@@ -1,6 +1,7 @@
 from cbpi_api import *
 
-class NotificationController():
+
+class NotificationController(object):
     '''
     This the notification controller
     '''

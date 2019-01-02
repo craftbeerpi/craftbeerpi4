@@ -7,6 +7,9 @@ class CustomActor(CBPiActor):
 
     # Custom property which can be configured by the user
     gpio = Property.Number(label="Test")
+    v1 = Property.Text(label="Test")
+    v2 = Property.Kettle(label="Test")
+    v3 = Property.Sensor(label="Test")
 
     def init(self):
         pass

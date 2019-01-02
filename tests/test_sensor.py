@@ -21,7 +21,6 @@ class SensorTestCase(AioHTTPTestCase):
             }
         }
 
-
         # Add new sensor
         resp = await self.client.post(path="/sensor/", json=data)
         assert resp.status == 200
@@ -43,5 +42,3 @@ class SensorTestCase(AioHTTPTestCase):
         # # Delete Sensor
         resp = await self.client.delete(path="/sensor/%s" % sensor_id)
         assert resp.status == 204
-
-        await asyncio.sleep(5)

@@ -1,7 +1,5 @@
 from json import JSONEncoder
 
-
-
 class ComplexEncoder(JSONEncoder):
 
 
@@ -16,10 +14,10 @@ class ComplexEncoder(JSONEncoder):
             #    return obj.reprJSON()
             #elif isinstance(obj, ActorModel):
             #    return None
-            elif hasattr(obj, "callback"):
-                return obj()
+            #elif hasattr(obj, "callback"):
+            #    return obj()
             else:
                 return None
-        except TypeError as e:
+        except TypeError:
             pass
         return None

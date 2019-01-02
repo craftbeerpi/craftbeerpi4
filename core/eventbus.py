@@ -124,9 +124,7 @@ class CBPiEventBus(object):
 
                 if inspect.iscoroutinefunction(content_obj.method):
                     if content_obj.supports_future is True:
-
                         fut = self.loop.create_future()
-
                         futures["%s.%s" % (content_obj.method.__module__, content_obj.name)] = fut
                         self.loop.create_task(content_obj.method(**kwargs, topic = topic, future=fut))
 

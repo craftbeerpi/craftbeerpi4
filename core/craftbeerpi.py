@@ -8,9 +8,10 @@ from aiohttp_session import session_middleware
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 from aiohttp_swagger import setup_swagger
 from cbpi_api.exceptions import CBPiException
+from voluptuous import MultipleInvalid
 
+from controller.dashboard_controller import DashboardController
 from controller.job_controller import JobController
-from core.websocket import CBPiWebSocket
 from core.controller.actor_controller import ActorController
 from core.controller.config_controller import ConfigController
 from core.controller.kettle_controller import KettleController
@@ -23,6 +24,13 @@ from core.database.model import DBModel
 from core.eventbus import CBPiEventBus
 from core.http_endpoints.http_login import Login
 from core.utils import *
+from core.websocket import CBPiWebSocket
+from http_endpoints.http_actor import ActorHttpEndpoints
+from http_endpoints.http_config import ConfigHttpEndpoints
+from http_endpoints.http_dashboard import DashBoardHttpEndpoints
+from http_endpoints.http_kettle import KettleHttpEndpoints
+from http_endpoints.http_sensor import SensorHttpEndpoints
+from http_endpoints.http_step import StepHttpEndpoints
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -43,6 +51,8 @@ async def error_middleware(request, handler):
     except CBPiException as ex:
         message = str(ex)
         return web.json_response(status=500, data={'error': message})
+    except MultipleInvalid as ex:
+        return web.json_response(status=500, data={'error': str(ex)})
     return web.json_response({'error': message})
 
 class CraftBeerPi():
@@ -69,6 +79,15 @@ class CraftBeerPi():
         self.config = ConfigController(self)
         self.kettle = KettleController(self)
         self.step = StepController(self)
+        self.dashboard = DashboardController(self)
+
+        self.http_step = StepHttpEndpoints(self)
+        self.http_sensor = SensorHttpEndpoints(self)
+        self.http_config = ConfigHttpEndpoints(self)
+        self.http_actor = ActorHttpEndpoints(self)
+        self.http_kettle = KettleHttpEndpoints(self)
+        self.http_dashboard = DashBoardHttpEndpoints(self)
+
         self.notification = NotificationController(self)
         self.login = Login(self)
 
@@ -103,7 +122,11 @@ class CraftBeerPi():
         self.register_on_startup(obj)
 
     def register_http_endpoints(self, obj, url_prefix=None, static=None):
-        
+
+        if url_prefix is None:
+            logger.debug("URL Prefix is None for %s. No endpoints will be registered. Please set / explicit if you want to add it to the root path" % obj)
+            return
+
         routes = []
         for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "route")]:
             http_method = method.__getattribute__("method")
@@ -131,7 +154,7 @@ class CraftBeerPi():
             }
             switcher[http_method]()
 
-        if url_prefix is not None:
+        if url_prefix != "/":
             logger.debug("URL Prefix: %s "  % (url_prefix,))
             sub = web.Application()
             sub.add_routes(routes)
@@ -206,6 +229,7 @@ class CraftBeerPi():
         await self.actor.init()
         await self.kettle.init()
         await self.call_initializer(self.app)
+        await self.dashboard.init()
         self._swagger_setup()
 
         return self.app

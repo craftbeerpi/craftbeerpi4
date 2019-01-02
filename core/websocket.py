@@ -27,7 +27,6 @@ class CBPiWebSocket:
     def send(self, data):
 
         for ws in self._clients:
-
             async def send_data(ws, data):
                 await ws.send_str(data)
             self.cbpi.app.loop.create_task(send_data(ws, data))

@@ -55,3 +55,7 @@ class ConfigTestCase(AioHTTPTestCase):
         resp = await self.client.request("GET", "/config/")
         assert resp.status == 200
 
+    @unittest_run_loop
+    async def test_get_default(self):
+        value = self.cbpi.config.get("HELLO_WORLD", None)
+        assert value == None

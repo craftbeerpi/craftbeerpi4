@@ -1,12 +1,15 @@
 import pprint
 from abc import ABCMeta
 
+from cbpi_api.exceptions import CBPiException
+
 
 class CRUDController(metaclass=ABCMeta):
 
 
     cache = {}
     caching = True
+    name = None
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
@@ -17,6 +20,7 @@ class CRUDController(metaclass=ABCMeta):
         
         :return: 
         '''
+
         if self.caching is True:
             self.cache = await self.model.get_all()
 
@@ -37,6 +41,8 @@ class CRUDController(metaclass=ABCMeta):
         :param id: 
         :return: 
         '''
+        if id not in self.cache:
+            raise CBPiException("%s with id %s not found" % (self.name,id))
         return self.cache.get(id)
 
     async def _pre_add_callback(self, data):
@@ -61,8 +67,13 @@ class CRUDController(metaclass=ABCMeta):
         :param data: 
         :return: 
         '''
+
+
         await self._pre_add_callback(data)
+        print("INSSERT ADD", data)
+
         m = await self.model.insert(**data)
+
         self.cache[m.id] = m
         await self._post_add_callback(m)
 
@@ -83,7 +94,14 @@ class CRUDController(metaclass=ABCMeta):
         :param data: 
         :return: 
         '''
+
+
+
         id = int(id)
+
+        if id not in self.cache:
+            raise CBPiException("%s with id %s not found" % (self.name,id))
+
         data["id"] = id
 
         try:
@@ -121,19 +139,16 @@ class CRUDController(metaclass=ABCMeta):
         pass
 
     async def delete(self, id):
-
-
-
         '''
         
         :param id: 
         :return: 
         '''
-        await self._pre_delete_callback(id)
 
         if id not in self.cache:
+            raise CBPiException("%s with id %s not found" % (self.name,id))
 
-            return
+        await self._pre_delete_callback(id)
         m = await self.model.delete(id)
         await self._post_delete_callback(id)
         try:

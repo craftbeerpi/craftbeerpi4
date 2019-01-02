@@ -8,7 +8,7 @@ class Login():
 
     def __init__(self,cbpi):
         self.cbpi = cbpi
-        self.cbpi.register(self)
+        self.cbpi.register(self, url_prefix="/")
 
         self.db = {cbpi.static_config.get("username", "cbpi"): cbpi.static_config.get("password", "cbpi")}
 
@@ -23,11 +23,8 @@ class Login():
         params = await request.post()
 
         user = params.get('username', None)
-        password = params.get('password', None)
-        print("UUSEr", user, password, str(self.db[user]))
-        if (user in self.db and
-            params.get('password', None) == str(self.db[user])):
 
+        if (user in self.db and params.get('password', None) == str(self.db[user])):
             # User is in our database, remember their login details
             await auth.remember(request, user)
             return web.Response(body='OK'.encode('utf-8'))

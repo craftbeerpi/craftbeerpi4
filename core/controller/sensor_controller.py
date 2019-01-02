@@ -5,154 +5,21 @@ from cbpi_api import request_mapping
 
 from core.controller.crud_controller import CRUDController
 from core.database.model import SensorModel
-from core.http_endpoints.http_api import HttpAPI
 from core.job.aiohttp import get_scheduler_from_app
 from core.utils.encoder import ComplexEncoder
 
 
-class SensorController(CRUDController, HttpAPI):
+class SensorController(CRUDController):
 
     model = SensorModel
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.cbpi.register(self, "/sensor")
+        self.cbpi.register(self)
         self.service = self
         self.types = {}
         self.logger = logging.getLogger(__name__)
         self.sensors = {}
-
-    def info(self):
-        return json.dumps(dict(name="SensorController", types=self.types), cls=ComplexEncoder)
-
-    @request_mapping(path="/types", auth_required=False)
-    async def get_types(self, request):
-        """
-        ---
-        description: Get all sensor types
-        tags:
-        - Sensor
-        responses:
-            "200":
-                description: successful operation
-        """
-        return await super().get_types(request)
-
-    @request_mapping(path="/", auth_required=False)
-    async def http_get_all(self, request):
-        """
-
-        ---
-        description: Get all sensor
-        tags:
-        - Sensor
-        responses:
-            "204":
-                description: successful operation
-        """
-        return await super().http_get_all(request)
-
-    @request_mapping(path="/{id:\d+}", auth_required=False)
-    async def http_get_one(self, request):
-        """
-        ---
-        description: Get an sensor
-        tags:
-        - Sensor
-        parameters:
-        - name: "id"
-          in: "path"
-          description: "Sensor ID"
-          required: true
-          type: "integer"
-          format: "int64"
-        responses:
-            "204":
-                description: successful operation
-            "405":
-                description: invalid HTTP Met
-        """
-        return await super().http_get_one(request)
-
-    @request_mapping(path="/", method="POST", auth_required=False)
-    async def http_add(self, request):
-        """
-        ---
-        description: Get one sensor
-        tags:
-        - Sensor
-        parameters:
-        - in: body
-          name: body
-          description: Created an sensor
-          required: false
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-              type:
-                type: string
-              config:
-                type: object
-        responses:
-            "204":
-                description: successful operation
-        """
-        return await super().http_add(request)
-
-    @request_mapping(path="/{id}", method="PUT", auth_required=False)
-    async def http_update(self, request):
-        """
-        ---
-        description: Update an sensor
-        tags:
-        - Sensor
-        parameters:
-        - name: "id"
-          in: "path"
-          description: "Sensor ID"
-          required: true
-          type: "integer"
-          format: "int64"
-        - in: body
-          name: body
-          description: Update an sensor
-          required: false
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-              type:
-                type: string
-              config:
-                type: object
-        responses:
-            "200":
-                description: successful operation
-        """
-        return await super().http_update(request)
-
-    @request_mapping(path="/{id}", method="DELETE", auth_required=False)
-    async def http_delete_one(self, request):
-        """
-        ---
-        description: Delete an sensor
-        tags:
-        - Sensor
-        parameters:
-        - name: "id"
-          in: "path"
-          description: "Sensor ID"
-          required: true
-          type: "integer"
-          format: "int64"
-        responses:
-            "204":
-                description: successful operation
-        """
-        return await super().http_delete_one(request)
 
     async def init(self):
         '''
@@ -160,6 +27,8 @@ class SensorController(CRUDController, HttpAPI):
 
         :return: 
         '''
+
+
         await super(SensorController, self).init()
         for id, value in self.cache.items():
             await self.init_sensor(value)
@@ -198,7 +67,6 @@ class SensorController(CRUDController, HttpAPI):
     async def _pre_delete_callback(self, sensor_id):
         if int(sensor_id) not in self.cache:
             return
-
         if self.cache[int(sensor_id)].instance is not None:
             await self.stop_sensor(self.cache[int(sensor_id)])
 
