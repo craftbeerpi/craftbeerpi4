@@ -1,11 +1,13 @@
 import logging
 import weakref
 from collections import defaultdict
-import json
+
 import aiohttp
 from aiohttp import web
-from typing import Iterable, Callable
 from cbpi_api import *
+from voluptuous import Schema
+
+from utils import json_dumps
 
 
 class CBPiWebSocket:
@@ -19,59 +21,52 @@ class CBPiWebSocket:
 
     @on_event(topic="#")
     async def listen(self, topic, **kwargs):
-        from core.utils.encoder import ComplexEncoder
-        data = json.dumps(dict(topic=topic, data=dict(**kwargs)),skipkeys=True, check_circular=True, cls=ComplexEncoder)
+        data = dict(topic=topic, data=dict(**kwargs))
         self.logger.info("PUSH %s " % data)
         self.send(data)
 
     def send(self, data):
-
+        self.logger.debug("broadcast to ws clients. Data: %s" % data)
         for ws in self._clients:
             async def send_data(ws, data):
-                await ws.send_str(data)
+                await ws.send_json(data=data, dumps=json_dumps)
             self.cbpi.app.loop.create_task(send_data(ws, data))
-
-    def add_callback(self, func: Callable, event: str) -> None:
-        self._callbacks[event].add(func)
-
-    def register_object(self, obj):
-        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "ws")]:
-            self.add_callback(method, method.__getattribute__("key"))
-
-    async def emit(self, event: str, *args, **kwargs) -> None:
-        for func in self._event_funcs(event):
-            await func(*args, **kwargs)
-
-    def _event_funcs(self, event: str) -> Iterable[Callable]:
-        for func in self._callbacks[event]:
-            yield func
 
     async def websocket_handler(self, request):
         ws = web.WebSocketResponse()
         await ws.prepare(request)
 
         self._clients.add(ws)
+        peername = request.transport.get_extra_info('peername')
+        if peername is not None:
+            host, port = peername
+        else:
+            host, port = "Unknowen"
 
-        c = len(self._clients) - 1
-
-        self.logger.info(ws)
-        self.logger.info(c)
+        self.logger.info("Client Connected - Host: %s Port: %s  - client count: %s " % (host, port, len(self._clients)))
         try:
+            await ws.send_json(data=dict(topic="connection/success"))
             async for msg in ws:
                 if msg.type == aiohttp.WSMsgType.TEXT:
-                    if msg.data == 'close':
 
+                    msg_obj = msg.json()
+                    schema = Schema({"topic": str, "data": dict})
+                    schema(msg_obj)
+
+                    topic = msg_obj.get("topic")
+                    data = msg_obj.get("data")
+                    if topic == "close":
                         await ws.close()
-                        self.logger.info("WS Close")
                     else:
-                        msg_obj = msg.json()
-
-                        await self.cbpi.bus.fire(msg_obj["topic"], id=1, power=22)
-                        # await self.fire(msg_obj["key"], ws, msg)
-
-                        # await ws.send_str(msg.data)
+                        if data is not None:
+                            await self.cbpi.bus.fire(topic=topic, **data)
+                        else:
+                            await self.cbpi.bus.fire(topic=topic)
                 elif msg.type == aiohttp.WSMsgType.ERROR:
                     self.logger.error('ws connection closed with exception %s' % ws.exception())
+
+        except Exception as e:
+            self.logger.error("%s - Received Data %s" % (str(e), msg.data))
 
         finally:
             self._clients.discard(ws)

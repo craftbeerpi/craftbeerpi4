@@ -1,4 +1,5 @@
-import aiohttp
+from unittest import mock
+
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 
 from core.craftbeerpi import CraftBeerPi
@@ -6,13 +7,20 @@ from core.craftbeerpi import CraftBeerPi
 
 class ActorTestCase(AioHTTPTestCase):
 
-
-
-
     async def get_application(self):
         self.cbpi = CraftBeerPi()
         await self.cbpi.init_serivces()
         return self.cbpi.app
+
+    @unittest_run_loop
+    async def test_actor_mock(self):
+        with mock.patch.object(self.cbpi.bus, 'fire', wraps=self.cbpi.bus.fire) as mock_obj:
+            # Send HTTP POST
+            resp = await self.client.request("POST", "/actor/1/on")
+            # Check Result
+            assert resp.status == 204
+            # Check if Event are fired
+            assert mock_obj.call_count == 2
 
 
     @unittest_run_loop
@@ -92,3 +100,8 @@ class ActorTestCase(AioHTTPTestCase):
         # Update not existing actor
         resp = await self.client.put(path="/actor/%s" % 9999, json=data)
         assert resp.status == 500
+
+    @unittest_run_loop
+    async def test_actor_action(self):
+        resp = await self.client.post(path="/actor/1/action", json=dict(name="myAction", parameter=dict(name="Manuel")))
+        assert resp.status == 204

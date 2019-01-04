@@ -59,6 +59,15 @@ class StepModel(DBModel):
             await db.commit()
 
     @classmethod
+    async def update_state(cls, step_id, state, end=None):
+        async with aiosqlite.connect(DATABASE_FILE) as db:
+            if end is not None:
+                await db.execute("UPDATE %s SET state = ?, end = ? WHERE id = ?" % cls.__table_name__, (state, end, step_id))
+            else:
+                await db.execute("UPDATE %s SET state = ? WHERE id = ?" % cls.__table_name__, (state, step_id))
+            await db.commit()
+
+    @classmethod
     async def get_by_state(cls, state, order=True):
 
         async with aiosqlite.connect(DATABASE_FILE) as db:
@@ -73,6 +82,7 @@ class StepModel(DBModel):
 
     @classmethod
     async def reset_all_steps(cls):
+        print("RESET ALL STEPS NOW")
         async with aiosqlite.connect(DATABASE_FILE) as db:
             await db.execute("UPDATE %s SET state = 'I', stepstate = NULL , start = NULL, end = NULL " % cls.__table_name__)
             await db.commit()

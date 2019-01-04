@@ -2,6 +2,7 @@ import logging
 from asyncio import Future
 
 from cbpi_api import *
+from voluptuous import Schema
 
 from core.controller.crud_controller import CRUDController
 from core.database.model import ActorModel
@@ -29,23 +30,28 @@ class ActorController(CRUDController):
         :return: 
         """
         await super(ActorController, self).init()
-
         for id, value in self.cache.items():
             await self._init_actor(value)
 
+    def get_state(self):
+        return dict(items=self.cache,types=self.types)
+
     async def _init_actor(self, actor):
 
-        if actor.type in self.types:
+        try:
+            if actor.type in self.types:
 
-            cfg = actor.config.copy()
-            cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
-            clazz = self.types[actor.type]["class"];
-            self.cache[actor.id].instance = clazz(**cfg)
-            self.cache[actor.id].instance.init()
-            await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
-        else:
-            print("NOT FOUND")
-            self.logger.error("Actor type '%s' not found (Available Actor Types: %s)" % (actor.type, ', '.join(self.types.keys())))
+                cfg = actor.config.copy()
+                cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
+                clazz = self.types[actor.type]["class"];
+                self.cache[actor.id].instance = clazz(**cfg)
+                self.cache[actor.id].instance.init()
+                await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
+            else:
+                print("NOT FOUND")
+                self.logger.error("Actor type '%s' not found (Available Actor Types: %s)" % (actor.type, ', '.join(self.types.keys())))
+        except Exception as e:
+            self.logger.error("Failed to init actor %s - Reason %s" % (actor.id, str(e)))
 
     async def _stop_actor(self, actor):
         actor.instance.stop()
@@ -93,6 +99,7 @@ class ActorController(CRUDController):
             else:
                 actor.on()
 
+
     @on_event(topic="actor/+/off")
     async def off(self, actor_id, **kwargs) -> None:
         """
@@ -102,13 +109,21 @@ class ActorController(CRUDController):
         :param actor_id: the actor actor_id
         :param kwargs: 
         """
-
         self.logger.debug("OFF %s" % actor_id)
         actor_id = int(actor_id)
 
         if actor_id in self.cache:
             actor = self.cache[actor_id].instance
             actor.off()
+
+    @on_event(topic="actor/+/action")
+    async def call_action(self, actor_id, data, **kwargs) -> None:
+
+        schema = Schema({"name":str, "parameter":dict})
+        schema(data)
+        name = data.get("name")
+        parameter = data.get("parameter")
+        actor = self.cache[actor_id].instance.__getattribute__(name)(**parameter)
 
     async def _post_add_callback(self, m):
         '''

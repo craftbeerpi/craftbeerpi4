@@ -19,6 +19,12 @@ class IndexTestCase(AioHTTPTestCase):
         assert resp.status == 200
 
     @unittest_run_loop
+    async def test_404(self):
+        # Test Index Page
+        resp = await self.client.get(path="/abc")
+        assert resp.status == 200
+
+    @unittest_run_loop
     async def test_wrong_login(self):
         resp = await self.client.post(path="/login", data={"username": "beer", "password": "123"})
         print("REPONSE STATUS", resp.status)

@@ -2,7 +2,6 @@ from json import JSONEncoder
 
 class ComplexEncoder(JSONEncoder):
 
-
     def default(self, obj):
 
         from core.database.orm_framework import DBModel
@@ -17,7 +16,7 @@ class ComplexEncoder(JSONEncoder):
             #elif hasattr(obj, "callback"):
             #    return obj()
             else:
-                return None
+                raise TypeError()
         except TypeError:
             pass
         return None

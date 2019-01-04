@@ -30,6 +30,9 @@ class KettleController(CRUDController):
         '''
         await super(KettleController, self).init()
 
+    def get_state(self):
+        return dict(items=self.cache,types=self.types)
+
     async def toggle_automtic(self, id):
         '''
         

@@ -1,4 +1,6 @@
 import asyncio
+from unittest import mock
+
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from core.craftbeerpi import CraftBeerPi
 
@@ -51,20 +53,46 @@ class StepTestCase(AioHTTPTestCase):
         resp = await self.client.delete(path="/step/%s" % sensor_id)
         assert resp.status == 204
 
+    def create_wait_callback(self, topic):
+        future = self.cbpi.app.loop.create_future()
+
+        async def test(**kwargs):
+            print("GOON")
+            future.set_result("OK")
+        self.cbpi.bus.register(topic, test, once=True)
+        return future
+
+    async def wait(self, future):
+        done, pending = await asyncio.wait({future})
+
+        if future in done:
+            pass
+
     @unittest_run_loop
     async def test_process(self):
-        resp = await self.client.request("GET", "/step/stop")
-        assert resp.status == 204
+        await self.cbpi.step.stop()
 
-        resp = await self.client.request("GET", "/step/start")
-        assert resp.status == 204
+        with mock.patch.object(self.cbpi.step, 'start', wraps=self.cbpi.step.start) as mock_obj:
 
-        resp = await self.client.request("GET", "/step/next")
-        assert resp.status == 204
+            future = self.create_wait_callback("step/+/started")
+            await self.cbpi.step.start()
+            await self.wait(future)
 
-        resp = await self.client.request("GET", "/step/stop")
-        assert resp.status == 204
+            future = self.create_wait_callback("step/+/started")
+            await self.cbpi.step.next()
+            await self.wait(future)
 
+            future = self.create_wait_callback("step/+/started")
+            await self.cbpi.step.next()
+            await self.wait(future)
 
+            future = self.create_wait_callback("step/+/started")
+            await self.cbpi.step.next()
+            await self.wait(future)
 
+            future = self.create_wait_callback("job/step/done")
+            await self.cbpi.step.stop()
+            await self.wait(future)
+            print("COUNT", mock_obj.call_count)
+            print("ARGS", mock_obj.call_args_list)
 

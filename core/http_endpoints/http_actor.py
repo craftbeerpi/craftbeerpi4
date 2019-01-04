@@ -232,3 +232,38 @@ class ActorHttpEndpoints(HttpCrudEndpoints):
 
         await self.cbpi.bus.fire(topic="actor/%s/toggle" % actor_id, actor_id=actor_id)
         return web.Response(status=204)
+
+    @request_mapping(path="/{id:\d+}/action", method="POST", auth_required=auth)
+    async def http_action(self, request) -> web.Response:
+        """
+
+        ---
+        description: Toogle an actor on or off
+        tags:
+        - Actor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: Update an actor
+          required: false
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              config:
+                type: object
+        responses:
+            "204":
+                description: successful operation
+        """
+        actor_id = int(request.match_info['id'])
+
+        await self.cbpi.bus.fire(topic="actor/%s/action" % actor_id, actor_id=actor_id, data=await request.json())
+        return web.Response(status=204)

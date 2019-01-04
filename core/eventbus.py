@@ -51,6 +51,7 @@ class CBPiEventBus(object):
         if method in self.registry:
             raise RuntimeError("Method %s already registerd. Please unregister first!" % method.__name__)
         self.logger.info("Topic %s", topic)
+
         node = self._root
         for sym in topic.split('/'):
             node = node._children.setdefault(sym, self.Node())
@@ -102,7 +103,6 @@ class CBPiEventBus(object):
             self.loop = loop
         else:
             self.loop = asyncio.get_event_loop()
-
 
 
     def sync_fire(self,topic: str,timeout=1, **kwargs):

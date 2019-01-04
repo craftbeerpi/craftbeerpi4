@@ -33,6 +33,9 @@ class SensorController(CRUDController):
         for id, value in self.cache.items():
             await self.init_sensor(value)
 
+    def get_state(self):
+        return dict(items=self.cache,types=self.types)
+
     async def init_sensor(self, sensor):
         if sensor.type in self.types:
             cfg = sensor.config.copy()

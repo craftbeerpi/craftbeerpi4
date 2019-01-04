@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import time
 
 from cbpi_api import *
@@ -17,14 +18,17 @@ class StepController(CRUDController):
 
     def __init__(self, cbpi):
         super(StepController, self).__init__(cbpi)
-
+        self.caching = False
+        self.is_stopping = False
         self.cbpi = cbpi
         self.current_task = None
+        self.is_next = False
         self.types = {}
         self.current_step = None
         self.current_job = None
         self.cbpi.register(self)
-
+        self.logger = logging.getLogger(__name__)
+        self.starttime = None
 
     async def init(self):
         '''
@@ -54,6 +58,8 @@ class StepController(CRUDController):
             self.current_job = await self.cbpi.job.start_job(self.current_step.run(), step.name, "step")
 
 
+    def get_state(self):
+        return dict(items=self.get_all(),types=self.types,is_running=self.is_running(),current_step=self.current_step)
 
     @on_event("step/action")
     async def handle_action(self, action, **kwargs):
@@ -72,7 +78,7 @@ class StepController(CRUDController):
 
 
     @on_event("step/next")
-    async def handle_next(self, **kwargs):
+    async def next(self, **kwargs):
         '''
         Event Handler for "step/next".
         It start the next step
@@ -80,28 +86,20 @@ class StepController(CRUDController):
         :param kwargs: 
         :return: None
         '''
-        if self.current_step is not None:
-            self.current_step.next()
-            pass
+        print("REQUEST NEXT")
+        self.starttime = time.time()
+        if self.current_step is not None and self.is_next is False:
+            self.logger.info("Request Next Step to start. Stopping current step")
+            self.is_next = True
+            self.current_step.stop()
+        else:
+            self.logger.info("Can Start Next")
 
-    @on_event("step/reset")
-    async def handle_reset(self, **kwargs):
-        '''
-        Event Handler for "step/reset".
-        Resets the current step
-        
-        :param kwargs: 
-        :return: None
-        '''
-        if self.current_step is not None:
-            await self.stop()
-            self.is_stopping = True
 
-        await self.model.reset_all_steps()
 
 
     @on_event("job/step/done")
-    async def handle_step_done(self, topic, **kwargs):
+    async def _step_done(self, topic, **kwargs):
 
         '''
         Event Handler for "step/+/done".
@@ -112,17 +110,23 @@ class StepController(CRUDController):
         :return: 
         '''
 
+        # SHUTDONW DO NOTHING
+        self.logger.info("HANDLE DONE IS SHUTDONW %s  IS STOPPING %s IS NEXT %s" % ( self.cbpi.shutdown, self.is_stopping, self.is_next))
+
+
         if self.cbpi.shutdown:
             return
 
-        self.cache[self.current_step.id].state = "D"
-        step_id = self.current_step.id
-        self.current_step = None
+        if self.is_stopping:
+            self.is_stopping = False
+            return
+        self.is_next = False
+        if self.current_step is not None:
+            await self.model.update_state(self.current_step.id, "D", int(time.time()))
+            self.current_step = None
+        await self.start()
 
-        if self.is_stopping is not True:
-            await self.start()
 
-        self.is_stopping = False
 
     def _get_manged_fields_as_array(self, type_cfg):
 
@@ -139,7 +143,7 @@ class StepController(CRUDController):
             return False
 
     @on_event("step/start")
-    async def start(self, future, **kwargs):
+    async def start(self, **kwargs):
 
         '''
         Start the first step 
@@ -147,39 +151,58 @@ class StepController(CRUDController):
         :return:None  
         '''
 
-        if self.current_step is None:
-            loop = asyncio.get_event_loop()
-            open_step = False
+        if self.is_running() is False:
+            next_step = await self.model.get_by_state("I")
 
-            inactive = await self.model.get_by_state("I")
-            active = await self.model.get_by_state("A")
+            if next_step is not None:
+                step_type = self.types[next_step.type]
 
-            if active is not None:
-                active.state = 'D'
-                active.end = int(time.time())
-                # self.stop_step()
-                self.current_step = None
-                await self.model.update(**active.__dict__)
-
-            if inactive is not None:
-                step_type = self.types["CustomStepCBPi"]
-
-                config = dict(cbpi=self.cbpi, id=inactive.id, name=inactive.name, managed_fields=self._get_manged_fields_as_array(step_type))
+                config = dict(cbpi=self.cbpi, id=next_step.id, name=next_step.name, managed_fields=self._get_manged_fields_as_array(step_type))
                 self.current_step = step_type["class"](**config)
 
-                inactive.state = 'A'
-                inactive.stepstate = inactive.config
-                inactive.start = int(time.time())
-                await self.model.update(**inactive.__dict__)
-                self.current_job = await self.cbpi.job.start_job(self.current_step.run(), inactive.name, "step")
+                next_step.state = 'A'
+                next_step.stepstate = next_step.config
+                next_step.start = int(time.time())
+                await self.model.update(**next_step.__dict__)
+                if self.starttime is not None:
+                    end = time.time()
+                    d = end - self.starttime
+                    print("DURATION", d)
+                else:
+                    print("NORMAL START")
+                self.current_job = await self.cbpi.job.start_job(self.current_step.run(), next_step.name, "step")
+                await self.cbpi.bus.fire("step/%s/started" % self.current_step.id)
             else:
-                await self.cbpi.bus.fire("step/berwing/finished")
-
-        future.set_result(True)
+                await self.cbpi.bus.fire("step/brewing/finished")
+        else:
+            self.logger.error("Process Already Running")
+        print("----------- END")
 
     @on_event("step/stop")
     async def stop(self, **kwargs):
-        if self.current_job is not None:
+
+        if self.current_step is not None:
+            self.current_step.stop()
             self.is_stopping = True
-            await self.current_job.close()
-            await self.model.reset_all_steps()
+            self.current_step = None
+
+        await self.model.reset_all_steps()
+        await self.cbpi.bus.fire("step/brewing/stopped")
+
+    @on_event("step/reset")
+    async def handle_reset(self, **kwargs):
+        '''
+        Event Handler for "step/reset".
+        Resets the current step
+
+        :param kwargs:
+        :return: None
+        '''
+        if self.current_step is not None:
+
+            await self.stop()
+            self.current_step = None
+            self.is_stopping = True
+
+        await self.model.reset_all_steps()
+

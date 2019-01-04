@@ -35,8 +35,6 @@ from http_endpoints.http_step import StepHttpEndpoints
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-
-
 @web.middleware
 async def error_middleware(request, handler):
     try:
@@ -56,7 +54,6 @@ async def error_middleware(request, handler):
     return web.json_response({'error': message})
 
 class CraftBeerPi():
-
 
     def __init__(self):
         self.static_config = load_config(os.path.join(os.path.dirname(__file__), '../config/config.yaml'))
@@ -117,7 +114,7 @@ class CraftBeerPi():
         '''
         self.register_http_endpoints(obj, url_prefix, static)
         self.bus.register_object(obj)
-        self.ws.register_object(obj)
+        #self.ws.register_object(obj)
         self.job.register_background_task(obj)
         self.register_on_startup(obj)
 

@@ -178,12 +178,10 @@ class StepHttpEndpoints(HttpCrudEndpoints):
         """
         if self.controller.is_running():
             raise CBPiException("Brewing Process Already Running")
-        result = await self.cbpi.bus.fire("step/start")
-        r = result.get("core.controller.step_controller.start")
-        if r[0] is True:
-            return web.Response(status=204)
-        else:
-            raise CBPiException("Failed to start brewing process")
+        print("FIRE START FROM HTTP")
+        await self.cbpi.bus.fire("step/start")
+        return web.Response(status=204)
+
 
     @request_mapping(path="/reset", auth_required=False)
     async def http_reset(self, request):

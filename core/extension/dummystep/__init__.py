@@ -14,14 +14,12 @@ class CustomStepCBPi(CBPiSimpleStep):
         self.name="WOOHOO"
 
     async def run_cycle(self):
-
-
-        #await asyncio.sleep(1)
+        print("RUN", self.name)
         self.i = self.i + 1
-        self.name="HALLO WELT"
-        if self.i == 20:
+        if self.i == 5:
+        #    print("NEXT")
             self.next()
-        self.cbpi.notify(key="step", message="HELLO FROM STEP")
+        #self.cbpi.notify(key="step", message="HELLO FROM STEP")
 
 
 
