@@ -11,7 +11,7 @@ Architecture
 ActorController
 ^^^^^^^^^^^^^^^
 
-.. autoclass:: core.controller.actor_controller.ActorController
+.. autoclass:: cbpi.controller.actor_controller.ActorController
   :members:
   :private-members:
   :undoc-members:
@@ -21,7 +21,7 @@ ActorController
 CBPiActor
 ^^^^^^^^^
 
-.. autoclass:: cbpi_api.CBPiActor
+.. autoclass:: cbpi.api.CBPiActor
   :members:
   :private-members:
   :undoc-members:
@@ -31,7 +31,7 @@ CBPiActor
 Custom Actor
 ^^^^^^^^^^^^^
 
-.. literalinclude:: ../../core/extension/dummyactor/__init__.py
+.. literalinclude:: ../../cbpi/extension/dummyactor/__init__.py
    :caption: __init__.py
    :name: __init__-py
    :language: python
@@ -40,6 +40,6 @@ Custom Actor
 
 config.yaml
 
-.. literalinclude:: ../../core/extension/dummyactor/config.yaml
+.. literalinclude:: ../../cbpi/extension/dummyactor/config.yaml
    :language: yaml
    :linenos:

@@ -6,7 +6,7 @@ Brewing Step
 StepController
 ^^^^^^^^^^^^^^^
 
-.. autoclass:: core.controller.step_controller.StepController
+.. autoclass:: cbpi.controller.step_controller.StepController
   :members:
 
   :undoc-members:
@@ -16,7 +16,7 @@ StepController
 CBPiSimpleStep
 ^^^^^^^^^^^^^^
 
-.. autoclass:: cbpi_api.CBPiSimpleStep
+.. autoclass:: cbpi.api.CBPiSimpleStep
   :members:
   :undoc-members:
   :show-inheritance:
@@ -28,7 +28,7 @@ Custom Step
 This is an example of a custom step. The Step class need to extend Simple step. In addtion at least the run_cycle method needs to be overwritten
 
 
-.. literalinclude:: ../../core/extension/dummystep/__init__.py
+.. literalinclude:: ../../cbpi/extension/dummystep/__init__.py
    :caption: __init__.py
    :language: python
    :linenos:
@@ -36,6 +36,6 @@ This is an example of a custom step. The Step class need to extend Simple step. 
 
 config.yaml
 
-.. literalinclude:: ../../core/extension/dummystep/config.yaml
+.. literalinclude:: ../../cbpi/extension/dummystep/config.yaml
    :language: yaml
    :linenos:

@@ -18,6 +18,7 @@ Welcome to CraftBeerPi's documentation!
    kettle_controller
    properties
    standards
+   webapis
 
 
 ..
