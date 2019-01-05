@@ -45,6 +45,8 @@ class SensorController(CRUDController):
         else:
             self.logger.error("Sensor type '%s' not found (Available Sensor Types: %s)" % (sensor.type, ', '.join(self.types.keys())))
 
+
+
     async def stop_sensor(self, sensor):
         print("STOP", sensor.id)
         sensor.instance.stop()

@@ -1,8 +1,9 @@
+import logging
 from unittest import mock
-
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-
 from cbpi.craftbeerpi import CraftBeerPi
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
 
 
 class ActorTestCase(AioHTTPTestCase):
@@ -32,7 +33,7 @@ class ActorTestCase(AioHTTPTestCase):
         resp = await self.client.request("POST", "/actor/1/on")
         assert resp.status == 204
         i = await self.cbpi.actor.get_one(1)
-        print(i)
+
         assert i.instance.state is True
 
         resp = await self.client.request("POST", "/actor/1/off")
@@ -74,6 +75,11 @@ class ActorTestCase(AioHTTPTestCase):
 
         m2 = await resp.json()
         sensor_id = m2["id"]
+
+        resp = await self.client.request("POST", "/actor/%s/on" % sensor_id)
+        assert resp.status == 204
+
+
 
         # Update Sensor
         resp = await self.client.put(path="/actor/%s" % sensor_id, json=m)

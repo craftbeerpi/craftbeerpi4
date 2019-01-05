@@ -5,7 +5,6 @@ import os
 import pathlib
 import shutil
 
-logging.basicConfig(level=logging.INFO,filename='./logs/app.log', filemode='a', format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
 
 def create_plugin_file():
     import os.path
@@ -30,10 +29,13 @@ def main():
     #import sys
     #arg1, arg2 = sys.argv[1], sys.argv[2]
 
+
     create_home_folder_structure()
     create_plugin_file()
     create_config_file()
 
+    #logging.basicConfig(level=logging.INFO, filename='./logs/app.log', filemode='a', format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
 
     cbpi = CraftBeerPi()
     cbpi.start()

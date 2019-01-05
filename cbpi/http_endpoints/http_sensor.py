@@ -1,3 +1,8 @@
+import asyncio
+import os
+
+from aiohttp import web
+
 from cbpi.api import request_mapping
 
 from cbpi.http_endpoints.http_curd_endpoints import HttpCrudEndpoints
@@ -138,3 +143,31 @@ class SensorHttpEndpoints(HttpCrudEndpoints):
                 description: successful operation
         """
         return await super().http_delete_one(request)
+
+    @request_mapping(path="/{id:\d+}/log", auth_required=False)
+    async def http_get_log(self, request):
+        sensor_id = request.match_info['id']
+        resp = web.StreamResponse(status=200, reason='OK', headers={'Content-Type': 'text/html'})
+
+        await resp.prepare(request)
+        for filename in sorted(os.listdir("./logs/sensors"), reverse=True):
+            if filename.startswith("sensor_%s" % sensor_id):
+
+                with open(os.path.join("./logs/sensors/%s" % filename), 'r') as myfile:
+                    await resp.write(str.encode(myfile.read()))
+        return resp
+
+    @request_mapping(path="/{id:\d+}/log", method="DELETE", auth_required=False)
+    async def http_clear_log(self, request):
+        sensor_id = request.match_info['id']
+
+        for filename in sorted(os.listdir("./logs/sensors"), reverse=True):
+            print(filename)
+            if filename == "sensor_%s.log" % sensor_id:
+                with open(os.path.join("./logs/sensors/%s" % filename), 'w'):
+                    pass
+                continue
+            if filename.startswith("sensor_%s" % sensor_id):
+                os.remove(os.path.join("./logs/sensors/%s" % filename))
+
+        return web.Response(status=204)

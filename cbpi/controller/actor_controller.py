@@ -1,9 +1,7 @@
 import logging
 from asyncio import Future
-
 from cbpi.api import *
 from voluptuous import Schema
-
 from cbpi.controller.crud_controller import CRUDController
 from cbpi.database.model import ActorModel
 
@@ -40,7 +38,6 @@ class ActorController(CRUDController):
 
         try:
             if actor.type in self.types:
-
                 cfg = actor.config.copy()
                 cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
                 clazz = self.types[actor.type]["class"];
@@ -48,7 +45,6 @@ class ActorController(CRUDController):
                 self.cache[actor.id].instance.init()
                 await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
             else:
-                print("NOT FOUND")
                 self.logger.error("Actor type '%s' not found (Available Actor Types: %s)" % (actor.type, ', '.join(self.types.keys())))
         except Exception as e:
             self.logger.error("Failed to init actor %s - Reason %s" % (actor.id, str(e)))
@@ -131,6 +127,7 @@ class ActorController(CRUDController):
         :param m: 
         :return: 
         '''
+        print("INIT ACTION")
         await self._init_actor(m)
         pass
 
