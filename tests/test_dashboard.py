@@ -1,7 +1,7 @@
 import aiohttp
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 
-from core.craftbeerpi import CraftBeerPi
+from cbpi.craftbeerpi import CraftBeerPi
 
 
 class DashboardTestCase(AioHTTPTestCase):

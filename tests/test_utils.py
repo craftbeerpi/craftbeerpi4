@@ -1,6 +1,6 @@
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 
-from core.craftbeerpi import CraftBeerPi, load_config
+from cbpi.craftbeerpi import CraftBeerPi, load_config
 
 
 class UtilsTestCase(AioHTTPTestCase):

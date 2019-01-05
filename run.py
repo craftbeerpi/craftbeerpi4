@@ -1,4 +1,3 @@
-from core.craftbeerpi import CraftBeerPi
+from cbpi.cli import main
 
-cbpi = CraftBeerPi()
-cbpi.start()
+main()

@@ -2,9 +2,9 @@ import time
 
 import aiosqlite
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from cbpi_api.config import ConfigType
+from cbpi.api.config import ConfigType
 
-from core.craftbeerpi import CraftBeerPi
+from cbpi.craftbeerpi import CraftBeerPi
 
 
 class ConfigTestCase(AioHTTPTestCase):

@@ -2,39 +2,105 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="Lots of changes">
+      <change afterPath="$PROJECT_DIR$/cbpi/api/actor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/api/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/api/decorator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/api/exceptions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/api/extension.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/api/kettle_logic.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/api/property.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/api/sensor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/api/step.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbpi/mqtt/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/craftbeerpi4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/craftbeerpi4.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/controller/actor_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/controller/actor_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/controller/kettle_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/controller/kettle_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/controller/notification_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/controller/notification_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/controller/sensor_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/controller/sensor_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/controller/step_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/controller/step_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/controller/system_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/controller/system_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/craftbeerpi.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/craftbeerpi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/database/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/database/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/eventbus.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/eventbus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/extension/dummystep/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/extension/dummystep/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/http_endpoints/http_actor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_step.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/http_endpoints/http_step.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/utils/encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/utils/encoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/websocket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/config/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/create_database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/config/create_database.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/plugin_list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/config/plugin_list.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/api/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/actor_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/actor_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/config_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/config_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/crud_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/crud_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/dashboard_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/dashboard_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/job_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/job_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/kettle_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/kettle_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/notification_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/notification_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/plugin_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/plugin_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/sensor_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/sensor_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/step_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/step_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/controller/system_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/system_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/craftbeerpi.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/craftbeerpi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/database/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/database/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/database/orm_framework.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/database/orm_framework.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/eventbus.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/eventbus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/database/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/comp/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/comp/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/comp/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/comp/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/comp/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/comp/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/comp/static/index2.html" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/comp/static/index2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummyactor/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/dummyactor/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummyactor/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/dummylogic/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummylogic/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/dummylogic/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummylogic/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/dummysensor/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummysensor/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/dummystep/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummystep/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/extension/dummystep/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummystep/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_actor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_curd_endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_curd_endpoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_kettle.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_kettle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_sensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_sensor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/http_endpoints/http_step.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_step.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/job/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/job/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/job/_job.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/job/_job.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/job/_scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/job/_scheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/job/aiohttp.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/job/aiohttp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/mqtt/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/mqtt/mqtt.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/mqtt/mqtt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/mqtt/mqtt_matcher.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/mqtt/mqtt_matcher.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/utils/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/utils/encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/utils/encoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/utils/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/websocket.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/craftbeerpi.db" beforeDir="false" afterPath="$PROJECT_DIR$/craftbeerpi.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/genindex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/step.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/step.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.1" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.10" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.10" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.2" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.3" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.4" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.5" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.6" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.6" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.7" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.7" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.8" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.8" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.9" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sensors/sensor_1.log.9" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_1.log.9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_2.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_2.log.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_2.log.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sensors/sensor_2.log.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_actor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_dashboard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_index.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_index.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_kettle.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_kettle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_notification_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_notification_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_sensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_sensor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_step.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_step.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_system.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_ws.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_ws.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +109,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/craftbeerpi4$sample.coverage" NAME="sample Coverage Results" MODIFIED="1546716642557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$test.coverage" NAME="test Coverage Results" MODIFIED="1546678077234" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test_kettle.coverage" NAME="test kettle Coverage Results" MODIFIED="1546020780689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_tests_test_step.coverage" NAME="pytest for tests.test_step Coverage Results" MODIFIED="1546556940935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_test_gpio_py.coverage" NAME="pytest in test_gpio.py Coverage Results" MODIFIED="1546524097542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
@@ -53,16 +121,17 @@
     <SUITE FILE_PATH="coverage/craftbeerpi4$dummy.coverage" NAME="dummy Coverage Results" MODIFIED="1546520051389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_test_config_py.coverage" NAME="pytest in test_config.py Coverage Results" MODIFIED="1546113553124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_tests_test_actor.coverage" NAME="pytest for tests.test_actor Coverage Results" MODIFIED="1546524995902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1546559401341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1546717215007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test_app.coverage" NAME="test_app Coverage Results" MODIFIED="1546525009502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1546559251208" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1546717092702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_test_kettle_KettleTestCase.coverage" NAME="pytest for test_kettle.KettleTestCase Coverage Results" MODIFIED="1546357864696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$py_test_in_tests.coverage" NAME="py.test in tests Coverage Results" MODIFIED="1544486432317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_test_config_ConfigTestCase.coverage" NAME="pytest for test_config.ConfigTestCase Coverage Results" MODIFIED="1546212760017" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_test_ws_py.coverage" NAME="pytest in test_ws.py Coverage Results" MODIFIED="1546518348327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$cli.coverage" NAME="cli Coverage Results" MODIFIED="1546636569294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cbpi" />
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="236" />
+    <option name="myElementSize" value="243" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -85,12 +154,6 @@
         <item name="craftbeerpi.db" type="feb32156:DbDataSourceImpl" />
         <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="craftbeerpi.db" type="feb32156:DbDataSourceImpl" />
-        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-        <item name="step: table" type="3d80ac25:SqliteImplModel$Table" />
-      </path>
     </expand>
     <select />
   </component>
@@ -100,22 +163,41 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/test_gpio.py">
+        <entry file="file://$PROJECT_DIR$/logs/app.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="15" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-10439" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/setup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="424">
+              <caret line="36" column="1" lean-forward="true" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/extension/dummyactor/__init__.py">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+            <state relative-caret-position="90">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1176" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/controller/step_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1356">
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -124,18 +206,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/http_endpoints/http_actor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/cbpi/controller/sensor_controller.py">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/controller/config_controller.py">
+        <entry file="file://$PROJECT_DIR$/cbpi/controller/job_controller.py">
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <folding>
@@ -146,21 +222,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/controller/plugin_controller.py">
+        <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="120">
+              <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/api/sensor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#0#48#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/eventbus.py">
+        <entry file="file://$PROJECT_DIR$/tests/test_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="111" lean-forward="true" selection-start-line="111" selection-end-line="111" />
+            <state relative-caret-position="60">
+              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -176,21 +262,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>stop</find>
-      <find>NOT SHUTDOWN</find>
-      <find>NOWWWW</find>
-      <find>job/step</find>
-      <find>done</find>
-      <find>YES</find>
-      <find>is_stopping</find>
-      <find>job/step/done</find>
-      <find>Topic job/step/done</find>
-      <find>PUSH {'topic': 'job/step/done',</find>
-      <find>finish</find>
-      <find>send</find>
-      <find>on/ok</find>
-      <find>INTER 1</find>
-      <find>inter</find>
       <find>DONE</find>
       <find>start</find>
       <find>runng</find>
@@ -205,7 +276,22 @@
       <find>Fut</find>
       <find>CBPiException</find>
       <find>RPi</find>
+      <find>done</find>
+      <find>_jobs</find>
       <find>print</find>
+      <find>callbac</find>
+      <find>_jobs.app</find>
+      <find>/config</find>
+      <find>job.</find>
+      <find>from utils</find>
+      <find>Co</find>
+      <find>voluptuous</find>
+      <find>pyfiglet</find>
+      <find>from cbpi_api</find>
+      <find>bpi.http_endpoints.http_api</find>
+      <find>DEBUG</find>
+      <find>PUSH</find>
+      <find>basicConfig</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -219,6 +305,7 @@
       <dir>$PROJECT_DIR$/core/extension</dir>
       <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/core</dir>
+      <dir>$PROJECT_DIR$/cbpi</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -227,57 +314,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/extension/dummysensor/__init__.py" />
-        <option value="$PROJECT_DIR$/../craftbeerpi4_api/cbpi_api/sensor.py" />
-        <option value="$PROJECT_DIR$/tests/test_app.py" />
-        <option value="$PROJECT_DIR$/config/config.yaml" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/example_swagger_partial.yaml" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/swagger/example_swagger_partial.yaml" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_api.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_api2.py" />
-        <option value="$PROJECT_DIR$/core/controller/config_controller.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_kettle.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_config.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_sensor.py" />
-        <option value="$PROJECT_DIR$/core/controller/job_controller.py" />
-        <option value="$PROJECT_DIR$/core/database/orm_framework.py" />
-        <option value="$PROJECT_DIR$/core/controller/dashboard_controller.py" />
-        <option value="$PROJECT_DIR$/tests/test_sensor.py" />
-        <option value="$PROJECT_DIR$/tests/test_notification_controller.py" />
-        <option value="$PROJECT_DIR$/tests/test_config.py" />
-        <option value="$PROJECT_DIR$/core/controller/crud_controller.py" />
-        <option value="$PROJECT_DIR$/core/utils/utils.py" />
-        <option value="$PROJECT_DIR$/tests/test_utils.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_login.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_curd_endpoints.py" />
-        <option value="$PROJECT_DIR$/tests/test_kettle.py" />
-        <option value="$PROJECT_DIR$/run.py" />
-        <option value="$PROJECT_DIR$/tests/test_system.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_dashboard.py" />
-        <option value="$PROJECT_DIR$/tests/test_dashboard.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_actor.py" />
-        <option value="$PROJECT_DIR$/core/controller/sensor_controller.py" />
-        <option value="$PROJECT_DIR$/core/controller/kettle_controller.py" />
-        <option value="$PROJECT_DIR$/core/controller/system_controller.py" />
-        <option value="$PROJECT_DIR$/core/controller/notification_controller.py" />
-        <option value="$PROJECT_DIR$/core/utils/encoder.py" />
-        <option value="$PROJECT_DIR$/core/websocket.py" />
-        <option value="$PROJECT_DIR$/tests/test_index.py" />
-        <option value="$PROJECT_DIR$/core/craftbeerpi.py" />
-        <option value="$PROJECT_DIR$/tests/dummy.py" />
-        <option value="$PROJECT_DIR$/tests/test_gpio.py" />
-        <option value="$PROJECT_DIR$/core/http_endpoints/http_step.py" />
-        <option value="$PROJECT_DIR$/tests/test_actor.py" />
-        <option value="$PROJECT_DIR$/core/job/_job.py" />
-        <option value="$PROJECT_DIR$/tests/test_step.py" />
-        <option value="$PROJECT_DIR$/tests/test_ws.py" />
-        <option value="$PROJECT_DIR$/core/extension/dummystep/__init__.py" />
-        <option value="$PROJECT_DIR$/core/database/model.py" />
-        <option value="$PROJECT_DIR$/core/controller/step_controller.py" />
-        <option value="$PROJECT_DIR$/core/controller/actor_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/job_controller.py" />
+        <option value="$PROJECT_DIR$/build/lib/cbpi/craftbeerpi.py" />
+        <option value="$PROJECT_DIR$/build/lib/cbpi/controller/config_controller.py" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
-        <option value="$PROJECT_DIR$/core/eventbus.py" />
-        <option value="$PROJECT_DIR$/core/extension/dummyactor/__init__.py" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/actor_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/notification_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/plugin_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/system_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/extension/dummylogic/__init__.py" />
+        <option value="$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py" />
+        <option value="$PROJECT_DIR$/cbpi/extension/dummystep/__init__.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_login.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_curd_endpoints.py" />
+        <option value="$PROJECT_DIR$/cbpi/api/exceptions.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/kettle_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/sensor_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/extension/dummyactor/__init__.py" />
+        <option value="$PROJECT_DIR$/cbpi/eventbus.py" />
+        <option value="$PROJECT_DIR$/cbpi/database/orm_framework.py" />
+        <option value="$PROJECT_DIR$/cbpi/database/model.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_dashboard.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_kettle.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_actor.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_config.py" />
+        <option value="$PROJECT_DIR$/cbpi/api/actor.py" />
+        <option value="$PROJECT_DIR$/cbpi/api/kettle_logic.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/crud_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/api/__init__.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_sensor.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_step.py" />
+        <option value="$PROJECT_DIR$/cbpi/config/plugin_list.txt" />
+        <option value="$PROJECT_DIR$/cfg/plugin_list.txt" />
+        <option value="$PROJECT_DIR$/config/config.yaml" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/cbpi/controller/config_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/extension/comp/__init__.py" />
+        <option value="$PROJECT_DIR$/MANIFEST.in" />
+        <option value="$PROJECT_DIR$/Dockerfile" />
+        <option value="$PROJECT_DIR$/run.py" />
+        <option value="$PROJECT_DIR$/cbpi/websocket.py" />
+        <option value="$PROJECT_DIR$/sample.py" />
+        <option value="$PROJECT_DIR$/cbpi/api/extension.py" />
+        <option value="$PROJECT_DIR$/cbpi/craftbeerpi.py" />
+        <option value="$PROJECT_DIR$/cbpi/api/sensor.py" />
+        <option value="$PROJECT_DIR$/app.log" />
+        <option value="$PROJECT_DIR$/cbpi/cli.py" />
+        <option value="$PROJECT_DIR$/tests/test_config.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/step_controller.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -303,13 +390,7 @@
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="cbpi.egg-info" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -328,19 +409,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cbpi/api" />
+      <recent name="$PROJECT_DIR$/test" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/tests" />
+      <recent name="$PROJECT_DIR$/core/http_endpoints" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cbpi" />
       <recent name="$PROJECT_DIR$/core/http_endpoints/swagger" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/docs_src/source" />
       <recent name="$PROJECT_DIR$/docs_src/source/_images" />
-      <recent name="$PROJECT_DIR$/docs_src/source/nstatic" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/tests" />
-      <recent name="$PROJECT_DIR$/core/http_endpoints" />
-      <recent name="$PROJECT_DIR$/config" />
-      <recent name="$PROJECT_DIR$/core/extension/comp/static" />
-      <recent name="$PROJECT_DIR$/core/controller" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -356,6 +437,28 @@
     </option>
   </component>
   <component name="RunManager" selected="Python tests.pytest in tests">
+    <configuration name="cli" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="craftbeerpi4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cbpi" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cbpi/cli.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="craftbeerpi4" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -370,6 +473,50 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sample" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="craftbeerpi4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sample.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="craftbeerpi4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -456,54 +603,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for tests.test_step" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="craftbeerpi4" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;tests.test_step&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest in test_gpio.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="craftbeerpi4" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_gpio.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest in test_ws.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="craftbeerpi4" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_ws.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="pytest in tests" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="craftbeerpi4" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -525,17 +624,17 @@
       <item itemvalue="Python.run" />
       <item itemvalue="Python tests.pytest for tests.test_actor" />
       <item itemvalue="Python tests.pytest in tests" />
-      <item itemvalue="Python tests.pytest in test_ws.py" />
-      <item itemvalue="Python tests.pytest in test_gpio.py" />
-      <item itemvalue="Python tests.pytest for tests.test_step" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.cli" />
+      <item itemvalue="Python.sample" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.pytest in tests" />
         <item itemvalue="Python.run" />
-        <item itemvalue="Python tests.pytest for tests.test_step" />
-        <item itemvalue="Python tests.pytest in test_gpio.py" />
-        <item itemvalue="Python tests.pytest in test_ws.py" />
+        <item itemvalue="Python.sample" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.cli" />
       </list>
     </recent_temporary>
   </component>
@@ -557,7 +656,7 @@
       <workItem from="1546003397332" duration="543000" />
       <workItem from="1546006149688" duration="24136000" />
       <workItem from="1546201868140" duration="66956000" />
-      <workItem from="1546520120024" duration="18168000" />
+      <workItem from="1546520120024" duration="42748000" />
     </task>
     <task id="LOCAL-00001" summary="Lots of changes">
       <created>1541288846149</created>
@@ -577,18 +676,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_in_tests - 2019.01.04 at 00h 18m 01s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.01.04 at 00h 18m 14s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.01.04 at 00h 19m 30s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.01.04 at 00h 21m 30s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_in_tests - 2019.01.04 at 00h 23m 28s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
@@ -607,9 +694,21 @@
     <history-entry file="pytest_in_tests - 2019.01.04 at 00h 50m 28s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_in_tests - 2019.01.04 at 19h 23m 14s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_tests - 2019.01.04 at 23h 09m 43s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_tests - 2019.01.05 at 20h 39m 29s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_tests - 2019.01.05 at 20h 40m 24s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122447000" />
+    <option name="totallyTimeSpent" value="147027000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -622,16 +721,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="123" y="23" width="1492" height="910" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3262069" />
       <window_info id="Structure" order="1" weight="0.24957556" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.2737931" side_tool="true" weight="0.3997555" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32762837" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7262069" visible="true" weight="0.47432762" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7262069" weight="0.47432762" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39731053" />
-      <window_info anchor="bottom" id="Python Console" order="4" weight="0.3290398" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49761903" weight="0.2958435" />
+      <window_info anchor="bottom" id="Python Console" order="4" weight="0.32885087" />
+      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49761903" visible="true" weight="0.2811736" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286945" />
       <window_info anchor="bottom" id="Message" order="7" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32518336" />
@@ -643,40 +743,13 @@
       <window_info anchor="bottom" id="Database Console" order="14" weight="0.32885087" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="15" weight="0.40342298" />
       <window_info anchor="right" id="Data View" order="0" />
-      <window_info anchor="right" id="Database" order="1" sideWeight="0.49534884" visible="true" weight="0.24551724" />
+      <window_info anchor="right" id="Database" order="1" sideWeight="0.49534884" visible="true" weight="0.22344828" />
       <window_info anchor="right" id="Commander" order="2" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="5" />
-      <window_info anchor="right" id="Coverage" order="6" sideWeight="0.5046512" side_tool="true" visible="true" weight="0.24551724" />
+      <window_info anchor="right" id="SciView" order="5" weight="0.32965517" />
+      <window_info anchor="right" id="Coverage" order="6" sideWeight="0.5046512" side_tool="true" weight="0.24551724" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26551723" />
-      <window_info id="Structure" order="1" weight="0.24957556" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.27310345" side_tool="true" weight="0.23349634" />
-      <window_info anchor="bottom" id="Version Control" order="1" weight="0.32762837" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7268965" visible="true" weight="0.2591687" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39731053" />
-      <window_info anchor="bottom" id="Python Console" order="4" weight="0.3290398" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49761903" weight="0.2958435" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3286945" />
-      <window_info anchor="bottom" id="Message" order="7" />
-      <window_info anchor="bottom" id="Find" order="8" weight="0.32518336" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="Thumbnails" order="11" weight="0.22666667" />
-      <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="13" />
-      <window_info anchor="bottom" id="Database Console" order="14" weight="0.32885087" />
-      <window_info anchor="right" id="Coverage" order="0" sideWeight="0.50165015" side_tool="true" visible="true" weight="0.36827585" />
-      <window_info anchor="right" id="Data View" order="1" />
-      <window_info anchor="right" id="Database" order="2" sideWeight="0.49834985" visible="true" weight="0.36827585" />
-      <window_info anchor="right" id="Commander" order="3" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="6" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -697,7 +770,7 @@
           <line>25</line>
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/core/database/orm_framework.py</url>
+          <url>file://$PROJECT_DIR$/cbpi/database/orm_framework.py</url>
           <line>149</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
@@ -717,195 +790,208 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/logs/sensors/sensor_3.log">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/job_controller.py">
+    <entry file="file://$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        <state relative-caret-position="236">
+          <caret line="39" column="22" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="22" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/test/logs/sensors/sensor_1.log">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/test/logs/sensors/sensor_2.log">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/craftbeerpi.py">
+    <entry file="file://$PROJECT_DIR$/test_env2/lib/python3.7/site-packages/cbpi_api/sensor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="212" column="14" selection-start-line="212" selection-start-column="14" selection-end-line="212" selection-end-column="14" />
+        <state relative-caret-position="31">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://633d3113-4e25-4945-a8ff-56edb8af9fa9/schema/main/table/sensor">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6a479d72-eae8-4efb-a6f4-370f17be2a85/schema/main/table/sensor">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/actor_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/api/exceptions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" selection-start-column="11" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/api/actor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="44" selection-start-line="2" selection-start-column="44" selection-end-line="2" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/api/kettle_logic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/crud_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/api/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_sensor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="36" selection-start-column="21" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_step.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/config/config.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/database/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-475">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/database/orm_framework.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-645">
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/config/create_database.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/config/plugin_list.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/plugin_list.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" selection-start-column="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/config.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/eventbus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/config/config.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/config_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="9" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/plugin_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="39" column="29" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="75" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/cbpi/extension/comp/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/kettle">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/dummy">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/dashboard_content">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/dashboard">
+    <entry file="das://3f79e533-e857-4e39-8e2e-d7f62530cc84/schema/main/table/sensor">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -919,204 +1005,129 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/job/_job.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="75" column="49" selection-start-line="75" selection-start-column="49" selection-end-line="75" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/job/_scheduler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/job/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="24" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/system_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_actor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="86" column="14" selection-start-line="86" selection-start-column="14" selection-end-line="86" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/asyncio/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="554" column="10" selection-start-line="554" selection-start-column="10" selection-end-line="554" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/http_endpoints/http_step.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-267">
-          <caret line="180" column="35" selection-start-line="180" selection-start-column="35" selection-end-line="180" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_step.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="94" column="35" selection-start-line="94" selection-start-column="35" selection-end-line="94" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_ws.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="30" column="45" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/dummystep/config.yaml">
+    <entry file="file://$PROJECT_DIR$/logs/sensors/sensor_2.log.1">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/dummystep/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cbpi/websocket.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+        <state relative-caret-position="268">
+          <caret line="22" column="32" lean-forward="true" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/database/model.py">
+    <entry file="file://$PROJECT_DIR$/cbpi/api/extension.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="64" column="115" selection-start-line="64" selection-start-column="115" selection-end-line="64" selection-end-column="115" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1546557779957" expanded="true" signature="1478:1518" ph="UPDATE missi... " />
-            <marker date="1546557779957" expanded="true" signature="2314:2366" ph="SELECT * FRO... missing_value" />
-            <marker date="1546557779957" expanded="true" signature="2783:2853" ph="UPDATE missi... " />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/step_controller.py">
+    <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="124" column="85" selection-start-line="124" selection-start-column="85" selection-end-line="124" selection-end-column="85" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="30">
+          <caret line="2" column="2" lean-forward="true" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/plugin_controller.py">
+    <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="274">
+          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_gpio.py">
+    <entry file="file://$PROJECT_DIR$/.nojekyll">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/cli.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="15" selection-end-column="27" />
+        <state relative-caret-position="105">
+          <caret line="7" column="102" selection-start-line="7" selection-start-column="102" selection-end-line="7" selection-end-column="102" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/actor">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/logs/app.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10439" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="49" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/http_endpoints/http_actor.py">
+    <entry file="file://$PROJECT_DIR$/cbpi/api/sensor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="68">
+          <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#48#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/eventbus.py">
+    <entry file="file://$PROJECT_DIR$/tests/test_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="111" lean-forward="true" selection-start-line="111" selection-end-line="111" />
+        <state relative-caret-position="60">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/crud_controller.py">
+    <entry file="file://$PROJECT_DIR$/app.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1176" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/step_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1356">
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/sensor_controller.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/job_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="36" column="1" lean-forward="true" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/actor_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/controller/config_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/extension/dummyactor/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>

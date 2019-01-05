@@ -1,4 +1,7 @@
 *.pyc
-
 docs_src/build/
-
+build
+dist
+.idea
+*.log
+cbpi.egg-info
