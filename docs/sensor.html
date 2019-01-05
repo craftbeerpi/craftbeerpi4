@@ -91,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="step.html">Brewing Step</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kettle_controller.html">Kettle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standards.html">Standard &amp; Guidelines</a></li>
 </ul>
 
             
@@ -160,17 +161,67 @@
 <div class="section" id="sensor-controller">
 <h2>Sensor Controller<a class="headerlink" href="#sensor-controller" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="core.controller.sensor_controller.SensorController">
-<em class="property">class </em><code class="descclassname">core.controller.sensor_controller.</code><code class="descname">SensorController</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.sensor_controller.SensorController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">core.controller.crud_controller.CRUDController</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">core.http_endpoints.http_api.HttpCrudEndpoints</span></code></p>
-<dl class="method">
-<dt id="core.controller.sensor_controller.SensorController.get_value">
-<code class="descname">get_value</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.sensor_controller.SensorController.get_value" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.sensor_controller.SensorController">
+<em class="property">class </em><code class="descclassname">cbpi.controller.sensor_controller.</code><code class="descname">SensorController</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.controller.crud_controller.CRUDController</span></code></p>
+<dl class="attribute">
+<dt id="cbpi.controller.sensor_controller.SensorController._abc_impl">
+<code class="descname">_abc_impl</code><em class="property"> = &lt;_abc_data object&gt;</em><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController._abc_impl" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="core.controller.sensor_controller.SensorController.init">
-<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.sensor_controller.SensorController.init" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.sensor_controller.SensorController._post_add_callback">
+<code class="descname">_post_add_callback</code><span class="sig-paren">(</span><em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController._post_add_callback" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.sensor_controller.SensorController._post_update_callback">
+<code class="descname">_post_update_callback</code><span class="sig-paren">(</span><em>sensor</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController._post_update_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.sensor_controller.SensorController._pre_delete_callback">
+<code class="descname">_pre_delete_callback</code><span class="sig-paren">(</span><em>sensor_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController._pre_delete_callback" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.sensor_controller.SensorController._pre_update_callback">
+<code class="descname">_pre_update_callback</code><span class="sig-paren">(</span><em>sensor</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController._pre_update_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.sensor_controller.SensorController.get_state">
+<code class="descname">get_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController.get_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.sensor_controller.SensorController.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><em>sensor_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController.get_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.sensor_controller.SensorController.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController.init" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method initializes all actors during startup. It creates actor instances</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -182,11 +233,21 @@
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="cbpi.controller.sensor_controller.SensorController.init_sensor">
+<code class="descname">init_sensor</code><span class="sig-paren">(</span><em>sensor</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController.init_sensor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
-<dt id="core.controller.sensor_controller.SensorController.model">
-<code class="descname">model</code><a class="headerlink" href="#core.controller.sensor_controller.SensorController.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">core.database.model.SensorModel</span></code></p>
+<dt id="cbpi.controller.sensor_controller.SensorController.model">
+<code class="descname">model</code><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.database.model.SensorModel</span></code></p>
 </dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.sensor_controller.SensorController.stop_sensor">
+<code class="descname">stop_sensor</code><span class="sig-paren">(</span><em>sensor</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.sensor_controller.SensorController.stop_sensor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -194,17 +255,27 @@
 <div class="section" id="cbpisensor">
 <h2>CBPiSensor<a class="headerlink" href="#cbpisensor" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="core.api.sensor.CBPiSensor">
-<em class="property">class </em><code class="descclassname">core.api.sensor.</code><code class="descname">CBPiSensor</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.sensor.CBPiSensor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">core.api.extension.CBPiExtension</span></code></p>
+<dt id="cbpi.api.CBPiSensor">
+<em class="property">class </em><code class="descclassname">cbpi.api.</code><code class="descname">CBPiSensor</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiSensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.api.extension.CBPiExtension</span></code></p>
 <dl class="method">
-<dt id="core.api.sensor.CBPiSensor.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.sensor.CBPiSensor.run" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.CBPiSensor.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiSensor.init" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="core.api.sensor.CBPiSensor.state">
-<code class="descname">state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.sensor.CBPiSensor.state" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.CBPiSensor.log_data">
+<code class="descname">log_data</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiSensor.log_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.api.CBPiSensor.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiSensor.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.api.CBPiSensor.state">
+<code class="descname">state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiSensor.state" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -269,13 +340,13 @@
 53
 54
 55
-56</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+56
+57
+58</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
-<span class="kn">from</span> <span class="nn">core.api</span> <span class="kn">import</span> <span class="n">CBPiActor</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">background_task</span>
-<span class="kn">from</span> <span class="nn">core.api.sensor</span> <span class="kn">import</span> <span class="n">CBPiSensor</span>
-
+<span class="kn">from</span> <span class="nn">cbpi.api</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="k">class</span> <span class="nc">CustomSensor</span><span class="p">(</span><span class="n">CBPiSensor</span><span class="p">):</span>
 
@@ -296,6 +367,10 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span>
 
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+
     <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
 
@@ -306,10 +381,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
             <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_data</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">cbpi</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="s2">&quot;sensor/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;SENSOR IS RUNNING&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">await</span> <span class="n">cbpi</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="s2">&quot;sensor/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
 
 
 

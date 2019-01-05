@@ -87,13 +87,15 @@
 <li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Standard &amp; Guidelines</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#eventbus">CBPiEventBus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cbpieventbus">CBPiEventBus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#http-endpoints">HTTP Endpoints</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#websocket">CBPiWebSocket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cbpiwebsocket">CBPiWebSocket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sql-files">SQL Files</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#web-user-interface">Web User Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rest-api">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-extensions-pluins">Custom Extensions &amp; Pluins</a></li>
 </ul>
 </li>
 </ul>
@@ -169,8 +171,8 @@ As a main framework CraftBeerPi is based on <cite>aiohttp</cite></p>
 <ul class="simple">
 <li>aioHTTP <a class="reference external" href="https://aiohttp.readthedocs.io/en/stable/">https://aiohttp.readthedocs.io/en/stable/</a></li>
 </ul>
-<div class="section" id="eventbus">
-<h3>CBPiEventBus<a class="headerlink" href="#eventbus" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="cbpieventbus">
+<h3>CBPiEventBus<a class="headerlink" href="#cbpieventbus" title="Permalink to this headline">¶</a></h3>
 <p>One core concept of CraftBeerPi 4.x is the CBPiEventBus.
 It should be avoided to call method on a controller directly. Events should be fired and listener methods should be used.
 This makes sure that all components are loosely coupled. New plugins can listen on events and extend or change the functionality easily.</p>
@@ -188,6 +190,7 @@ This makes sure that all components are loosely coupled. New plugins can listen 
 <p class="first admonition-title">Note</p>
 <p class="last">It’s imporante to add <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs as parameter to the listening method. This makes sure that maybe addtional event paramenter are not causing an exception.</p>
 </div>
+<p>A list of all registered events listeners can be found under: <cite>http://&lt;IP_ADDRESS&gt;:&lt;PORT&gt;/system/events</cite></p>
 </div>
 <div class="section" id="http-endpoints">
 <h3>HTTP Endpoints<a class="headerlink" href="#http-endpoints" title="Permalink to this headline">¶</a></h3>
@@ -205,8 +208,8 @@ Typically you perform just some basing parameter validation and fire an event so
 <p class="last">The Events are process in an async way. Results will be pushed to the client via CBPiWebSocket Event.</p>
 </div>
 </div>
-<div class="section" id="websocket">
-<h3>CBPiWebSocket<a class="headerlink" href="#websocket" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="cbpiwebsocket">
+<h3>CBPiWebSocket<a class="headerlink" href="#cbpiwebsocket" title="Permalink to this headline">¶</a></h3>
 <p>The CBPiWebSocket is listening on <cite>http://&lt;IP_ADDRESS&gt;:&lt;PORT&gt;/ws</cite>
 All events are forwarded to all connected web socket clients.</p>
 <p>The CBPiWebSocket Event is having the following structure.</p>
@@ -225,6 +228,11 @@ All events are forwarded to all connected web socket clients.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="sql-files">
+<h3>SQL Files<a class="headerlink" href="#sql-files" title="Permalink to this headline">¶</a></h3>
+<p>Currently only one SQL file for database initialisation is available.
+It’s located under: <cite>./core/sql</cite></p>
+</div>
 </div>
 <div class="section" id="web-user-interface">
 <h2>Web User Interface<a class="headerlink" href="#web-user-interface" title="Permalink to this headline">¶</a></h2>
@@ -242,6 +250,10 @@ The build process is based on webpack and bable.</p>
 <p>The REST API of CraftBeerPi is documented using Swagger.io
 After server startup you can find the API documentaiton under: <cite>http://&lt;IP_ADDRESS&gt;:&lt;PORT&gt;/api/doc</cite></p>
 <p>To generate the swagger file <cite>aiohttp-swagger</cite> is used. for more information see: <a class="reference external" href="https://aiohttp-swagger.readthedocs.io/en/latest/">https://aiohttp-swagger.readthedocs.io/en/latest/</a></p>
+</div>
+<div class="section" id="custom-extensions-pluins">
+<h2>Custom Extensions &amp; Pluins<a class="headerlink" href="#custom-extensions-pluins" title="Permalink to this headline">¶</a></h2>
+<p>Custom Extension should be placed under <cite>./core/extensions</cite></p>
 </div>
 </div>
 

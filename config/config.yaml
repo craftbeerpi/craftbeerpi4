@@ -2,7 +2,7 @@
 name: CraftBeerPi
 version: 4.1
 
-#index_url: /myext
+index_url: /api/doc
 
 port: 8080
 

@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="step.html">Brewing Step</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kettle_controller.html">Kettle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standards.html">Standard &amp; Guidelines</a></li>
 </ul>
 
             
@@ -165,13 +166,78 @@
 <div class="section" id="actorcontroller">
 <h2>ActorController<a class="headerlink" href="#actorcontroller" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="core.controller.actor_controller.ActorController">
-<em class="property">class </em><code class="descclassname">core.controller.actor_controller.</code><code class="descname">ActorController</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.actor_controller.ActorController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">core.controller.actor_controller.ActorHttp</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">core.controller.crud_controller.CRUDController</span></code></p>
+<dt id="cbpi.controller.actor_controller.ActorController">
+<em class="property">class </em><code class="descclassname">cbpi.controller.actor_controller.</code><code class="descname">ActorController</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.controller.crud_controller.CRUDController</span></code></p>
 <p>The main actor controller</p>
+<dl class="attribute">
+<dt id="cbpi.controller.actor_controller.ActorController._abc_impl">
+<code class="descname">_abc_impl</code><em class="property"> = &lt;_abc_data object&gt;</em><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController._abc_impl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
-<dt id="core.controller.actor_controller.ActorController.init">
-<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.actor_controller.ActorController.init" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.actor_controller.ActorController._init_actor">
+<code class="descname">_init_actor</code><span class="sig-paren">(</span><em>actor</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController._init_actor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.actor_controller.ActorController._post_add_callback">
+<code class="descname">_post_add_callback</code><span class="sig-paren">(</span><em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController._post_add_callback" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.actor_controller.ActorController._post_update_callback">
+<code class="descname">_post_update_callback</code><span class="sig-paren">(</span><em>actor</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController._post_update_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.actor_controller.ActorController._pre_delete_callback">
+<code class="descname">_pre_delete_callback</code><span class="sig-paren">(</span><em>actor_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController._pre_delete_callback" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.actor_controller.ActorController._pre_update_callback">
+<code class="descname">_pre_update_callback</code><span class="sig-paren">(</span><em>actor</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController._pre_update_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.actor_controller.ActorController._stop_actor">
+<code class="descname">_stop_actor</code><span class="sig-paren">(</span><em>actor</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController._stop_actor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.actor_controller.ActorController.call_action">
+<code class="descname">call_action</code><span class="sig-paren">(</span><em>actor_id</em>, <em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#cbpi.controller.actor_controller.ActorController.call_action" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.actor_controller.ActorController.get_state">
+<code class="descname">get_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController.get_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.actor_controller.ActorController.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController.init" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method initializes all actors during startup. It creates actor instances</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -184,14 +250,14 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="core.controller.actor_controller.ActorController.model">
-<code class="descname">model</code><a class="headerlink" href="#core.controller.actor_controller.ActorController.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">core.database.model.ActorModel</span></code></p>
+<dt id="cbpi.controller.actor_controller.ActorController.model">
+<code class="descname">model</code><a class="headerlink" href="#cbpi.controller.actor_controller.ActorController.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.database.model.ActorModel</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.controller.actor_controller.ActorController.off">
-<code class="descname">off</code><span class="sig-paren">(</span><em>id</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#core.controller.actor_controller.ActorController.off" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.actor_controller.ActorController.off">
+<code class="descname">off</code><span class="sig-paren">(</span><em>actor_id</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#cbpi.controller.actor_controller.ActorController.off" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to switch and actor off
 Supporting Event Topic “actor/+/off”</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -199,7 +265,7 @@ Supporting Event Topic “actor/+/off”</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> – the actor id</li>
+<li><strong>actor_id</strong> – the actor actor_id</li>
 <li><strong>kwargs</strong> – </li>
 </ul>
 </td>
@@ -209,36 +275,27 @@ Supporting Event Topic “actor/+/off”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.controller.actor_controller.ActorController.on">
-<code class="descname">on</code><span class="sig-paren">(</span><em>id</em>, <em>power=100</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#core.controller.actor_controller.ActorController.on" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.actor_controller.ActorController.on">
+<code class="descname">on</code><span class="sig-paren">(</span><em>actor_id</em>, <em>future: _asyncio.Future</em>, <em>power=100</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#cbpi.controller.actor_controller.ActorController.on" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to switch an actor on.
 Supporting Event Topic “actor/+/on”</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>actor_id</strong> – the actor id</li>
-<li><strong>power</strong> – as integer value between 1 and 100</li>
-<li><strong>kwargs</strong> – </li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>actor_id</strong> – the actor id</td>
 </tr>
 </tbody>
 </table>
+<p>:param future
+:param power: as integer value between 1 and 100
+:param kwargs: 
+:return:</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.controller.actor_controller.ActorController.register">
-<code class="descname">register</code><span class="sig-paren">(</span><em>name</em>, <em>clazz</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#core.controller.actor_controller.ActorController.register" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="core.controller.actor_controller.ActorController.toggle">
-<code class="descname">toggle</code><span class="sig-paren">(</span><em>id</em>, <em>power=100</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#core.controller.actor_controller.ActorController.toggle" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.actor_controller.ActorController.toggle">
+<code class="descname">toggle</code><span class="sig-paren">(</span><em>actor_id</em>, <em>power=100</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#cbpi.controller.actor_controller.ActorController.toggle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to toggle an actor on or off
 Supporting Event Topic “actor/+/toggle”</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -246,8 +303,8 @@ Supporting Event Topic “actor/+/toggle”</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> – the actor id</li>
-<li><strong>power</strong> – the power as interger between 0 and 100</li>
+<li><strong>actor_id</strong> – the actor actor_id</li>
+<li><strong>power</strong> – the power as integer between 0 and 100</li>
 </ul>
 </td>
 </tr>
@@ -264,12 +321,22 @@ Supporting Event Topic “actor/+/toggle”</p>
 <div class="section" id="cbpiactor">
 <h2>CBPiActor<a class="headerlink" href="#cbpiactor" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="core.api.actor.CBPiActor">
-<em class="property">class </em><code class="descclassname">core.api.actor.</code><code class="descname">CBPiActor</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.actor.CBPiActor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">core.api.extension.CBPiExtension</span></code></p>
+<dt id="cbpi.api.CBPiActor">
+<em class="property">class </em><code class="descclassname">cbpi.api.</code><code class="descname">CBPiActor</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiActor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.api.extension.CBPiExtension</span></code></p>
+<dl class="attribute">
+<dt id="cbpi.api.CBPiActor._abc_impl">
+<code class="descname">_abc_impl</code><em class="property"> = &lt;_abc_data object&gt;</em><a class="headerlink" href="#cbpi.api.CBPiActor._abc_impl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
-<dt id="core.api.actor.CBPiActor.off">
-<code class="descname">off</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.actor.CBPiActor.off" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.CBPiActor.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiActor.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.api.CBPiActor.off">
+<code class="descname">off</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiActor.off" title="Permalink to this definition">¶</a></dt>
 <dd><p>Code to switch the actor off</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -282,8 +349,8 @@ Supporting Event Topic “actor/+/toggle”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.api.actor.CBPiActor.on">
-<code class="descname">on</code><span class="sig-paren">(</span><em>power</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.actor.CBPiActor.on" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.CBPiActor.on">
+<code class="descname">on</code><span class="sig-paren">(</span><em>power</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiActor.on" title="Permalink to this definition">¶</a></dt>
 <dd><p>Code to switch the actor on. Power is provided as integer value</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -298,8 +365,13 @@ Supporting Event Topic “actor/+/toggle”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.api.actor.CBPiActor.state">
-<code class="descname">state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.actor.CBPiActor.state" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.CBPiActor.reprJSON">
+<code class="descname">reprJSON</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiActor.reprJSON" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.api.CBPiActor.state">
+<code class="descname">state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiActor.state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the current actor state</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -311,6 +383,11 @@ Supporting Event Topic “actor/+/toggle”</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="cbpi.api.CBPiActor.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiActor.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
@@ -318,81 +395,191 @@ Supporting Event Topic “actor/+/toggle”</p>
 <h2>Custom Actor<a class="headerlink" href="#custom-actor" title="Permalink to this headline">¶</a></h2>
 <div class="literal-block-wrapper docutils container" id="init-py">
 <div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#init-py" title="Permalink to this code">¶</a></div>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">patch</span>
 
-<span class="kn">from</span> <span class="nn">core.api</span> <span class="kn">import</span> <span class="n">CBPiActor</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span> <span class="n">action</span>
+<span class="kn">from</span> <span class="nn">cbpi.api</span> <span class="kn">import</span> <span class="o">*</span>
 
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="kn">as</span> <span class="nn">GPIO</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to load RPi.GPIO. Using Mock&quot;</span><span class="p">)</span>
+    <span class="n">MockRPi</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">modules</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;RPi&quot;</span><span class="p">:</span> <span class="n">MockRPi</span><span class="p">,</span>
+        <span class="s2">&quot;RPi.GPIO&quot;</span><span class="p">:</span> <span class="n">MockRPi</span><span class="o">.</span><span class="n">GPIO</span>
+    <span class="p">}</span>
+    <span class="n">patcher</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="s2">&quot;sys.modules&quot;</span><span class="p">,</span> <span class="n">modules</span><span class="p">)</span>
+    <span class="n">patcher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="kn">as</span> <span class="nn">GPIO</span>
 
 <span class="k">class</span> <span class="nc">CustomActor</span><span class="p">(</span><span class="n">CBPiActor</span><span class="p">):</span>
 
     <span class="c1"># Custom property which can be configured by the user</span>
-    <span class="n">gpio</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
 
-
-    <span class="nd">@action</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{})</span>
-    <span class="k">def</span> <span class="nf">myAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ACTOR </span><span class="si">%s</span><span class="s2"> ON&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">True</span>
 
     <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;OFF&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">)</span>
-
-        <span class="c1"># Code to swtich the actor off goes here</span>
-
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ACTOR </span><span class="si">%s</span><span class="s2"> OFF &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">False</span>
 
-    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;ON&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">)</span>
 
-        <span class="c1"># Code to swtich the actor on goes here</span>
 
+
+<span class="k">class</span> <span class="nc">GPIOActor</span><span class="p">(</span><span class="n">CBPiActor</span><span class="p">):</span>
+
+    <span class="c1"># Custom property which can be configured by the user</span>
+
+    <span class="n">gpio</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span><span class="s2">&quot;GPIO&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">27</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;GPIO to which the actor is connected&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CBPiException</span><span class="p">(</span><span class="s2">&quot;FAILD TO INIT ACTOR&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;GPIO ON </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">))</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;GPIO OFF </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">))</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">class</span> <span class="nc">GPIORelayBoardActor</span><span class="p">(</span><span class="n">CBPiActor</span><span class="p">):</span>
+
+    <span class="c1"># Custom property which can be configured by the user</span>
+
+    <span class="n">gpio</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span><span class="s2">&quot;GPIO&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">27</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;GPIO to which the actor is connected&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CBPiException</span><span class="p">(</span><span class="s2">&quot;FAILD TO INIT ACTOR&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;GPIO ON </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">))</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;GPIO OFF </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">))</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">False</span>
 
 
 

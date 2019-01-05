@@ -6,7 +6,7 @@ Kettle
 KettleController
 ^^^^^^^^^^^^^^^^
 
-.. autoclass:: core.controller.kettle_controller.KettleController
+.. autoclass:: cbpi.controller.kettle_controller.KettleController
   :members:
   :private-members:
   :undoc-members:
@@ -16,7 +16,7 @@ CBPiKettleLogic
 ^^^^^^^^^^^^^^^
 
 
-.. autoclass:: core.api.kettle_logic.CBPiKettleLogic
+.. autoclass:: cbpi.api.CBPiKettleLogic
   :members:
   :show-inheritance:
   :inherited-members:
@@ -25,7 +25,7 @@ CBPiKettleLogic
 Custom Logic
 ^^^^^^^^^^^^^
 
-.. literalinclude:: ../../core/extension/dummylogic/__init__.py
+.. literalinclude:: ../../cbpi/extension/dummylogic/__init__.py
    :caption: __init__.py
    :name: __init__-py
    :language: python
@@ -34,6 +34,6 @@ Custom Logic
 
 config.yaml
 
-.. literalinclude:: ../../core/extension/dummylogic/config.yaml
+.. literalinclude:: ../../cbpi/extension/dummylogic/config.yaml
    :language: yaml
    :linenos:

@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Standard &amp; Guidelines" href="standards.html" />
     <link rel="prev" title="Kettle" href="kettle_controller.html" /> 
 
   
@@ -88,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#custom-actor">Custom Actor</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="standards.html">Standard &amp; Guidelines</a></li>
 </ul>
 
             
@@ -163,81 +165,191 @@ For example the user can set the GPIO number or the 1Wire Id.</p>
 <h2>Custom Actor<a class="headerlink" href="#custom-actor" title="Permalink to this headline">¶</a></h2>
 <div class="literal-block-wrapper docutils container" id="init-py">
 <div class="code-block-caption"><span class="caption-text">__init__.py</span><a class="headerlink" href="#init-py" title="Permalink to this code">¶</a></div>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">patch</span>
 
-<span class="kn">from</span> <span class="nn">core.api</span> <span class="kn">import</span> <span class="n">CBPiActor</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span> <span class="n">action</span>
+<span class="kn">from</span> <span class="nn">cbpi.api</span> <span class="kn">import</span> <span class="o">*</span>
 
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="kn">as</span> <span class="nn">GPIO</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to load RPi.GPIO. Using Mock&quot;</span><span class="p">)</span>
+    <span class="n">MockRPi</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">modules</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;RPi&quot;</span><span class="p">:</span> <span class="n">MockRPi</span><span class="p">,</span>
+        <span class="s2">&quot;RPi.GPIO&quot;</span><span class="p">:</span> <span class="n">MockRPi</span><span class="o">.</span><span class="n">GPIO</span>
+    <span class="p">}</span>
+    <span class="n">patcher</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="s2">&quot;sys.modules&quot;</span><span class="p">,</span> <span class="n">modules</span><span class="p">)</span>
+    <span class="n">patcher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="kn">as</span> <span class="nn">GPIO</span>
 
 <span class="k">class</span> <span class="nc">CustomActor</span><span class="p">(</span><span class="n">CBPiActor</span><span class="p">):</span>
 
     <span class="c1"># Custom property which can be configured by the user</span>
-    <span class="n">gpio</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
 
-
-    <span class="nd">@action</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{})</span>
-    <span class="k">def</span> <span class="nf">myAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ACTOR </span><span class="si">%s</span><span class="s2"> ON&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">True</span>
 
     <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;OFF&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">)</span>
-
-        <span class="c1"># Code to swtich the actor off goes here</span>
-
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ACTOR </span><span class="si">%s</span><span class="s2"> OFF &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">False</span>
 
-    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;ON&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">)</span>
 
-        <span class="c1"># Code to swtich the actor on goes here</span>
 
+
+<span class="k">class</span> <span class="nc">GPIOActor</span><span class="p">(</span><span class="n">CBPiActor</span><span class="p">):</span>
+
+    <span class="c1"># Custom property which can be configured by the user</span>
+
+    <span class="n">gpio</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span><span class="s2">&quot;GPIO&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">27</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;GPIO to which the actor is connected&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CBPiException</span><span class="p">(</span><span class="s2">&quot;FAILD TO INIT ACTOR&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;GPIO ON </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">))</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;GPIO OFF </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">))</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">class</span> <span class="nc">GPIORelayBoardActor</span><span class="p">(</span><span class="n">CBPiActor</span><span class="p">):</span>
+
+    <span class="c1"># Custom property which can be configured by the user</span>
+
+    <span class="n">gpio</span> <span class="o">=</span> <span class="n">Property</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span><span class="s2">&quot;GPIO&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">27</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;GPIO to which the actor is connected&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+            <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CBPiException</span><span class="p">(</span><span class="s2">&quot;FAILD TO INIT ACTOR&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;GPIO ON </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">))</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;GPIO OFF </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">))</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpio</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">False</span>
 
 
 
@@ -256,41 +368,41 @@ For example the user can set the GPIO number or the 1Wire Id.</p>
 </td></tr></table></div>
 </div>
 <dl class="class">
-<dt id="core.api.property.Property">
-<em class="property">class </em><code class="descclassname">core.api.property.</code><code class="descname">Property</code><a class="headerlink" href="#core.api.property.Property" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.Property">
+<em class="property">class </em><code class="descclassname">cbpi.api.</code><code class="descname">Property</code><a class="headerlink" href="#cbpi.api.Property" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="class">
-<dt id="core.api.property.Property.Actor">
-<em class="property">class </em><code class="descname">Actor</code><span class="sig-paren">(</span><em>label</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.property.Property.Actor" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.Property.Actor">
+<em class="property">class </em><code class="descname">Actor</code><span class="sig-paren">(</span><em>label</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.Property.Actor" title="Permalink to this definition">¶</a></dt>
 <dd><p>The user select an actor which is available in the system. The value of this variable will be the actor id</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="core.api.property.Property.Kettle">
-<em class="property">class </em><code class="descname">Kettle</code><span class="sig-paren">(</span><em>label</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.property.Property.Kettle" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.Property.Kettle">
+<em class="property">class </em><code class="descname">Kettle</code><span class="sig-paren">(</span><em>label</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.Property.Kettle" title="Permalink to this definition">¶</a></dt>
 <dd><p>The user select a kettle which is available in the system. The value of this variable will be the kettle id</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="core.api.property.Property.Number">
-<em class="property">class </em><code class="descname">Number</code><span class="sig-paren">(</span><em>label</em>, <em>configurable=False</em>, <em>default_value=None</em>, <em>unit=''</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.property.Property.Number" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.Property.Number">
+<em class="property">class </em><code class="descname">Number</code><span class="sig-paren">(</span><em>label</em>, <em>configurable=False</em>, <em>default_value=None</em>, <em>unit=''</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.Property.Number" title="Permalink to this definition">¶</a></dt>
 <dd><p>The user can set a number value</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="core.api.property.Property.Select">
-<em class="property">class </em><code class="descname">Select</code><span class="sig-paren">(</span><em>label</em>, <em>options</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.property.Property.Select" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.Property.Select">
+<em class="property">class </em><code class="descname">Select</code><span class="sig-paren">(</span><em>label</em>, <em>options</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.Property.Select" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select Property. The user can select value from list set as options parameter</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="core.api.property.Property.Sensor">
-<em class="property">class </em><code class="descname">Sensor</code><span class="sig-paren">(</span><em>label</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.property.Property.Sensor" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.Property.Sensor">
+<em class="property">class </em><code class="descname">Sensor</code><span class="sig-paren">(</span><em>label</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.Property.Sensor" title="Permalink to this definition">¶</a></dt>
 <dd><p>The user select a sensor which is available in the system. The value of this variable will be the sensor id</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="core.api.property.Property.Text">
-<em class="property">class </em><code class="descname">Text</code><span class="sig-paren">(</span><em>label</em>, <em>configurable=False</em>, <em>default_value=''</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.property.Property.Text" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.Property.Text">
+<em class="property">class </em><code class="descname">Text</code><span class="sig-paren">(</span><em>label</em>, <em>configurable=False</em>, <em>default_value=''</em>, <em>description=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.Property.Text" title="Permalink to this definition">¶</a></dt>
 <dd><p>The user can set a text value</p>
 </dd></dl>
 
@@ -306,6 +418,8 @@ For example the user can set the GPIO number or the 1Wire Id.</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="standards.html" class="btn btn-neutral float-right" title="Standard &amp; Guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="kettle_controller.html" class="btn btn-neutral" title="Kettle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

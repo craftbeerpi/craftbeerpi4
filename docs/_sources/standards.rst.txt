@@ -36,6 +36,8 @@ Here an example how listen on an event.
 
   It's imporante to add **kwargs as parameter to the listening method. This makes sure that maybe addtional event paramenter are not causing an exception.
 
+A list of all registered events listeners can be found under: `http://<IP_ADDRESS>:<PORT>/system/events`
+
 
 HTTP Endpoints
 --------------
@@ -80,6 +82,13 @@ The CBPiWebSocket Event is having the following structure.
 
 
 
+SQL Files
+---------
+Currently only one SQL file for database initialisation is available.
+It's located under: `./core/sql`
+
+
+
 Web User Interface
 ^^^^^^^^^^^^^^^^^^
 The Web UI is based on ReactJS + Redux.
@@ -98,3 +107,8 @@ After server startup you can find the API documentaiton under: `http://<IP_ADDRE
 To generate the swagger file `aiohttp-swagger` is used. for more information see: https://aiohttp-swagger.readthedocs.io/en/latest/
 
 
+
+Custom Extensions & Pluins
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Custom Extension should be placed under `./core/extensions`

@@ -91,6 +91,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standards.html">Standard &amp; Guidelines</a></li>
 </ul>
 
             
@@ -160,38 +161,48 @@
 <div class="section" id="kettlecontroller">
 <h2>KettleController<a class="headerlink" href="#kettlecontroller" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="core.controller.kettle_controller.KettleController">
-<em class="property">class </em><code class="descclassname">core.controller.kettle_controller.</code><code class="descname">KettleController</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">core.controller.crud_controller.CRUDController</span></code></p>
+<dt id="cbpi.controller.kettle_controller.KettleController">
+<em class="property">class </em><code class="descclassname">cbpi.controller.kettle_controller.</code><code class="descname">KettleController</code><span class="sig-paren">(</span><em>cbpi</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.controller.crud_controller.CRUDController</span></code></p>
 <p>The main kettle controller</p>
-<dl class="method">
-<dt id="core.controller.kettle_controller.KettleController._is_logic_running">
-<code class="descname">_is_logic_running</code><span class="sig-paren">(</span><em>kettle_id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController._is_logic_running" title="Permalink to this definition">¶</a></dt>
+<dl class="attribute">
+<dt id="cbpi.controller.kettle_controller.KettleController._abc_impl">
+<code class="descname">_abc_impl</code><em class="property"> = &lt;_abc_data object&gt;</em><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController._abc_impl" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.agitator_off">
-<code class="descname">agitator_off</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.agitator_off" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController._is_logic_running">
+<code class="descname">_is_logic_running</code><span class="sig-paren">(</span><em>kettle_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController._is_logic_running" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.agitator_on">
-<code class="descname">agitator_on</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.agitator_on" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.agitator_off">
+<code class="descname">agitator_off</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.agitator_off" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.get_temp">
-<code class="descname">get_temp</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.get_temp" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.agitator_on">
+<code class="descname">agitator_on</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.agitator_on" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.get_traget_temp">
-<code class="descname">get_traget_temp</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.get_traget_temp" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.get_state">
+<code class="descname">get_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.get_state" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.handle_automtic_event">
-<code class="descname">handle_automtic_event</code><span class="sig-paren">(</span><em>id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.handle_automtic_event" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.get_temp">
+<code class="descname">get_temp</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.get_temp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.kettle_controller.KettleController.get_traget_temp">
+<code class="descname">get_traget_temp</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.get_traget_temp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cbpi.controller.kettle_controller.KettleController.handle_automtic_event">
+<code class="descname">handle_automtic_event</code><span class="sig-paren">(</span><em>id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.handle_automtic_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to handle the event ‘kettle/+/automatic’</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -211,8 +222,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.heater_off">
-<code class="descname">heater_off</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.heater_off" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.heater_off">
+<code class="descname">heater_off</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.heater_off" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience Method to switch the heater of a kettle off</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -227,8 +238,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.heater_on">
-<code class="descname">heater_on</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.heater_on" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.heater_on">
+<code class="descname">heater_on</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.heater_on" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience Method to switch the heater of a kettle on</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -243,8 +254,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.init">
-<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.init" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.init" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method initializes all actors during startup. It creates actor instances</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -257,19 +268,19 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.job_stop">
-<code class="descname">job_stop</code><span class="sig-paren">(</span><em>key</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#core.controller.kettle_controller.KettleController.job_stop" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.job_stop">
+<code class="descname">job_stop</code><span class="sig-paren">(</span><em>key</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.job_stop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="core.controller.kettle_controller.KettleController.model">
-<code class="descname">model</code><a class="headerlink" href="#core.controller.kettle_controller.KettleController.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">core.database.model.KettleModel</span></code></p>
+<dt id="cbpi.controller.kettle_controller.KettleController.model">
+<code class="descname">model</code><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.database.model.KettleModel</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.controller.kettle_controller.KettleController.toggle_automtic">
-<code class="descname">toggle_automtic</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#core.controller.kettle_controller.KettleController.toggle_automtic" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.controller.kettle_controller.KettleController.toggle_automtic">
+<code class="descname">toggle_automtic</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.controller.kettle_controller.KettleController.toggle_automtic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience Method to toggle automatic</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -289,13 +300,13 @@
 <div class="section" id="cbpikettlelogic">
 <h2>CBPiKettleLogic<a class="headerlink" href="#cbpikettlelogic" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="core.api.kettle_logic.CBPiKettleLogic">
-<em class="property">class </em><code class="descclassname">core.api.kettle_logic.</code><code class="descname">CBPiKettleLogic</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#core.api.kettle_logic.CBPiKettleLogic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">core.api.extension.CBPiExtension</span></code></p>
+<dt id="cbpi.api.CBPiKettleLogic">
+<em class="property">class </em><code class="descclassname">cbpi.api.</code><code class="descname">CBPiKettleLogic</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiKettleLogic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cbpi.api.extension.CBPiExtension</span></code></p>
 <p>Base Class for a Kettle logic.</p>
 <dl class="method">
-<dt id="core.api.kettle_logic.CBPiKettleLogic.init">
-<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.kettle_logic.CBPiKettleLogic.init" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.CBPiKettleLogic.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiKettleLogic.init" title="Permalink to this definition">¶</a></dt>
 <dd><p>Code which will be executed when the logic is initialised. Needs to be overwritten by the implementing logic</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -308,8 +319,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="core.api.kettle_logic.CBPiKettleLogic.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.kettle_logic.CBPiKettleLogic.run" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.CBPiKettleLogic.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiKettleLogic.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is running as background process when logic is started.
 Typically a while loop responsible that the method keeps running</p>
 <blockquote>
@@ -329,8 +340,8 @@ Typically a while loop responsible that the method keeps running</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.api.kettle_logic.CBPiKettleLogic.stop">
-<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.api.kettle_logic.CBPiKettleLogic.stop" title="Permalink to this definition">¶</a></dt>
+<dt id="cbpi.api.CBPiKettleLogic.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cbpi.api.CBPiKettleLogic.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Code which will be executed when the logic is stopped. Needs to be overwritten by the implementing logic</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -429,13 +440,9 @@ Typically a while loop responsible that the method keeps running</p>
 78
 79
 80
-81
-82
-83</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+81</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 
-<span class="kn">from</span> <span class="nn">core.api</span> <span class="kn">import</span> <span class="n">Property</span><span class="p">,</span> <span class="n">on_event</span>
-<span class="kn">from</span> <span class="nn">core.api.kettle_logic</span> <span class="kn">import</span> <span class="n">CBPiKettleLogic</span>
-
+<span class="kn">from</span> <span class="nn">cbpi.api</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="k">class</span> <span class="nc">CustomLogic</span><span class="p">(</span><span class="n">CBPiKettleLogic</span><span class="p">):</span>
 
@@ -462,14 +469,14 @@ Typically a while loop responsible that the method keeps running</p>
         <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
 
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;----&gt; WAIT FOR FUTURE&quot;</span><span class="p">)</span>
+
                 <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">future_obj</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;------&gt; TIMEOUT&quot;</span><span class="p">)</span>
+
                 <span class="k">return</span> <span class="n">future_obj</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
             <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;timeout!&#39;</span><span class="p">)</span>
+                <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;----&gt; WAIT FOR FUTURE&quot;</span><span class="p">)</span>
+
             <span class="n">await</span> <span class="n">future_obj</span>
             <span class="k">return</span> <span class="n">future_obj</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 
@@ -484,10 +491,10 @@ Typically a while loop responsible that the method keeps running</p>
                 <span class="bp">self</span><span class="o">.</span><span class="n">cbpi</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">my_callback</span><span class="p">)</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;future&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="s2">&quot;AMAZING&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;OTHER VALUE&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">pass</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="n">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_event</span><span class="p">(</span><span class="s2">&quot;sensor/1&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">my_callback</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;THE RESULT&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
 
 
         <span class="sd">&#39;&#39;&#39;</span>
@@ -501,7 +508,7 @@ Typically a while loop responsible that the method keeps running</p>
 <span class="sd">                break</span>
 <span class="sd">            await asyncio.sleep(1)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;YES IM FINISHED STOP LOGIC&quot;</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cbpi</span><span class="p">):</span>
 

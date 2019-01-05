@@ -86,6 +86,8 @@
 <li class="toctree-l1"><a class="reference internal" href="kettle_controller.html">Kettle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="standards.html">Standard &amp; Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webapis.html">REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webapis.html#websocket-api">WebSocket API</a></li>
 </ul>
 
             
@@ -160,6 +162,7 @@
  | <a href="#I"><strong>I</strong></a>
  | <a href="#J"><strong>J</strong></a>
  | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
@@ -172,7 +175,47 @@
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController._is_logic_running">_is_logic_running() (core.controller.kettle_controller.KettleController method)</a>
+      <li><a href="actor.html#cbpi.api.CBPiActor._abc_impl">_abc_impl (cbpi.api.CBPiActor attribute)</a>
+
+      <ul>
+        <li><a href="actor.html#cbpi.controller.actor_controller.ActorController._abc_impl">(cbpi.controller.actor_controller.ActorController attribute)</a>
+</li>
+        <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController._abc_impl">(cbpi.controller.kettle_controller.KettleController attribute)</a>
+</li>
+        <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController._abc_impl">(cbpi.controller.sensor_controller.SensorController attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController._init_actor">_init_actor() (cbpi.controller.actor_controller.ActorController method)</a>
+</li>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController._is_logic_running">_is_logic_running() (cbpi.controller.kettle_controller.KettleController method)</a>
+</li>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController._post_add_callback">_post_add_callback() (cbpi.controller.actor_controller.ActorController method)</a>
+
+      <ul>
+        <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController._post_add_callback">(cbpi.controller.sensor_controller.SensorController method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController._post_update_callback">_post_update_callback() (cbpi.controller.actor_controller.ActorController method)</a>
+
+      <ul>
+        <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController._post_update_callback">(cbpi.controller.sensor_controller.SensorController method)</a>
+</li>
+      </ul></li>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController._pre_delete_callback">_pre_delete_callback() (cbpi.controller.actor_controller.ActorController method)</a>
+
+      <ul>
+        <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController._pre_delete_callback">(cbpi.controller.sensor_controller.SensorController method)</a>
+</li>
+      </ul></li>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController._pre_update_callback">_pre_update_callback() (cbpi.controller.actor_controller.ActorController method)</a>
+
+      <ul>
+        <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController._pre_update_callback">(cbpi.controller.sensor_controller.SensorController method)</a>
+</li>
+      </ul></li>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController._stop_actor">_stop_actor() (cbpi.controller.actor_controller.ActorController method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -180,13 +223,13 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actor.html#core.controller.actor_controller.ActorController">ActorController (class in core.controller.actor_controller)</a>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController">ActorController (class in cbpi.controller.actor_controller)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.agitator_off">agitator_off() (core.controller.kettle_controller.KettleController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.agitator_off">agitator_off() (cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.agitator_on">agitator_on() (core.controller.kettle_controller.KettleController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.agitator_on">agitator_on() (cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -194,15 +237,17 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actor.html#core.api.actor.CBPiActor">CBPiActor (class in core.api.actor)</a>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController.call_action">call_action() (cbpi.controller.actor_controller.ActorController method)</a>
 </li>
-      <li><a href="kettle_controller.html#core.api.kettle_logic.CBPiKettleLogic">CBPiKettleLogic (class in core.api.kettle_logic)</a>
+      <li><a href="actor.html#cbpi.api.CBPiActor">CBPiActor (class in cbpi.api)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sensor.html#core.api.sensor.CBPiSensor">CBPiSensor (class in core.api.sensor)</a>
+      <li><a href="kettle_controller.html#cbpi.api.CBPiKettleLogic">CBPiKettleLogic (class in cbpi.api)</a>
 </li>
-      <li><a href="step.html#core.api.step.CBPiSimpleStep">CBPiSimpleStep (class in core.api.step)</a>
+      <li><a href="sensor.html#cbpi.api.CBPiSensor">CBPiSensor (class in cbpi.api)</a>
+</li>
+      <li><a href="step.html#cbpi.api.CBPiSimpleStep">CBPiSimpleStep (class in cbpi.api)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -210,13 +255,21 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.get_temp">get_temp() (core.controller.kettle_controller.KettleController method)</a>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController.get_state">get_state() (cbpi.controller.actor_controller.ActorController method)</a>
+
+      <ul>
+        <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.get_state">(cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
+        <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController.get_state">(cbpi.controller.sensor_controller.SensorController method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.get_traget_temp">get_traget_temp() (core.controller.kettle_controller.KettleController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.get_temp">get_temp() (cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
-      <li><a href="sensor.html#core.controller.sensor_controller.SensorController.get_value">get_value() (core.controller.sensor_controller.SensorController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.get_traget_temp">get_traget_temp() (cbpi.controller.kettle_controller.KettleController method)</a>
+</li>
+      <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController.get_value">get_value() (cbpi.controller.sensor_controller.SensorController method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -224,33 +277,17 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.controller.step_controller.StepController.handle_action">handle_action() (core.controller.step_controller.StepController method)</a>
+      <li><a href="step.html#cbpi.controller.step_controller.StepController.handle_action">handle_action() (cbpi.controller.step_controller.StepController method)</a>
 </li>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.handle_automtic_event">handle_automtic_event() (core.controller.kettle_controller.KettleController method)</a>
-</li>
-      <li><a href="step.html#core.controller.step_controller.StepController.handle_done">handle_done() (core.controller.step_controller.StepController method)</a>
-</li>
-      <li><a href="step.html#core.controller.step_controller.StepController.handle_next">next() (core.controller.step_controller.StepController method)</a>
-</li>
-      <li><a href="step.html#core.controller.step_controller.StepController.handle_reset">handle_reset() (core.controller.step_controller.StepController method)</a>
-</li>
-      <li><a href="step.html#core.controller.step_controller.StepController.handle_start">handle_start() (core.controller.step_controller.StepController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.handle_automtic_event">handle_automtic_event() (cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.controller.step_controller.StepController.handle_stop">handle_stop() (core.controller.step_controller.StepController method)</a>
+      <li><a href="step.html#cbpi.controller.step_controller.StepController.handle_reset">handle_reset() (cbpi.controller.step_controller.StepController method)</a>
 </li>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.heater_off">heater_off() (core.controller.kettle_controller.KettleController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.heater_off">heater_off() (cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.heater_on">heater_on() (core.controller.kettle_controller.KettleController method)</a>
-</li>
-      <li><a href="step.html#core.controller.step_controller.StepController.http_action">http_action() (core.controller.step_controller.StepController method)</a>
-</li>
-      <li><a href="step.html#core.controller.step_controller.StepController.http_next">http_next() (core.controller.step_controller.StepController method)</a>
-</li>
-      <li><a href="step.html#core.controller.step_controller.StepController.http_reset">http_reset() (core.controller.step_controller.StepController method)</a>
-</li>
-      <li><a href="step.html#core.controller.step_controller.StepController.http_start">http_start() (core.controller.step_controller.StepController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.heater_on">heater_on() (cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -258,21 +295,27 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="kettle_controller.html#core.api.kettle_logic.CBPiKettleLogic.init">setup() (core.api.kettle_logic.CBPiKettleLogic method)</a>
+      <li><a href="actor.html#cbpi.api.CBPiActor.init">init() (cbpi.api.CBPiActor method)</a>
 
       <ul>
-        <li><a href="actor.html#core.controller.actor_controller.ActorController.init">(core.controller.actor_controller.ActorController method)</a>
+        <li><a href="kettle_controller.html#cbpi.api.CBPiKettleLogic.init">(cbpi.api.CBPiKettleLogic method)</a>
 </li>
-        <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.init">(core.controller.kettle_controller.KettleController method)</a>
+        <li><a href="sensor.html#cbpi.api.CBPiSensor.init">(cbpi.api.CBPiSensor method)</a>
 </li>
-        <li><a href="sensor.html#core.controller.sensor_controller.SensorController.init">(core.controller.sensor_controller.SensorController method)</a>
+        <li><a href="actor.html#cbpi.controller.actor_controller.ActorController.init">(cbpi.controller.actor_controller.ActorController method)</a>
 </li>
-        <li><a href="step.html#core.controller.step_controller.StepController.init">(core.controller.step_controller.StepController method)</a>
+        <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.init">(cbpi.controller.kettle_controller.KettleController method)</a>
+</li>
+        <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController.init">(cbpi.controller.sensor_controller.SensorController method)</a>
+</li>
+        <li><a href="step.html#cbpi.controller.step_controller.StepController.init">(cbpi.controller.step_controller.StepController method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.api.step.CBPiSimpleStep.is_dirty">is_dirty() (core.api.step.CBPiSimpleStep method)</a>
+      <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController.init_sensor">init_sensor() (cbpi.controller.sensor_controller.SensorController method)</a>
+</li>
+      <li><a href="step.html#cbpi.api.CBPiSimpleStep.is_dirty">is_dirty() (cbpi.api.CBPiSimpleStep method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -280,7 +323,7 @@
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.job_stop">job_stop() (core.controller.kettle_controller.KettleController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.job_stop">job_stop() (cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -288,7 +331,15 @@
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController">KettleController (class in core.controller.kettle_controller)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController">KettleController (class in cbpi.controller.kettle_controller)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sensor.html#cbpi.api.CBPiSensor.log_data">log_data() (cbpi.api.CBPiSensor method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -296,14 +347,14 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.api.step.CBPiSimpleStep.managed_fields">managed_fields (core.api.step.CBPiSimpleStep attribute)</a>
+      <li><a href="step.html#cbpi.api.CBPiSimpleStep.managed_fields">managed_fields (cbpi.api.CBPiSimpleStep attribute)</a>
 </li>
-      <li><a href="actor.html#core.controller.actor_controller.ActorController.model">model (core.controller.actor_controller.ActorController attribute)</a>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController.model">model (cbpi.controller.actor_controller.ActorController attribute)</a>
 
       <ul>
-        <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.model">(core.controller.kettle_controller.KettleController attribute)</a>
+        <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.model">(cbpi.controller.kettle_controller.KettleController attribute)</a>
 </li>
-        <li><a href="sensor.html#core.controller.sensor_controller.SensorController.model">(core.controller.sensor_controller.SensorController attribute)</a>
+        <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController.model">(cbpi.controller.sensor_controller.SensorController attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -312,26 +363,30 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.api.step.CBPiSimpleStep.next">next() (core.api.step.CBPiSimpleStep method)</a>
+      <li><a href="step.html#cbpi.api.CBPiSimpleStep.next">next() (cbpi.api.CBPiSimpleStep method)</a>
+
+      <ul>
+        <li><a href="step.html#cbpi.controller.step_controller.StepController.next">(cbpi.controller.step_controller.StepController method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actor.html#core.api.actor.CBPiActor.off">off() (core.api.actor.CBPiActor method)</a>
+      <li><a href="actor.html#cbpi.api.CBPiActor.off">off() (cbpi.api.CBPiActor method)</a>
 
       <ul>
-        <li><a href="actor.html#core.controller.actor_controller.ActorController.off">(core.controller.actor_controller.ActorController method)</a>
+        <li><a href="actor.html#cbpi.controller.actor_controller.ActorController.off">(cbpi.controller.actor_controller.ActorController method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actor.html#core.api.actor.CBPiActor.on">on() (core.api.actor.CBPiActor method)</a>
+      <li><a href="actor.html#cbpi.api.CBPiActor.on">on() (cbpi.api.CBPiActor method)</a>
 
       <ul>
-        <li><a href="actor.html#core.controller.actor_controller.ActorController.on">(core.controller.actor_controller.ActorController method)</a>
+        <li><a href="actor.html#cbpi.controller.actor_controller.ActorController.on">(cbpi.controller.actor_controller.ActorController method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -340,21 +395,21 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="properties.html#core.api.property.Property">Property (class in core.api.property)</a>
+      <li><a href="properties.html#cbpi.api.Property">Property (class in cbpi.api)</a>
 </li>
-      <li><a href="properties.html#core.api.property.Property.Actor">Property.Actor (class in core.api.property)</a>
+      <li><a href="properties.html#cbpi.api.Property.Actor">Property.Actor (class in cbpi.api)</a>
 </li>
-      <li><a href="properties.html#core.api.property.Property.Kettle">Property.Kettle (class in core.api.property)</a>
+      <li><a href="properties.html#cbpi.api.Property.Kettle">Property.Kettle (class in cbpi.api)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="properties.html#core.api.property.Property.Number">Property.Number (class in core.api.property)</a>
+      <li><a href="properties.html#cbpi.api.Property.Number">Property.Number (class in cbpi.api)</a>
 </li>
-      <li><a href="properties.html#core.api.property.Property.Select">Property.Select (class in core.api.property)</a>
+      <li><a href="properties.html#cbpi.api.Property.Select">Property.Select (class in cbpi.api)</a>
 </li>
-      <li><a href="properties.html#core.api.property.Property.Sensor">Property.Sensor (class in core.api.property)</a>
+      <li><a href="properties.html#cbpi.api.Property.Sensor">Property.Sensor (class in cbpi.api)</a>
 </li>
-      <li><a href="properties.html#core.api.property.Property.Text">Property.Text (class in core.api.property)</a>
+      <li><a href="properties.html#cbpi.api.Property.Text">Property.Text (class in cbpi.api)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -362,25 +417,25 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actor.html#core.controller.actor_controller.ActorController.register">register() (core.controller.actor_controller.ActorController method)</a>
+      <li><a href="actor.html#cbpi.api.CBPiActor.reprJSON">reprJSON() (cbpi.api.CBPiActor method)</a>
 </li>
-      <li><a href="step.html#core.api.step.CBPiSimpleStep.reset">reset() (core.api.step.CBPiSimpleStep method)</a>
+      <li><a href="step.html#cbpi.api.CBPiSimpleStep.reset">reset() (cbpi.api.CBPiSimpleStep method)</a>
 </li>
-      <li><a href="step.html#core.api.step.CBPiSimpleStep.reset_dirty">reset_dirty() (core.api.step.CBPiSimpleStep method)</a>
+      <li><a href="step.html#cbpi.api.CBPiSimpleStep.reset_dirty">reset_dirty() (cbpi.api.CBPiSimpleStep method)</a>
 </li>
-      <li><a href="kettle_controller.html#core.api.kettle_logic.CBPiKettleLogic.run">run() (core.api.kettle_logic.CBPiKettleLogic method)</a>
+      <li><a href="kettle_controller.html#cbpi.api.CBPiKettleLogic.run">run() (cbpi.api.CBPiKettleLogic method)</a>
 
       <ul>
-        <li><a href="sensor.html#core.api.sensor.CBPiSensor.run">(core.api.sensor.CBPiSensor method)</a>
+        <li><a href="sensor.html#cbpi.api.CBPiSensor.run">(cbpi.api.CBPiSensor method)</a>
 </li>
-        <li><a href="step.html#core.api.step.CBPiSimpleStep.run">(core.api.step.CBPiSimpleStep method)</a>
+        <li><a href="step.html#cbpi.api.CBPiSimpleStep.run">(cbpi.api.CBPiSimpleStep method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.api.step.CBPiSimpleStep.run_cycle">run_cycle() (core.api.step.CBPiSimpleStep method)</a>
+      <li><a href="step.html#cbpi.api.CBPiSimpleStep.run_cycle">run_cycle() (cbpi.api.CBPiSimpleStep method)</a>
 </li>
-      <li><a href="step.html#core.api.step.CBPiSimpleStep.running">running() (core.api.step.CBPiSimpleStep method)</a>
+      <li><a href="step.html#cbpi.api.CBPiSimpleStep.running">running() (cbpi.api.CBPiSimpleStep method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -388,37 +443,41 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sensor.html#core.controller.sensor_controller.SensorController">SensorController (class in core.controller.sensor_controller)</a>
+      <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController">SensorController (class in cbpi.controller.sensor_controller)</a>
 </li>
-      <li><a href="step.html#core.controller.step_controller.StepController.start">start() (core.controller.step_controller.StepController method)</a>
+      <li><a href="step.html#cbpi.controller.step_controller.StepController.start">start() (cbpi.controller.step_controller.StepController method)</a>
 </li>
-      <li><a href="actor.html#core.api.actor.CBPiActor.state">state() (core.api.actor.CBPiActor method)</a>
+      <li><a href="actor.html#cbpi.api.CBPiActor.state">state() (cbpi.api.CBPiActor method)</a>
 
       <ul>
-        <li><a href="sensor.html#core.api.sensor.CBPiSensor.state">(core.api.sensor.CBPiSensor method)</a>
+        <li><a href="sensor.html#cbpi.api.CBPiSensor.state">(cbpi.api.CBPiSensor method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="step.html#core.controller.step_controller.StepController">StepController (class in core.controller.step_controller)</a>
+      <li><a href="step.html#cbpi.controller.step_controller.StepController">StepController (class in cbpi.controller.step_controller)</a>
 </li>
-      <li><a href="kettle_controller.html#core.api.kettle_logic.CBPiKettleLogic.stop">stop() (core.api.kettle_logic.CBPiKettleLogic method)</a>
+      <li><a href="actor.html#cbpi.api.CBPiActor.stop">stop() (cbpi.api.CBPiActor method)</a>
 
       <ul>
-        <li><a href="step.html#core.api.step.CBPiSimpleStep.stop">(core.api.step.CBPiSimpleStep method)</a>
+        <li><a href="kettle_controller.html#cbpi.api.CBPiKettleLogic.stop">(cbpi.api.CBPiKettleLogic method)</a>
+</li>
+        <li><a href="step.html#cbpi.api.CBPiSimpleStep.stop">(cbpi.api.CBPiSimpleStep method)</a>
 </li>
       </ul></li>
+      <li><a href="sensor.html#cbpi.controller.sensor_controller.SensorController.stop_sensor">stop_sensor() (cbpi.controller.sensor_controller.SensorController method)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actor.html#core.controller.actor_controller.ActorController.toggle">toggle() (core.controller.actor_controller.ActorController method)</a>
+      <li><a href="actor.html#cbpi.controller.actor_controller.ActorController.toggle">toggle() (cbpi.controller.actor_controller.ActorController method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="kettle_controller.html#core.controller.kettle_controller.KettleController.toggle_automtic">toggle_automtic() (core.controller.kettle_controller.KettleController method)</a>
+      <li><a href="kettle_controller.html#cbpi.controller.kettle_controller.KettleController.toggle_automtic">toggle_automtic() (cbpi.controller.kettle_controller.KettleController method)</a>
 </li>
   </ul></td>
 </tr></table>

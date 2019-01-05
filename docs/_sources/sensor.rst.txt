@@ -5,7 +5,7 @@ Sensor
 Sensor Controller
 ^^^^^^^^^^^^^^^^^
 
-.. autoclass:: core.controller.sensor_controller.SensorController
+.. autoclass:: cbpi.controller.sensor_controller.SensorController
   :members:
   :private-members:
   :undoc-members:
@@ -15,7 +15,7 @@ Sensor Controller
 CBPiSensor
 ^^^^^^^^^^
 
-.. autoclass:: core.api.sensor.CBPiSensor
+.. autoclass:: cbpi.api.CBPiSensor
   :members:
   :private-members:
   :undoc-members:
@@ -25,15 +25,15 @@ CBPiSensor
 Custom Sensor
 ^^^^^^^^^^^^^
 
-.. literalinclude:: ../../core/extension/dummysensor/__init__.py
+.. literalinclude:: ../../cbpi/extension/dummysensor/__init__.py
    :caption: __init__.py
-   :name: __init__-py
+   :name: __init__.py
    :language: python
    :linenos:
 
 
 config.yaml
 
-.. literalinclude:: ../../core/extension/dummysensor/config.yaml
+.. literalinclude:: ../../cbpi/extension/dummysensor/config.yaml
    :language: yaml
    :linenos:

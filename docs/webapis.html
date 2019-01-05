@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; CraftBeerPi 4.0 documentation</title>
+  <title>REST API &mdash; CraftBeerPi 4.0 documentation</title>
   
 
   
@@ -28,8 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Core" href="core.html" />
-    <link rel="prev" title="Welcome to CraftBeerPi’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Standard &amp; Guidelines" href="standards.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -79,13 +78,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#download-and-installation">Download and Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#run-the-server">Run the Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#update-craftbeerpi">Update CraftBeerPi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-plugins">Install plugins</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="actor.html">Actor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sensor.html">Sensor</a></li>
@@ -93,8 +86,8 @@
 <li class="toctree-l1"><a class="reference internal" href="kettle_controller.html">Kettle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="properties.html">Properties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="standards.html">Standard &amp; Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="webapis.html">REST API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="webapis.html#websocket-api">WebSocket API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#websocket-api">WebSocket API</a></li>
 </ul>
 
             
@@ -140,13 +133,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Installation</li>
+      <li>REST API</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/install.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/webapis.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -159,53 +152,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>Please make sure that Python 3.5 is installed.
-<a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian//">Rapsbian Stretch</a> is required at least.
-It will also run on MacOS</p>
-<div class="section" id="download-and-installation">
-<h2>Download and Installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install -i https://test.pypi.org/simple/ cbpi
+  <div class="section" id="rest-api">
+<h1>REST API<a class="headerlink" href="#rest-api" title="Permalink to this headline">¶</a></h1>
+<p>The REST API is document by using Swagger.IO.
+After startup of the server the API documentation is available under:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">SERVER_IP</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">PORT</span><span class="o">&gt;/</span><span class="n">api</span><span class="o">/</span><span class="n">doc</span>
 </pre></div>
 </div>
-<p>Further version can be found on PiPy: <a class="reference external" href="https://test.pypi.org/project/cbpi/">https://test.pypi.org/project/cbpi/</a></p>
+</div>
+<div class="section" id="websocket-api">
+<h1>WebSocket API<a class="headerlink" href="#websocket-api" title="Permalink to this headline">¶</a></h1>
+<p>WebSocket client can be connected to the following endpoint:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">SERVER_IP</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">PORT</span><span class="o">&gt;/</span><span class="n">ws</span>
+</pre></div>
+</div>
+<p>I recommend to use Dark WebSocket Terminal for testing. At the moment the WebSocket API is just pushing data.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">All dependencies will be installed automatically. The installation will add the command “cbpi” to your shell.</p>
-</div>
-<p>To uninstall just remove the package via pip.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip uninstall cbpi
-</pre></div>
-</div>
-</div>
-<div class="section" id="run-the-server">
-<h2>Run the Server<a class="headerlink" href="#run-the-server" title="Permalink to this headline">¶</a></h2>
-<p>To start CraftBeerPi just run the following command in your shell</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cbpi
-</pre></div>
-</div>
-<p>During the first startup a <cite>config</cite> and <cite>logs</cite> folder gets created in the directory from where the <cite>$ cbpi</cite> in called
-PIP Website: <a class="reference external" href="https://test.pypi.org/project/cbpi/">https://test.pypi.org/project/cbpi/</a></p>
-</div>
-<div class="section" id="update-craftbeerpi">
-<h2>Update CraftBeerPi<a class="headerlink" href="#update-craftbeerpi" title="Permalink to this headline">¶</a></h2>
-<p>That’s super easy. Just run again with upgrade option</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install -i https://test.pypi.org/simple/ cbpi --upgrade
-</pre></div>
-</div>
-</div>
-<div class="section" id="install-plugins">
-<h2>Install plugins<a class="headerlink" href="#install-plugins" title="Permalink to this headline">¶</a></h2>
-<p>Plugins are normal Python Pip packages.</p>
-<p>Install</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install -i https://test.pypi.org/simple/ CBPiActor1
-</pre></div>
-</div>
-<p>Uninstall</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip uninstall CBPiActor1
-</pre></div>
-</div>
+<p class="last">Currently Security is not enabled. That means you need no password to connect to th Web APIs</p>
 </div>
 </div>
 
@@ -217,10 +181,8 @@ PIP Website: <a class="reference external" href="https://test.pypi.org/project/c
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="core.html" class="btn btn-neutral float-right" title="Core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="index.html" class="btn btn-neutral" title="Welcome to CraftBeerPi’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="standards.html" class="btn btn-neutral" title="Standard &amp; Guidelines" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
