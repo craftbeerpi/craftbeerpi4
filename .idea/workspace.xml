@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="Lots of changes">
+      <change afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_src/source/actor.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_src/source/actor.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_src/source/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_src/source/index.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_src/source/install.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_src/source/install.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_src/source/kettle_controller.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_src/source/kettle_controller.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_src/source/properties.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_src/source/properties.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_src/source/sensor.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_src/source/sensor.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_src/source/step.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_src/source/step.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/craftbeerpi.db" beforeDir="false" afterPath="$PROJECT_DIR$/craftbeerpi.db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +26,7 @@
     <SUITE FILE_PATH="coverage/craftbeerpi4$dummy.coverage" NAME="dummy Coverage Results" MODIFIED="1546520051389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_test_config_py.coverage" NAME="pytest in test_config.py Coverage Results" MODIFIED="1546113553124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_tests_test_actor.coverage" NAME="pytest for tests.test_actor Coverage Results" MODIFIED="1546724758047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1546717215007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1546728972103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test_app.coverage" NAME="test_app Coverage Results" MODIFIED="1546525009502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1546724951675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_test_kettle_KettleTestCase.coverage" NAME="pytest for test_kettle.KettleTestCase Coverage Results" MODIFIED="1546357864696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -54,17 +49,7 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="craftbeerpi.db" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="craftbeerpi.db" type="feb32156:DbDataSourceImpl" />
-        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="FavoritesManager">
@@ -72,54 +57,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/websocket.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="22" column="32" lean-forward="true" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-914">
+              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/install.rst">
-          <provider selected="true" editor-type-id="restructured-text-editor" />
+        <entry file="file://$PROJECT_DIR$/LICENSE">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="120" selection-start-line="2" selection-start-column="120" selection-end-line="2" selection-end-column="120" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/kettle_controller.rst">
-          <provider selected="true" editor-type-id="restructured-text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/properties.rst">
-          <provider selected="true" editor-type-id="restructured-text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/sensor.rst">
-          <provider selected="true" editor-type-id="restructured-text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/webapis.rst">
-          <provider selected="true" editor-type-id="restructured-text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/build/html/index.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/index.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/index.rst">
-          <provider selected="true" editor-type-id="restructured-text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
-          <provider selected="true" editor-type-id="restructured-text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs_src/source/step.rst">
-          <provider selected="true" editor-type-id="restructured-text-editor" />
+        <entry file="file://$PROJECT_DIR$/config/config.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -185,7 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cbpi/extension/dummystep/__init__.py" />
         <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_login.py" />
         <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_curd_endpoints.py" />
         <option value="$PROJECT_DIR$/cbpi/api/exceptions.py" />
@@ -226,7 +202,6 @@
         <option value="$PROJECT_DIR$/cbpi/controller/actor_controller.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/config/config.yaml" />
         <option value="$PROJECT_DIR$/docs_src/source/step.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/actor.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/kettle_controller.rst" />
@@ -236,14 +211,16 @@
         <option value="$PROJECT_DIR$/docs_src/source/webapis.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/index.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/install.rst" />
+        <option value="$PROJECT_DIR$/config/config.yaml" />
+        <option value="$PROJECT_DIR$/LICENSE" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="123" />
+    <option name="x" value="27" />
     <option name="y" value="23" />
-    <option name="width" value="1492" />
-    <option name="height" value="910" />
+    <option name="width" value="1563" />
+    <option name="height" value="917" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -257,22 +234,6 @@
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="docs_src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="docs_src" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -318,7 +279,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.run">
+  <component name="RunManager" selected="Python tests.pytest in tests">
     <configuration name="cli" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="craftbeerpi4" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -512,8 +473,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.run" />
         <item itemvalue="Python tests.pytest in tests" />
+        <item itemvalue="Python.run" />
         <item itemvalue="Python.sample" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.cli" />
@@ -538,7 +499,7 @@
       <workItem from="1546003397332" duration="543000" />
       <workItem from="1546006149688" duration="24136000" />
       <workItem from="1546201868140" duration="66956000" />
-      <workItem from="1546520120024" duration="49686000" />
+      <workItem from="1546520120024" duration="51304000" />
     </task>
     <task id="LOCAL-00001" summary="Lots of changes">
       <created>1541288846149</created>
@@ -558,15 +519,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_tests_test_actor - 2019.01.05 at 22h 38m 41s.xml">
-      <configuration name="pytest for tests.test_actor" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_tests_test_actor - 2019.01.05 at 22h 39m 28s.xml">
-      <configuration name="pytest for tests.test_actor" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_tests_test_actor - 2019.01.05 at 22h 39m 50s.xml">
-      <configuration name="pytest for tests.test_actor" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_tests_test_actor - 2019.01.05 at 22h 40m 42s.xml">
       <configuration name="pytest for tests.test_actor" configurationId="tests" />
     </history-entry>
@@ -588,9 +540,18 @@
     <history-entry file="pytest_for_tests_test_actor - 2019.01.05 at 22h 46m 00s.xml">
       <configuration name="pytest for tests.test_actor" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_in_tests - 2019.01.05 at 23h 55m 35s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_tests - 2019.01.05 at 23h 56m 10s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_tests - 2019.01.05 at 23h 56m 45s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153965000" />
+    <option name="totallyTimeSpent" value="155583000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -602,18 +563,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="123" y="23" width="1492" height="910" extended-state="0" />
+    <frame x="27" y="23" width="1563" height="917" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3262069" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3109796" />
       <window_info id="Structure" order="1" weight="0.24957556" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.2737931" side_tool="true" weight="0.3997555" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32762837" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7262069" weight="0.47432762" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7262069" visible="true" weight="0.4739394" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39731053" />
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.32885087" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49761903" visible="true" weight="0.30929095" />
+      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49761903" weight="0.30946603" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286945" />
       <window_info anchor="bottom" id="Message" order="7" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32518336" />
@@ -625,12 +586,12 @@
       <window_info anchor="bottom" id="Database Console" order="14" weight="0.32885087" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="15" weight="0.40342298" />
       <window_info anchor="right" id="Data View" order="0" />
-      <window_info anchor="right" id="Database" order="1" sideWeight="0.49534884" visible="true" weight="0.11793104" />
+      <window_info anchor="right" id="Database" order="1" sideWeight="0.4953917" visible="true" weight="0.112426035" />
       <window_info anchor="right" id="Commander" order="2" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
       <window_info anchor="right" id="SciView" order="5" weight="0.32965517" />
-      <window_info anchor="right" id="Coverage" order="6" sideWeight="0.5046512" side_tool="true" weight="0.24551724" />
+      <window_info anchor="right" id="Coverage" order="6" sideWeight="0.5046083" side_tool="true" visible="true" weight="0.112426035" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -672,13 +633,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -693,16 +647,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/websocket.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="22" column="32" lean-forward="true" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cbpi/api/extension.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -714,16 +658,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="2" lean-forward="true" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -910,24 +844,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="35" lean-forward="true" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -943,13 +863,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/install.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/source/conf.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -960,9 +873,6 @@
       <provider selected="true" editor-type-id="restructured-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/source/properties.rst">
-      <provider selected="true" editor-type-id="restructured-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs_src/source/kettle_controller.rst">
       <provider selected="true" editor-type-id="restructured-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/source/actor.rst">
@@ -985,6 +895,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/docs_src/source/install.rst">
       <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/install.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_src/source/kettle_controller.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/websocket.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="22" column="32" lean-forward="true" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-914">
+          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="120" selection-start-line="2" selection-start-column="120" selection-end-line="2" selection-end-column="120" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
