@@ -130,3 +130,35 @@ class DashboardContentModel(DBModel):
         async with aiosqlite.connect(DATABASE_FILE) as db:
             await db.execute("DELETE FROM %s WHERE dbid = ?" % (cls.__table_name__), (id,))
             await db.commit()
+
+
+class TranslationModel(DBModel):
+    __fields__ = ["key", "text", "language_code"]
+    __table_name__ = "translation"
+    __json_fields__ = []
+    __priamry_key__ = "key"
+
+    @classmethod
+    async def get_all(cls):
+
+        result = {}
+        async with aiosqlite.connect(DATABASE_FILE) as db:
+            sql = "SELECT * FROM %s" % cls.__table_name__
+            db.row_factory = DBModel.dict_factory
+            async with db.execute(sql) as cursor:
+                async for row in cursor:
+                    code = row.get("language_code")
+                    key = row.get("key")
+                    text = row.get("text")
+                    if code not in result:
+                        result[code] = {}
+                    result[code][key] = text
+                await cursor.close()
+
+        return result
+
+    @classmethod
+    async def add_key(cls, locale, key):
+        async with aiosqlite.connect(DATABASE_FILE) as db:
+            await db.execute("INSERT INTO %s (language_code, key, text) VALUES (?,?, ' ')" % (cls.__table_name__), (locale, key))
+            await db.commit()

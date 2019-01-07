@@ -17,6 +17,9 @@ class DashboardController(CRUDController):
         self.logger = logging.getLogger(__name__)
         self.cbpi.register(self)
 
+    def get_state(self):
+        return dict(items=self.cache)
+
     async def get_content(self, dashboard_id):
         return await DashboardContentModel.get_by_dashboard_id(dashboard_id)
 

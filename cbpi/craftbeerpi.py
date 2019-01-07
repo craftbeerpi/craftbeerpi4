@@ -30,7 +30,8 @@ from cbpi.http_endpoints.http_dashboard import DashBoardHttpEndpoints
 from cbpi.http_endpoints.http_kettle import KettleHttpEndpoints
 from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
-
+from controller.translation_controller import TranslationController
+from http_endpoints.http_translation import TranslationHttpEndpoint
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +74,7 @@ class CraftBeerPi():
         self.bus = CBPiEventBus(self.app.loop, self)
         self.ws = CBPiWebSocket(self)
         self.job = JobController(self)
+        self.translation = TranslationController(self)
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
         self.plugin = PluginController(self)
@@ -88,6 +90,7 @@ class CraftBeerPi():
         self.http_actor = ActorHttpEndpoints(self)
         self.http_kettle = KettleHttpEndpoints(self)
         self.http_dashboard = DashBoardHttpEndpoints(self)
+        self.http_translation = TranslationHttpEndpoint(self)
 
         self.notification = NotificationController(self)
         self.login = Login(self)
@@ -221,7 +224,7 @@ class CraftBeerPi():
         await self.job.init()
         await DBModel.setup()
         await self.config.init()
-
+        await self.translation.init()
         self._setup_http_index()
         self.plugin.load_plugins()
         self.plugin.load_plugins_from_evn()

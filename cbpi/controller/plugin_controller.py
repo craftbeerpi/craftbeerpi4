@@ -108,13 +108,14 @@ class PluginController():
         '''
         logger.info("Register %s Class %s" % (name, clazz.__name__))
         if issubclass(clazz, CBPiActor):
-            self.cbpi.actor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
+            #self.cbpi.actor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
+            self.cbpi.actor.types[name] = self._parse_props(clazz)
 
         if issubclass(clazz, CBPiSensor):
-            self.cbpi.sensor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
+            self.cbpi.sensor.types[name] = self._parse_props(clazz)
 
         if issubclass(clazz, CBPiKettleLogic):
-            self.cbpi.kettle.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
+            self.cbpi.kettle.types[name] = self._parse_props(clazz)
 
         if issubclass(clazz, CBPiSimpleStep):
             self.cbpi.step.types[name] = self._parse_props(clazz)

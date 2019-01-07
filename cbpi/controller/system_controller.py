@@ -14,14 +14,17 @@ class SystemController():
         self.service = cbpi.actor
         self.cbpi.register(self, "/system")
 
-    @request_mapping("/state", method="GET", auth_required=False)
+    @request_mapping("/", method="GET", auth_required=False)
     def state(self, request):
         # TODO implement restart
         return web.json_response(data=dict(
             actor=self.cbpi.actor.get_state(),
             sensor=self.cbpi.sensor.get_state(),
             kettle=self.cbpi.kettle.get_state(),
-            step=self.cbpi.step.get_state())
+            step=self.cbpi.step.get_state(),
+            dashboard=self.cbpi.dashboard.get_state(),
+            translations=self.cbpi.translation.get_all(),
+            config=self.cbpi.config.get_state())
             , dumps=json_dumps)
 
     @request_mapping("/restart", method="POST", name="RestartServer", auth_required=False)
@@ -48,3 +51,4 @@ class SystemController():
     @request_mapping("/events", method="GET", name="get_all_events", auth_required=False)
     def get_all_events(self, request):
         return web.json_response(data=self.cbpi.bus.dump())
+

@@ -18,6 +18,10 @@ class ConfigController():
         self.cbpi = cbpi
         self.cbpi.register(self)
 
+
+    def get_state(self):
+        return self.cache
+
     async def init(self):
         this_directory = os.path.dirname(__file__)
 
