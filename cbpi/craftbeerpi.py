@@ -30,7 +30,7 @@ from cbpi.http_endpoints.http_dashboard import DashBoardHttpEndpoints
 from cbpi.http_endpoints.http_kettle import KettleHttpEndpoints
 from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
-from controller.translation_controller import TranslationController
+from cbpi.controller.translation_controller import TranslationController
 from http_endpoints.http_translation import TranslationHttpEndpoint
 
 logger = logging.getLogger(__name__)
