@@ -24,6 +24,7 @@ class CustomActor(CBPiActor):
     # Custom property which can be configured by the user
 
     def init(self):
+        self.state = False
         pass
 
     def on(self, power=0):
@@ -34,7 +35,8 @@ class CustomActor(CBPiActor):
         logger.info("ACTOR %s OFF " % self.id)
         self.state = False
 
-
+    def get_state(self):
+        return self.state
 
 
 class GPIOActor(CBPiActor):

@@ -35,7 +35,7 @@ class CBPiActor(CBPiExtension, metaclass=ABCMeta):
         '''
         pass
 
-    def state(self):
+    def get_state(self):
 
         '''
         Return the current actor state

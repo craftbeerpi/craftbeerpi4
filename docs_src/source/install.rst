@@ -29,7 +29,7 @@ To uninstall just remove the package via pip.
     $ sudo pip uninstall cbpi
 
 MacOS
-^^^^^^^^^^^^
+^^^^^^
 
 Make sure to have Python 3 installed. For example via Homebrew. !!!Attention pip3 not just pip!!!
 ::

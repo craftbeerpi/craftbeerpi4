@@ -10,6 +10,7 @@ class CBPiSensor(CBPiExtension):
         CBPiExtension.__init__(self, *args, **kwds)
         self.logger = logging.getLogger(__file__)
         self.data_logger = None
+        self.state = False
 
 
 
@@ -34,5 +35,8 @@ class CBPiSensor(CBPiExtension):
     async def run(self, cbpi):
         self.logger.warning("Sensor Init not implemented")
 
-    def state(self):
+    def get_state(self):
+        pass
+
+    def get_value(self):
         pass

@@ -25,10 +25,14 @@ class CustomSensor(CBPiSensor):
 
     def init(self):
         super().init()
+        self.state = True
 
+    def get_state(self):
+        return self.state
 
-    def state(self):
-        super().state()
+    def get_value(self):
+
+        return self.value
 
     def stop(self):
         pass
@@ -39,6 +43,7 @@ class CustomSensor(CBPiSensor):
             await asyncio.sleep(self.interval)
             self.log_data(10)
             self.value = self.value + 1
+
             await cbpi.bus.fire("sensor/%s" % self.id, value=self.value)
 
 
