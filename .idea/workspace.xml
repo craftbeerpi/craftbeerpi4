@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="Lots of changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cbpi/controller/translation_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/translation_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cbpi/craftbeerpi.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/craftbeerpi.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,15 +71,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/config.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/plugin_list.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -100,14 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="92" column="49" selection-start-line="92" selection-start-column="49" selection-end-line="92" selection-end-column="49" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="86">
+              <caret line="32" column="8" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -159,14 +146,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cbpi/controller/translation_controller.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/cbp42/lib/python3.7/site-packages/cbpi/craftbeerpi.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -274,7 +270,6 @@
         <option value="$PROJECT_DIR$/cbpi/controller/config_controller.py" />
         <option value="$PROJECT_DIR$/cbpi/extension/ui/react/src/recucers/parameter.js" />
         <option value="$PROJECT_DIR$/cbpi/controller/system_controller.py" />
-        <option value="$PROJECT_DIR$/cbpi/craftbeerpi.py" />
         <option value="$PROJECT_DIR$/cbpi/extension/ui/react/src/recucers/translation.js" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/cbpi/database/model.py" />
@@ -286,6 +281,7 @@
         <option value="$PROJECT_DIR$/config/plugin_list.txt" />
         <option value="$PROJECT_DIR$/cbpi/controller/plugin_controller.py" />
         <option value="$PROJECT_DIR$/cbpi/controller/translation_controller.py" />
+        <option value="$PROJECT_DIR$/cbpi/craftbeerpi.py" />
       </list>
     </option>
   </component>
@@ -316,13 +312,37 @@
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7.1 virtualenv at ~/cbp42 &gt;" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7.1 virtualenv at ~/cbp42 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7.1 virtualenv at ~/cbp42 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7.1 virtualenv at ~/cbp42 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
+              <item name="craftbeerpi.py" type="8704e2dd:PyFileNode" />
             </path>
           </expand>
           <select />
@@ -591,7 +611,7 @@
       <workItem from="1546797494638" duration="14249000" />
       <workItem from="1546971487719" duration="1233000" />
       <workItem from="1546973098962" duration="96000" />
-      <workItem from="1546975321797" duration="27000" />
+      <workItem from="1546975321797" duration="140000" />
     </task>
     <task id="LOCAL-00001" summary="Lots of changes">
       <created>1541288846149</created>
@@ -643,7 +663,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175148000" />
+    <option name="totallyTimeSpent" value="175261000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -945,23 +965,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/translation_controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="92" column="49" selection-start-line="92" selection-start-column="49" selection-end-line="92" selection-end-column="49" />
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/controller/translation_controller.py">
+    <entry file="file://$USER_HOME$/cbp42/lib/python3.7/site-packages/cbpi/craftbeerpi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="32" column="8" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
         </state>
       </provider>
     </entry>
