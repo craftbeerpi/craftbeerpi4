@@ -10,14 +10,17 @@ It will also run on MacOS
 Download and Installation
 =========================
 
+Raspberry PI
+^^^^^^^^^^^^
+
 ::
 
-    $ sudo pip install -i https://test.pypi.org/simple/ cbpi
+    $ sudo pip install cbpi
 
-Further version can be found on PiPy: https://test.pypi.org/project/cbpi/
+Further version can be found on PiPy: https://pypi.org/project/cbpi/
 
 .. note::
-    All dependencies will be installed automatically. The installation will add the command "cbpi" to your shell.
+    All dependencies will be installed automatically.
 
 To uninstall just remove the package via pip.
 
@@ -25,10 +28,30 @@ To uninstall just remove the package via pip.
 
     $ sudo pip uninstall cbpi
 
+MacOS
+^^^^^^^^^^^^
+
+Make sure to have Python 3 installed. For example via Homebrew. !!!Attention pip3 not just pip!!!
+::
+
+    $ sudo pip3 install cbpi
+
+Further version can be found on PiPy: https://pypi.org/project/cbpi/
+
+.. note::
+    All dependencies will be installed automatically.
+
+To uninstall just remove the package via pip.
+
+::
+
+    $ sudo pip uninstall cbpi
+
+
 Run the Server
 ==============
 
-To start CraftBeerPi just run the following command in your shell
+The installation will add the command "cbpi" to your shell. To start CraftBeerPi just run the following command in your shell
 ::
 
     $ cbpi
@@ -41,8 +64,9 @@ PIP Website: https://test.pypi.org/project/cbpi/
 Update CraftBeerPi
 ==================
 
-That's super easy. Just run again with upgrade option
+That's super easy. Just run again with upgrade option.
 ::
+
     $ sudo pip install -i https://test.pypi.org/simple/ cbpi --upgrade
 
 

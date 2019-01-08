@@ -80,7 +80,11 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#download-and-installation">Download and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-and-installation">Download and Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#raspberry-pi">Raspberry PI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macos">MacOS</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#run-the-server">Run the Server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#update-craftbeerpi">Update CraftBeerPi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-plugins">Install plugins</a></li>
@@ -166,22 +170,41 @@
 It will also run on MacOS</p>
 <div class="section" id="download-and-installation">
 <h2>Download and Installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install -i https://test.pypi.org/simple/ cbpi
+<div class="section" id="raspberry-pi">
+<h3>Raspberry PI<a class="headerlink" href="#raspberry-pi" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install cbpi
 </pre></div>
 </div>
-<p>Further version can be found on PiPy: <a class="reference external" href="https://test.pypi.org/project/cbpi/">https://test.pypi.org/project/cbpi/</a></p>
+<p>Further version can be found on PiPy: <a class="reference external" href="https://pypi.org/project/cbpi/">https://pypi.org/project/cbpi/</a></p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">All dependencies will be installed automatically. The installation will add the command “cbpi” to your shell.</p>
+<p class="last">All dependencies will be installed automatically.</p>
 </div>
 <p>To uninstall just remove the package via pip.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip uninstall cbpi
 </pre></div>
 </div>
 </div>
+<div class="section" id="macos">
+<h3>MacOS<a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h3>
+<p>Make sure to have Python 3 installed. For example via Homebrew. !!!Attention pip3 not just pip!!!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip3 install cbpi
+</pre></div>
+</div>
+<p>Further version can be found on PiPy: <a class="reference external" href="https://pypi.org/project/cbpi/">https://pypi.org/project/cbpi/</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All dependencies will be installed automatically.</p>
+</div>
+<p>To uninstall just remove the package via pip.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip uninstall cbpi
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="run-the-server">
 <h2>Run the Server<a class="headerlink" href="#run-the-server" title="Permalink to this headline">¶</a></h2>
-<p>To start CraftBeerPi just run the following command in your shell</p>
+<p>The installation will add the command “cbpi” to your shell. To start CraftBeerPi just run the following command in your shell</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cbpi
 </pre></div>
 </div>
@@ -190,7 +213,7 @@ PIP Website: <a class="reference external" href="https://test.pypi.org/project/c
 </div>
 <div class="section" id="update-craftbeerpi">
 <h2>Update CraftBeerPi<a class="headerlink" href="#update-craftbeerpi" title="Permalink to this headline">¶</a></h2>
-<p>That’s super easy. Just run again with upgrade option</p>
+<p>That’s super easy. Just run again with upgrade option.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install -i https://test.pypi.org/simple/ cbpi --upgrade
 </pre></div>
 </div>
