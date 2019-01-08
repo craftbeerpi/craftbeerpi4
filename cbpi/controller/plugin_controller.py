@@ -61,7 +61,9 @@ class PluginController():
 
         plugins = []
         this_directory = os.path.dirname(__file__)
-        with open(os.path.join(this_directory, "../config/plugin_list.txt")) as f:
+        with open("./config/plugin_list.txt") as f:
+
+            print("###### LAD")
             plugins = f.read().splitlines()
             plugins = list(set(plugins))
 
