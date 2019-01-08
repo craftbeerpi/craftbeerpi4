@@ -1,7 +1,6 @@
 import logging
 
-from database.model import TranslationModel
-
+from cbpi.database.model import TranslationModel
 
 class TranslationController(object):
 
