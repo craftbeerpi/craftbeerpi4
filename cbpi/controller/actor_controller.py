@@ -54,7 +54,7 @@ class ActorController(CRUDController):
         await self.cbpi.bus.fire(topic="actor/%s/stopped" % actor.id, id=actor.id)
 
     @on_event(topic="actor/+/switch/on")
-    async def on(self, actor_id, future: Future, power=100, **kwargs) -> None:
+    async def on(self, actor_id, power=100, **kwargs) -> None:
         """
         Method to switch an actor on.
         Supporting Event Topic "actor/+/on"
@@ -70,10 +70,9 @@ class ActorController(CRUDController):
         if actor_id in self.cache:
             self.logger.debug("ON %s" % actor_id)
             actor = self.cache[actor_id].instance
-            await self.cbpi.bus.fire("actor/%s/on/ok" % actor_id)
             actor.on(power)
+            await self.cbpi.bus.fire("actor/%s/on/ok" % actor_id)
 
-        future.set_result("OK")
 
     @on_event(topic="actor/+/toggle")
     async def toggle(self, actor_id, power=100, **kwargs) -> None:
@@ -91,9 +90,13 @@ class ActorController(CRUDController):
         if actor_id in self.cache:
             actor = self.cache[actor_id].instance
             if actor.state is True:
-                actor.off()
+
+                await self.off(actor_id=actor_id)
             else:
-                actor.on()
+
+
+                await self.on(actor_id=actor_id)
+
 
 
     @on_event(topic="actor/+/off")
@@ -111,6 +114,7 @@ class ActorController(CRUDController):
         if actor_id in self.cache:
             actor = self.cache[actor_id].instance
             actor.off()
+            await self.cbpi.bus.fire("actor/%s/off/ok" % actor_id)
 
     @on_event(topic="actor/+/action")
     async def call_action(self, actor_id, data, **kwargs) -> None:

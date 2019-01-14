@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="Lots of changes">
-      <change beforePath="$PROJECT_DIR$/cbpi/api/actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/api/actor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cbpi/api/sensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/api/sensor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cbpi/extension/dummyactor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummyactor/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cbpi/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/cli.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cbpi/controller/actor_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/actor_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cbpi/craftbeerpi.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/craftbeerpi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cbpi/eventbus.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/eventbus.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cbpi/http_endpoints/http_translation.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_translation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cbpi/http_endpoints/http_actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_actor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cbpi/http_endpoints/http_kettle.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_kettle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cbpi/utils/encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/utils/encoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_src/source/install.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_src/source/install.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cbpi/websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/websocket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/craftbeerpi.db" beforeDir="false" afterPath="$PROJECT_DIR$/craftbeerpi.db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +22,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/craftbeerpi4$sample.coverage" NAME="sample Coverage Results" MODIFIED="1546716642557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$sample.coverage" NAME="sample Coverage Results" MODIFIED="1547290556456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test.coverage" NAME="test Coverage Results" MODIFIED="1546678077234" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test_kettle.coverage" NAME="test kettle Coverage Results" MODIFIED="1546020780689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_tests_test_step.coverage" NAME="pytest for tests.test_step Coverage Results" MODIFIED="1546556940935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -31,7 +36,7 @@
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_tests_test_actor.coverage" NAME="pytest for tests.test_actor Coverage Results" MODIFIED="1546724758047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1546728972103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$test_app.coverage" NAME="test_app Coverage Results" MODIFIED="1546525009502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1546985787615" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/craftbeerpi4$run.coverage" NAME="run Coverage Results" MODIFIED="1547414404286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_test_kettle_KettleTestCase.coverage" NAME="pytest for test_kettle.KettleTestCase Coverage Results" MODIFIED="1546357864696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$py_test_in_tests.coverage" NAME="py.test in tests Coverage Results" MODIFIED="1544486432317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/craftbeerpi4$pytest_for_test_config_ConfigTestCase.coverage" NAME="pytest for test_config.ConfigTestCase Coverage Results" MODIFIED="1546212760017" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -66,6 +71,18 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="craftbeerpi.db" type="feb32156:DbDataSourceImpl" />
         <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="actor: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="craftbeerpi.db" type="feb32156:DbDataSourceImpl" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="dashboard: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="craftbeerpi.db" type="feb32156:DbDataSourceImpl" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
         <item name="translation: table" type="3d80ac25:SqliteImplModel$Table" />
       </path>
     </expand>
@@ -77,10 +94,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cbpi/extension/dummyactor/__init__.py">
+        <entry file="file://$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
+            <state relative-caret-position="147">
+              <caret line="41" selection-start-line="41" selection-end-line="41" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -89,53 +106,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cbpi/utils/encoder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="19" selection-start-line="18" selection-start-column="46" selection-end-line="19" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cbpi/controller/sensor_controller.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cbpi/database/model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cbpi/extension/dummysensor/config.yaml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/sensor">
           <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
             <state>
@@ -145,19 +115,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cbpi/api/sensor.py">
+        <entry file="file:///usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/asyncio/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="147">
+              <caret line="556" selection-start-line="556" selection-end-line="556" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cbpi/controller/actor_controller.py">
+        <entry file="file://$PROJECT_DIR$/cbpi/websocket.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="43" column="45" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="45" />
+            <state relative-caret-position="162">
+              <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -166,13 +136,64 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cbpi/api/actor.py">
+        <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="37" column="17" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="17" />
+            <state relative-caret-position="147">
+              <caret line="74" column="28" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="28" />
               <folding>
-                <element signature="e#0#23#0" expanded="true" />
+                <element signature="e#0#14#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/controller/config_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="22" column="25" lean-forward="true" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/eventbus.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="117" column="27" selection-start-line="117" selection-start-column="27" selection-end-line="117" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/extension/comp/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="262">
+              <caret line="35" column="26" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/controller/sensor_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-23">
+              <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cbpi/api/sensor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="193">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -188,13 +209,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Fut</find>
-      <find>CBPiException</find>
-      <find>RPi</find>
-      <find>done</find>
-      <find>_jobs</find>
-      <find>print</find>
-      <find>callbac</find>
       <find>_jobs.app</find>
       <find>/config</find>
       <find>job.</find>
@@ -218,6 +232,13 @@
       <find>render_config</find>
       <find>###</find>
       <find>ui</find>
+      <find>httpsen</find>
+      <find>CustomSensor</find>
+      <find>Errr</find>
+      <find>ws</find>
+      <find>tog</find>
+      <find>w</find>
+      <find>togll</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -241,14 +262,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cbpi/controller/step_controller.py" />
-        <option value="$PROJECT_DIR$/cbpi/controller/sensor_controller.py" />
-        <option value="$PROJECT_DIR$/cbpi/cli.py" />
-        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_sensor.py" />
-        <option value="$PROJECT_DIR$/tests/test_actor.py" />
-        <option value="$PROJECT_DIR$/docs_src/source/step.rst" />
-        <option value="$PROJECT_DIR$/docs_src/source/actor.rst" />
-        <option value="$PROJECT_DIR$/docs_src/source/kettle_controller.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/properties.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/sensor.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/restapi.rst" />
@@ -273,25 +286,33 @@
         <option value="$PROJECT_DIR$/cbpi/extension/ui/react/src/recucers/parameter.js" />
         <option value="$PROJECT_DIR$/cbpi/controller/system_controller.py" />
         <option value="$PROJECT_DIR$/cbpi/extension/ui/react/src/recucers/translation.js" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/cbpi/database/model.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/config/config.yaml" />
         <option value="$PROJECT_DIR$/config/plugin_list.txt" />
         <option value="$PROJECT_DIR$/cbpi/controller/plugin_controller.py" />
         <option value="$PROJECT_DIR$/cbpi/controller/translation_controller.py" />
-        <option value="$PROJECT_DIR$/cbpi/craftbeerpi.py" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/docs_src/source/core.rst" />
         <option value="$PROJECT_DIR$/docs_src/source/install.rst" />
         <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_translation.py" />
-        <option value="$PROJECT_DIR$/cbpi/controller/actor_controller.py" />
         <option value="$PROJECT_DIR$/cbpi/api/actor.py" />
         <option value="$PROJECT_DIR$/cbpi/extension/dummyactor/__init__.py" />
         <option value="$PROJECT_DIR$/cbpi/api/sensor.py" />
-        <option value="$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py" />
+        <option value="$PROJECT_DIR$/cbpi/cli.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_actor.py" />
+        <option value="$PROJECT_DIR$/cbpi/http_endpoints/http_kettle.py" />
         <option value="$PROJECT_DIR$/cbpi/utils/encoder.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$PROJECT_DIR$/sample.py" />
+        <option value="$PROJECT_DIR$/cbpi/api/__init__.py" />
+        <option value="$PROJECT_DIR$/cbpi/api/decorator.py" />
+        <option value="$PROJECT_DIR$/cbpi/controller/actor_controller.py" />
+        <option value="$PROJECT_DIR$/config/config.yaml" />
+        <option value="$PROJECT_DIR$/cbpi/craftbeerpi.py" />
+        <option value="$PROJECT_DIR$/cbpi/websocket.py" />
+        <option value="$PROJECT_DIR$/cbpi/eventbus.py" />
+        <option value="$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py" />
       </list>
     </option>
   </component>
@@ -329,78 +350,26 @@
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
               <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="actor.py" type="8704e2dd:PyFileNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="actor.py" type="8704e2dd:PyFileNode" />
-              <item name="CBPiActor" type="dd8bbb05:PyElementNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="sensor.py" type="8704e2dd:PyFileNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="sensor.py" type="8704e2dd:PyFileNode" />
-              <item name="CBPiSensor" type="dd8bbb05:PyElementNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
               <item name="cbpi" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="actor_controller.py" type="8704e2dd:PyFileNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="sensor_controller.py" type="8704e2dd:PyFileNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="sensor_controller.py" type="8704e2dd:PyFileNode" />
-              <item name="SensorController" type="dd8bbb05:PyElementNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
-              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-              <item name="model.py" type="8704e2dd:PyFileNode" />
             </path>
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
               <item name="cbpi" type="462c0819:PsiDirectoryNode" />
               <item name="extension" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
+              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
+              <item name="extension" type="462c0819:PsiDirectoryNode" />
+              <item name="comp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
@@ -437,22 +406,75 @@
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
               <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
+              <item name="craftbeerpi.py" type="8704e2dd:PyFileNode" />
             </path>
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
               <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-              <item name="encoder.py" type="8704e2dd:PyFileNode" />
+              <item name="craftbeerpi.py" type="8704e2dd:PyFileNode" />
+              <item name="CraftBeerPi" type="dd8bbb05:PyElementNode" />
             </path>
             <path>
               <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
               <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
               <item name="cbpi" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-              <item name="encoder.py" type="8704e2dd:PyFileNode" />
-              <item name="ComplexEncoder" type="dd8bbb05:PyElementNode" />
+              <item name="eventbus.py" type="8704e2dd:PyFileNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
+              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
+              <item name="eventbus.py" type="8704e2dd:PyFileNode" />
+              <item name="CBPiEventBus" type="dd8bbb05:PyElementNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
+              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
+              <item name="websocket.py" type="8704e2dd:PyFileNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
+              <item name="cbpi" type="462c0819:PsiDirectoryNode" />
+              <item name="websocket.py" type="8704e2dd:PyFileNode" />
+              <item name="CBPiWebSocket" type="dd8bbb05:PyElementNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="craftbeerpi4" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7.1 virtualenv at ~/cbp42 &gt;" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7.1 virtualenv at ~/cbp42 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7.1 virtualenv at ~/cbp42 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="asyncio" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="craftbeerpi4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7.1 virtualenv at ~/cbp42 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="asyncio" type="462c0819:PsiDirectoryNode" />
+              <item name="tasks.py" type="8704e2dd:PyFileNode" />
             </path>
           </expand>
           <select />
@@ -520,7 +542,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python">
       <module name="craftbeerpi4" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -534,7 +556,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
-      <option name="PARAMETERS" value="" />
+      <option name="PARAMETERS" value="test" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -691,9 +713,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.run" />
-        <item itemvalue="Python tests.pytest in tests" />
         <item itemvalue="Python.sample" />
+        <item itemvalue="Python tests.pytest in tests" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.cli" />
       </list>
@@ -721,7 +742,9 @@
       <workItem from="1546797494638" duration="14249000" />
       <workItem from="1546971487719" duration="1233000" />
       <workItem from="1546973098962" duration="96000" />
-      <workItem from="1546975321797" duration="3567000" />
+      <workItem from="1546975321797" duration="11290000" />
+      <workItem from="1547151428258" duration="2906000" />
+      <workItem from="1547155436005" duration="10051000" />
     </task>
     <task id="LOCAL-00001" summary="Lots of changes">
       <created>1541288846149</created>
@@ -773,7 +796,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="178688000" />
+    <option name="totallyTimeSpent" value="199368000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -788,12 +811,12 @@
     <frame x="0" y="23" width="1680" height="962" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3021978" />
-      <window_info id="Structure" order="1" weight="0.24957556" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30952382" />
+      <window_info id="Structure" order="1" weight="0.24908425" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.2737931" side_tool="true" weight="0.3997555" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32762837" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7262069" visible="true" weight="0.54022986" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7262069" visible="true" weight="0.43793103" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39731053" />
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.32885087" />
       <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49761903" weight="0.49080458" />
@@ -808,7 +831,7 @@
       <window_info anchor="bottom" id="Database Console" order="14" weight="0.32885087" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="15" weight="0.40342298" />
       <window_info anchor="right" id="Data View" order="0" />
-      <window_info anchor="right" id="Database" order="1" sideWeight="0.49781278" visible="true" weight="0.22588523" />
+      <window_info active="true" anchor="right" id="Database" order="1" sideWeight="0.49781278" visible="true" weight="0.22588523" />
       <window_info anchor="right" id="Commander" order="2" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
@@ -855,180 +878,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cbpi/extension/ui/react/src/common/Form.js" />
-    <entry file="file://$PROJECT_DIR$/samples.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="50" column="1" selection-start-line="50" selection-start-column="1" selection-end-line="50" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/step" />
-    <entry file="file://$PROJECT_DIR$/cbpi/extension/ui/react/src/recucers/brewing.js" />
-    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_dashboard.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/extension/ui/react/src/recucers/dashboard.js" />
-    <entry file="file://$PROJECT_DIR$/cbpi/controller/dashboard_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="20" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/controller/config_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="21" column="17" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/dashboard" />
-    <entry file="file://$PROJECT_DIR$/cbpi/extension/ui/react/src/recucers/parameter.js" />
-    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_kettle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_login.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/database/orm_framework.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1221">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/controller/step_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/cbp42/lib/python3.7/site-packages/aiosqlite/core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="154" selection-start-line="154" selection-end-line="154" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/extension/ui/react/src/recucers/translation.js" />
-    <entry file="file://$PROJECT_DIR$/.nojekyll">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/controller/plugin_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="63" column="44" selection-start-line="63" selection-start-column="44" selection-end-line="63" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/cbp42/lib/python3.7/site-packages/cbpi-ui/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/controller/system_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/plugin_list.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/eventbus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="32" column="8" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/cbp42/lib/python3.7/site-packages/cbpi/craftbeerpi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -1091,27 +940,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/translation">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cbpi/utils/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" column="41" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/controller/actor_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="43" column="45" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1135,30 +967,77 @@
     <entry file="file://$PROJECT_DIR$/cbpi/extension/dummysensor/config.yaml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/sensor">
+    <entry file="file:///usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/argparse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="1321" column="8" selection-start-line="1321" selection-start-column="8" selection-end-line="1321" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/cli.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="5" selection-start-column="13" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_dashboard.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_login.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_kettle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2610">
+          <caret line="178" selection-start-line="178" selection-end-line="193" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_curd_endpoints.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/actor">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/api/sensor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/controller/sensor_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cbpi/extension/dummyactor/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
+        <state relative-caret-position="345">
           <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
@@ -1166,23 +1045,218 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py">
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.3/python_stubs/1959656778/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        <state relative-caret-position="11175">
+          <caret line="745" column="8" selection-start-line="745" selection-start-column="8" selection-end-line="745" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/dashboard">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/kettle_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/kettle">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/system_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="22" column="41" lean-forward="true" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cbpi/utils/encoder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="19" selection-start-line="18" selection-start-column="46" selection-end-line="19" />
+        <state relative-caret-position="263">
+          <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/asyncio/events.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="87" selection-start-line="87" selection-end-line="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/translation">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_actor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="729">
+          <caret line="223" column="77" selection-start-line="223" selection-start-column="69" selection-end-line="223" selection-end-column="77" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/api/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/api/decorator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="126" selection-start-column="126" selection-end-column="126" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/crud_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../craftbeerpi-ui/cbpi-ui/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/actor_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="56" column="14" selection-start-line="56" selection-start-column="14" selection-end-line="56" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="11" selection-start-line="12" selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/craftbeerpi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="74" column="28" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/config_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="22" column="25" lean-forward="true" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/websocket.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/extension/comp/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="35" column="26" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/controller/sensor_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-23">
+          <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/api/sensor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/eventbus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="117" column="27" selection-start-line="117" selection-start-column="27" selection-end-line="117" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/asyncio/tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="556" selection-start-line="556" selection-end-line="556" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cbpi/extension/dummysensor/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5067e7fe-480d-4433-bc40-f2d1c38362a2/schema/main/table/sensor">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>

@@ -12,7 +12,7 @@ class ComplexEncoder(JSONEncoder):
         try:
 
             if isinstance(obj, ActorModel):
-                data =  dict(**obj.__dict__, state=obj.instance.get_state())
+                data = dict(**obj.__dict__, state=obj.instance.get_state())
                 del data["instance"]
                 return data
 
@@ -23,7 +23,7 @@ class ComplexEncoder(JSONEncoder):
             #elif callable(getattr(obj, "reprJSON")):
             #    return obj.reprJSON()
             elif isinstance(obj, DBModel):
-                return None
+                return obj.__dict__
             #elif hasattr(obj, "callback"):
             #    return obj()
             else:

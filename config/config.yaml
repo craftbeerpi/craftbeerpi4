@@ -10,3 +10,5 @@ port: 8080
 username: cbpi
 password: 123
 
+ws_push_all: true
+

@@ -115,6 +115,8 @@ class CBPiEventBus(object):
 
         futures = {}
 
+        print("FIRE",topic, kwargs)
+
         async def wait(futures):
             if(len(futures) > 0):
                 await asyncio.wait(futures.values())

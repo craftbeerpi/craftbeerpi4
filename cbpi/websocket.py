@@ -1,4 +1,5 @@
 import logging
+import re
 import weakref
 from collections import defaultdict
 
@@ -19,11 +20,27 @@ class CBPiWebSocket:
         self.cbpi.app.add_routes([web.get('/ws', self.websocket_handler)])
         self.cbpi.bus.register_object(self)
 
-    @on_event(topic="#")
+        #if self.cbpi.config.static.get("ws_push_all", False):
+        #self.cbpi.bus.register("#", self.listen)
+        self.patters = {}
+        #self.add_mapper("(actor)\/([\d])\/(on|toggle|off)\/(ok)$", self.map_actor)
+
+    def add_mapper(self, pattern, method):
+        self.patters[re.compile(pattern)] = method
+
+    async def map_actor(self, regex_result, **kwargs):
+
+        actor_id = int(regex_result.group(2))
+        return dict(topic="ACTOR_UPDATE", data=await self.cbpi.actor.get_one(actor_id))
+
+
+
     async def listen(self, topic, **kwargs):
+
         data = dict(topic=topic, data=dict(**kwargs))
         self.logger.debug("PUSH %s " % data)
         self.send(data)
+
 
     def send(self, data):
         self.logger.debug("broadcast to ws clients. Data: %s" % data)

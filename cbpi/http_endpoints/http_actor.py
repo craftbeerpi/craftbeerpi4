@@ -33,18 +33,9 @@ class ActorHttpEndpoints(HttpCrudEndpoints):
         description: Switch actor on
         tags:
         - Actor
-        parameters:
-        - name: "id"
-          in: "path"
-          description: "Actor ID"
-          required: true
-          type: "integer"
-          format: "int64"
         responses:
             "204":
                 description: successful operation
-            "405":
-                description: invalid HTTP Met
         """
         return await super().http_get_all(request)
 
@@ -74,7 +65,7 @@ class ActorHttpEndpoints(HttpCrudEndpoints):
     async def http_add(self, request):
         """
         ---
-        description: Get one Actor
+        description: add one Actor
         tags:
         - Actor
         parameters:

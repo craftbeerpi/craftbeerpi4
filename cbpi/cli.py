@@ -26,9 +26,6 @@ def create_home_folder_structure():
 
 
 def main():
-    #import sys
-    #arg1, arg2 = sys.argv[1], sys.argv[2]
-
 
     create_home_folder_structure()
     create_plugin_file()

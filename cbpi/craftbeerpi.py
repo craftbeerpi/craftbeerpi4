@@ -36,8 +36,6 @@ from cbpi.http_endpoints.http_translation import TranslationHttpEndpoint
 logger = logging.getLogger(__name__)
 
 
-
-
 @web.middleware
 async def error_middleware(request, handler):
     try:
@@ -46,6 +44,7 @@ async def error_middleware(request, handler):
             return response
         message = response.message
     except web.HTTPException as ex:
+        print(ex)
         if ex.status != 404:
             raise
         message = ex.reason
@@ -60,7 +59,6 @@ class CraftBeerPi():
 
     def __init__(self):
 
-
         self.static_config = load_config("./config/config.yaml")
         self.database_file = "./craftbeerpi.db"
         logger.info("Init CraftBeerPI")
@@ -71,15 +69,18 @@ class CraftBeerPi():
 
         self._setup_shutdownhook()
         self.initializer = []
+
         self.bus = CBPiEventBus(self.app.loop, self)
-        self.ws = CBPiWebSocket(self)
         self.job = JobController(self)
+        self.config = ConfigController(self)
+        self.ws = CBPiWebSocket(self)
+
         self.translation = TranslationController(self)
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
         self.plugin = PluginController(self)
         self.system = SystemController(self)
-        self.config = ConfigController(self)
+
         self.kettle = KettleController(self)
         self.step = StepController(self)
         self.dashboard = DashboardController(self)
@@ -97,6 +98,7 @@ class CraftBeerPi():
 
     def _setup_shutdownhook(self):
         self.shutdown = False
+
         async def on_cleanup(app):
             self.shutdown = True
 
@@ -158,6 +160,7 @@ class CraftBeerPi():
             }
             switcher[http_method]()
 
+        print("ADDD ", routes)
         if url_prefix != "/":
             logger.debug("URL Prefix: %s "  % (url_prefix,))
             sub = web.Application()
@@ -166,6 +169,7 @@ class CraftBeerPi():
                 sub.add_routes([web.static('/static', static, show_index=False)])
             self.app.add_subapp(url_prefix, sub)
         else:
+            print("ADDD ", routes)
             self.app.add_routes(routes)
 
     def _swagger_setup(self):
