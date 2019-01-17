@@ -12,12 +12,18 @@ class ComplexEncoder(JSONEncoder):
         try:
 
             if isinstance(obj, ActorModel):
-                data = dict(**obj.__dict__, state=obj.instance.get_state())
+                print(obj.instance)
+                print("DATA", obj.__dict__)
+                data = dict(**obj.__dict__)
+                data["state"] = obj.instance.get_state()
                 del data["instance"]
+
                 return data
 
             elif isinstance(obj, SensorModel):
-                data =  dict(**obj.__dict__, state=obj.instance.get_state(), value=obj.instance.get_value())
+                data =  dict(**obj.__dict__)
+                data["value"] = value=obj.instance.get_value()
+                data["state"] = obj.instance.get_state()
                 del data["instance"]
                 return data
             #elif callable(getattr(obj, "reprJSON")):
@@ -28,6 +34,7 @@ class ComplexEncoder(JSONEncoder):
             #    return obj()
             else:
                 raise TypeError()
-        except TypeError:
+        except Exception as e:
+            print(e)
             pass
         return None

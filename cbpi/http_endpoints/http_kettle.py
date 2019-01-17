@@ -280,6 +280,29 @@ class KettleHttpEndpoints(HttpCrudEndpoints):
         temp = await self.controller.get_traget_temp(kettle_id)
         return web.json_response(data=dict(target_temp=temp, kettle_id=kettle_id))
 
+    @request_mapping(path="/{id:\d+}/temp/{temp:\d+}", method="PUT", auth_required=False)
+    async def http_set_taget_temp(self, request):
+        """
+        ---
+        description: Get Target Temp of kettle
+        tags:
+        - Kettle
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Kettle ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "204":
+                description: successful operation
+        """
+        kettle_id = int(request.match_info['id'])
+        target_temp = int(request.match_info['temp'])
+        await self.cbpi.bus.fire(topic="kettle/%s/targettemp" % kettle_id, kettle_id=kettle_id, target_temp=target_temp)
+        return web.Response(status=204)
+
     @request_mapping(path="/{id:\d+}/temp", auth_required=False)
     async def http_temp(self, request):
         """
@@ -300,5 +323,6 @@ class KettleHttpEndpoints(HttpCrudEndpoints):
         """
         kettle_id = int(request.match_info['id'])
         temp = await self.controller.get_temp(kettle_id)
-        return web.json_response(data=dict(temp=temp, kettle_id=kettle_id))
+
+        return web.Response(status=204)
 

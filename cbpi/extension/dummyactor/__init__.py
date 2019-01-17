@@ -36,6 +36,7 @@ class CustomActor(CBPiActor):
         self.state = False
 
     def get_state(self):
+
         return self.state
 
 

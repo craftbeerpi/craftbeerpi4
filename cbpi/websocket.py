@@ -21,22 +21,10 @@ class CBPiWebSocket:
         self.cbpi.bus.register_object(self)
 
         #if self.cbpi.config.static.get("ws_push_all", False):
-        #self.cbpi.bus.register("#", self.listen)
-        self.patters = {}
-        #self.add_mapper("(actor)\/([\d])\/(on|toggle|off)\/(ok)$", self.map_actor)
-
-    def add_mapper(self, pattern, method):
-        self.patters[re.compile(pattern)] = method
-
-    async def map_actor(self, regex_result, **kwargs):
-
-        actor_id = int(regex_result.group(2))
-        return dict(topic="ACTOR_UPDATE", data=await self.cbpi.actor.get_one(actor_id))
-
+        self.cbpi.bus.register("#", self.listen)
 
 
     async def listen(self, topic, **kwargs):
-
         data = dict(topic=topic, data=dict(**kwargs))
         self.logger.debug("PUSH %s " % data)
         self.send(data)

@@ -15,13 +15,13 @@ class SystemController():
         self.cbpi.register(self, "/system")
 
     @request_mapping("/", method="GET", auth_required=False)
-    def state(self, request):
+    async def state(self, request):
         # TODO implement restart
         return web.json_response(data=dict(
             actor=self.cbpi.actor.get_state(),
             sensor=self.cbpi.sensor.get_state(),
             kettle=self.cbpi.kettle.get_state(),
-            step=self.cbpi.step.get_state(),
+            step=await self.cbpi.step.get_state(),
             dashboard=self.cbpi.dashboard.get_state(),
             translations=self.cbpi.translation.get_all(),
             config=self.cbpi.config.get_state())

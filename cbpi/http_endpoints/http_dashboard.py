@@ -180,6 +180,8 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
                 description: successful operation
         """
         data = await request.json()
+
+        data["dbid"] = int(request.match_info['id'])
         return web.json_response(await self.cbpi.dashboard.add_content(data), dumps=json_dumps)
 
 
@@ -214,7 +216,7 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
 
 
 
-    @request_mapping(path="/{id:\d+}/content/{content_id:\d+}/move", method="PUT", auth_required=False)
+    @request_mapping(path="/{id:\d+}/content/{content_id:\d+}/move", method="POST", auth_required=False)
     async def move_content(self,request):
         """
         ---
@@ -252,8 +254,9 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
                 description: successful operation
         """
         data = await request.json()
-        schema = Schema({"x": int, "y": int})
+        schema = Schema({"id": int, "x": int, "y": int})
         schema(data)
         content_id = int(request.match_info['content_id'])
+        print("MOVE",content_id)
         return web.json_response(await self.cbpi.dashboard.move_content(content_id,data["x"], data["y"]), dumps=json_dumps)
 

@@ -154,3 +154,11 @@ class KettleController(CRUDController):
         sensor_id = kettle.sensor
 
         return await self.cbpi.sensor.get_value(sensor_id)
+
+    @on_event(topic="kettle/+/targettemp")
+    async def set_target_temp(self, kettle_id, target_temp, **kwargs) -> None:
+
+        kettle = self.cache[int(kettle_id)]
+        kettle.target_temp = int(target_temp)
+        await self.model.update(**kettle.__dict__)
+        await self.cbpi.bus.fire("kettle/%s/targettemp/set" % kettle_id)

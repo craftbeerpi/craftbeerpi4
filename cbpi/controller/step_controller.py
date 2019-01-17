@@ -56,8 +56,8 @@ class StepController(CRUDController):
             self.current_job = await self.cbpi.job.start_job(self.current_step.run(), step.name, "step")
 
 
-    def get_state(self):
-        return dict(items=self.get_all(),types=self.types,is_running=self.is_running(),current_step=self.current_step)
+    async def get_state(self):
+        return dict(items=await self.get_all(),types=self.types,is_running=self.is_running(),current_step=self.current_step)
 
     @on_event("step/action")
     async def handle_action(self, action, **kwargs):

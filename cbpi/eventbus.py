@@ -115,7 +115,8 @@ class CBPiEventBus(object):
 
         futures = {}
 
-        print("FIRE",topic, kwargs)
+
+        self.logger.info("FIRE %s %s" % (topic, kwargs))
 
         async def wait(futures):
             if(len(futures) > 0):
