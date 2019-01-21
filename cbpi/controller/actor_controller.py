@@ -35,7 +35,7 @@ class ActorController(CRUDController):
         return dict(items=self.cache,types=self.types)
 
     async def _init_actor(self, actor):
-        print("INit ACTOR")
+
         try:
             if actor.type in self.types:
                 cfg = actor.config.copy()

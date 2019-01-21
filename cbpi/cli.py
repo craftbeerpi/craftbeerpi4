@@ -1,3 +1,4 @@
+import argparse
 import logging
 
 from cbpi.craftbeerpi import CraftBeerPi
@@ -24,18 +25,33 @@ def create_home_folder_structure():
     pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config')).mkdir(parents=True, exist_ok=True)
 
+def copy_splash():
+    srcfile = os.path.join(os.path.dirname(__file__), "config", "splash.png")
+    destfile = os.path.join(".", 'config')
+    shutil.copy(srcfile, destfile)
 
 def main():
+    parser = argparse.ArgumentParser(description='Welcome to CraftBeerPi 4')
+    parser.add_argument("action", type=str, help="start,stop,restart,setup")
 
-    create_home_folder_structure()
-    create_plugin_file()
-    create_config_file()
+    args = parser.parse_args()
 
-    #logging.basicConfig(level=logging.INFO, filename='./logs/app.log', filemode='a', format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    logging.basicConfig(level=logging.INFO, filename='./logs/app.log', filemode='a', format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
 
-    cbpi = CraftBeerPi()
-    cbpi.start()
+    if args.action == "setup":
+        create_home_folder_structure()
+        create_plugin_file()
+        create_config_file()
+        copy_splash()
+
+    if args.action == "start":
+
+        cbpi = CraftBeerPi()
+        cbpi.start()
+
+    parser.print_help()
+
 
 
 

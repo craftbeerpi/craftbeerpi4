@@ -32,7 +32,7 @@ class HttpCrudEndpoints():
     @request_mapping(path="/", method="POST", auth_required=False)
     async def http_add(self, request):
         data = await request.json()
-        print(data)
+
 
         obj = await self.controller.add(**data)
         return web.json_response(obj, dumps=json_dumps)

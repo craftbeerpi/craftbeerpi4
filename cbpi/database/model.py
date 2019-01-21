@@ -81,10 +81,34 @@ class StepModel(DBModel):
 
     @classmethod
     async def reset_all_steps(cls):
-        print("RESET ALL STEPS NOW")
+
         async with aiosqlite.connect(DATABASE_FILE) as db:
             await db.execute("UPDATE %s SET state = 'I', stepstate = NULL , start = NULL, end = NULL " % cls.__table_name__)
             await db.commit()
+
+    @classmethod
+    async def sort(cls, new_order):
+
+        async with aiosqlite.connect(DATABASE_FILE) as db:
+            for key, value in new_order.items():
+                print("ORDER", key, value)
+                await db.execute("UPDATE %s SET '%s' = ? WHERE id = ?" % (cls.__table_name__, "order"), (value, key))
+            await db.commit()
+
+    @classmethod
+    async def get_max_order(cls):
+
+
+        async with aiosqlite.connect(DATABASE_FILE) as db:
+            db.row_factory = aiosqlite.Row
+            db.row_factory = DBModel.dict_factory
+            async with db.execute("SELECT max(step.'order') as 'order' FROM %s" % cls.__table_name__) as cursor:
+                row = await cursor.fetchone()
+                if row is not None:
+                    return row.get("order")
+                else:
+                    return 0
+
 
 class DashboardModel(DBModel):
     __fields__ = ["name"]

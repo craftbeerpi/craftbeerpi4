@@ -224,3 +224,10 @@ class StepHttpEndpoints(HttpCrudEndpoints):
         """
         await self.cbpi.bus.fire("step/stop")
         return web.Response(status=204)
+
+    @request_mapping(path="/sort", method="POST", auth_required=False)
+    async def http_sort(self, request):
+        data = await request.json()
+        print(data)
+        await self.cbpi.step.sort(data)
+        return web.Response(status=204)

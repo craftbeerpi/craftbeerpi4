@@ -47,6 +47,7 @@ class CBPiSimpleStep(metaclass=ABCMeta):
         '''
 
         while self.running():
+
             try:
                 await self.run_cycle()
             except Exception as e:

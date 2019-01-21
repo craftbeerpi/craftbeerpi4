@@ -53,7 +53,7 @@ async def error_middleware(request, handler):
         return web.json_response(status=500, data={'error': message})
     except MultipleInvalid as ex:
         return web.json_response(status=500, data={'error': str(ex)})
-    return web.json_response({'error': message})
+    return web.json_response(status=500, data={'error': message})
 
 class CraftBeerPi():
 
@@ -160,7 +160,7 @@ class CraftBeerPi():
             }
             switcher[http_method]()
 
-        print("ADDD ", routes)
+
         if url_prefix != "/":
             logger.debug("URL Prefix: %s "  % (url_prefix,))
             sub = web.Application()
@@ -169,7 +169,7 @@ class CraftBeerPi():
                 sub.add_routes([web.static('/static', static, show_index=False)])
             self.app.add_subapp(url_prefix, sub)
         else:
-            print("ADDD ", routes)
+
             self.app.add_routes(routes)
 
     def _swagger_setup(self):

@@ -16,9 +16,13 @@ class CustomStepCBPi(CBPiSimpleStep):
     async def run_cycle(self):
         print("RUN", self.name)
         self.i = self.i + 1
-        if self.i == 5:
+        await asyncio.sleep(5)
+        print("WAIT")
+        self.next()
+        #if self.i == 5:
         #    print("NEXT")
-            self.next()
+
+
         #self.cbpi.notify(key="step", message="HELLO FROM STEP")
 
 

@@ -204,3 +204,16 @@ class StepController(CRUDController):
 
         await self.model.reset_all_steps()
 
+    async def sort(self, data):
+        await self.model.sort(data)
+
+    async def _pre_add_callback(self, data):
+        order = await self.model.get_max_order()
+        data["order"] = 1 if order is None else order + 1
+        data["state"] = "I"
+        return await super()._pre_add_callback(data)
+
+
+
+
+
