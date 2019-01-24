@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from asyncio import Future
 from cbpi.api import *
@@ -76,7 +77,7 @@ class ActorController(CRUDController):
 
 
     @on_event(topic="actor/+/toggle")
-    async def toggle(self, actor_id, power=100, **kwargs) -> None:
+    async def toggle(self, actor_id, power=100, time=None, **kwargs) -> None:
         """
         Method to toggle an actor on or off
         Supporting Event Topic "actor/+/toggle"
@@ -86,18 +87,23 @@ class ActorController(CRUDController):
         :return:
         """
 
+
+
         self.logger.debug("TOGGLE %s" % actor_id)
         actor_id = int(actor_id)
         if actor_id in self.cache:
             actor = self.cache[actor_id].instance
-            if actor.state is True:
 
+            if actor.state is True:
                 await self.off(actor_id=actor_id)
             else:
-
-
                 await self.on(actor_id=actor_id)
 
+            if time is not None:
+                async def time_toggle(cbpi, actor_id, time):
+                    await asyncio.sleep(time)
+                    await cbpi.bus.fire("actor/%s/off" % actor_id, actor_id = actor_id)
+                await self.cbpi.job.start_job(time_toggle(self.cbpi, actor_id, time), "actor_%s_time_toggle" % actor_id, "actor_toggle")
 
 
     @on_event(topic="actor/+/off")

@@ -22,6 +22,12 @@ except Exception:
 class CustomActor(CBPiActor):
 
     # Custom property which can be configured by the user
+    @action("test", parameters={})
+    def action1(self):
+        print("EOOOHOOO")
+        pass
+
+
 
     def init(self):
         self.state = False

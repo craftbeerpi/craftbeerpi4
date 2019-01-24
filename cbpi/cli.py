@@ -36,7 +36,7 @@ def main():
 
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.INFO, filename='./logs/app.log', filemode='a', format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    #logging.basicConfig(level=logging.INFO, filename='./logs/app.log', filemode='a', format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
 
     if args.action == "setup":

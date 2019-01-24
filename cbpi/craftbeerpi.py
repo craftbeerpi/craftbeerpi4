@@ -44,7 +44,6 @@ async def error_middleware(request, handler):
             return response
         message = response.message
     except web.HTTPException as ex:
-        print(ex)
         if ex.status != 404:
             raise
         message = ex.reason

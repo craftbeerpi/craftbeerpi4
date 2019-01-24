@@ -12,8 +12,9 @@ class ConfigHttpEndpoints(HttpCrudEndpoints):
         self.controller = cbpi.config
         self.cbpi.register(self, "/config")
 
-    @request_mapping(path="/{name}/", method="POST", auth_required=False)
+    @request_mapping(path="/{name}/", method="PUT", auth_required=False)
     async def http_post(self, request) -> web.Response:
+
         """
         ---
         description: Set config parameter
@@ -29,6 +30,7 @@ class ConfigHttpEndpoints(HttpCrudEndpoints):
             "204":
                 description: successful operation
         """
+        print("HALLO PARA")
         name = request.match_info['name']
         data = await request.json()
         await self.controller.set(name=name, value=data.get("value"))

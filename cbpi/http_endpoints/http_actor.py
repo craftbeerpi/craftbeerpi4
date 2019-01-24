@@ -220,8 +220,11 @@ class ActorHttpEndpoints(HttpCrudEndpoints):
                 description: invalid HTTP Met
         """
         actor_id = int(request.match_info['id'])
-
-        await self.cbpi.bus.fire(topic="actor/%s/toggle" % actor_id, actor_id=actor_id)
+        if await request.text():
+            data = await request.json()
+            await self.cbpi.bus.fire(topic="actor/%s/toggle" % actor_id, time=data.get("time"), actor_id=actor_id)
+        else:
+            await self.cbpi.bus.fire(topic="actor/%s/toggle" % actor_id, actor_id=actor_id)
         return web.Response(status=204)
 
     @request_mapping(path="/{id:\d+}/action", method="POST", auth_required=auth)

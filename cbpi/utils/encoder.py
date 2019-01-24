@@ -12,8 +12,8 @@ class ComplexEncoder(JSONEncoder):
         try:
 
             if isinstance(obj, ActorModel):
-                print(obj.instance)
-                print("DATA", obj.__dict__)
+
+
                 data = dict(**obj.__dict__)
                 data["state"] = obj.instance.get_state()
                 del data["instance"]
@@ -35,6 +35,6 @@ class ComplexEncoder(JSONEncoder):
             else:
                 raise TypeError()
         except Exception as e:
-            print(e)
+
             pass
         return None

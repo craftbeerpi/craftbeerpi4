@@ -84,7 +84,7 @@ class StepController(CRUDController):
         :param kwargs: 
         :return: None
         '''
-        print("REQUEST NEXT")
+
         self.starttime = time.time()
         if self.current_step is not None and self.is_next is False:
             self.logger.info("Request Next Step to start. Stopping current step")

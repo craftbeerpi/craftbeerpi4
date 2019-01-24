@@ -40,6 +40,7 @@ release = '4.0'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinxcontrib.mermaid'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

@@ -12,7 +12,7 @@ class TranslationController(object):
 
     async def init(self):
         self._cache = await TranslationModel.get_all()
-        print(self._cache)
+
 
 
     def get_all(self):

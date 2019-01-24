@@ -42,7 +42,7 @@ class HttpCrudEndpoints():
         id = int(request.match_info['id'])
         data = await request.json()
         obj = await self.controller.update(id, data)
-        print("PRINT",await self.controller.get_one(id))
+
         return web.json_response(await self.controller.get_one(id), dumps=json_dumps)
 
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)

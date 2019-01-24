@@ -153,7 +153,7 @@ class KettleHttpEndpoints(HttpCrudEndpoints):
         self.controller = cbpi.kettle
         self.cbpi.register(self, "/kettle")
 
-    @request_mapping(path="/{id:\d+}/automatic", auth_required=False)
+    @request_mapping(path="/{id:\d+}/automatic", method="POST", auth_required=False)
     async def http_automatic(self, request):
         """
         ---

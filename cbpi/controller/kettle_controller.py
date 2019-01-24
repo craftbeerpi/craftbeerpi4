@@ -24,6 +24,9 @@ class KettleController(CRUDController):
         :return: 
         '''
         await super(KettleController, self).init()
+        for key, value in self.cache.items():
+            value.state = False
+
 
     def get_state(self):
         return dict(items=self.cache,types=self.types)
@@ -44,14 +47,17 @@ class KettleController(CRUDController):
 
         await self.cbpi.bus.fire(topic="kettle/%s/automatic" % id, id=id)
 
-    @on_event(topic="job/done")
+    @on_event(topic="job/+/done")
     async def job_stop(self, key, **kwargs) -> None:
 
         match = re.match("kettle_logic_(\d+)", key)
         if match is not None:
             kid = match.group(1)
+            await self.cbpi.bus.fire(topic="kettle/%s/logic/stop" % kid)
+
             kettle = self.cache[int(kid)]
             kettle.instance = None
+            kettle.state = False
 
     @on_event(topic="kettle/+/automatic")
     async def handle_automtic_event(self, id, **kwargs):
@@ -65,6 +71,7 @@ class KettleController(CRUDController):
         '''
         id = int(id)
 
+        print("K", id)
         if id in self.cache:
 
             kettle = self.cache[id]
@@ -72,7 +79,10 @@ class KettleController(CRUDController):
             if hasattr(kettle, "instance") is False:
                 kettle.instance = None
             self._is_logic_running(id)
+
+
             if kettle.instance is None:
+                print("start")
                 if kettle.logic in self.types:
                     clazz = self.types.get("CustomKettleLogic")["class"]
                     cfg = kettle.config.copy()
@@ -80,12 +90,19 @@ class KettleController(CRUDController):
                     kettle.instance = clazz(**cfg)
 
                 await self.cbpi.job.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic%s" % id)
+                kettle.state = True
+
+                await self.cbpi.bus.fire(topic="kettle/%s/logic/start" % id)
             else:
                 kettle.instance.running = False
                 kettle.instance = None
+                kettle.state = False
+                await self.cbpi.bus.fire(topic="kettle/%s/logic/stop" % id)
 
     def _is_logic_running(self, kettle_id):
         scheduler = get_scheduler_from_app(self.cbpi.app)
+
+
 
     async def heater_on(self, id):
         '''

@@ -151,6 +151,21 @@ class StepHttpEndpoints(HttpCrudEndpoints):
         """
         return await super().http_delete_one(request)
 
+    @request_mapping(path="/", method="DELETE", auth_required=False)
+    async def http_delete_all(self, request):
+        """
+        ---
+        description: Delete all step
+        tags:
+        - Step
+        responses:
+            "204":
+                description: successful operation
+        """
+        self.cbpi.notify(key="step_delete_all", message="NOT IMPLEMENTE", type="danger")
+        return web.Response(status=204)
+
+
     @request_mapping(path="/action", auth_required=False)
     async def http_action(self, request):
         """
@@ -228,6 +243,5 @@ class StepHttpEndpoints(HttpCrudEndpoints):
     @request_mapping(path="/sort", method="POST", auth_required=False)
     async def http_sort(self, request):
         data = await request.json()
-        print(data)
         await self.cbpi.step.sort(data)
         return web.Response(status=204)

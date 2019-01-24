@@ -41,8 +41,8 @@ class MyComp(CBPiExtension, CRUDController, HttpCrudEndpoints):
     @on_event(topic="kettle/+/automatic")
     async def listen2(self, **kwargs):
 
-
-        await self.cbpi.bus.fire(topic="actor/%s/toggle" % 1, id=1)
+        pass
+        #await self.cbpi.bus.fire(topic="actor/%s/toggle" % 1, id=1)
 
 
 def setup(cbpi):

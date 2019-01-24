@@ -125,7 +125,7 @@ class HTTPSensorEndpoint(CBPiExtension):
         key = request.match_info['key']
         value = request.match_info['value']
         cache[key] = value
-        print(cache)
+
         return web.Response(status=204)
 
 
