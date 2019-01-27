@@ -10,7 +10,7 @@ As a main framework CraftBeerPi is based on `aiohttp`
 * aioHTTP https://aiohttp.readthedocs.io/en/stable/
 
 CBPiEventBus
---------
+------------
 
 One core concept of CraftBeerPi 4.x is the CBPiEventBus.
 It should be avoided to call method on a controller directly. Events should be fired and listener methods should be used.
@@ -34,7 +34,8 @@ Here an example how listen on an event.
 
 .. note::
 
-  It's imporante to add **kwargs as parameter to the listening method. This makes sure that maybe addtional event paramenter are not causing an exception.
+  It is important to add **kwargs as parameter to the listening method. This makes sure that maybe addtional event paramenter are not causing an exception.
+
 
 A list of all registered events listeners can be found under: `http://<IP_ADDRESS>:<PORT>/system/events`
 
@@ -59,7 +60,7 @@ Typically you perform just some basing parameter validation and fire an event so
 
 
 CBPiWebSocket
----------
+-------------
 
 The CBPiWebSocket is listening on `http://<IP_ADDRESS>:<PORT>/ws`
 All events are forwarded to all connected web socket clients.

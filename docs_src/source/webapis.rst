@@ -8,6 +8,8 @@ After startup of the server the API documentation is available under:
 
     http://<SERVER_IP>:<PORT>/api/doc
 
+.. swaggerv2doc:: http://0.0.0.0:8080/api/doc/swagger.json
+
 
 WebSocket API
 =============
