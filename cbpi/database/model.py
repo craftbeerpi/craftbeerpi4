@@ -38,6 +38,7 @@ class ConfigModel(DBModel):
     __table_name__ = "config"
     __json_fields__ = ["options"]
     __priamry_key__ = "name"
+    __order_by__ = "name"
 
 
 class KettleModel(DBModel):
@@ -53,6 +54,7 @@ class StepModel(DBModel):
 
     @classmethod
     async def update_step_state(cls, step_id, state):
+        print("NOW UPDATE", state)
         async with aiosqlite.connect(DATABASE_FILE) as db:
             cursor = await db.execute("UPDATE %s SET stepstate = ? WHERE id = ?" % cls.__table_name__, (json.dumps(state), step_id))
             await db.commit()

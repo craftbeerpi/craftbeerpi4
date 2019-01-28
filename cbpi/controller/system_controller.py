@@ -1,5 +1,8 @@
 import datetime
+import re
+
 from aiohttp import web
+import os
 from aiojobs.aiohttp import get_scheduler_from_app
 
 from cbpi.api import *
@@ -49,7 +52,7 @@ class SystemController():
         return web.Response(text="NOT IMPLEMENTED")
 
     @request_mapping("/shutdown", method="POST", name="ShutdownSerer", auth_required=False)
-    def restart(self, request):
+    def shutdown(self, request):
         """
         ---
         description: Shutdown System - Not implemented
@@ -94,3 +97,50 @@ class SystemController():
         """
         return web.json_response(data=self.cbpi.bus.dump())
 
+    @request_mapping(path="/logs", auth_required=False)
+    async def http_get_log(self, request):
+        result = []
+        file_pattern = re.compile("^(\w+.).log(.?\d*)")
+        for filename in sorted(os.listdir("./logs"), reverse=True):#
+            if file_pattern.match(filename):
+                result.append(filename)
+
+        return web.json_response(result)
+
+    @request_mapping(path="/logs/{name}", method="DELETE", auth_required=False)
+    async def http_delete_log(self, request):
+        log_name = request.match_info['name']
+        file_patter = re.compile("^(\w+.).log(.?\d*)")
+        file_sensor_log = re.compile("^sensor_(\d).log(.?\d*)")
+
+        if file_patter.match(log_name):
+
+            pass
+
+
+
+    @request_mapping(path="/logs", method="DELETE", auth_required=False)
+    async def http_delete_logs(self, request):
+
+        sensor_log_pattern = re.compile("sensor_([\d]).log$")
+        sensor_log_pattern2 = re.compile("sensor_([\d]).log.[\d]*$")
+
+        app_log_pattern = re.compile("app.log$")
+
+        for filename in sorted(os.listdir("./logs"), reverse=True):#
+            if app_log_pattern.match(filename):
+                with open(os.path.join("./logs/%s" % filename), 'w'):
+                    pass
+                continue
+
+
+        for filename in sorted(os.listdir("./logs/sensors"), reverse=True):
+
+            if sensor_log_pattern.match(filename):
+                with open(os.path.join("./logs/sensors/%s" % filename), 'w'):
+                    pass
+                continue
+            elif sensor_log_pattern2.match(filename):
+                os.remove(os.path.join("./logs/sensors/%s" % filename))
+
+        return web.Response(status=204)

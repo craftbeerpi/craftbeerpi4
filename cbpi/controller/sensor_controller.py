@@ -42,13 +42,14 @@ class SensorController(CRUDController):
             self.cache[sensor.id].instance.init()
             scheduler = get_scheduler_from_app(self.cbpi.app)
             self.cache[sensor.id].instance.job = await scheduler.spawn(self.cache[sensor.id].instance.run(self.cbpi), sensor.name, "sensor")
+            await self.cbpi.bus.fire(topic="sensor/%s/initialized" % sensor.id, id=sensor.id)
         else:
             self.logger.error("Sensor type '%s' not found (Available Sensor Types: %s)" % (sensor.type, ', '.join(self.types.keys())))
 
 
 
     async def stop_sensor(self, sensor):
-        print("STOP", sensor.id)
+
         sensor.instance.stop()
         await self.cbpi.bus.fire(topic="sensor/%s/stopped" % sensor.id, id=sensor.id)
 
@@ -78,4 +79,4 @@ class SensorController(CRUDController):
             await self.stop_sensor(sensor)
 
     async def _post_update_callback(self, sensor):
-        self.init_sensor(sensor)
+        await self.init_sensor(sensor)

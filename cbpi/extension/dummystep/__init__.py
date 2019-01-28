@@ -1,26 +1,31 @@
 import asyncio
+import time
 
 from cbpi.api import *
 
 
 class CustomStepCBPi(CBPiSimpleStep):
 
-    name = Property.Number(label="Test")
-
+    name1 = Property.Number(label="Test", configurable=True)
+    timer_end = Property.Number(label="Test", default_value=None)
+    temp = Property.Number(label="Temperature", default_value=50, configurable=True)
     i = 0
     
     @action(key="name", parameters=None)
     def test(self, **kwargs):
         self.name="WOOHOO"
 
+
+
     async def run_cycle(self):
-        print("RUN", self.name)
+        print("RUN", self.name1, self.managed_fields, self.timer_end)
         self.i = self.i + 1
-        await asyncio.sleep(5)
-        print("WAIT")
-        self.next()
-        #if self.i == 5:
-        #    print("NEXT")
+
+        if self.timer_end is None:
+            self.timer_end = time.time() + 10
+
+        if self.i == 10:
+            self.next()
 
 
         #self.cbpi.notify(key="step", message="HELLO FROM STEP")

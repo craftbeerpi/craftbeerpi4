@@ -54,15 +54,15 @@ class CustomLogic(CBPiKettleLogic):
         result = await self.wait_for_event("sensor/1/data", callback=my_callback)
         '''
 
-
+        value = 0
 
 
         while self.running:
 
-            print("RUN", self.test)
-            value = await self.cbpi.sensor.get_value(1)
+            value = value + 1
             print(value)
             if value >= 10:
+
                 break
             await asyncio.sleep(1)
 

@@ -39,16 +39,19 @@ class ActorController(CRUDController):
 
         try:
             if actor.type in self.types:
+
                 cfg = actor.config.copy()
                 cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
                 clazz = self.types[actor.type]["class"];
                 self.cache[actor.id].instance = clazz(**cfg)
                 self.cache[actor.id].instance.init()
-                print(actor.id, self.cache[actor.id].instance)
+
                 await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
             else:
+
                 self.logger.error("Actor type '%s' not found (Available Actor Types: %s)" % (actor.type, ', '.join(self.types.keys())))
         except Exception as e:
+
             self.logger.error("Failed to init actor %s - Reason %s" % (actor.id, str(e)))
 
     async def _stop_actor(self, actor):
@@ -153,4 +156,5 @@ class ActorController(CRUDController):
             await self._stop_actor(actor)
 
     async def _post_update_callback(self, actor):
+
         await self._init_actor(actor)

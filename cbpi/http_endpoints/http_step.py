@@ -162,7 +162,8 @@ class StepHttpEndpoints(HttpCrudEndpoints):
             "204":
                 description: successful operation
         """
-        self.cbpi.notify(key="step_delete_all", message="NOT IMPLEMENTE", type="danger")
+
+        await self.cbpi.bus.fire("step/clear")
         return web.Response(status=204)
 
 
@@ -243,5 +244,5 @@ class StepHttpEndpoints(HttpCrudEndpoints):
     @request_mapping(path="/sort", method="POST", auth_required=False)
     async def http_sort(self, request):
         data = await request.json()
-        await self.cbpi.step.sort(data)
+        await self.cbpi.bus.fire("step/sort", data=data)
         return web.Response(status=204)

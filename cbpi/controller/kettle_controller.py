@@ -53,11 +53,13 @@ class KettleController(CRUDController):
         match = re.match("kettle_logic_(\d+)", key)
         if match is not None:
             kid = match.group(1)
-            await self.cbpi.bus.fire(topic="kettle/%s/logic/stop" % kid)
+
 
             kettle = self.cache[int(kid)]
             kettle.instance = None
             kettle.state = False
+            print("FIRE")
+            await self.cbpi.bus.fire(topic="kettle/%s/logic/stop" % kid)
 
     @on_event(topic="kettle/+/automatic")
     async def handle_automtic_event(self, id, **kwargs):
@@ -89,7 +91,7 @@ class KettleController(CRUDController):
                     cfg.update(dict(cbpi=self.cbpi))
                     kettle.instance = clazz(**cfg)
 
-                await self.cbpi.job.start_job(kettle.instance.run(), "Kettle_logic_%s" % kettle.id, "kettle_logic%s" % id)
+                await self.cbpi.job.start_job(kettle.instance.run(), "kettle_logic_%s" % kettle.id, "kettle_logic%s" % id)
                 kettle.state = True
 
                 await self.cbpi.bus.fire(topic="kettle/%s/logic/start" % id)

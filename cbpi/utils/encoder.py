@@ -23,6 +23,7 @@ class ComplexEncoder(JSONEncoder):
             elif isinstance(obj, SensorModel):
                 data =  dict(**obj.__dict__)
                 data["value"] = value=obj.instance.get_value()
+                data["unit"] = value = obj.instance.get_unit()
                 data["state"] = obj.instance.get_state()
                 del data["instance"]
                 return data
@@ -35,6 +36,6 @@ class ComplexEncoder(JSONEncoder):
             else:
                 raise TypeError()
         except Exception as e:
-
+            print(e)
             pass
         return None

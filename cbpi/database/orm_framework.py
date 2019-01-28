@@ -96,6 +96,12 @@ class DBModel(object):
             await db.commit()
 
     @classmethod
+    async def delete_all(cls):
+        async with aiosqlite.connect(DATABASE_FILE) as db:
+            await db.execute("DELETE FROM %s" % cls.__table_name__)
+            await db.commit()
+
+    @classmethod
     async def insert(cls, **kwargs):
 
 

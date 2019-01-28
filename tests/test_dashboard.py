@@ -60,7 +60,8 @@ class DashboardTestCase(AioHTTPTestCase):
         resp = await self.client.get(path="/dashboard/%s/content" % (dashboard_id))
         assert resp.status == 200
 
-        resp = await self.client.put(path="/dashboard/%s/content/%s/move" % (dashboard_id, content_id), json=dict(x=1,y=1))
+
+        resp = await self.client.post(path="/dashboard/%s/content/%s/move" % (dashboard_id, content_id), json=dict(x=1,y=1))
         assert resp.status == 200
 
         resp = await self.client.delete(path="/dashboard/%s/content/%s" % (dashboard_id, content_id))

@@ -95,11 +95,11 @@ class CRUDController(metaclass=ABCMeta):
         :return: 
         '''
 
-
-
+        self.logger.debug("Update Sensor %s - %s " % (id, data))
         id = int(id)
 
         if id not in self.cache:
+            self.logger.debug("Sensor %s Not in Cache" % (id,))
             raise CBPiException("%s with id %s not found" % (self.name,id))
 
         data["id"] = id
@@ -107,17 +107,18 @@ class CRUDController(metaclass=ABCMeta):
         try:
             ### DELETE INSTANCE BEFORE UPDATE
             del data["instance"]
-        except:
+        except Exception as e:
             pass
 
         if self.caching is True:
             await self._pre_update_callback(self.cache[id])
             self.cache[id].__dict__.update(**data)
-            m = await self.model.update(**self.cache[id].__dict__)
-            await self._post_update_callback(m)
-        else:
-            m = await self.model.update(**data)
+            m = self.cache[id] = await self.model.update(**self.cache[id].__dict__)
+            await self._post_update_callback(self.cache[id])
 
+        else:
+
+            m = await self.model.update(**data)
         return m
 
 

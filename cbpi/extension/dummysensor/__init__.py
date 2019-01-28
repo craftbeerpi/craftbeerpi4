@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import asyncio
 from aiohttp import web
 from cbpi.api import *
@@ -29,9 +30,14 @@ class CustomSensor(CBPiSensor):
     def get_state(self):
         return self.state
 
+
+
     def get_value(self):
 
         return self.value
+
+    def get_unit(self):
+        return "°%s" % self.get_parameter("TEMP_UNIT", "C")
 
     def stop(self):
         pass
@@ -40,9 +46,8 @@ class CustomSensor(CBPiSensor):
         self.value = 0
         while True:
             await asyncio.sleep(self.interval)
-            self.log_data(10)
             self.value = self.value + 1
-
+            self.log_data(self.value)
             await cbpi.bus.fire("sensor/%s/data" % self.id, value=self.value)
 
 cache = {}

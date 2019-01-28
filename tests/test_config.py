@@ -46,7 +46,7 @@ class ConfigTestCase(AioHTTPTestCase):
         await self.cbpi.config.set(key, value)
         assert self.cbpi.config.get(key, 1) == value
 
-        resp = await self.client.request("POST", "/config/%s/" % key, json={'value': '1'})
+        resp = await self.client.request("PUT", "/config/%s/" % key, json={'value': '1'})
         assert resp.status == 204
         assert self.cbpi.config.get(key, -1) == "1"
 

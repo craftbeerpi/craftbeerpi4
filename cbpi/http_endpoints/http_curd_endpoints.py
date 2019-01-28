@@ -32,8 +32,6 @@ class HttpCrudEndpoints():
     @request_mapping(path="/", method="POST", auth_required=False)
     async def http_add(self, request):
         data = await request.json()
-
-
         obj = await self.controller.add(**data)
         return web.json_response(obj, dumps=json_dumps)
 
@@ -42,8 +40,7 @@ class HttpCrudEndpoints():
         id = int(request.match_info['id'])
         data = await request.json()
         obj = await self.controller.update(id, data)
-
-        return web.json_response(await self.controller.get_one(id), dumps=json_dumps)
+        return web.json_response(obj, dumps=json_dumps)
 
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
     async def http_delete_one(self, request):

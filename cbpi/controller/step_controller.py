@@ -154,8 +154,12 @@ class StepController(CRUDController):
 
             if next_step is not None:
                 step_type = self.types[next_step.type]
+                print(step_type)
+                managed_fields = self._get_manged_fields_as_array(step_type)
+                config = dict(cbpi=self.cbpi, id=next_step.id, name=next_step.name, managed_fields=managed_fields)
+                config.update(**next_step.config)
+                self._set_default(step_type, config, managed_fields)
 
-                config = dict(cbpi=self.cbpi, id=next_step.id, name=next_step.name, managed_fields=self._get_manged_fields_as_array(step_type))
                 self.current_step = step_type["class"](**config)
 
                 next_step.state = 'A'
@@ -175,6 +179,12 @@ class StepController(CRUDController):
         else:
             self.logger.error("Process Already Running")
         print("----------- END")
+
+    def _set_default(self, step_type, config, managed_fields):
+        for key in managed_fields:
+            if key not in config:
+                config[key] = None
+
 
     @on_event("step/stop")
     async def stop(self, **kwargs):
@@ -204,7 +214,13 @@ class StepController(CRUDController):
 
         await self.model.reset_all_steps()
 
-    async def sort(self, data):
+    @on_event("step/clear")
+    async def clear_all(self, **kwargs):
+        await self.model.delete_all()
+        self.cbpi.notify(key="Steps Cleared", message="Steps cleared successfully", type="success")
+
+    @on_event("step/sort")
+    async def sort(self, topic, data, **kwargs):
         await self.model.sort(data)
 
     async def _pre_add_callback(self, data):

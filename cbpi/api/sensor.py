@@ -12,6 +12,8 @@ class CBPiSensor(CBPiExtension):
         self.data_logger = None
         self.state = False
 
+    def get_parameter(self, name, default):
+        return self.cbpi.config.get(name, default)
 
 
     def log_data(self, value):
@@ -27,7 +29,7 @@ class CBPiSensor(CBPiExtension):
         self.data_logger = logging.getLogger('cbpi.sensor.%s' % self.id)
         self.data_logger.propagate = False
         self.data_logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler('./logs/sensors/sensor_%s.log' % self.id, maxBytes=2000, backupCount=10)
+        handler = RotatingFileHandler('./logs/sensor_%s.log' % self.id, maxBytes=2000, backupCount=10)
         self.data_logger.addHandler(handler)
         pass
 
@@ -39,4 +41,7 @@ class CBPiSensor(CBPiExtension):
         pass
 
     def get_value(self):
+        pass
+
+    def get_unit(self):
         pass

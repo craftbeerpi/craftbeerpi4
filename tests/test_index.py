@@ -22,7 +22,7 @@ class IndexTestCase(AioHTTPTestCase):
     async def test_404(self):
         # Test Index Page
         resp = await self.client.get(path="/abc")
-        assert resp.status == 200
+        assert resp.status == 500
 
     @unittest_run_loop
     async def test_wrong_login(self):

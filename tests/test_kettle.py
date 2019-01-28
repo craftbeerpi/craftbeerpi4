@@ -37,14 +37,14 @@ class KettleTestCase(AioHTTPTestCase):
     @unittest_run_loop
     async def test_temp(self):
         resp = await self.client.get("/kettle/1/temp")
-        assert resp.status == 200
+        assert resp.status == 204
 
         resp = await self.client.get("/kettle/1/targettemp")
         assert resp.status == 200
 
     @unittest_run_loop
     async def test_automatic(self):
-        resp = await self.client.get("/kettle/1/automatic")
+        resp = await self.client.post("/kettle/1/automatic")
         assert resp.status == 204
 
 

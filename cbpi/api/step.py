@@ -8,12 +8,13 @@ class CBPiSimpleStep(metaclass=ABCMeta):
 
     __dirty = False
     managed_fields = []
-    _interval = 0.1
+    _interval = 1
     _max_exceptions = 2
     _exception_count = 0
 
     def __init__(self, *args, **kwargs):
         self.logger = logging.getLogger(__name__)
+        print(kwargs)
         for a in kwargs:
             super(CBPiSimpleStep, self).__setattr__(a, kwargs.get(a))
         self.id = kwargs.get("id")
@@ -60,14 +61,15 @@ class CBPiSimpleStep(metaclass=ABCMeta):
             await asyncio.sleep(self._interval)
 
             if self.is_dirty():
+                print("DIRTY")
                 # Now we have to store the managed props
                 state = {}
                 for field in self.managed_fields:
+
                     state[field] = self.__getattribute__(field)
-                    #step_controller.model.update_step_state(step_controller.current_step.id, state)
 
-                    await self.cbpi.step.model.update_step_state(self.id, state)
-
+                await self.cbpi.step.model.update_step_state(self.id, state)
+                await self.cbpi.bus.fire("step/update")
                 self.reset_dirty()
 
     @abstractmethod
