@@ -30,7 +30,7 @@ class ConfigHttpEndpoints(HttpCrudEndpoints):
             "204":
                 description: successful operation
         """
-        print("HALLO PARA")
+
         name = request.match_info['name']
         data = await request.json()
         await self.controller.set(name=name, value=data.get("value"))

@@ -41,7 +41,9 @@ class SensorController(CRUDController):
             self.cache[sensor.id].instance = clazz(**cfg)
             self.cache[sensor.id].instance.init()
             scheduler = get_scheduler_from_app(self.cbpi.app)
-            self.cache[sensor.id].instance.job = await scheduler.spawn(self.cache[sensor.id].instance.run(self.cbpi), sensor.name, "sensor")
+
+            self.cache[sensor.id].instance.job = await self.cbpi.job.start_job(self.cache[sensor.id].instance.run(self.cbpi), sensor.name, "sensor")
+
             await self.cbpi.bus.fire(topic="sensor/%s/initialized" % sensor.id, id=sensor.id)
         else:
             self.logger.error("Sensor type '%s' not found (Available Sensor Types: %s)" % (sensor.type, ', '.join(self.types.keys())))

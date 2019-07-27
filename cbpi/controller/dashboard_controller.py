@@ -1,7 +1,5 @@
 import logging
 
-from voluptuous import Schema, MultipleInvalid
-
 from cbpi.controller.crud_controller import CRUDController
 from cbpi.database.model import DashboardModel, DashboardContentModel
 

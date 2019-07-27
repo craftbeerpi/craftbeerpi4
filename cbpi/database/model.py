@@ -20,6 +20,13 @@ class ActorModel(DBModel):
         'config': dict
     }
 
+    def to_json(self):
+        data = dict(**self.__dict__)
+        if hasattr(self,"instance"):
+            data["state"] = self.instance.get_state()
+            del data["instance"]
+        return data
+
 
 class SensorModel(DBModel):
     __fields__ = ["name", "type", "config"]
@@ -31,6 +38,15 @@ class SensorModel(DBModel):
         'type': str,
         'config': dict
     }
+
+    def to_json(self):
+        data = dict(**self.__dict__)
+        if hasattr(self,"instance"):
+            data["value"] = self.instance.get_value()
+            data["unit"] = self.instance.get_unit()
+            data["state"] = self.instance.get_state()
+            del data["instance"]
+        return data
 
 
 class ConfigModel(DBModel):
@@ -54,7 +70,7 @@ class StepModel(DBModel):
 
     @classmethod
     async def update_step_state(cls, step_id, state):
-        print("NOW UPDATE", state)
+
         async with aiosqlite.connect(DATABASE_FILE) as db:
             cursor = await db.execute("UPDATE %s SET stepstate = ? WHERE id = ?" % cls.__table_name__, (json.dumps(state), step_id))
             await db.commit()
@@ -93,7 +109,7 @@ class StepModel(DBModel):
 
         async with aiosqlite.connect(DATABASE_FILE) as db:
             for key, value in new_order.items():
-                print("ORDER", key, value)
+
                 await db.execute("UPDATE %s SET '%s' = ? WHERE id = ?" % (cls.__table_name__, "order"), (value, key))
             await db.commit()
 
@@ -110,6 +126,19 @@ class StepModel(DBModel):
                     return row.get("order")
                 else:
                     return 0
+
+    def to_json(self):
+        data = dict(**self.__dict__)
+        if hasattr(self,"instance"):
+            data["state_msg"] = self.instance.get_status()
+            del data["instance"]
+        return data
+
+    def __str__(self):
+        return "%s, %s, %s, %s, %s" % (self.name, self.start, self.end, self.state, self.order)
+
+    def __repr__(self) -> str:
+        return "Steps(%s, %s, %s, %s, %s)" % (self.name, self.start, self.end, self.state, self.order)
 
 
 class DashboardModel(DBModel):

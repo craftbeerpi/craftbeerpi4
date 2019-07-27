@@ -257,6 +257,6 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
         schema = Schema({"id": int, "x": int, "y": int})
         schema(data)
         content_id = int(request.match_info['content_id'])
-        print("MOVE",content_id)
+
         return web.json_response(await self.cbpi.dashboard.move_content(content_id,data["x"], data["y"]), dumps=json_dumps)
 

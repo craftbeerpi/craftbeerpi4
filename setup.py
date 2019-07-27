@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(name='cbpi',
-      version='4.0.0.1',
-      description='CraftBeerPi API',
+      version='4.0.0.4',
+      description='CraftBeerPi',
       author='Manuel Fritsch',
       author_email='manuel@craftbeerpi.com',
       url='http://web.craftbeerpi.com',
@@ -23,6 +23,7 @@ setup(name='cbpi',
           "aiojobs==0.2.2",
           "aiosqlite==0.7.0",
           "cryptography==2.3.1",
+          "requests==2.22.0",
           "voluptuous==0.11.5",
           "pyfiglet==0.7.6"
       ],

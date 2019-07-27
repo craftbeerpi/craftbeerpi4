@@ -52,6 +52,9 @@ async def error_middleware(request, handler):
         return web.json_response(status=500, data={'error': message})
     except MultipleInvalid as ex:
         return web.json_response(status=500, data={'error': str(ex)})
+    except Exception as ex:
+        return web.json_response(status=500, data={'error': str(ex)})
+
     return web.json_response(status=500, data={'error': message})
 
 class CraftBeerPi():
@@ -187,7 +190,7 @@ class CraftBeerPi():
                       api_version=self.static_config.get("version", ""),
                       contact="info@craftbeerpi.com")
 
-    def notify(self, key, message, type="info"):
+    def notify(self, key: str, message: str, type: str = "info") -> None:
         '''
         This is a convinience method to send notification to the client
         
@@ -216,7 +219,7 @@ class CraftBeerPi():
             if url is not None:
                 raise web.HTTPFound(url)
             else:
-                return web.Response(text="Hello, world")
+                return web.Response(text="Hello from CraftbeerPi!")
 
         self.app.add_routes([web.get('/', http_index)])
 

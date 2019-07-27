@@ -3,7 +3,7 @@ from cbpi.api import *
 from cbpi.controller.crud_controller import CRUDController
 from cbpi.database.model import KettleModel
 from cbpi.job.aiohttp import get_scheduler_from_app
-
+import logging
 
 class KettleController(CRUDController):
     '''
@@ -15,6 +15,7 @@ class KettleController(CRUDController):
         super(KettleController, self).__init__(cbpi)
         self.cbpi = cbpi
         self.types = {}
+        self.logger = logging.getLogger(__name__)
         self.cbpi.register(self)
 
     async def init(self):
@@ -58,7 +59,7 @@ class KettleController(CRUDController):
             kettle = self.cache[int(kid)]
             kettle.instance = None
             kettle.state = False
-            print("FIRE")
+
             await self.cbpi.bus.fire(topic="kettle/%s/logic/stop" % kid)
 
     @on_event(topic="kettle/+/automatic")
@@ -73,7 +74,7 @@ class KettleController(CRUDController):
         '''
         id = int(id)
 
-        print("K", id)
+
         if id in self.cache:
 
             kettle = self.cache[id]
@@ -84,7 +85,7 @@ class KettleController(CRUDController):
 
 
             if kettle.instance is None:
-                print("start")
+
                 if kettle.logic in self.types:
                     clazz = self.types.get("CustomKettleLogic")["class"]
                     cfg = kettle.config.copy()
@@ -104,13 +105,9 @@ class KettleController(CRUDController):
     def _is_logic_running(self, kettle_id):
         scheduler = get_scheduler_from_app(self.cbpi.app)
 
-
-
     async def heater_on(self, id):
         '''
         Convenience Method to switch the heater of a kettle on
-        
-        
         :param id: the kettle id
         :return: (boolean, string) 
         '''

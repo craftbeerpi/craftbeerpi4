@@ -1,13 +1,8 @@
-import re
-
-pattern = "(actor)\/([\d])\/(on|toggle|off)$"
-
-p = re.compile(pattern)
-result = p.match("actor/1/toggle")
-
-print(result, result.group(3))
 
 
+def test123(name: str) -> str:
+
+    print(name)
 
 
-
+test123("HALLO")

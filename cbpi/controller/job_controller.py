@@ -4,6 +4,7 @@ import logging
 from cbpi.job.aiohttp import setup, get_scheduler_from_app
 
 logger = logging.getLogger(__name__)
+
 class JobController(object):
 
     def __init__(self, cbpi):

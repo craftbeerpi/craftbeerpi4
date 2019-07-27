@@ -68,9 +68,9 @@ class KettleTestCase(AioHTTPTestCase):
         assert resp.status == 200
 
         m = await resp.json()
-        print(m)
-        sensor_id = m["id"]
 
+        sensor_id = m["id"]
+        print("KETTLE", m["id"], m)
         # Get sensor
         resp = await self.client.get(path="/kettle/%s" % sensor_id)
         assert resp.status == 200

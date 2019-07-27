@@ -114,6 +114,7 @@ class Job:
         self._started.set_result(None)
 
     def _done_callback(self, task):
+
         scheduler = self._scheduler
         scheduler._done(self)
         try:

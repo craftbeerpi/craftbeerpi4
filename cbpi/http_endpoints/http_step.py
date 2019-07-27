@@ -28,24 +28,16 @@ class StepHttpEndpoints(HttpCrudEndpoints):
 
     @request_mapping(path="/", auth_required=False)
     async def http_get_all(self, request):
+
         """
 
         ---
-        description: Switch step on
+        description: Get all steps
         tags:
         - Step
-        parameters:
-        - name: "id"
-          in: "path"
-          description: "step ID"
-          required: true
-          type: "integer"
-          format: "int64"
         responses:
             "204":
                 description: successful operation
-            "405":
-                description: invalid HTTP Met
         """
         return await super().http_get_all(request)
 

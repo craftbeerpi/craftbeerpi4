@@ -7,16 +7,13 @@ from cbpi.database.model import StepModel
 
 
 class StepController(CRUDController):
-    '''
-    The Step Controller. This controller is responsible to start and stop the brewing steps.
-    
-    '''
 
-    model = StepModel
+
 
     def __init__(self, cbpi):
-        super(StepController, self).__init__(cbpi)
-        self.caching = False
+        self.model = StepModel
+
+        self.caching = True
         self.is_stopping = False
         self.cbpi = cbpi
         self.current_task = None
@@ -28,36 +25,11 @@ class StepController(CRUDController):
         self.logger = logging.getLogger(__name__)
         self.starttime = None
 
-    async def init(self):
-        '''
-        Initializer of the the Step Controller. 
-        :return: 
-        '''
-        await super(StepController, self).init()
-
-        step = await self.model.get_by_state('A')
-        # We have an active step
-        if step is not None:
-
-            # get the type
-            step_type = self.types.get(step.type)
-
-            if step_type is None:
-                # step type not found. cant restart step
-                return
-
-            if step.stepstate is not None:
-                cfg = step.stepstate.copy()
-            else:
-                cfg = {}
-            cfg.update(dict(cbpi=self.cbpi, id=step.id, managed_fields=self._get_manged_fields_as_array(step_type)))
-
-            self.current_step = step_type["class"](**cfg)
-            self.current_job = await self.cbpi.job.start_job(self.current_step.run(), step.name, "step")
-
-
-    async def get_state(self):
-        return dict(items=await self.get_all(),types=self.types,is_running=self.is_running(),current_step=self.current_step)
+    def is_running(self):
+        if self.current_step is not None:
+            return True
+        else:
+            return False
 
     @on_event("step/action")
     async def handle_action(self, action, **kwargs):
@@ -65,171 +37,163 @@ class StepController(CRUDController):
         '''
         Event Handler for "step/action".
         It invokes the provided method name on the current step
-        
-        
+
+
         :param action: the method name which will be invoked
-        :param kwargs: 
+        :param kwargs:
         :return: None
         '''
         if self.current_step is not None:
             self.current_step.__getattribute__(action)()
 
-
-    @on_event("step/next")
-    async def next(self, **kwargs):
-        '''
-        Event Handler for "step/next".
-        It start the next step
-        
-        :param kwargs: 
-        :return: None
-        '''
-
-        self.starttime = time.time()
-        if self.current_step is not None and self.is_next is False:
-            self.logger.info("Request Next Step to start. Stopping current step")
-            self.is_next = True
-            self.current_step.stop()
-        else:
-            self.logger.info("Can Start Next")
-
-
-
-
-    @on_event("job/step/done")
-    async def _step_done(self, topic, **kwargs):
-
-        '''
-        Event Handler for "step/+/done".
-        Starts the next step
-        
-        :param topic: 
-        :param kwargs: 
-        :return: 
-        '''
-
-        # SHUTDONW DO NOTHING
-        self.logger.info("HANDLE DONE IS SHUTDONW %s  IS STOPPING %s IS NEXT %s" % ( self.cbpi.shutdown, self.is_stopping, self.is_next))
-
-
-        if self.cbpi.shutdown:
-            return
-
-        if self.is_stopping:
-            self.is_stopping = False
-            return
-        self.is_next = False
-        if self.current_step is not None:
-            await self.model.update_state(self.current_step.id, "D", int(time.time()))
-            self.current_step = None
-        await self.start()
-
-
-
     def _get_manged_fields_as_array(self, type_cfg):
 
         result = []
+
         for f in type_cfg.get("properties"):
+
             result.append(f.get("name"))
 
         return result
 
-    def is_running(self):
-        if self.current_step is not None:
-            return True
-        else:
-            return False
+    async def init(self):
+
+        # load all steps into cache
+        self.cache = await self.model.get_all()
+
+
+        for key, value in self.cache.items():
+
+            # get step type as string
+            step_type = self.types.get(value.type)
+
+            # if step has state
+            if value.stepstate is not None:
+                cfg = value.stepstate.copy()
+            else:
+                cfg = {}
+
+            # set managed fields
+            cfg.update(dict(cbpi=self.cbpi, id=value.id, managed_fields=self._get_manged_fields_as_array(step_type)))
+
+            if value.config is not None:
+                # set config values
+                cfg.update(**value.config)
+            # create step instance
+            value.instance = step_type["class"](**cfg)
+
+    async def get_all(self, force_db_update: bool = True):
+        return self.cache
+
+    def find_next_step(self):
+        # filter
+        inactive_steps = {k: v for k, v in self.cache.items() if v.state == 'I'}
+        if len(inactive_steps) == 0:
+            return None
+        return min(inactive_steps, key=lambda x: inactive_steps[x].order)
 
     @on_event("step/start")
     async def start(self, **kwargs):
 
-        '''
-        Start the first step 
-        
-        :return:None  
-        '''
-
         if self.is_running() is False:
-            next_step = await self.model.get_by_state("I")
-
-            if next_step is not None:
-                step_type = self.types[next_step.type]
-                print(step_type)
-                managed_fields = self._get_manged_fields_as_array(step_type)
-                config = dict(cbpi=self.cbpi, id=next_step.id, name=next_step.name, managed_fields=managed_fields)
-                config.update(**next_step.config)
-                self._set_default(step_type, config, managed_fields)
-
-                self.current_step = step_type["class"](**config)
-
+            next_step_id = self.find_next_step()
+            if next_step_id:
+                next_step = self.cache[next_step_id]
                 next_step.state = 'A'
                 next_step.stepstate = next_step.config
                 next_step.start = int(time.time())
                 await self.model.update(**next_step.__dict__)
-                if self.starttime is not None:
-                    end = time.time()
-                    d = end - self.starttime
-                    print("DURATION", d)
-                else:
-                    print("NORMAL START")
-                self.current_job = await self.cbpi.job.start_job(self.current_step.run(), next_step.name, "step")
+                self.current_step = next_step
+                # start the step job
+                self.current_job = await self.cbpi.job.start_job(self.current_step.instance.run(), next_step.name, "step")
                 await self.cbpi.bus.fire("step/%s/started" % self.current_step.id)
             else:
                 await self.cbpi.bus.fire("step/brewing/finished")
         else:
             self.logger.error("Process Already Running")
-        print("----------- END")
 
-    def _set_default(self, step_type, config, managed_fields):
-        for key in managed_fields:
-            if key not in config:
-                config[key] = None
+    async def next(self, **kwargs):
 
+        if self.current_step is not None:
+
+            self.is_next = True
+            self.current_step.instance.stop()
+
+    @on_event("job/step/done")
+    async def step_done(self, **kwargs):
+
+        if self.cbpi.shutdown:
+            return
+        if self.is_stopping:
+            self.is_stopping = False
+            return
+
+        if self.current_step is not None:
+
+            self.current_step.state = "D"
+            await self.model.update_state(self.current_step.id, "D", int(time.time()))
+            self.current_step = None
+
+        # start the next step
+        await self.start()
 
     @on_event("step/stop")
-    async def stop(self, **kwargs):
-
-        if self.current_step is not None:
-            self.current_step.stop()
-            self.is_stopping = True
-            self.current_step = None
-
+    async def stop_all(self, **kwargs):
+        # RESET DB
         await self.model.reset_all_steps()
+        # RELOAD all Steps from DB into cache and initialize Instances
+        await self.init()
         await self.cbpi.bus.fire("step/brewing/stopped")
-
-    @on_event("step/reset")
-    async def handle_reset(self, **kwargs):
-        '''
-        Event Handler for "step/reset".
-        Resets the current step
-
-        :param kwargs:
-        :return: None
-        '''
-        if self.current_step is not None:
-
-            await self.stop()
-            self.current_step = None
-            self.is_stopping = True
-
-        await self.model.reset_all_steps()
 
     @on_event("step/clear")
     async def clear_all(self, **kwargs):
         await self.model.delete_all()
         self.cbpi.notify(key="Steps Cleared", message="Steps cleared successfully", type="success")
 
-    @on_event("step/sort")
-    async def sort(self, topic, data, **kwargs):
-        await self.model.sort(data)
-
     async def _pre_add_callback(self, data):
+
         order = await self.model.get_max_order()
         data["order"] = 1 if order is None else order + 1
         data["state"] = "I"
+        data["stepstate"] = {}
         return await super()._pre_add_callback(data)
 
+    async def init_step(self, value: StepModel):
+        step_type = self.types.get(value.type)
 
+        # if step has state
+        if value.stepstate is not None:
+            cfg = value.stepstate.copy()
+        else:
+            cfg = {}
 
+        # set managed fields
+        cfg.update(dict(cbpi=self.cbpi, id=value.id, managed_fields=self._get_manged_fields_as_array(step_type)))
+        # set config values
+        cfg.update(**value.config)
+        # create step instance
+        value.instance = step_type["class"](**cfg)
+        return value
 
+    async def _post_add_callback(self, m: StepModel) -> None:
+        self.cache[m.id] = await self.init_step(m)
 
+    async def _post_update_callback(self, m: StepModel) -> None:
+        '''
+        :param m: step model
+        :return: None
+        '''
+        self.cache[m.id] = await self.init_step(m)
+
+    @on_event("step/sort")
+    async def sort(self, topic: 'str', data: 'dict', **kwargs):
+
+        # update order in cache
+        for id, order in data.items():
+            self.cache[int(id)].order = order
+
+        # update oder in database
+        await self.model.sort(data)
+
+    async def get_state(self):
+        return dict(items=await self.get_all(),types=self.types,is_running=self.is_running(),current_step=self.current_step)

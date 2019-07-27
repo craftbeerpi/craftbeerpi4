@@ -45,5 +45,3 @@ class CBPiActor(CBPiExtension, metaclass=ABCMeta):
 
         pass
 
-    def reprJSON(self):
-        return dict(state=True)

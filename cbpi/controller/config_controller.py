@@ -6,7 +6,7 @@ from cbpi.database.model import ConfigModel
 from cbpi.utils import load_config
 
 
-class ConfigController():
+class ConfigController:
     '''
     The main actor controller
     '''
@@ -24,14 +24,13 @@ class ConfigController():
 
     async def init(self):
         this_directory = os.path.dirname(__file__)
-
         self.static = load_config("./config/config.yaml")
         items = await self.model.get_all()
         for key, value in items.items():
             self.cache[value.name] = value
 
     def get(self, name, default=None):
-        self.logger.info("GET CONFIG VALUE %s (default %s)" % (name, default))
+        self.logger.debug("GET CONFIG VALUE %s (default %s)" % (name, default))
         if name in self.cache and self.cache[name].value is not None:
             return self.cache[name].value
         else:

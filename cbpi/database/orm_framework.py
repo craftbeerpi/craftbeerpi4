@@ -167,3 +167,7 @@ class DBModel(object):
         for idx, col in enumerate(cursor.description):
             d[col[0]] = row[idx]
         return d
+
+    def to_json(self):
+
+        return self.__dict__

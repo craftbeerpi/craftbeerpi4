@@ -17,9 +17,11 @@ class StepTestCase(AioHTTPTestCase):
     async def test_get(self):
 
         resp = await self.client.request("GET", "/step")
+        print(resp)
         assert resp.status == 200
 
         resp = await self.client.request("GET", "/step/types")
+        print(resp)
         assert resp.status == 200
 
 
@@ -28,14 +30,15 @@ class StepTestCase(AioHTTPTestCase):
         data = {
             "name": "Test",
             "type": "CustomStepCBPi",
+            "config": {}
         }
 
-        # Add new sensor
+        # Add new step
         resp = await self.client.post(path="/step/", json=data)
         assert resp.status == 200
 
         m = await resp.json()
-        print(m)
+        print("Step", m)
         sensor_id = m["id"]
 
         # Get sensor
@@ -68,31 +71,37 @@ class StepTestCase(AioHTTPTestCase):
         if future in done:
             pass
 
+
+
     @unittest_run_loop
     async def test_process(self):
-        await self.cbpi.step.stop()
 
-        with mock.patch.object(self.cbpi.step, 'start', wraps=self.cbpi.step.start) as mock_obj:
+        step_ctlr = self.cbpi.step
 
+
+        await step_ctlr.clear_all()
+        await  step_ctlr.add(**{"name": "Kettle1", "type": "CustomStepCBPi", "config": {"name1": "1", "temp": 99}})
+        await  step_ctlr.add(**{"name": "Kettle1", "type": "CustomStepCBPi", "config": {"name1": "1", "temp": 99}})
+        await  step_ctlr.add(**{"name": "Kettle1", "type": "CustomStepCBPi", "config": {"name1": "1", "temp": 99}})
+
+        await step_ctlr.stop_all()
+
+        future = self.create_wait_callback("step/+/started")
+        await step_ctlr.start()
+        await self.wait(future)
+
+        for i in range(len(step_ctlr.cache)-1):
             future = self.create_wait_callback("step/+/started")
-            await self.cbpi.step.start()
+            await step_ctlr.next()
             await self.wait(future)
 
-            future = self.create_wait_callback("step/+/started")
-            await self.cbpi.step.next()
-            await self.wait(future)
+        await self.print_steps()
 
-            future = self.create_wait_callback("step/+/started")
-            await self.cbpi.step.next()
-            await self.wait(future)
 
-            future = self.create_wait_callback("step/+/started")
-            await self.cbpi.step.next()
-            await self.wait(future)
 
-            future = self.create_wait_callback("job/step/done")
-            await self.cbpi.step.stop()
-            await self.wait(future)
-            print("COUNT", mock_obj.call_count)
-            print("ARGS", mock_obj.call_args_list)
+    async def print_steps(self):
 
+        s = await self.cbpi.step.get_all()
+        print(s)
+        for k, v in s.items():
+            print(k, v.to_json())

@@ -1,8 +1,9 @@
 import asyncio
 import logging
-from asyncio import Future
-from cbpi.api import *
+
 from voluptuous import Schema
+
+from cbpi.api import *
 from cbpi.controller.crud_controller import CRUDController
 from cbpi.database.model import ActorModel
 
@@ -46,6 +47,7 @@ class ActorController(CRUDController):
                 self.cache[actor.id].instance = clazz(**cfg)
                 self.cache[actor.id].instance.init()
 
+
                 await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
             else:
 
@@ -73,6 +75,7 @@ class ActorController(CRUDController):
 
         actor_id = int(actor_id)
         if actor_id in self.cache:
+
             self.logger.debug("ON %s" % actor_id)
             actor = self.cache[actor_id].instance
             actor.on(power)
@@ -141,7 +144,7 @@ class ActorController(CRUDController):
         :param m: 
         :return: 
         '''
-        print("INIT ACTION")
+
         await self._init_actor(m)
         pass
 

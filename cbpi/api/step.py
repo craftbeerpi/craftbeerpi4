@@ -1,3 +1,4 @@
+import json
 import time
 import asyncio
 import logging
@@ -6,21 +7,38 @@ from abc import abstractmethod,ABCMeta
 
 class CBPiSimpleStep(metaclass=ABCMeta):
 
-    __dirty = False
     managed_fields = []
-    _interval = 1
-    _max_exceptions = 2
-    _exception_count = 0
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, cbpi="", managed_fields=[], id="", name="", *args, **kwargs):
         self.logger = logging.getLogger(__name__)
-        print(kwargs)
-        for a in kwargs:
-            super(CBPiSimpleStep, self).__setattr__(a, kwargs.get(a))
-        self.id = kwargs.get("id")
+        self._exception_count = 0
+        self._interval = 0.1
+        self._max_exceptions = 2
+        self.__dirty = False
+        self.cbpi = cbpi
+        self.id = id
+        self.name = name
+
+        if managed_fields:
+            self.managed_fields = managed_fields
+            for a in managed_fields:
+                super(CBPiSimpleStep, self).__setattr__(a, kwargs.get(a, None))
+
         self.is_stopped = False
         self.is_next = False
         self.start = time.time()
+
+        self.logger.info(self.__repr__())
+
+    def __repr__(self) -> str:
+        mf = {}
+        has_cbpi = True if self.cbpi is not None else  False
+        for f in self.managed_fields:
+            mf[f] = super(CBPiSimpleStep, self).__getattribute__(f)
+        return json.dumps(dict(type=self.__class__.__name__, id=self.id, name=self.name, has_link_to_cbpi=has_cbpi, managed_fields=mf))
+
+    def get_status(self):
+        pass
 
     def running(self):
         '''
@@ -39,6 +57,9 @@ class CBPiSimpleStep(metaclass=ABCMeta):
 
     async def run(self):
 
+        #while self.running():
+        #    print(".... Step %s ...." % self.id)
+        #    await asyncio.sleep(0.1)
         '''
         This method in running in the background. It invokes the run_cycle method in the configured interval
         It checks if a managed variable was modified in the last exection cycle. If yes, the method will persisit the new value of the
@@ -61,7 +82,6 @@ class CBPiSimpleStep(metaclass=ABCMeta):
             await asyncio.sleep(self._interval)
 
             if self.is_dirty():
-                print("DIRTY")
                 # Now we have to store the managed props
                 state = {}
                 for field in self.managed_fields:
@@ -71,6 +91,7 @@ class CBPiSimpleStep(metaclass=ABCMeta):
                 await self.cbpi.step.model.update_step_state(self.id, state)
                 await self.cbpi.bus.fire("step/update")
                 self.reset_dirty()
+
 
     @abstractmethod
     async def run_cycle(self):

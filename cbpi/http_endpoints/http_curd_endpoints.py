@@ -22,7 +22,7 @@ class HttpCrudEndpoints():
 
     @request_mapping(path="/", auth_required=False)
     async def http_get_all(self, request):
-        return web.json_response(await self.controller.get_all(force_db_update=True), dumps=json_dumps)
+        return web.json_response(await self.controller.get_all(), dumps=json_dumps)
 
     @request_mapping(path="/{id:\d+}", auth_required=False)
     async def http_get_one(self, request):
@@ -39,6 +39,8 @@ class HttpCrudEndpoints():
     async def http_update(self, request):
         id = int(request.match_info['id'])
         data = await request.json()
+
+
         obj = await self.controller.update(id, data)
         return web.json_response(obj, dumps=json_dumps)
 

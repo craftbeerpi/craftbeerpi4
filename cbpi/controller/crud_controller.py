@@ -70,7 +70,7 @@ class CRUDController(metaclass=ABCMeta):
 
 
         await self._pre_add_callback(data)
-        print("INSSERT ADD", data)
+
 
         m = await self.model.insert(**data)
 
@@ -96,10 +96,12 @@ class CRUDController(metaclass=ABCMeta):
         '''
 
         self.logger.debug("Update Sensor %s - %s " % (id, data))
+
         id = int(id)
 
-        if id not in self.cache:
-            self.logger.debug("Sensor %s Not in Cache" % (id,))
+        if self.caching is True and id not in self.cache:
+
+            self.logger.debug("%s %s Not in Cache" % (self.name, id))
             raise CBPiException("%s with id %s not found" % (self.name,id))
 
         data["id"] = id
@@ -115,13 +117,9 @@ class CRUDController(metaclass=ABCMeta):
             self.cache[id].__dict__.update(**data)
             m = self.cache[id] = await self.model.update(**self.cache[id].__dict__)
             await self._post_update_callback(self.cache[id])
-
         else:
-
             m = await self.model.update(**data)
         return m
-
-
 
     async def _pre_delete_callback(self, m):
         '''

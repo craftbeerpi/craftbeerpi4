@@ -3,6 +3,7 @@ import asyncio
 from aiohttp import web
 from cbpi.api import *
 
+import re
 
 class CustomSensor(CBPiSensor):
 
@@ -61,6 +62,7 @@ class HTTPSensor(CBPiSensor):
 
     def init(self):
         super().init()
+
         self.state = True
 
     def get_state(self):
@@ -80,10 +82,12 @@ class HTTPSensor(CBPiSensor):
 
             try:
                 value = cache.pop(self.key, None)
+                print("HTTP SENSOR READ", value)
                 if value is not None:
                     self.log_data(value)
-                    await cbpi.bus.fire("sensor/%s" % self.id, value=value)
-            except:
+                    await cbpi.bus.fire("sensor/%s/data" % self.id, value=value)
+            except Exception as e:
+                print(e)
                 pass
 
 class HTTPSensorEndpoint(CBPiExtension):
@@ -95,6 +99,7 @@ class HTTPSensorEndpoint(CBPiExtension):
 
         :param cbpi:
         '''
+        self.pattern_check = re.compile("^[a-zA-Z0-9,.]{0,10}$")
 
         self.cbpi = cbpi
         # register component for http, events
@@ -125,10 +130,17 @@ class HTTPSensorEndpoint(CBPiExtension):
             "204":
                 description: successful operation
         """
-        print("HALLO")
+
         global cache
         key = request.match_info['key']
         value = request.match_info['value']
+        if self.pattern_check.match(key) is None:
+            return web.json_response(status=422, data={'error': "Key not matching pattern ^[a-zA-Z0-9,.]{0,10}$"})
+
+        if self.pattern_check.match(value) is None:
+            return web.json_response(status=422, data={'error': "Data not matching pattern ^[a-zA-Z0-9,.]{0,10}$"})
+
+        print("HTTP SENSOR ", key, value)
         cache[key] = value
 
         return web.Response(status=204)
