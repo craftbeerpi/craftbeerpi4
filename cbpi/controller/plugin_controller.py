@@ -1,19 +1,15 @@
-import asyncio
 import logging
 import os
 from importlib import import_module
-
+import datetime
 import aiohttp
 import yaml
-from aiohttp import web
-
-from cbpi.api import *
-from cbpi.utils.utils import load_config, json_dumps
-
-logger = logging.getLogger(__name__)
 import subprocess
 import sys
+from cbpi.api import *
+from cbpi.utils.utils import load_config
 
+logger = logging.getLogger(__name__)
 
 class PluginController():
     modules = {}
@@ -21,38 +17,79 @@ class PluginController():
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.cbpi.register(self, "/plugin")
 
-    @classmethod
+        self.plugins = {}
+        self.plugins = load_config("./config/plugin_list.txt")
+
     async def load_plugin_list(self):
         async with aiohttp.ClientSession() as session:
-            async with session.get('https://raw.githubusercontent.com/Manuel83/craftbeerpi-plugins/master/plugins_v4.yaml') as resp:
+            async with session.get('http://localhost:2202/list') as resp:
                 if (resp.status == 200):
                     data = yaml.load(await resp.text())
+                    self.plugins = data
                     return data
+
+    def installed_plugins(self):
+        return self.plugins
+
+    async def install(self, package_name):
+        async def install(cbpi, plugins, package_name):
+            data = subprocess.check_output([sys.executable, "-m", "pip", "install", package_name])
+            data = data.decode('UTF-8')
+            if package_name not in self.plugins:
+                now = datetime.datetime.now()
+                self.plugins[package_name] = dict(version="1.0", installation_date=now.strftime("%Y-%m-%d %H:%M:%S"))
+                with open('./config/plugin_list.txt', 'w') as outfile:
+                    yaml.dump(self.plugins, outfile, default_flow_style=False)
+            if data.startswith('Requirement already satisfied'):
+                self.cbpi.notify(key="p", message="Plugin already installed ", type="warning")
+            else:
+
+                self.cbpi.notify(key="p", message="Plugin installed ", type="success")
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get('http://localhost:2202/get/%s' % package_name) as resp:
+
+                if (resp.status == 200):
+                    data = await resp.json()
+                    await self.cbpi.job.start_job(install(self.cbpi, self.plugins, data["package_name"]), data["package_name"], "plugins_install")
+                    return True
+                else:
+                    self.cbpi.notify(key="p", message="Failed to install Plugin %s " % package_name, type="danger")
+                    return False
+
+    async def uninstall(self, package_name):
+        async def uninstall(cbpi, plugins, package_name):
+            print("try to uninstall", package_name)
+            try:
+                data = subprocess.check_output([sys.executable, "-m", "pip", "uninstall", "-y", package_name])
+                data = data.decode('UTF-8')
+                if data.startswith("Successfully uninstalled"):
+                    cbpi.notify(key="p", message="Plugin %s Uninstalled" % package_name, type="success")
+                else:
+                    cbpi.notify(key="p", message=data, type="success")
+            except Exception as e:
+                print(e)
+
+        if package_name in self.plugins:
+            print("Uninstall", self.plugins[package_name])
+            await self.cbpi.job.start_job(uninstall(self.cbpi, self.plugins, package_name), package_name, "plugins_uninstall")
 
     def load_plugins(self):
 
         this_directory = os.path.dirname(__file__)
-
         for filename in os.listdir(os.path.join(this_directory, "../extension")):
-
             if os.path.isdir(os.path.join(this_directory, "../extension/") + filename) is False or filename == "__pycache__":
                 continue
             try:
                 logger.info("Trying to load plugin %s" % filename)
-
                 data = load_config(os.path.join(this_directory, "../extension/%s/config.yaml" % filename))
-
                 if (data.get("version") == 4):
-
                     self.modules[filename] = import_module("cbpi.extension.%s" % (filename))
                     self.modules[filename].setup(self.cbpi)
-
                     logger.info("Plugin %s loaded successful" % filename)
                 else:
                     logger.warning("Plugin %s is not supporting version 4" % filename)
-
 
             except Exception as e:
                 print(e)
@@ -60,14 +97,7 @@ class PluginController():
 
     def load_plugins_from_evn(self):
 
-        plugins = []
-        this_directory = os.path.dirname(__file__)
-        with open("./config/plugin_list.txt") as f:
-
-            plugins = f.read().splitlines()
-            plugins = list(set(plugins))
-
-        for p in plugins:
+        for p in self.plugins:
             logger.debug("Load Plugin %s" % p)
             try:
                 logger.info("Try to load plugin:  %s " % p)
@@ -78,53 +108,6 @@ class PluginController():
             except Exception as e:
                 logger.error("FAILED to load plugin %s " % p)
                 logger.error(e)
-
-    @on_event("job/plugins_install/done")
-    async def done(self, **kwargs):
-        self.cbpi.notify(key="p", message="Plugin installed ", type="success")
-        print("DONE INSTALL PLUGIN", kwargs)
-
-    @request_mapping(path="/install", method="GET", auth_required=False)
-    async def install_plugin(self, request):
-        """
-                    ---
-                    description: Install Plugin
-                    tags:
-                    - Plugin
-                    produces:
-                    - application/json
-                    responses:
-                        "204":
-                            description: successful operation. Return "pong" text
-                        "405":
-                            description: invalid HTTP Method
-                    """
-
-        async def install(name):
-            await asyncio.sleep(5)
-            subprocess.call([sys.executable, "-m", "pip", "install", name])
-
-        print("OK")
-
-        await self.cbpi.job.start_job(install('requests'), "requests", "plugins_install")
-        return web.Response(status=204)
-
-    @request_mapping(path="/list", method="GET", auth_required=False)
-    async def get_plugins(self, request):
-        """
-            ---
-            description: Get a list of avialable plugins
-            tags:
-            - Plugin
-            produces:
-            - application/json
-            responses:
-                "200":
-                    description: successful operation. Return "pong" text
-                "405":
-                    description: invalid HTTP Method
-            """
-        return web.json_response(await self.load_plugin_list(), dumps=json_dumps)
 
     def register(self, name, clazz) -> None:
         '''

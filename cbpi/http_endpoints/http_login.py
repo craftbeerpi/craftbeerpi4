@@ -9,7 +9,6 @@ class Login():
     def __init__(self,cbpi):
         self.cbpi = cbpi
         self.cbpi.register(self, url_prefix="/")
-
         self.db = {cbpi.static_config.get("username", "cbpi"): cbpi.static_config.get("password", "cbpi")}
 
     @request_mapping(path="/logout", name="Logout", method="GET", auth_required=True)

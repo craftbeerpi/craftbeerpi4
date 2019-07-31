@@ -1,12 +1,9 @@
 import asyncio
-from unittest import mock
-
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from cbpi.craftbeerpi import CraftBeerPi
 
 
 class StepTestCase(AioHTTPTestCase):
-
 
     async def get_application(self):
         self.cbpi = CraftBeerPi()
@@ -71,13 +68,10 @@ class StepTestCase(AioHTTPTestCase):
         if future in done:
             pass
 
-
-
     @unittest_run_loop
     async def test_process(self):
 
         step_ctlr = self.cbpi.step
-
 
         await step_ctlr.clear_all()
         await  step_ctlr.add(**{"name": "Kettle1", "type": "CustomStepCBPi", "config": {"name1": "1", "temp": 99}})
@@ -96,8 +90,6 @@ class StepTestCase(AioHTTPTestCase):
             await self.wait(future)
 
         await self.print_steps()
-
-
 
     async def print_steps(self):
 

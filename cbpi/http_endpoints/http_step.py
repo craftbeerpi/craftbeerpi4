@@ -159,18 +159,35 @@ class StepHttpEndpoints(HttpCrudEndpoints):
         return web.Response(status=204)
 
 
-    @request_mapping(path="/action", auth_required=False)
+    @request_mapping(path="/action", method="POST", auth_required=False, json_schema={"action": str, "parameter": dict})
     async def http_action(self, request):
         """
-        ---
-        description: Call step action
-        tags:
-        - Step
-        responses:
-            "204":
-                description: successful operation
-        """
-        await self.cbpi.bus.fire("step/action", action="test")
+                ---
+                description: Call Step Action
+                tags:
+                - Step
+                parameters:
+                - in: body
+                  name: body
+                  description: Step Action
+                  required: true
+                  schema:
+                    type: object
+                    properties:
+                      action:
+                        type: string
+                      parameter:
+                        type: object
+                produces:
+                - application/json
+                responses:
+                    "204":
+                        description: successful operation
+                    "405":
+                        description: invalid HTTP Method
+                """
+        data = await request.json()
+        await self.cbpi.bus.fire("step/action", name=data["action"], parameter=data["parameter"])
         return web.Response(text="OK")
 
     @request_mapping(path="/start", auth_required=False)

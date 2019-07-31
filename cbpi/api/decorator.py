@@ -1,3 +1,7 @@
+from functools import wraps
+
+from voluptuous import Schema
+
 __all__ = ["request_mapping", "on_startup", "on_event", "on_mqtt_message", "on_websocket_message", "action", "background_task"]
 
 from aiohttp_auth import auth
@@ -9,7 +13,7 @@ def composed(*decs):
         return f
     return deco
 
-def request_mapping(path, name=None, method="GET", auth_required=True):
+def request_mapping(path, name=None, method="GET", auth_required=True, json_schema=None):
 
     def on_http_request(path, name=None):
         def real_decorator(func):
@@ -21,14 +25,34 @@ def request_mapping(path, name=None, method="GET", auth_required=True):
 
         return real_decorator
 
+    def validate_json_body(func):
+
+
+        @wraps(func)
+        async def wrapper(*args):
+
+            if json_schema is not None:
+                data = await args[-1].json()
+                schema = Schema(json_schema)
+                schema(data)
+
+            return await func(*args)
+
+        return wrapper
+
+
+
     if auth_required is True:
         return composed(
-            on_http_request(path,  name),
-            auth.auth_required
+            on_http_request(path, name),
+            auth.auth_required,
+            validate_json_body
+
         )
     else:
         return composed(
-            on_http_request(path, name)
+            on_http_request(path, name),
+            validate_json_body
         )
 
 def on_websocket_message(path, name=None):

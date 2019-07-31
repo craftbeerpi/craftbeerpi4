@@ -72,7 +72,7 @@ class ActorHttpEndpoints(HttpCrudEndpoints):
         - in: body
           name: body
           description: Created an actor
-          required: false
+          required: true
           schema:
             type: object
             properties:

@@ -32,6 +32,7 @@ from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
 from cbpi.controller.translation_controller import TranslationController
 from cbpi.http_endpoints.http_translation import TranslationHttpEndpoint
+from http_endpoints.http_plugin import PluginHttpEndpoints
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +62,8 @@ class CraftBeerPi():
 
     def __init__(self):
 
+        self.version = "4.0.0.1"
+
         self.static_config = load_config("./config/config.yaml")
         self.database_file = "./craftbeerpi.db"
         logger.info("Init CraftBeerPI")
@@ -68,6 +71,7 @@ class CraftBeerPi():
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
         middlewares = [web.normalize_path_middleware(), session_middleware(EncryptedCookieStorage(urandom(32))), auth.auth_middleware(policy), error_middleware]
         self.app = web.Application(middlewares=middlewares)
+        self.app["cbpi"] = self
 
         self._setup_shutdownhook()
         self.initializer = []
@@ -94,7 +98,7 @@ class CraftBeerPi():
         self.http_kettle = KettleHttpEndpoints(self)
         self.http_dashboard = DashBoardHttpEndpoints(self)
         self.http_translation = TranslationHttpEndpoint(self)
-
+        self.http_plugin = PluginHttpEndpoints(self)
         self.notification = NotificationController(self)
         self.login = Login(self)
 
@@ -125,7 +129,7 @@ class CraftBeerPi():
         '''
         self.register_http_endpoints(obj, url_prefix, static)
         self.bus.register_object(obj)
-        #self.ws.register_object(obj)
+       #self.ws.register_object(obj)
         self.job.register_background_task(obj)
         self.register_on_startup(obj)
 

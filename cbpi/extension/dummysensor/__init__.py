@@ -82,7 +82,7 @@ class HTTPSensor(CBPiSensor):
 
             try:
                 value = cache.pop(self.key, None)
-                print("HTTP SENSOR READ", value)
+
                 if value is not None:
                     self.log_data(value)
                     await cbpi.bus.fire("sensor/%s/data" % self.id, value=value)

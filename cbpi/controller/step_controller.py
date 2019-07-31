@@ -1,9 +1,11 @@
+import json
 import logging
 import time
 
 from cbpi.api import *
 from cbpi.controller.crud_controller import CRUDController
 from cbpi.database.model import StepModel
+from utils.encoder import ComplexEncoder
 
 
 class StepController(CRUDController):
@@ -31,20 +33,7 @@ class StepController(CRUDController):
         else:
             return False
 
-    @on_event("step/action")
-    async def handle_action(self, action, **kwargs):
 
-        '''
-        Event Handler for "step/action".
-        It invokes the provided method name on the current step
-
-
-        :param action: the method name which will be invoked
-        :param kwargs:
-        :return: None
-        '''
-        if self.current_step is not None:
-            self.current_step.__getattribute__(action)()
 
     def _get_manged_fields_as_array(self, type_cfg):
 
@@ -106,7 +95,7 @@ class StepController(CRUDController):
                 self.current_step = next_step
                 # start the step job
                 self.current_job = await self.cbpi.job.start_job(self.current_step.instance.run(), next_step.name, "step")
-                await self.cbpi.bus.fire("step/%s/started" % self.current_step.id)
+                await self.cbpi.bus.fire("step/%s/started" % self.current_step.id, step=next_step)
             else:
                 await self.cbpi.bus.fire("step/brewing/finished")
         else:
@@ -132,6 +121,7 @@ class StepController(CRUDController):
 
             self.current_step.state = "D"
             await self.model.update_state(self.current_step.id, "D", int(time.time()))
+            await self.cbpi.bus.fire("step/%s/done" % self.current_step.id, step=self.current_step)
             self.current_step = None
 
         # start the next step
@@ -197,3 +187,10 @@ class StepController(CRUDController):
 
     async def get_state(self):
         return dict(items=await self.get_all(),types=self.types,is_running=self.is_running(),current_step=self.current_step)
+
+    @on_event(topic="step/action")
+    async def call_action(self, name, parameter, **kwargs) -> None:
+        print(name, parameter)
+        if self.current_step is not None:
+
+            self.current_step.instance.__getattribute__(name)(**parameter)

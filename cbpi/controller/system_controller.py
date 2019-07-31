@@ -1,6 +1,7 @@
 import datetime
 import re
 
+import aiohttp
 from aiohttp import web
 import os
 from aiojobs.aiohttp import get_scheduler_from_app
@@ -15,7 +16,20 @@ class SystemController():
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.service = cbpi.actor
+
         self.cbpi.register(self, "/system")
+        self.cbpi.app.on_startup.append(self.check_for_update)
+
+
+    async def check_for_update(self, app):
+        timeout = aiohttp.ClientTimeout(total=1)
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.post('http://localhost:2202/check', json=dict(version=app["cbpi"].version)) as resp:
+                if (resp.status == 200):
+                    data = await resp.json()
+                    print(data)
+
+
 
     @request_mapping("/", method="GET", auth_required=False)
     async def state(self, request):
