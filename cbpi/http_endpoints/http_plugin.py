@@ -1,6 +1,6 @@
 from aiohttp import web
-from api import request_mapping
-from utils import json_dumps
+from cbpi.api import request_mapping
+from cbpi.utils import json_dumps
 
 
 class PluginHttpEndpoints:

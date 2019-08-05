@@ -25,7 +25,8 @@ setup(name='cbpi',
           "cryptography==2.3.1",
           "requests==2.22.0",
           "voluptuous==0.11.5",
-          "pyfiglet==0.7.6"
+          "pyfiglet==0.7.6",
+          'pandas==0.25.0'
       ],
         dependency_links=[
         'https://testpypi.python.org/pypi'

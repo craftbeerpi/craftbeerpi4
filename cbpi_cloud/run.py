@@ -52,9 +52,6 @@ async def get_package_name(request):
     return web.json_response(data=dict(package_name=package_name))
 
 
-
-
-
 app = web.Application()
 app.add_routes([
     web.get('/list', get_list),

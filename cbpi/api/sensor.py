@@ -17,22 +17,10 @@ class CBPiSensor(CBPiExtension):
 
 
     def log_data(self, value):
-
-        formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-
-        self.data_logger.debug("%s,%s" % (formatted_time, value))
-
+        self.cbpi.log.log_data(self.id, value)
 
     def init(self):
-
-
-        self.data_logger = logging.getLogger('cbpi.sensor.%s' % self.id)
-        self.data_logger.propagate = False
-        self.data_logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler('./logs/sensor_%s.log' % self.id, maxBytes=2000, backupCount=10)
-        self.data_logger.addHandler(handler)
         pass
-
 
     async def run(self, cbpi):
         self.logger.warning("Sensor Init not implemented")

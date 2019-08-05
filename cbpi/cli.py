@@ -36,6 +36,12 @@ def copy_splash():
     shutil.copy(srcfile, destfile)
     print("Splash Srceen created")
 
+def clear_db():
+    import os.path
+    if os.path.exists(os.path.join(".", "craftbeerpi.db")) is True:
+        os.remove(os.path.join(".", "craftbeerpi.db"))
+        print("database Cleared")
+
 
 def check_for_setup():
 
@@ -78,6 +84,10 @@ def main():
         create_plugin_file()
         create_config_file()
         copy_splash()
+        return
+
+    if args.action == "cleardb":
+        clear_db()
         return
 
     if args.action == "plugins":

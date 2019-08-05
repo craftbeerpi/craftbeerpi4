@@ -13,3 +13,4 @@ class UtilsTestCase(AioHTTPTestCase):
     @unittest_run_loop
     async def test_load_file(self):
         assert load_config("") is None
+

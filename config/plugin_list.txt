@@ -1,13 +1,11 @@
-SampleActor:
+cbpi-actor:
   api: 4.0
   author: CraftBeerPi11
   description: A sample Actor for CraftBeerPi
   repo_url: https://github.com/craftbeerpi/sample_actor
-SampleActor2:
+cbpi-ui:
   api: 4.0
   author: CraftBeerPi
   description: A sample Actor2 for CraftBeerPi
   repo_url: https://github.com/craftbeerpi/sample_actor
-requests:
-  installation_date: '2019-07-29 23:02:25'
-  version: '1.0'
+

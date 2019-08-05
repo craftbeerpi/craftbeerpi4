@@ -84,7 +84,9 @@ class PluginController():
             try:
                 logger.info("Trying to load plugin %s" % filename)
                 data = load_config(os.path.join(this_directory, "../extension/%s/config.yaml" % filename))
-                if (data.get("version") == 4):
+
+
+                if (data.get("active") is True and data.get("version") == 4):
                     self.modules[filename] = import_module("cbpi.extension.%s" % (filename))
                     self.modules[filename].setup(self.cbpi)
                     logger.info("Plugin %s loaded successful" % filename)

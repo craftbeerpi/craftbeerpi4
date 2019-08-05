@@ -19,6 +19,7 @@ from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
 from cbpi.controller.system_controller import SystemController
+from cbpi.controller.log_file_controller import LogController
 from cbpi.database.model import DBModel
 from cbpi.eventbus import CBPiEventBus
 from cbpi.http_endpoints.http_login import Login
@@ -32,7 +33,8 @@ from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
 from cbpi.controller.translation_controller import TranslationController
 from cbpi.http_endpoints.http_translation import TranslationHttpEndpoint
-from http_endpoints.http_plugin import PluginHttpEndpoints
+from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
+from cbpi.http_endpoints.http_system import SystemHttpEndpoints
 
 logger = logging.getLogger(__name__)
 
@@ -85,6 +87,7 @@ class CraftBeerPi():
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
         self.plugin = PluginController(self)
+        self.log = LogController(self)
         self.system = SystemController(self)
 
         self.kettle = KettleController(self)
@@ -99,6 +102,7 @@ class CraftBeerPi():
         self.http_dashboard = DashBoardHttpEndpoints(self)
         self.http_translation = TranslationHttpEndpoint(self)
         self.http_plugin = PluginHttpEndpoints(self)
+        self.http_system = SystemHttpEndpoints(self)
         self.notification = NotificationController(self)
         self.login = Login(self)
 
