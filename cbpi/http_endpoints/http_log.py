@@ -143,7 +143,7 @@ class LogHttpEndpoints:
     async def delete_log(self, request):
         """
         ---
-        description: Get log data for sensor
+        description: delete log data for sensor
         tags:
         - Log
         parameters:

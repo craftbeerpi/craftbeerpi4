@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a245e6a-2e43-4348-8759-dc1b63a4c9c8" name="Default" comment="Lots of changes">
-      <change beforePath="$PROJECT_DIR$/cbpi/controller/log_file_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/controller/log_file_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cbpi/http_endpoints/http_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/cbpi/http_endpoints/http_log.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
@@ -105,8 +104,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_log.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="74" column="47" selection-start-line="74" selection-start-column="47" selection-end-line="74" selection-end-column="47" />
+            <state relative-caret-position="206">
+              <caret line="145" column="27" selection-start-line="145" selection-start-column="27" selection-end-line="145" selection-end-column="27" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -957,7 +956,7 @@
       <workItem from="1557865115345" duration="642000" />
       <workItem from="1558267960394" duration="706000" />
       <workItem from="1559500167254" duration="104000" />
-      <workItem from="1563709285256" duration="111965000" />
+      <workItem from="1563709285256" duration="112064000" />
     </task>
     <task id="LOCAL-00001" summary="Lots of changes">
       <created>1541288846149</created>
@@ -1009,7 +1008,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="383843000" />
+    <option name="totallyTimeSpent" value="383942000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1028,10 +1027,10 @@
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.2826618" side_tool="true" weight="0.34545454" />
       <window_info anchor="bottom" id="Version Control" order="1" sideWeight="0.4993895" weight="0.32613635" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7173382" visible="true" weight="0.24545455" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7173382" weight="0.24545455" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6996337" weight="0.45454547" />
       <window_info anchor="bottom" id="Python Console" order="4" sideWeight="0.49938852" weight="0.32876712" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49571952" weight="0.3659091" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="5" sideWeight="0.49571952" visible="true" weight="0.3659091" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49979618" weight="0.32648402" />
       <window_info anchor="bottom" id="Message" order="7" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32518336" />
@@ -1415,8 +1414,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cbpi/http_endpoints/http_log.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="74" column="47" selection-start-line="74" selection-start-column="47" selection-end-line="74" selection-end-column="47" />
+        <state relative-caret-position="206">
+          <caret line="145" column="27" selection-start-line="145" selection-start-column="27" selection-end-line="145" selection-end-column="27" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
