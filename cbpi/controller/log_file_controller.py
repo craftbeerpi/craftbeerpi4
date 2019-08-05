@@ -155,7 +155,6 @@ class LogController:
         for f in all_filenames:
             zip.write(os.path.join(f))
         zip.close()
-
-        return file_name
+        return os.path.basename(file_name)
 
 
