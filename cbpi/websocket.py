@@ -1,11 +1,9 @@
 import logging
-import re
 import weakref
 from collections import defaultdict
 
 import aiohttp
 from aiohttp import web
-from cbpi.api import *
 from voluptuous import Schema
 
 from cbpi.utils import json_dumps

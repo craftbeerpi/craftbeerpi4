@@ -31,8 +31,6 @@ class CustomSensor(CBPiSensor):
     def get_state(self):
         return self.state
 
-
-
     def get_value(self):
 
         return self.value

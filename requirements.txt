@@ -1,3 +1,4 @@
+pandas
 aiohttp==3.4.4
 aiohttp-auth==0.1.1
 aiohttp-route-decorator==0.1.4

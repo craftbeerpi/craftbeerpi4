@@ -35,6 +35,7 @@ from cbpi.controller.translation_controller import TranslationController
 from cbpi.http_endpoints.http_translation import TranslationHttpEndpoint
 from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
 from cbpi.http_endpoints.http_system import SystemHttpEndpoints
+from cbpi.http_endpoints.http_log import LogHttpEndpoints
 
 logger = logging.getLogger(__name__)
 
@@ -104,6 +105,7 @@ class CraftBeerPi():
         self.http_plugin = PluginHttpEndpoints(self)
         self.http_system = SystemHttpEndpoints(self)
         self.notification = NotificationController(self)
+        self.http_log = LogHttpEndpoints(self)
         self.login = Login(self)
 
     def _setup_shutdownhook(self):

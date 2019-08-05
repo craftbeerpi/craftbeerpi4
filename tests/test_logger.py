@@ -18,7 +18,7 @@ class UtilsTestCase(AioHTTPTestCase):
 
         log_name = "test"
         #clear all logs
-        await self.cbpi.log.clear_log(log_name)
+        self.cbpi.log.clear_log(log_name)
         assert len(glob.glob('./logs/sensor_%s.log*' % log_name)) == 0
 
         # write log entries
@@ -29,11 +29,13 @@ class UtilsTestCase(AioHTTPTestCase):
 
         # read log data
         data = await self.cbpi.log.get_data(log_name, sample_rate='1s')
-
-
         assert len(data["time"]) == 5
 
-        await self.cbpi.log.clear_log(log_name)
+        assert self.cbpi.log.zip_log_data(log_name) is not None
+
+        self.cbpi.log.clear_zip(log_name)
+
+        self.cbpi.log.clear_log(log_name)
 
 
 

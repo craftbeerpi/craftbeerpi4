@@ -5,6 +5,8 @@ import os
 from logging.handlers import RotatingFileHandler
 from time import strftime, localtime
 import pandas as pd
+import zipfile
+
 
 class LogController:
 
@@ -50,6 +52,7 @@ class LogController:
         # remove duplicates
         names = set(names)
 
+        print(names)
         result = None
 
         def dateparse(time_in_secs):
@@ -89,6 +92,8 @@ class LogController:
                 data[name] = result[name].interpolate(limit_direction='both', limit=10).tolist()
         else:
             data[name] = result.interpolate().tolist()
+
+        print(data)
         return data
 
 
@@ -98,9 +103,10 @@ class LogController:
         :param name: log name as string. pattern /logs/sensor_%s.log*
         :return: list of log file names
         '''
-        return = glob.glob('./logs/sensor_%s.log*' % name)
 
-    async def clear_log(self, name:str ) -> str:
+        return [os.path.basename(x) for x in glob.glob('./logs/sensor_%s.log*' % name)]
+
+    def clear_log(self, name:str ) -> str:
         '''
 
         :param name: log name as string. pattern /logs/sensor_%s.log*
@@ -108,12 +114,48 @@ class LogController:
         '''
         all_filenames = glob.glob('./logs/sensor_%s.log*' % name)
         for f in all_filenames:
-            print(f)
+
             os.remove(f)
 
         if name in self.datalogger:
             del self.datalogger[name]
 
 
+    def get_all_zip_file_names(self, name: str) -> list:
+
+        '''
+        Return a list of all zip file names
+        :param name: 
+        :return: 
+        '''
+
+        return [os.path.basename(x) for x in glob.glob('./logs/*-sensor-%s.zip' % name)]
+
+    def clear_zip(self, name:str ) -> None:
+        """
+        clear all zip files for a sensor
+        :param name: sensor name
+        :return: None
+        """
+
+        all_filenames = glob.glob('./logs/*-sensor-%s.zip' % name)
+        for f in all_filenames:
+            os.remove(f)
+
+    def zip_log_data(self, name: str) -> str:
+        """
+        :param name: sensor name
+        :return: zip_file_name
+        """
+
+        formatted_time = strftime("%Y-%m-%d-%H_%M_%S", localtime())
+        file_name = './logs/%s-sensor-%s.zip' % (formatted_time, name)
+        zip = zipfile.ZipFile(file_name, 'w', zipfile.ZIP_DEFLATED)
+        all_filenames = glob.glob('./logs/sensor_%s.log*' % name)
+        for f in all_filenames:
+            zip.write(os.path.join(f))
+        zip.close()
+
+        return file_name
 
 

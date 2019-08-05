@@ -21,7 +21,6 @@ class CBPiMqttClient:
 
     async def listen(self, topic, **kwargs):
         if self.client is not None:
-            print(topic, kwargs)
             await self.client.publish(topic, str.encode(json.dumps(kwargs, cls=ComplexEncoder)), QOS_0)
 
 def setup(cbpi):
@@ -32,5 +31,5 @@ def setup(cbpi):
     :param cbpi: the cbpi core
     :return:
     '''
-    print("MQTT REGISTER-------------")
-    c = CBPiMqttClient(cbpi)
+    client = CBPiMqttClient(cbpi)
+

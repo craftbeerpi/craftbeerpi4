@@ -38,6 +38,8 @@ class JobController(object):
 
         self.cbpi.app.on_startup.append(spawn_job)
 
+
+
     async def start_job(self, method, name, type):
         scheduler = get_scheduler_from_app(self.cbpi.app)
         return await scheduler.spawn(method, name, type)
