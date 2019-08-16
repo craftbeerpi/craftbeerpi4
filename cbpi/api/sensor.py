@@ -1,11 +1,10 @@
-from logging.handlers import RotatingFileHandler
-from time import localtime, strftime
+import logging
+from abc import ABCMeta
 
 from cbpi.api.extension import CBPiExtension
-import logging
 
 
-class CBPiSensor(CBPiExtension):
+class CBPiSensor(CBPiExtension, metaclass=ABCMeta):
     def __init__(self, *args, **kwds):
         CBPiExtension.__init__(self, *args, **kwds)
         self.logger = logging.getLogger(__file__)

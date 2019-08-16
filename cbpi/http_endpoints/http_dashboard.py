@@ -118,7 +118,9 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
             "204":
                 description: successful operation
         """
-        return await super().http_delete_one(request)
+        id = request.match_info['id']
+        await self.cbpi.dashboard.delete_dashboard(id)
+        return web.Response(status=204)
 
     @request_mapping(path="/{id:\d+}/content", auth_required=False)
     async def get_content(self, request):

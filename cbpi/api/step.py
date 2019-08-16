@@ -2,7 +2,7 @@ import json
 import time
 import asyncio
 import logging
-from abc import abstractmethod,ABCMeta
+from abc import abstractmethod, ABCMeta
 
 
 class CBPiSimpleStep(metaclass=ABCMeta):

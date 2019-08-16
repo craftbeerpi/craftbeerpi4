@@ -180,9 +180,9 @@ class SensorHttpEndpoints(HttpCrudEndpoints):
         """
 
         ---
-        description: Toogle an actor on or off
+        description: Execute action on sensor
         tags:
-        - Actor
+        - Sensor
         parameters:
         - name: "id"
           in: "path"

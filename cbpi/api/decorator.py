@@ -2,7 +2,7 @@ from functools import wraps
 
 from voluptuous import Schema
 
-__all__ = ["request_mapping", "on_startup", "on_event", "on_mqtt_message", "on_websocket_message", "action", "background_task"]
+__all__ = ["request_mapping", "on_startup", "on_event", "action", "background_task"]
 
 from aiohttp_auth import auth
 
@@ -55,15 +55,6 @@ def request_mapping(path, name=None, method="GET", auth_required=True, json_sche
             validate_json_body
         )
 
-def on_websocket_message(path, name=None):
-    def real_decorator(func):
-        func.ws = True
-        func.key = path
-        func.name = name
-        return func
-
-    return real_decorator
-
 def on_event(topic):
     def real_decorator(func):
         func.eventbus = True
@@ -76,21 +67,11 @@ def on_event(topic):
 def action(key, parameters):
     def real_decorator(func):
         func.action = True
-
         func.key = key
         func.parameters = parameters
         return func
 
     return real_decorator
-
-def on_mqtt_message(topic):
-    def real_decorator(func):
-        func.mqtt = True
-        func.topic = topic
-        return func
-
-    return real_decorator
-
 
 def background_task(name, interval):
     def real_decorator(func):
@@ -98,7 +79,6 @@ def background_task(name, interval):
         func.name = name
         func.interval = interval
         return func
-
     return real_decorator
 
 
@@ -108,7 +88,6 @@ def on_startup(name, order=0):
         func.name = name
         func.order = order
         return func
-
     return real_decorator
 
 

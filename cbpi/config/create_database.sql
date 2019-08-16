@@ -109,3 +109,8 @@ CREATE TABLE IF NOT EXISTS dummy
     name VARCHAR(80)
 
 );
+
+
+INSERT OR IGNORE INTO config (name, value, type, description, options) VALUES ('TEMP_UNIT', 'F', 'select', 'Temperature Unit', '[{"value": "C", "label": "C"}, {"value": "F", "label": "F"}]');
+INSERT OR IGNORE INTO config (name, value, type, description, options) VALUES ('NAME', 'India Pale Ale1', 'string', 'Brew Name', 'null');
+INSERT OR IGNORE INTO config (name, value, type, description, options) VALUES ('BREWERY_NAME', 'CraftBeerPI', 'string', 'Brewery Name', 'null');

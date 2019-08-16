@@ -149,8 +149,7 @@ class ActorController(CRUDController):
         pass
 
     async def _pre_delete_callback(self, actor_id):
-        #if int(actor_id) not in self.cache:
-        #    return
+
         if self.cache[int(actor_id)].instance is not None:
             await self._stop_actor(self.cache[int(actor_id)])
 

@@ -78,5 +78,14 @@
         </library>
       </libraries>
     </data-source>
+    <data-source source="LOCAL" name="craftbeerpi.db test" uuid="2513ed7e-a63e-406f-b4b6-435eaa982255">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/cbpi4_test/2019-08-08-001/craftbeerpi.db</jdbc-url>
+      <driver-properties>
+        <property name="enable_load_extension" value="true" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>

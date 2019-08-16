@@ -1,5 +1,6 @@
 import logging
 from os import urandom
+import os
 
 from aiohttp import web
 from aiohttp_auth import auth
@@ -231,7 +232,8 @@ class CraftBeerPi():
             else:
                 return web.Response(text="Hello from CraftbeerPi!")
 
-        self.app.add_routes([web.get('/', http_index)])
+
+        self.app.add_routes([web.get('/', http_index), web.static('/static', os.path.join(os.path.dirname(__file__),"static"), show_index=True)])
 
     async def init_serivces(self):
 

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='cbpi',
-      version='4.0.0.4',
+      version='4.0.0.5',
       description='CraftBeerPi',
       author='Manuel Fritsch',
       author_email='manuel@craftbeerpi.com',

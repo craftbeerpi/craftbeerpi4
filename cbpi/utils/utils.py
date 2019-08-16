@@ -7,11 +7,13 @@ import yaml
 
 
 def load_config(fname):
+
     try:
         with open(fname, 'rt') as f:
-            data = yaml.load(f)
+            data = yaml.load(f, Loader=yaml.FullLoader)
         return data
     except Exception as e:
+        print(e)
         pass
 
 def json_dumps(obj):

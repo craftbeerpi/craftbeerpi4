@@ -10,6 +10,7 @@ class DashboardController(CRUDController):
     name = "Dashboard"
 
     def __init__(self, cbpi):
+        self.caching = False
         super(DashboardController, self).__init__(cbpi)
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
@@ -29,3 +30,7 @@ class DashboardController(CRUDController):
 
     async def move_content(self,content_id, x, y):
         await DashboardContentModel.update_coordinates(content_id, x, y)
+
+    async def delete_dashboard(self, dashboard_id):
+        await DashboardContentModel.delete_by_dashboard_id(dashboard_id)
+        await self.model.delete(dashboard_id)
