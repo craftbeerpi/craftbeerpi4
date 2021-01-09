@@ -40,17 +40,13 @@ class ActorController(CRUDController):
 
         try:
             if actor.type in self.types:
-
                 cfg = actor.config.copy()
                 cfg.update(dict(cbpi=self.cbpi, id=id, name=actor.name))
                 clazz = self.types[actor.type]["class"];
                 self.cache[actor.id].instance = clazz(**cfg)
                 self.cache[actor.id].instance.init()
-
-
                 await self.cbpi.bus.fire(topic="actor/%s/initialized" % actor.id, id=actor.id)
             else:
-
                 self.logger.error("Actor type '%s' not found (Available Actor Types: %s)" % (actor.type, ', '.join(self.types.keys())))
         except Exception as e:
 
@@ -149,12 +145,11 @@ class ActorController(CRUDController):
         pass
 
     async def _pre_delete_callback(self, actor_id):
-
-        if self.cache[int(actor_id)].instance is not None:
+        if hasattr(self.cache[int(actor_id)], "instance")  and self.cache[int(actor_id)].instance is not None:
             await self._stop_actor(self.cache[int(actor_id)])
 
     async def _pre_update_callback(self, actor):
-        if actor.instance is not None:
+        if hasattr(actor, "instance") and actor.instance is not None:
             await self._stop_actor(actor)
 
     async def _post_update_callback(self, actor):

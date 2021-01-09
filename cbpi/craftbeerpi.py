@@ -141,6 +141,7 @@ class CraftBeerPi():
         self.register_on_startup(obj)
 
     def register_http_endpoints(self, obj, url_prefix=None, static=None):
+        
 
         if url_prefix is None:
             logger.debug("URL Prefix is None for %s. No endpoints will be registered. Please set / explicit if you want to add it to the root path" % obj)
@@ -173,16 +174,16 @@ class CraftBeerPi():
             }
             switcher[http_method]()
 
-
+        print("URL PREFIX", url_prefix)
         if url_prefix != "/":
             logger.debug("URL Prefix: %s "  % (url_prefix,))
             sub = web.Application()
             sub.add_routes(routes)
             if static is not None:
-                sub.add_routes([web.static('/static', static, show_index=False)])
+                sub.add_routes([web.static('/static', static, show_index=True)])
             self.app.add_subapp(url_prefix, sub)
         else:
-
+            
             self.app.add_routes(routes)
 
     def _swagger_setup(self):
@@ -195,6 +196,7 @@ class CraftBeerPi():
         This is the api for CraftBeerPi
         """
 
+        print("SWAGGER.......")
         setup_swagger(self.app,
                       description=long_description,
                       title=self.static_config.get("name", "CraftBeerPi"),
@@ -227,12 +229,14 @@ class CraftBeerPi():
     def _setup_http_index(self):
         async def http_index(request):
             url = self.config.static.get("index_url")
+            
             if url is not None:
+
                 raise web.HTTPFound(url)
             else:
                 return web.Response(text="Hello from CraftbeerPi!")
 
-
+        
         self.app.add_routes([web.get('/', http_index), web.static('/static', os.path.join(os.path.dirname(__file__),"static"), show_index=True)])
 
     async def init_serivces(self):
@@ -258,4 +262,4 @@ class CraftBeerPi():
 
 
     def start(self):
-        web.run_app(self.init_serivces(), port=self.static_config.get("port", 8080))
+        web.run_app(self.init_serivces(), port=self.static_config.get("port", 2202))

@@ -72,12 +72,12 @@ class SensorController(CRUDController):
     async def _pre_delete_callback(self, sensor_id):
         if int(sensor_id) not in self.cache:
             return
-        if self.cache[int(sensor_id)].instance is not None:
+        if hasattr(self.cache[int(sensor_id)], "instance") and self.cache[int(sensor_id)].instance is not None:
             await self.stop_sensor(self.cache[int(sensor_id)])
 
     async def _pre_update_callback(self, sensor):
 
-        if sensor.instance is not None:
+        if hasattr(sensor, "instance") and sensor.instance is not None:
             await self.stop_sensor(sensor)
 
     async def _post_update_callback(self, sensor):

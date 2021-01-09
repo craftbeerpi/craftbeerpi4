@@ -141,6 +141,7 @@ def remove(package_name):
     return True
 
 def main():
+    
     parser = argparse.ArgumentParser(description='Welcome to CraftBeerPi 4')
     parser.add_argument("action", type=str, help="start,stop,restart,setup,plugins")
     parser.add_argument("--name", type=str, help="Plugin name")

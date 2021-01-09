@@ -2,7 +2,7 @@
 name: CraftBeerPi
 version: 4.0
 
-index_url: /ui/static/index.html
+index_url: /cbpi_ui/static/index.html
 
 port: 8080
 

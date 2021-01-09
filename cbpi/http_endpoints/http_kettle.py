@@ -1,12 +1,12 @@
 from aiohttp import web
 from cbpi.api import *
 
-
 from cbpi.http_endpoints.http_curd_endpoints import HttpCrudEndpoints
 auth = False
 
 
 class KettleHttpEndpoints(HttpCrudEndpoints):
+
     @request_mapping(path="/types", auth_required=False)
     async def get_types(self, request):
         return await super().get_types(request)
@@ -152,6 +152,7 @@ class KettleHttpEndpoints(HttpCrudEndpoints):
         super().__init__(cbpi)
         self.controller = cbpi.kettle
         self.cbpi.register(self, "/kettle")
+
 
     @request_mapping(path="/{id:\d+}/automatic", method="POST", auth_required=False)
     async def http_automatic(self, request):
@@ -325,4 +326,3 @@ class KettleHttpEndpoints(HttpCrudEndpoints):
         temp = await self.controller.get_temp(kettle_id)
 
         return web.Response(status=204)
-

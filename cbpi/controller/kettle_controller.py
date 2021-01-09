@@ -168,7 +168,6 @@ class KettleController(CRUDController):
             raise SensorException("Sensor not defined for kettle id %s" % id)
 
         sensor_id = kettle.sensor
-
         return await self.cbpi.sensor.get_value(sensor_id)
 
     @on_event(topic="kettle/+/targettemp")

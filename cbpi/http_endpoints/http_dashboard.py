@@ -141,6 +141,8 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
                 description: successful operation
         """
         dashboard_id = int(request.match_info['id'])
+
+
         return web.json_response(await self.cbpi.dashboard.get_content(dashboard_id), dumps=json_dumps)
 
 
@@ -165,100 +167,15 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
           schema:
             type: object
             properties:
-              element_id:
-                type: string
-              type:
-                type: string
-              x:
-                type: "integer"
-                format: "int64"
-              y:
-                type: "integer"
-                format: "int64"
-              config:
-                type: object
+              elements:
+                type: array
+              pathes:
+                type: array
         responses:
             "200":
                 description: successful operation
         """
         data = await request.json()
-
-        data["dbid"] = int(request.match_info['id'])
-        return web.json_response(await self.cbpi.dashboard.add_content(data), dumps=json_dumps)
-
-
-    @request_mapping(path="/{id:\d+}/content/{content_id:\d+}", method="DELETE", auth_required=False)
-    async def delete_content(self, request):
-        """
-        ---
-        description: Delete Dashboard Content
-        tags:
-        - Dashboard
-        parameters:
-        - name: "id"
-          in: "path"
-          description: "Dashboard ID"
-          required: true
-          type: "integer"
-          format: "int64"
-        - name: "content_id"
-          in: "path"
-          description: "Dashboard Content ID"
-          required: true
-          type: "integer"
-          format: "int64"
-        responses:
-            "204":
-                description: successful operation
-        """
-        content_id = int(request.match_info['content_id'])
-
-        await self.cbpi.dashboard.delete_content(content_id)
+        dashboard_id = int(request.match_info['id'])
+        await self.cbpi.dashboard.add_content(dashboard_id, data)
         return web.Response(status=204)
-
-
-
-    @request_mapping(path="/{id:\d+}/content/{content_id:\d+}/move", method="POST", auth_required=False)
-    async def move_content(self,request):
-        """
-        ---
-        description: Get Dashboard Content
-        tags:
-        - Dashboard
-        parameters:
-        - name: "id"
-          in: "path"
-          description: "Dashboard ID"
-          required: true
-          type: "integer"
-          format: "int64"
-        - name: "content_id"
-          in: "path"
-          description: "Content ID"
-          required: true
-          type: "integer"
-          format: "int64"
-        - name: body
-          in: body
-          description: Dashboard Content
-          required: true
-          schema:
-            type: object
-            properties:
-              x:
-                type: "integer"
-                format: "int64"
-              y:
-                type: "integer"
-                format: "int64"
-        responses:
-            "200":
-                description: successful operation
-        """
-        data = await request.json()
-        schema = Schema({"id": int, "x": int, "y": int})
-        schema(data)
-        content_id = int(request.match_info['content_id'])
-
-        return web.json_response(await self.cbpi.dashboard.move_content(content_id,data["x"], data["y"]), dumps=json_dumps)
-

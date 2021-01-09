@@ -38,12 +38,12 @@ CREATE TABLE IF NOT EXISTS kettle
 (
     id INTEGER PRIMARY KEY NOT NULL,
     name VARCHAR(80),
-    sensor VARCHAR(80),
-    heater VARCHAR(10),
+    sensor INTEGER,
+    heater INTEGER,
     automatic VARCHAR(255),
     logic VARCHAR(50),
     config VARCHAR(1000),
-    agitator VARCHAR(10),
+    agitator INTEGER,
     target_temp INTEGER,
     height INTEGER,
     diameter INTEGER

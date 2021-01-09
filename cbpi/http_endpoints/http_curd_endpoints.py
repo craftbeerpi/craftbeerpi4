@@ -39,8 +39,6 @@ class HttpCrudEndpoints():
     async def http_update(self, request):
         id = int(request.match_info['id'])
         data = await request.json()
-
-
         obj = await self.controller.update(id, data)
         return web.json_response(obj, dumps=json_dumps)
 

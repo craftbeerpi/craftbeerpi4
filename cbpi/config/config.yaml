@@ -4,7 +4,7 @@ version: 4.0.1_alpha
 
 #: /myext
 
-port: 8080
+port: 8000
 
 username: cbpi
 password: 123

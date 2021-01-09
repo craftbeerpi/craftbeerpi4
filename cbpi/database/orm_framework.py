@@ -146,9 +146,9 @@ class DBModel(object):
 
     @classmethod
     async def update(cls, **kwargs):
+        print("UPDATE")
         async with aiosqlite.connect(DATABASE_FILE) as db:
             query = 'UPDATE %s SET %s WHERE %s = ?' % (cls.__table_name__, ', '.join("'%s' = ?" % str(x) for x in cls.__fields__), cls.__priamry_key__)
-
             data = ()
             for f in cls.__fields__:
                 if f in cls.__json_fields__:
@@ -157,6 +157,7 @@ class DBModel(object):
                     data = data + (kwargs.get(f),)
 
             data = data + (kwargs.get(cls.__priamry_key__),)
+            print(query)
             cursor = await db.execute(query, data)
             await db.commit()
             return cls(kwargs)

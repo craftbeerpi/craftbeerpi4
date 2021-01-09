@@ -121,6 +121,8 @@ class ActorHttpEndpoints(HttpCrudEndpoints):
             "200":
                 description: successful operation
         """
+        print(".........")
+        print(request)
         return await super().http_update(request)
 
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)

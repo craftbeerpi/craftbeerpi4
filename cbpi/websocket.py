@@ -36,17 +36,26 @@ class CBPiWebSocket:
             self.cbpi.app.loop.create_task(send_data(ws, data))
 
     async def websocket_handler(self, request):
+        
+        
+
         ws = web.WebSocketResponse()
         await ws.prepare(request)
-
+        print(ws)
         self._clients.add(ws)
-        peername = request.transport.get_extra_info('peername')
-        if peername is not None:
-            host, port = peername
-        else:
-            host, port = "Unknowen"
-
-        self.logger.info("Client Connected - Host: %s Port: %s  - client count: %s " % (host, port, len(self._clients)))
+        try:
+            peername = request.transport.get_extra_info('peername')
+            if peername is not None:
+                print(peername)
+                host = peername[0]
+                port = peername[1]
+            else:
+                host, port = "Unknowen"
+            self.logger.info("Client Connected - Host: %s Port: %s  - client count: %s " % (host, port, len(self._clients)))
+        except Exception as e:
+            print(e)
+        
+        
         try:
             await ws.send_json(data=dict(topic="connection/success"))
             async for msg in ws:
@@ -77,3 +86,4 @@ class CBPiWebSocket:
         self.logger.info("Web Socket Close")
 
         return ws
+        
