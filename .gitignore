@@ -6,4 +6,5 @@ dist
 *.log
 cbpi.egg-info
 logs
+venv
 cbpi/extension/ui
