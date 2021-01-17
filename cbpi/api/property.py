@@ -29,8 +29,6 @@ class Property(object):
         '''
         def __init__(self, label, configurable=False, default_value=None, unit="", description=""):
             '''
-            Test
-            
             
             :param label: 
             :param configurable: 

@@ -3,7 +3,61 @@ import time
 import asyncio
 import logging
 from abc import abstractmethod, ABCMeta
+import logging
 
+class CBPiStep(metaclass=ABCMeta):
+    def __init__(self, cbpi, id, name, props) :
+        self.cbpi = cbpi
+        self.props = {"wohoo": 0, "count": 5, **props}
+        self.id = id
+        self.name = name
+        self.status = 0
+        self.running = False
+        self.stop_reason = None
+        self.pause = False
+        self.task = None
+        self._exception_count = 0
+        self._max_exceptions = 2
+        self.state_msg = "No state"
+
+    def get_state(self):
+        return self.state_msg
+
+    def stop(self):
+        self.stop_reason = "STOP"
+        self.running = False
+        
+    def start(self):
+        self.running = True
+        self.stop_reason = None
+    
+    def next(self):
+        self.stop_reason = "NEXT"
+        self.running = False
+
+    async def reset(self): 
+        pass
+
+    async def update(self, props):
+        await self.cbpi.step2.update_props(self.id, props)
+
+    async def run(self): 
+        while self.running:
+            try:
+                await self.execute()
+            except:
+                self._exception_count += 1
+                logging.error("Step has thrown exception")
+                if self._exception_count >= self._max_exceptions:
+                    self.stop_reason = "MAX_EXCEPTIONS"
+                    return (self.id, self.stop_reason)
+            await asyncio.sleep(1)
+            
+        return (self.id, self.stop_reason)
+
+    @abstractmethod
+    async def execute(self):
+        pass
 
 class CBPiSimpleStep(metaclass=ABCMeta):
 

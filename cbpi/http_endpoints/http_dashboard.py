@@ -179,3 +179,26 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
         dashboard_id = int(request.match_info['id'])
         await self.cbpi.dashboard.add_content(dashboard_id, data)
         return web.Response(status=204)
+
+    @request_mapping(path="/{id:\d+}/content", method="DELETE", auth_required=False)
+    async def delete_conent(self, request):
+        """
+        ---
+        description: Add Dashboard Content
+        tags:
+        - Dashboard
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Dashboard ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """
+  
+        dashboard_id = int(request.match_info['id'])
+        await self.cbpi.dashboard.delete_content(dashboard_id)
+        return web.Response(status=204)

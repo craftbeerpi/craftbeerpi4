@@ -4,8 +4,7 @@ from aiohttp.web import View
 
 from . import create_scheduler
 
-__all__ = ('setup', 'spawn', 'get_scheduler', 'get_scheduler_from_app',
-           'atomic')
+__all__ = ('setup', 'spawn', 'get_scheduler', 'get_scheduler_from_app', 'atomic')
 
 
 def get_scheduler(request):

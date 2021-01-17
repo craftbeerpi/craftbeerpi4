@@ -6,6 +6,7 @@ __all__ = ["CBPiActor",
            "on_startup",
            "request_mapping",
            "action",
+           "parameters",
            "background_task",
            "CBPiKettleLogic",
            "CBPiSimpleStep",
@@ -13,7 +14,8 @@ __all__ = ["CBPiActor",
            "KettleException",
            "SensorException",
            "ActorException",
-           "CBPiSensor"]
+           "CBPiSensor",
+           "CBPiStep"]
 
 from cbpi.api.actor import *
 from cbpi.api.sensor import *

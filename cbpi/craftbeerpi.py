@@ -19,6 +19,7 @@ from cbpi.controller.notification_controller import NotificationController
 from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
+from cbpi.controller.step_controller_ng import StepControllerNg
 from cbpi.controller.system_controller import SystemController
 from cbpi.controller.log_file_controller import LogController
 from cbpi.database.model import DBModel
@@ -32,6 +33,7 @@ from cbpi.http_endpoints.http_dashboard import DashBoardHttpEndpoints
 from cbpi.http_endpoints.http_kettle import KettleHttpEndpoints
 from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
+from cbpi.http_endpoints.http_step2 import StepHttpEndpoints2
 from cbpi.controller.translation_controller import TranslationController
 from cbpi.http_endpoints.http_translation import TranslationHttpEndpoint
 from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
@@ -94,9 +96,11 @@ class CraftBeerPi():
 
         self.kettle = KettleController(self)
         self.step = StepController(self)
+        self.step2 = StepControllerNg(self)
         self.dashboard = DashboardController(self)
 
         self.http_step = StepHttpEndpoints(self)
+        self.http_step2 = StepHttpEndpoints2(self)
         self.http_sensor = SensorHttpEndpoints(self)
         self.http_config = ConfigHttpEndpoints(self)
         self.http_actor = ActorHttpEndpoints(self)
@@ -199,8 +203,8 @@ class CraftBeerPi():
         print("SWAGGER.......")
         setup_swagger(self.app,
                       description=long_description,
-                      title=self.static_config.get("name", "CraftBeerPi"),
-                      api_version=self.static_config.get("version", ""),
+                      title=self.static_config.get("name", "CraftBeerPi 4.0"),
+                      api_version=self.static_config.get("version", "4.0"),
                       contact="info@craftbeerpi.com")
 
     def notify(self, key: str, message: str, type: str = "info") -> None:
@@ -251,7 +255,7 @@ class CraftBeerPi():
         self.plugin.load_plugins()
         self.plugin.load_plugins_from_evn()
         await self.sensor.init()
-        await self.step.init()
+        await self.step2.init()
         await self.actor.init()
         await self.kettle.init()
         await self.call_initializer(self.app)

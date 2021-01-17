@@ -1,196 +1,315 @@
 {
     "elements": [
         {
-            "id": "8bf7b72b-76e8-4c7a-86da-23f211d1942b",
+            "id": "db0c8199-6935-4c77-989a-28528b6743d7",
             "name": "Kettle",
             "props": {
                 "heigth": "150",
                 "width": "100"
             },
             "type": "Kettle",
-            "x": 200,
-            "y": 115
-        },
-        {
-            "id": "78e5fe5a-6db8-4bd6-ba18-e67469cb1a0f",
-            "name": "Kettle",
-            "props": {
-                "heigth": "150",
-                "width": "100"
-            },
-            "type": "Kettle",
-            "x": 610,
-            "y": 115
-        },
-        {
-            "id": "0f45b8b5-8ebd-41b2-9bd2-a957f655b84c",
-            "name": "Kettle",
-            "props": {
-                "heigth": "150",
-                "width": "100"
-            },
-            "type": "Kettle",
-            "x": 410,
-            "y": 115
-        },
-        {
-            "id": "9d7d8ebf-ffad-4e35-96db-23d5b7f9c11c",
-            "name": "Sensor Data",
-            "props": {
-                "sensor": 1,
-                "unit": "\u00b0"
-            },
-            "type": "Sensor",
-            "x": 240,
-            "y": 230
-        },
-        {
-            "id": "97331778-eca2-4e35-b94b-3337763a372c",
-            "name": "Sensor Data",
-            "props": {
-                "sensor": 1,
-                "unit": "\u00b0"
-            },
-            "type": "Sensor",
-            "x": 450,
-            "y": 230
-        },
-        {
-            "id": "f20b7ed4-cdc8-46c2-a01a-ac0c0eab3801",
-            "name": "Sensor Data",
-            "props": {
-                "sensor": 1,
-                "unit": "\u00b0"
-            },
-            "type": "Sensor",
-            "x": 655,
-            "y": 230
-        },
-        {
-            "id": "03eec665-ab3f-423b-bfb7-6faea856937b",
-            "name": "MashTun",
-            "props": {
-                "color": "#fff",
-                "size": "10"
-            },
-            "type": "Text",
             "x": 205,
-            "y": 120
+            "y": 155
         },
         {
-            "id": "9912ec53-71c7-4499-a1df-6466a4c02607",
-            "name": "Hot Liqour Tank",
+            "id": "35f8c20b-c801-4cf5-946c-29bcf88a989b",
+            "name": "Kettle",
+            "props": {
+                "heigth": "150",
+                "width": "100"
+            },
+            "type": "Kettle",
+            "x": 400,
+            "y": 155
+        },
+        {
+            "id": "e62714ea-52c8-4544-af53-e7711fa3a087",
+            "name": "Kettle",
+            "props": {
+                "heigth": "150",
+                "width": "100"
+            },
+            "type": "Kettle",
+            "x": 585,
+            "y": 155
+        },
+        {
+            "id": "d7f576b7-7fa7-4be7-8b31-68fef3b65777",
+            "name": "Mash",
             "props": {
                 "color": "#fff",
                 "size": "10"
             },
             "type": "Text",
-            "x": 415,
-            "y": 120
+            "x": 210,
+            "y": 135
         },
         {
-            "id": "4df11ebf-a8c9-4dc1-af8e-b6566bda0137",
+            "id": "36db0df9-922c-4cf6-8222-63f1eb34e22a",
+            "name": "HLT",
+            "props": {
+                "color": "#fff",
+                "size": "10"
+            },
+            "type": "Text",
+            "x": 405,
+            "y": 135
+        },
+        {
+            "id": "7ae6a76b-712f-4d54-a661-7285b8f6d47b",
             "name": "Boil",
             "props": {
                 "color": "#fff",
                 "size": "10"
             },
             "type": "Text",
+            "x": 590,
+            "y": 140
+        },
+        {
+            "id": "dfaad0f6-455c-4da6-9c82-789c6b36e046",
+            "name": "CraftBeerPi Brewery",
+            "props": {
+                "color": "#fff",
+                "size": "26"
+            },
+            "type": "Text",
+            "x": 205,
+            "y": 75
+        },
+        {
+            "id": "4d2c8dfe-61a9-433d-83a8-72f74d17e7e5",
+            "name": "Sensor Data",
+            "props": {
+                "sensor": 1,
+                "unit": "\u00b0"
+            },
+            "type": "Sensor",
+            "x": 245,
+            "y": 260
+        },
+        {
+            "id": "13a6b89d-50c7-4efb-b940-ec174e522314",
+            "name": "Sensor Data",
+            "props": {
+                "sensor": 1,
+                "unit": "\u00b0"
+            },
+            "type": "Sensor",
+            "x": 445,
+            "y": 260
+        },
+        {
+            "id": "8d171952-791d-4f72-bfc9-dac8714b839f",
+            "name": "Sensor Data",
+            "props": {
+                "sensor": 1,
+                "unit": "\u00b0"
+            },
+            "type": "Sensor",
+            "x": 630,
+            "y": 260
+        },
+        {
+            "id": "3963a344-8223-471f-aee6-5119e69f007f",
+            "name": "TargetTemp",
+            "props": {
+                "color": "#fff",
+                "kettle": "1",
+                "size": "12",
+                "unit": "\u00b0"
+            },
+            "type": "TargetTemp",
+            "x": 215,
+            "y": 175
+        },
+        {
+            "id": "50333692-e956-4a8e-830f-934cd1d037c4",
+            "name": "TargetTemp",
+            "props": {
+                "color": "#fff",
+                "kettle": "1",
+                "size": "12",
+                "unit": "\u00b0"
+            },
+            "type": "TargetTemp",
+            "x": 410,
+            "y": 175
+        },
+        {
+            "id": "28860d2d-f326-4375-a972-4e40a07bcf29",
+            "name": "Target Temp",
+            "props": {
+                "color": "#fff",
+                "size": "10"
+            },
+            "type": "Text",
+            "x": 215,
+            "y": 160
+        },
+        {
+            "id": "2f6129ab-61a5-4080-95d3-8832f3f8d57e",
+            "name": "Target Temp",
+            "props": {
+                "color": "#fff",
+                "size": "10"
+            },
+            "type": "Text",
+            "x": 410,
+            "y": 160
+        },
+        {
+            "id": "4b3f0ef9-61a8-4be2-9f6f-f954a04a77ce",
+            "name": "TargetTemp",
+            "props": {
+                "color": "#fff",
+                "kettle": "1",
+                "size": "12",
+                "unit": "\u00b0"
+            },
+            "type": "TargetTemp",
+            "x": 595,
+            "y": 175
+        },
+        {
+            "id": "9fc5f252-7f83-4eb6-89f6-99fd343502b8",
+            "name": "Target temp",
+            "props": {
+                "color": "#fff",
+                "size": "10"
+            },
+            "type": "Text",
+            "x": 595,
+            "y": 160
+        },
+        {
+            "id": "3ec3e5d8-f82e-40c1-8c41-cb8286659d3b",
+            "name": "Led",
+            "props": {
+                "actor": 1
+            },
+            "type": "Led",
+            "x": 245,
+            "y": 220
+        },
+        {
+            "id": "2e325539-6ed9-4e0d-b1dc-de860c47a1be",
+            "name": "Heater",
+            "props": {
+                "actor": 1
+            },
+            "type": "ActorButton",
+            "x": 210,
+            "y": 380
+        },
+        {
+            "id": "78b85989-c1bc-47e3-ad7b-0defeabb9bdc",
+            "name": "Pump",
+            "props": {
+                "actor": 2
+            },
+            "type": "ActorButton",
+            "x": 305,
+            "y": 380
+        },
+        {
+            "id": "3c3f81d0-cdfd-4521-a2fe-2f039f17b583",
+            "name": "Current Temp",
+            "props": {
+                "color": "#fff",
+                "size": "10"
+            },
+            "type": "Text",
+            "x": 235,
+            "y": 280
+        },
+        {
+            "id": "0ac051db-5550-4dac-a8ba-e3c1f131704b",
+            "name": "Current Temp",
+            "props": {
+                "color": "#fff",
+                "size": "10"
+            },
+            "type": "Text",
+            "x": 430,
+            "y": 280
+        },
+        {
+            "id": "e9c833c2-6c87-4849-9ada-479ec95e79da",
+            "name": "Current Temp",
+            "props": {
+                "color": "#fff",
+                "size": "10"
+            },
+            "type": "Text",
             "x": 615,
-            "y": 120
-        },
-        {
-            "id": "e51ca9a8-e911-42ea-ba19-ca21cfed72ce",
-            "name": "Current Temp",
-            "props": {
-                "color": "#fff",
-                "size": "10"
-            },
-            "type": "Text",
-            "x": 220,
-            "y": 215
-        },
-        {
-            "id": "6eb1d953-c579-4417-89ef-55cb472517a5",
-            "name": "Current Temp",
-            "props": {
-                "color": "#fff",
-                "size": "10"
-            },
-            "type": "Text",
-            "x": 435,
-            "y": 215
-        },
-        {
-            "id": "ad3087a4-5b8f-4ade-b665-4b2acbbaecc2",
-            "name": "Current Temp",
-            "props": {
-                "color": "#fff",
-                "size": "10"
-            },
-            "type": "Text",
-            "x": 635,
-            "y": 215
-        },
-        {
-            "id": "891eac86-3d81-4438-b9c4-65035c71e52f",
-            "name": "CraftBeerPi v4.0",
-            "props": {
-                "color": "#fff",
-                "size": "30"
-            },
-            "type": "Text",
-            "x": 200,
-            "y": 65
+            "y": 280
         }
     ],
     "pathes": [
         {
             "coordinates": [
                 [
-                    670,
-                    260
+                    305,
+                    185
                 ],
                 [
-                    670,
-                    305
-                ],
-                [
-                    265,
-                    305
-                ],
-                [
-                    265,
-                    260
+                    405,
+                    185
                 ]
             ],
-            "id": "74b4bf4d-3bb8-44d8-a50b-f27c915f6218"
+            "id": "49e7684e-21a3-4e0b-8e94-60f95abee80f"
         },
         {
             "coordinates": [
+                [
+                    400,
+                    275
+                ],
                 [
                     305,
-                    230
-                ],
-                [
-                    410,
-                    230
+                    275
                 ]
             ],
-            "id": "c967d63c-7ec5-42b9-bbc3-e0d85b420670"
+            "id": "5ba909c1-49a9-46e5-a6d0-1d0350c37aa4"
         },
         {
             "coordinates": [
                 [
-                    410,
-                    145
+                    255,
+                    300
                 ],
                 [
-                    300,
-                    145
+                    255,
+                    350
+                ],
+                [
+                    555,
+                    350
+                ],
+                [
+                    555,
+                    200
+                ],
+                [
+                    585,
+                    200
                 ]
             ],
-            "id": "e5498af8-3086-4bee-b35b-085a13bbd2b2"
+            "id": "aed2d4d3-b99e-4af5-b8cf-d92d47721be4"
+        },
+        {
+            "coordinates": [
+                [
+                    685,
+                    275
+                ],
+                [
+                    805,
+                    275
+                ]
+            ],
+            "id": "176fed29-56c2-4534-9cab-8c328d0e138c"
         }
     ]
 }

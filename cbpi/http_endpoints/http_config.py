@@ -13,7 +13,7 @@ class ConfigHttpEndpoints(HttpCrudEndpoints):
         self.cbpi.register(self, "/config")
 
     @request_mapping(path="/{name}/", method="PUT", auth_required=False)
-    async def http_post(self, request) -> web.Response:
+    async def http_put(self, request) -> web.Response:
 
         """
         ---
@@ -26,6 +26,15 @@ class ConfigHttpEndpoints(HttpCrudEndpoints):
           description: "Parameter name"
           required: true
           type: "string"
+        - name: body
+          in: body
+          description: "Parameter Value"
+          required: true
+          schema:
+            type: object
+            properties:
+              value:
+                type: string
         responses:
             "204":
                 description: successful operation

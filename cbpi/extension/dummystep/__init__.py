@@ -38,6 +38,24 @@ class CustomStepCBPi(CBPiSimpleStep):
 
         #self.cbpi.notify(key="step", message="HELLO FROM STEP")
 
+@parameters([Property.Number(label="Test", configurable=True), Property.Text(label="Test", configurable=True, default_value="HALLO")])
+class Step2(CBPiStep):
+
+    i = 0
+
+    @action(key="name", parameters=[Property.Number(label="Test", configurable=True)])
+    async def action(self, **kwargs):
+        print("HALLO")
+
+    async def execute(self):
+
+        print(self.props)
+        self.i += 1
+        print(self.i)
+        self.state_msg = "COUNT %s" % self.i
+        await self.update(self.props)
+        print("JETZT GEHTS LO")
+        #raise Exception("RROR")
 
 
 def setup(cbpi):
@@ -48,5 +66,5 @@ def setup(cbpi):
     :param cbpi: the cbpi core 
     :return: 
     '''
-
+    cbpi.plugin.register("CustomStep2", Step2)
     cbpi.plugin.register("CustomStepCBPi", CustomStepCBPi)

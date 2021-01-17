@@ -2,7 +2,7 @@ from functools import wraps
 
 from voluptuous import Schema
 
-__all__ = ["request_mapping", "on_startup", "on_event", "action", "background_task"]
+__all__ = ["request_mapping", "on_startup", "on_event", "action", "background_task", "parameters"]
 
 from aiohttp_auth import auth
 
@@ -71,6 +71,13 @@ def action(key, parameters):
         func.parameters = parameters
         return func
 
+    return real_decorator
+
+def parameters(parameter):
+    def real_decorator(func):
+        func.cbpi_p = True
+        func.cbpi_parameters = parameter
+        return func
     return real_decorator
 
 def background_task(name, interval):

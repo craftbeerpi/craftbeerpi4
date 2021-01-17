@@ -21,11 +21,8 @@ class SensorController(CRUDController):
     async def init(self):
         '''
         This method initializes all actors during startup. It creates actor instances
-
         :return: 
         '''
-
-
         await super(SensorController, self).init()
         for id, value in self.cache.items():
             await self.init_sensor(value)
@@ -34,6 +31,9 @@ class SensorController(CRUDController):
         return dict(items=self.cache,types=self.types)
 
     async def init_sensor(self, sensor):
+
+
+        print("INIT SENSOR")
         if sensor.type in self.types:
             cfg = sensor.config.copy()
             cfg.update(dict(cbpi=self.cbpi, id=sensor.id, name=sensor.name))

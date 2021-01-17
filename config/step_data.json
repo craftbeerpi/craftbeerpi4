@@ -1,0 +1,35 @@
+{
+    "basic": {},
+    "profile": [
+        {
+            "id": "eopJy6oxGqrNuRNtiAPXvN",
+            "name": "AMAZING",
+            "props": {
+                "count": 5,
+                "wohoo": 0
+            },
+            "status": "P",
+            "type": "CustomStep2"
+        },
+        {
+            "id": "duxvgLknKLjGYhdm9TKqUE",
+            "name": "Manuel",
+            "props": {
+                "count": 5,
+                "wohoo": 0
+            },
+            "status": "I",
+            "type": "CustomStep2"
+        },
+        {
+            "id": "hyXYDBUAENgwD7yNwaeLe7",
+            "name": "HALLO",
+            "props": {
+                "count": 5,
+                "wohoo": 0
+            },
+            "status": "I",
+            "type": "CustomStep2"
+        }
+    ]
+}
