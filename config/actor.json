@@ -1,0 +1,25 @@
+{
+    "data": [
+        {
+            "id": "9NkxVioA7FfZi6waegi246",
+            "name": "Manuel",
+            "props": {},
+            "state": {},
+            "type": "CustomActor"
+        },
+        {
+            "id": "5hk68r3pFBe6JoRXzavLCA",
+            "name": "Actor 1",
+            "props": {},
+            "state": {},
+            "type": "CustomActor"
+        },
+        {
+            "id": "YgVFNsXncfMMoHD7U6TvP6",
+            "name": "111",
+            "props": {},
+            "state": {},
+            "type": "CustomActor"
+        }
+    ]
+}

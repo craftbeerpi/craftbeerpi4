@@ -1,0 +1,21 @@
+{
+    "data": [
+        {
+            "id": "TPpjzj9YXh6yYzvyJycmig",
+            "name": "AMAZING22211111123123",
+            "props": {
+                "param1": "HALLO",
+                "param2": "Test"
+            },
+            "status": null,
+            "type": "CustomSensor2"
+        },
+        {
+            "id": "2rAviwweTUY27Y8yZKftWA",
+            "name": "Testasdfasdf",
+            "props": {},
+            "status": null,
+            "type": "CustomSensor2"
+        }
+    ]
+}

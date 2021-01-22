@@ -18,9 +18,10 @@ class PluginController():
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-
-        self.plugins = {}
         self.plugins = load_config("./config/plugin_list.txt")
+        if self.plugins is None:
+            self.plugins = {}
+
 
     async def load_plugin_list(self):
         async with aiohttp.ClientSession() as session:
@@ -98,7 +99,7 @@ class PluginController():
                     self.modules[filename] = import_module(
                         "cbpi.extension.%s" % (filename))
                     self.modules[filename].setup(self.cbpi)
-                    logger.info("Plugin %s loaded successful" % filename)
+                    #logger.info("Plugin %s loaded successful" % filename)
                 else:
                     logger.warning(
                         "Plugin %s is not supporting version 4" % filename)
@@ -116,7 +117,7 @@ class PluginController():
                 self.modules[p] = import_module(p)
                 self.modules[p].setup(self.cbpi)
 
-                logger.info("Plugin %s loaded successfully" % p)
+                #logger.info("Plugin %s loaded successfully" % p)
             except Exception as e:
                 logger.error("FAILED to load plugin %s " % p)
                 logger.error(e)
@@ -128,22 +129,19 @@ class PluginController():
         :param clazz: actor class
         :return: None
         '''
-        logger.info("Register %s Class %s" % (name, clazz.__name__))
-        if issubclass(clazz, CBPiActor):
-            # self.cbpi.actor.types[name] = {"class": clazz, "config": self._parse_props(clazz)}
-            self.cbpi.actor.types[name] = self._parse_props(clazz)
+        logger.debug("Register %s Class %s" % (name, clazz.__name__))
+        
+        if issubclass(clazz, CBPiActor2):
+            self.cbpi.actor.types[name] = self._parse_step_props(clazz,name)
 
-        if issubclass(clazz, CBPiSensor):
-            self.cbpi.sensor.types[name] = self._parse_props(clazz)
-
-        if issubclass(clazz, CBPiKettleLogic):
-            self.cbpi.kettle.types[name] = self._parse_props(clazz)
-
-        if issubclass(clazz, CBPiSimpleStep):
-            self.cbpi.step.types[name] = self._parse_props(clazz)
+        if issubclass(clazz, CBPiKettleLogic2):
+            self.cbpi.kettle.types[name] = self._parse_step_props(clazz,name)
+    
+        if issubclass(clazz, CBPiSensor2):
+            self.cbpi.sensor.types[name] = self._parse_step_props(clazz,name)
 
         if issubclass(clazz, CBPiStep):
-            self.cbpi.step2.types[name] = self._parse_step_props(clazz,name)
+            self.cbpi.step.types[name] = self._parse_step_props(clazz,name)
 
         if issubclass(clazz, CBPiExtension):
             self.c = clazz(self.cbpi)
@@ -165,8 +163,7 @@ class PluginController():
 
     def _parse_step_props(self, cls, name):
 
-        result = {"name": name, "class": cls,
-                  "properties": [], "actions": []}
+        result = {"name": name, "class": cls, "properties": [], "actions": []}
 
         if hasattr(cls, "cbpi_parameters"):
             parameters = []
@@ -174,7 +171,9 @@ class PluginController():
                 parameters.append(self._parse_property_object(p))
             result["properties"] = parameters
         for method_name, method in cls.__dict__.items():
+
             if hasattr(method, "action"):
+                print(method_name)
                 key = method.__getattribute__("key")
                 parameters = []
                 for p in  method.__getattribute__("parameters"):

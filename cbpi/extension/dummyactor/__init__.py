@@ -19,31 +19,39 @@ except Exception:
     patcher.start()
     import RPi.GPIO as GPIO
 
-class CustomActor(CBPiActor):
+class CustomActor(CBPiActor2):
+
+
+    my_name = ""
 
     # Custom property which can be configured by the user
     @action("test", parameters={})
-    def action1(self):
+    async def action1(self, **kwargs):
+        print("ACTION !", kwargs)
+        self.my_name = kwargs.get("name")
 
         pass
-
-
-
+    
     def init(self):
+        print("INIT")
+        
         self.state = False
         pass
 
-    def on(self, power=0):
-        logger.info("ACTOR %s ON" % self.id)
+    async def on(self, power=0):
+        logger.info("ACTOR 1111 %s ON" % self.id)
         self.state = True
 
-    def off(self):
+    async def off(self):
         logger.info("ACTOR %s OFF " % self.id)
         self.state = False
 
     def get_state(self):
-
+        
         return self.state
+    
+    async def run(self):
+        pass
 
 
 class GPIOActor(CBPiActor):

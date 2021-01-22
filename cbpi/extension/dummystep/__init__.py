@@ -4,59 +4,33 @@ import time
 from cbpi.api import *
 
 
-class CustomStepCBPi(CBPiSimpleStep):
-
-    name1 = Property.Number(label="Test", configurable=True)
-    timer_end = Property.Number(label="Test", default_value=None)
-    temp = Property.Number(label="Temperature", default_value=50, configurable=True)
-
-
-
-    i = 0
-    
-    @action(key="name", parameters=None)
-    def test(self, **kwargs):
-        self.name="WOOHOO"
-
-    def get_status(self):
-        return "Status: %s Temp" % self.temp
-
-    async def run_cycle(self):
-
-        self.next()
-
-        '''
-        print("RUN", self.name1, self.managed_fields, self.timer_end)
-        self.i = self.i + 1
-
-        if self.timer_end is None:
-            self.timer_end = time.time() + 10
-
-        if self.i == 10:
-            self.next()
-        '''
-
-        #self.cbpi.notify(key="step", message="HELLO FROM STEP")
-
-@parameters([Property.Number(label="Test", configurable=True), Property.Text(label="Test", configurable=True, default_value="HALLO")])
+@parameters([Property.Number(label="Param1", configurable=True), 
+             Property.Text(label="Param2", configurable=True, default_value="HALLO"), 
+             Property.Select(label="Param3", options=[1,2,4]), 
+             Property.Sensor(label="Param4"), 
+             Property.Actor(label="Param5")])
 class Step2(CBPiStep):
 
-    i = 0
+    @action(key="name2", parameters=[])
+    async def action2(self, **kwargs):
+        print("CALL ACTION")
 
     @action(key="name", parameters=[Property.Number(label="Test", configurable=True)])
     async def action(self, **kwargs):
-        print("HALLO")
+        print("CALL ACTION")
 
     async def execute(self):
+        count = self.props.get("count", 0)
+        self.state_msg = "COUNT %s" % count
 
-        print(self.props)
-        self.i += 1
-        print(self.i)
-        self.state_msg = "COUNT %s" % self.i
+        self.props["count"] += 1
         await self.update(self.props)
-        print("JETZT GEHTS LO")
-        #raise Exception("RROR")
 
+        if count >= 5:
+            self.next()
+        
+    async def reset(self): 
+        self.props["count"] = 0
 
 def setup(cbpi):
     '''
@@ -67,4 +41,4 @@ def setup(cbpi):
     :return: 
     '''
     cbpi.plugin.register("CustomStep2", Step2)
-    cbpi.plugin.register("CustomStepCBPi", CustomStepCBPi)
+    

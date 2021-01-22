@@ -1,2 +1,3 @@
 recursive-include cbpi/config *
 recursive-include cbpi/extension *
+recursive-include cbpi/static *

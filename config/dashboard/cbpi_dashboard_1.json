@@ -244,6 +244,36 @@
             "type": "Text",
             "x": 615,
             "y": 280
+        },
+        {
+            "id": "3a9e422f-8d55-4360-8f16-807f9a657988",
+            "name": "Steps",
+            "props": {
+                "width": "400"
+            },
+            "type": "Steps",
+            "x": 20,
+            "y": 430
+        },
+        {
+            "id": "3be00e94-4e06-4a6b-9b8d-c832be73386a",
+            "name": "Led",
+            "props": {
+                "actor": 1
+            },
+            "type": "Led",
+            "x": 440,
+            "y": 215
+        },
+        {
+            "id": "d896b230-8dab-4c33-b73a-1dd74e6de906",
+            "name": "Led",
+            "props": {
+                "actor": 1
+            },
+            "type": "Led",
+            "x": 625,
+            "y": 215
         }
     ],
     "pathes": [

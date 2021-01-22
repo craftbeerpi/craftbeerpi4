@@ -1,0 +1,26 @@
+{
+    "data": [
+        {
+            "agitator": "9NkxVioA7FfZi6waegi246",
+            "heater": "9NkxVioA7FfZi6waegi246",
+            "id": "gJ6jCupRmpxRsweY9nANTp",
+            "name": "Kettle 233312312",
+            "props": {},
+            "sensor": "TPpjzj9YXh6yYzvyJycmig",
+            "state": {},
+            "target_temp": 22,
+            "type": "CustomKettleLogic"
+        },
+        {
+            "agitator": "9NkxVioA7FfZi6waegi246",
+            "heater": "9NkxVioA7FfZi6waegi246",
+            "id": "RMjMvwphxt3aiMrTnHbpcB",
+            "name": "Test",
+            "props": {},
+            "sensor": "TPpjzj9YXh6yYzvyJycmig",
+            "state": {},
+            "target_temp": 22,
+            "type": "CustomKettleLogic"
+        }
+    ]
+}

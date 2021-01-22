@@ -1,4 +1,5 @@
 __all__ = ["CBPiActor",
+           "CBPiActor2",
            "CBPiExtension",
            "Property",
            "PropertyType",
@@ -9,12 +10,14 @@ __all__ = ["CBPiActor",
            "parameters",
            "background_task",
            "CBPiKettleLogic",
+           "CBPiKettleLogic2",
            "CBPiSimpleStep",
            "CBPiException",
            "KettleException",
            "SensorException",
            "ActorException",
            "CBPiSensor",
+           "CBPiSensor2",
            "CBPiStep"]
 
 from cbpi.api.actor import *

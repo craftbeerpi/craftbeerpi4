@@ -39,7 +39,7 @@ class CBPiStep(metaclass=ABCMeta):
         pass
 
     async def update(self, props):
-        await self.cbpi.step2.update_props(self.id, props)
+        await self.cbpi.step.update_props(self.id, props)
 
     async def run(self): 
         while self.running:

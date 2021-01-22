@@ -1,7 +1,8 @@
 from setuptools import setup, find_packages
+from cbpi import __version__
 
 setup(name='cbpi',
-      version='4.0.0.5',
+      version=__version__,
       description='CraftBeerPi',
       author='Manuel Fritsch',
       author_email='manuel@craftbeerpi.com',
@@ -14,19 +15,21 @@ setup(name='cbpi',
       'cbpi': ['*','*.txt', '*.rst', '*.yaml']},
 
       install_requires=[
-          "aiohttp==3.4.4",
+          "aiohttp==3.7.3",
           "aiohttp-auth==0.1.1",
           "aiohttp-route-decorator==0.1.4",
           "aiohttp-security==0.4.0",
-          "aiohttp-session==2.7.0",
-          "aiohttp-swagger==1.0.5",
-          "aiojobs==0.2.2",
-          "aiosqlite==0.7.0",
-          "cryptography==2.3.1",
-          "requests==2.22.0",
-          "voluptuous==0.11.5",
-          "pyfiglet==0.7.6",
-          'pandas==0.25.0'
+          "aiohttp-session==2.9.0",
+          "aiohttp-swagger==1.0.15",
+          "aiojobs==0.3.0",
+          "aiosqlite==0.16.0",
+          "cryptography==3.3.1",
+          "requests==2.25.1",
+          "voluptuous==0.12.1",
+          "pyfiglet==0.8.post1",
+          'pandas==1.2.0',
+          'shortuuid==1.0.1',
+          'tabulate==0.8.7'
       ],
         dependency_links=[
         'https://testpypi.python.org/pypi'

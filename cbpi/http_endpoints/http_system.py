@@ -26,9 +26,7 @@ class SystemHttpEndpoints:
             actor=self.cbpi.actor.get_state(),
             sensor=self.cbpi.sensor.get_state(),
             kettle=self.cbpi.kettle.get_state(),
-            step=self.cbpi.step2.get_state(),
-            dashboard=self.cbpi.dashboard.get_state(),
-            translations=self.cbpi.translation.get_all(),
+            step=self.cbpi.step.get_state(),
             config=self.cbpi.config.get_state())
             , dumps=json_dumps)
 

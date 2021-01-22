@@ -7,7 +7,6 @@ from time import strftime, localtime
 import pandas as pd
 import zipfile
 
-
 class LogController:
 
     def __init__(self, cbpi):

@@ -31,5 +31,10 @@ def setup(cbpi):
     :param cbpi: the cbpi core
     :return:
     '''
+    print("MQTT")
+    print("###################")
+    print("###################")
+    print("###################")
+    print("###################")
     client = CBPiMqttClient(cbpi)
 

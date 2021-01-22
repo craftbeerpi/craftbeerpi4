@@ -1,7 +1,7 @@
 import logging
 from os import urandom
 import os
-
+from cbpi import __version__
 from aiohttp import web
 from aiohttp_auth import auth
 from aiohttp_session import session_middleware
@@ -19,8 +19,9 @@ from cbpi.controller.notification_controller import NotificationController
 from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
-from cbpi.controller.step_controller_ng import StepControllerNg
+
 from cbpi.controller.system_controller import SystemController
+
 from cbpi.controller.log_file_controller import LogController
 from cbpi.database.model import DBModel
 from cbpi.eventbus import CBPiEventBus
@@ -28,14 +29,14 @@ from cbpi.http_endpoints.http_login import Login
 from cbpi.utils import *
 from cbpi.websocket import CBPiWebSocket
 from cbpi.http_endpoints.http_actor import ActorHttpEndpoints
+
+
 from cbpi.http_endpoints.http_config import ConfigHttpEndpoints
 from cbpi.http_endpoints.http_dashboard import DashBoardHttpEndpoints
 from cbpi.http_endpoints.http_kettle import KettleHttpEndpoints
 from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
-from cbpi.http_endpoints.http_step2 import StepHttpEndpoints2
-from cbpi.controller.translation_controller import TranslationController
-from cbpi.http_endpoints.http_translation import TranslationHttpEndpoint
+
 from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
 from cbpi.http_endpoints.http_system import SystemHttpEndpoints
 from cbpi.http_endpoints.http_log import LogHttpEndpoints
@@ -68,7 +69,7 @@ class CraftBeerPi():
 
     def __init__(self):
 
-        self.version = "4.0.0.1"
+        self.version = __version__
 
         self.static_config = load_config("./config/config.yaml")
         self.database_file = "./craftbeerpi.db"
@@ -87,26 +88,24 @@ class CraftBeerPi():
         self.config = ConfigController(self)
         self.ws = CBPiWebSocket(self)
 
-        self.translation = TranslationController(self)
+
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
         self.plugin = PluginController(self)
         self.log = LogController(self)
         self.system = SystemController(self)
-
         self.kettle = KettleController(self)
         self.step = StepController(self)
-        self.step2 = StepControllerNg(self)
+        
         self.dashboard = DashboardController(self)
 
+
         self.http_step = StepHttpEndpoints(self)
-        self.http_step2 = StepHttpEndpoints2(self)
         self.http_sensor = SensorHttpEndpoints(self)
         self.http_config = ConfigHttpEndpoints(self)
         self.http_actor = ActorHttpEndpoints(self)
         self.http_kettle = KettleHttpEndpoints(self)
         self.http_dashboard = DashBoardHttpEndpoints(self)
-        self.http_translation = TranslationHttpEndpoint(self)
         self.http_plugin = PluginHttpEndpoints(self)
         self.http_system = SystemHttpEndpoints(self)
         self.notification = NotificationController(self)
@@ -156,7 +155,7 @@ class CraftBeerPi():
             http_method = method.__getattribute__("method")
             path = method.__getattribute__("path")
             class_name = method.__self__.__class__.__name__
-            logger.info("Register Endpoint : %s.%s %s %s%s " % (class_name, method.__name__, http_method, url_prefix, path))
+            logger.debug("Register Endpoint : %s.%s %s %s%s " % (class_name, method.__name__, http_method, url_prefix, path))
 
             def add_post():
                 routes.append(web.post(method.__getattribute__("path"), method))
@@ -178,7 +177,6 @@ class CraftBeerPi():
             }
             switcher[http_method]()
 
-        print("URL PREFIX", url_prefix)
         if url_prefix != "/":
             logger.debug("URL Prefix: %s "  % (url_prefix,))
             sub = web.Application()
@@ -199,12 +197,10 @@ class CraftBeerPi():
         long_description = """
         This is the api for CraftBeerPi
         """
-
-        print("SWAGGER.......")
         setup_swagger(self.app,
                       description=long_description,
-                      title=self.static_config.get("name", "CraftBeerPi 4.0"),
-                      api_version=self.static_config.get("version", "4.0"),
+                      title="CraftBeerPi",
+                      api_version=self.version,
                       contact="info@craftbeerpi.com")
 
     def notify(self, key: str, message: str, type: str = "info") -> None:
@@ -227,13 +223,15 @@ class CraftBeerPi():
     def _print_logo(self):
         from pyfiglet import Figlet
         f = Figlet(font='big')
-        logger.info("\n%s" % f.renderText("%s %s" % (self.static_config.get("name"), self.static_config.get("version"))))
+        logger.info("\n%s" % f.renderText("CraftBeerPi %s " %  self.version))
+        logger.info("www.CraftBeerPi.com")
+        logger.info("(c) 2021 Manuel Fritsch")
 
 
     def _setup_http_index(self):
         async def http_index(request):
             url = self.config.static.get("index_url")
-            
+            py
             if url is not None:
 
                 raise web.HTTPFound(url)
@@ -250,12 +248,11 @@ class CraftBeerPi():
         await self.job.init()
         await DBModel.setup()
         await self.config.init()
-        await self.translation.init()
         self._setup_http_index()
         self.plugin.load_plugins()
         self.plugin.load_plugins_from_evn()
         await self.sensor.init()
-        await self.step2.init()
+        await self.step.init()
         await self.actor.init()
         await self.kettle.init()
         await self.call_initializer(self.app)

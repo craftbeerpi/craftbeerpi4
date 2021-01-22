@@ -1,23 +1,18 @@
 import logging
 import json
-from cbpi.controller.crud_controller import CRUDController
-from cbpi.database.model import DashboardModel, DashboardContentModel
 import os
 
-class DashboardController(CRUDController):
+class DashboardController():
 
-    model = DashboardModel
-    name = "Dashboard"
 
     def __init__(self, cbpi):
         self.caching = False
-        super(DashboardController, self).__init__(cbpi)
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
         self.cbpi.register(self)
 
-    def get_state(self):
-        return dict(items=self.cache)
+    async def init(self):
+        pass
 
     async def get_content(self, dashboard_id):
         try:
@@ -26,12 +21,10 @@ class DashboardController(CRUDController):
                 return data
         except:
             return {}
-        
-
+    
     async def add_content(self, dashboard_id, data):
         with open('./config/dashboard/cbpi_dashboard_%s.json' % dashboard_id, 'w') as outfile:
             json.dump(data, outfile, indent=4, sort_keys=True)
-        
         return {"status": "OK"}
 
     async def delete_content(self, dashboard_id):

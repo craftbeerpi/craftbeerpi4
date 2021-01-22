@@ -14,6 +14,7 @@ import pathlib
 import shutil
 
 
+
 def create_plugin_file():
     import os.path
     if os.path.exists(os.path.join(".", 'config', "plugin_list.txt")) is False:
@@ -144,10 +145,16 @@ def main():
     
     parser = argparse.ArgumentParser(description='Welcome to CraftBeerPi 4')
     parser.add_argument("action", type=str, help="start,stop,restart,setup,plugins")
+    parser.add_argument('--debug', dest='debug', action='store_true')
     parser.add_argument("--name", type=str, help="Plugin name")
     args = parser.parse_args()
+
+    if args.debug is True:
+        level =logging.DEBUG
+    else:
+        level =logging.INFO
     #logging.basicConfig(level=logging.INFO, filename='./logs/app.log', filemode='a', format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    logging.basicConfig(level=level, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
 
     if args.action == "setup":
         print("Setting up CBPi")
