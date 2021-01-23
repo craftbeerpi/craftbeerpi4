@@ -2,50 +2,15 @@ from abc import ABCMeta
 import asyncio
 from cbpi.api.extension import CBPiExtension
 
-__all__ = ["CBPiActor", "CBPiActor2"]
+__all__ = ["CBPiActor"]
 
 import logging
 
 
 logger = logging.getLogger(__file__)
 
-class CBPiActor(CBPiExtension, metaclass=ABCMeta):
 
-    def init(self):
-        pass
-
-    def stop(self):
-        pass
-
-    def on(self, power):
-        '''
-        Code to switch the actor on. Power is provided as integer value  
-        
-        :param power: power value between 0 and 100 
-        :return: None
-        '''
-        pass
-
-    def off(self):
-
-        '''
-        Code to switch the actor off
-        
-        :return: None 
-        '''
-        pass
-
-    def get_state(self):
-
-        '''
-        Return the current actor state
-        
-        :return: 
-        '''
-
-        pass
-
-class CBPiActor2(metaclass=ABCMeta):
+class CBPiActor(metaclass=ABCMeta):
 
     def __init__(self, cbpi, id, props):
         self.cbpi = cbpi
@@ -64,16 +29,12 @@ class CBPiActor2(metaclass=ABCMeta):
 
     async def run(self):
         while self.running:
-            print("RUNNING ACTOR")
             await asyncio.sleep(1)
         
     def get_state(self):
-        print("########STATE", self.state)
         return dict(state=self.state)
 
     async def start(self):
-
-        print("START UP ACTOR")
         self.running = True
 
     async def stop(self):

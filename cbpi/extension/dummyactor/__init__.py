@@ -19,9 +19,13 @@ except Exception:
     patcher.start()
     import RPi.GPIO as GPIO
 
-class CustomActor(CBPiActor2):
 
-
+@parameters([Property.Number(label="Param1", configurable=True), 
+             Property.Text(label="Param2", configurable=True, default_value="HALLO"), 
+             Property.Select(label="Param3", options=[1,2,4]), 
+             Property.Sensor(label="Param4"), 
+             Property.Actor(label="Param5")])
+class CustomActor(CBPiActor):
     my_name = ""
 
     # Custom property which can be configured by the user
@@ -29,7 +33,6 @@ class CustomActor(CBPiActor2):
     async def action1(self, **kwargs):
         print("ACTION !", kwargs)
         self.my_name = kwargs.get("name")
-
         pass
     
     def init(self):
@@ -52,57 +55,6 @@ class CustomActor(CBPiActor2):
     
     async def run(self):
         pass
-
-
-class GPIOActor(CBPiActor):
-
-    # Custom property which can be configured by the user
-
-    gpio = Property.Select("GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27], description="GPIO to which the actor is connected")
-
-    def init(self):
-        try:
-            GPIO.setup(int(self.gpio), GPIO.OUT)
-            GPIO.output(int(self.gpio), 0)
-        except Exception as e:
-            raise CBPiException("FAILD TO INIT ACTOR")
-
-    def on(self, power=0):
-
-        print("GPIO ON %s" % str(self.gpio))
-        GPIO.output(int(self.gpio), 1)
-        self.state = True
-
-    def off(self):
-        print("GPIO OFF %s" % str(self.gpio))
-        GPIO.output(int(self.gpio), 0)
-        self.state = False
-
-class GPIORelayBoardActor(CBPiActor):
-
-    # Custom property which can be configured by the user
-
-    gpio = Property.Select("GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27], description="GPIO to which the actor is connected")
-
-    def init(self):
-        try:
-            GPIO.setup(int(self.gpio), GPIO.OUT)
-            GPIO.output(int(self.gpio), 1)
-        except Exception as e:
-            raise CBPiException("FAILD TO INIT ACTOR")
-
-    def on(self, power=0):
-
-        print("GPIO ON %s" % str(self.gpio))
-        GPIO.output(int(self.gpio), 0)
-        self.state = True
-
-    def off(self):
-        print("GPIO OFF %s" % str(self.gpio))
-        GPIO.output(int(self.gpio), 1)
-        self.state = False
-
-
 
 def setup(cbpi):
 

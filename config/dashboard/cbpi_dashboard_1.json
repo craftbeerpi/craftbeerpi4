@@ -196,7 +196,7 @@
             "id": "2e325539-6ed9-4e0d-b1dc-de860c47a1be",
             "name": "Heater",
             "props": {
-                "actor": 1
+                "actor": "8BLRqagLicCdEBDdc77Sgr"
             },
             "type": "ActorButton",
             "x": 210,
@@ -206,7 +206,7 @@
             "id": "78b85989-c1bc-47e3-ad7b-0defeabb9bdc",
             "name": "Pump",
             "props": {
-                "actor": 2
+                "actor": "8BLRqagLicCdEBDdc77Sgr"
             },
             "type": "ActorButton",
             "x": 305,

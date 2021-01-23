@@ -1,25 +1,44 @@
 {
     "data": [
         {
-            "agitator": "9NkxVioA7FfZi6waegi246",
-            "heater": "9NkxVioA7FfZi6waegi246",
-            "id": "gJ6jCupRmpxRsweY9nANTp",
-            "name": "Kettle 233312312",
+            "agitator": "",
+            "heater": "8BLRqagLicCdEBDdc77Sgr",
+            "id": "oHxKz3z5RjbsxfSz6KUgov",
+            "name": "Test",
             "props": {},
-            "sensor": "TPpjzj9YXh6yYzvyJycmig",
+            "sensor": "",
             "state": {},
-            "target_temp": 22,
+            "target_temp": null,
             "type": "CustomKettleLogic"
         },
         {
-            "agitator": "9NkxVioA7FfZi6waegi246",
-            "heater": "9NkxVioA7FfZi6waegi246",
-            "id": "RMjMvwphxt3aiMrTnHbpcB",
+            "agitator": "",
+            "heater": "",
+            "id": "WxAkesrkqiHH3Gywc4fMci",
             "name": "Test",
-            "props": {},
-            "sensor": "TPpjzj9YXh6yYzvyJycmig",
+            "props": {
+                "Param2": "13",
+                "Param3": 1,
+                "Param4": "",
+                "Param5": "8BLRqagLicCdEBDdc77Sgr"
+            },
+            "sensor": "",
             "state": {},
-            "target_temp": 22,
+            "target_temp": null,
+            "type": "CustomKettleLogic"
+        },
+        {
+            "agitator": "",
+            "heater": "8BLRqagLicCdEBDdc77Sgr",
+            "id": "gc9Bwp38jtyxkVWH5oYRNZ",
+            "name": "Test",
+            "props": {
+                "Param3": 1,
+                "Param5": "8BLRqagLicCdEBDdc77Sgr"
+            },
+            "sensor": "",
+            "state": {},
+            "target_temp": null,
             "type": "CustomKettleLogic"
         }
     ]

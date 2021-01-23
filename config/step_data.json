@@ -1,60 +1,8 @@
 {
     "basic": {
-        "name": "Weissbier"
+        "name": "WOOHOo"
     },
     "profile": [
-        {
-            "id": "eopJy6oxGqrNuRNtiAPXvN",
-            "name": "Step1",
-            "props": {
-                "Param1": "1",
-                "Param2": "HALLO",
-                "Param3": 1,
-                "count": 8,
-                "wohoo": 0
-            },
-            "status": "P",
-            "type": "CustomStep2"
-        },
-        {
-            "id": "hyXYDBUAENgwD7yNwaeLe7",
-            "name": "Step2",
-            "props": {
-                "Param1": "123",
-                "Param2": "Parameter2",
-                "Param3": 2,
-                "count": 0,
-                "wohoo": 0
-            },
-            "status": "I",
-            "type": "CustomStep2"
-        },
-        {
-            "id": "iJHU9FgeGBtvDhraEHUoP2",
-            "name": "Step3",
-            "props": {
-                "Param1": 123,
-                "Param2": "HALLO",
-                "Param3": 2,
-                "Param5": 1,
-                "count": 0,
-                "wohoo": 0
-            },
-            "status": "I",
-            "type": "CustomStep2"
-        },
-        {
-            "id": "duxvgLknKLjGYhdm9TKqUE",
-            "name": "Step4",
-            "props": {
-                "Param1": "1222",
-                "Param2": "HELLO",
-                "Param3": 2,
-                "count": 0,
-                "wohoo": 0
-            },
-            "status": "I",
-            "type": "CustomStep2"
-        }
+        
     ]
 }
