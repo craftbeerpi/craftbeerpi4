@@ -2,7 +2,7 @@
 import asyncio
 import random
 import re
-
+import random
 from aiohttp import web
 from cbpi.api import *
 
@@ -14,6 +14,11 @@ from cbpi.api import *
              Property.Actor(label="Param5")])
 class CustomSensor(CBPiSensor):
     
+    def __init__(self, cbpi, id, props):
+        super(CustomSensor, self).__init__(cbpi, id, props)
+        self.value = 0
+
+
     @action(key="Test", parameters=[])
     async def action1(self, **kwargs):
         print("ACTION!", kwargs)
@@ -30,8 +35,13 @@ class CustomSensor(CBPiSensor):
 
         while self.running is True:
             print("HALLO")
+            self.value = random.randint(0,50)
+            self.push_update(self.value)
             await asyncio.sleep(1)
     
+    def get_state(self):
+        return dict(value=self.value)
+
 
 def setup(cbpi):
 

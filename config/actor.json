@@ -2,12 +2,26 @@
     "data": [
         {
             "id": "8BLRqagLicCdEBDdc77Sgr",
-            "name": "Test",
+            "name": "Heater",
             "props": {
                 "Param3": 2,
                 "Param4": "",
                 "Param5": "8BLRqagLicCdEBDdc77Sgr"
             },
+            "state": false,
+            "type": "CustomActor"
+        },
+        {
+            "id": "Aifjxmw4QdPfU3XbR6iyis",
+            "name": "Pump1",
+            "props": {},
+            "state": false,
+            "type": "CustomActor"
+        },
+        {
+            "id": "HX2bKdobuANehPggYcynnj",
+            "name": "Pump2",
+            "props": {},
             "state": false,
             "type": "CustomActor"
         }

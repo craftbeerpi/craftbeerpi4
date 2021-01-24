@@ -41,7 +41,6 @@ class CBPiWebSocket:
 
         ws = web.WebSocketResponse()
         await ws.prepare(request)
-        print(ws)
         self._clients.add(ws)
         try:
             peername = request.transport.get_extra_info('peername')

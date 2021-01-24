@@ -5,6 +5,7 @@ class KettleController(BasicController):
 
     def __init__(self, cbpi):
         super(KettleController, self).__init__(cbpi, "kettle.json")
+        self.update_key = "kettleupdate"
         self.autostart = False
         
     async def on(self, id):

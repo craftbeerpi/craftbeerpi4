@@ -1,5 +1,13 @@
 {
     "data": [
-        
+        {
+            "id": "8ohkXvFA9UrkHLsxQL38wu",
+            "name": "Test1112222",
+            "props": {},
+            "state": {
+                "value": 0
+            },
+            "type": "CustomSensor"
+        }
     ]
 }

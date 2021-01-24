@@ -81,7 +81,7 @@
             "id": "4d2c8dfe-61a9-433d-83a8-72f74d17e7e5",
             "name": "Sensor Data",
             "props": {
-                "sensor": 1,
+                "sensor": "8ohkXvFA9UrkHLsxQL38wu",
                 "unit": "\u00b0"
             },
             "type": "Sensor",
@@ -92,7 +92,7 @@
             "id": "13a6b89d-50c7-4efb-b940-ec174e522314",
             "name": "Sensor Data",
             "props": {
-                "sensor": 1,
+                "sensor": "8ohkXvFA9UrkHLsxQL38wu",
                 "unit": "\u00b0"
             },
             "type": "Sensor",
@@ -103,7 +103,7 @@
             "id": "8d171952-791d-4f72-bfc9-dac8714b839f",
             "name": "Sensor Data",
             "props": {
-                "sensor": 1,
+                "sensor": "8ohkXvFA9UrkHLsxQL38wu",
                 "unit": "\u00b0"
             },
             "type": "Sensor",
@@ -186,11 +186,11 @@
             "id": "3ec3e5d8-f82e-40c1-8c41-cb8286659d3b",
             "name": "Led",
             "props": {
-                "actor": 1
+                "actor": "8BLRqagLicCdEBDdc77Sgr"
             },
             "type": "Led",
-            "x": 245,
-            "y": 220
+            "x": 240,
+            "y": 210
         },
         {
             "id": "2e325539-6ed9-4e0d-b1dc-de860c47a1be",
@@ -199,18 +199,8 @@
                 "actor": "8BLRqagLicCdEBDdc77Sgr"
             },
             "type": "ActorButton",
-            "x": 210,
-            "y": 380
-        },
-        {
-            "id": "78b85989-c1bc-47e3-ad7b-0defeabb9bdc",
-            "name": "Pump",
-            "props": {
-                "actor": "8BLRqagLicCdEBDdc77Sgr"
-            },
-            "type": "ActorButton",
-            "x": 305,
-            "y": 380
+            "x": 120,
+            "y": 255
         },
         {
             "id": "3c3f81d0-cdfd-4521-a2fe-2f039f17b583",
@@ -246,24 +236,14 @@
             "y": 280
         },
         {
-            "id": "3a9e422f-8d55-4360-8f16-807f9a657988",
-            "name": "Steps",
-            "props": {
-                "width": "400"
-            },
-            "type": "Steps",
-            "x": 20,
-            "y": 430
-        },
-        {
             "id": "3be00e94-4e06-4a6b-9b8d-c832be73386a",
             "name": "Led",
             "props": {
-                "actor": 1
+                "actor": "Aifjxmw4QdPfU3XbR6iyis"
             },
             "type": "Led",
-            "x": 440,
-            "y": 215
+            "x": 435,
+            "y": 210
         },
         {
             "id": "d896b230-8dab-4c33-b73a-1dd74e6de906",
@@ -274,10 +254,34 @@
             "type": "Led",
             "x": 625,
             "y": 215
+        },
+        {
+            "id": "adfe673c-1778-4980-b751-5c613c5c5b76",
+            "name": "Pump1",
+            "props": {
+                "actor": "Aifjxmw4QdPfU3XbR6iyis"
+            },
+            "type": "ActorButton",
+            "x": 360,
+            "y": 360
+        },
+        {
+            "id": "0e1ea214-9ae0-47c2-902d-cae0947ba8a1",
+            "name": "Pump2",
+            "props": {
+                "actor": "HX2bKdobuANehPggYcynnj"
+            },
+            "type": "ActorButton",
+            "x": 810,
+            "y": 320
         }
     ],
     "pathes": [
         {
+            "condition": [
+                "8BLRqagLicCdEBDdc77Sgr",
+                "Aifjxmw4QdPfU3XbR6iyis"
+            ],
             "coordinates": [
                 [
                     305,
@@ -291,6 +295,9 @@
             "id": "49e7684e-21a3-4e0b-8e94-60f95abee80f"
         },
         {
+            "condition": [
+                "8BLRqagLicCdEBDdc77Sgr"
+            ],
             "coordinates": [
                 [
                     400,
@@ -304,6 +311,9 @@
             "id": "5ba909c1-49a9-46e5-a6d0-1d0350c37aa4"
         },
         {
+            "condition": [
+                "Aifjxmw4QdPfU3XbR6iyis"
+            ],
             "coordinates": [
                 [
                     255,
@@ -329,14 +339,21 @@
             "id": "aed2d4d3-b99e-4af5-b8cf-d92d47721be4"
         },
         {
+            "condition": [
+                "HX2bKdobuANehPggYcynnj"
+            ],
             "coordinates": [
                 [
                     685,
                     275
                 ],
                 [
-                    805,
+                    795,
                     275
+                ],
+                [
+                    795,
+                    375
                 ]
             ],
             "id": "176fed29-56c2-4534-9cab-8c328d0e138c"

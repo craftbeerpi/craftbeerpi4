@@ -35,6 +35,12 @@ class CBPiSensor(metaclass=ABCMeta):
     def get_unit(self):
         pass
 
+    def push_update(self, value):
+        try:
+            self.cbpi.ws.send(dict(topic="sensorstate", id=self.id, value=value))
+        except:
+            logging.error("Faild to push sensor update")
+
     async def start(self):
         self.running = True
 

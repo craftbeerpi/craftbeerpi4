@@ -4,9 +4,8 @@ from tabulate import tabulate
 class ActorController(BasicController):
 
     def __init__(self, cbpi):
-
-        
         super(ActorController, self).__init__(cbpi, "actor.json")
+        self.update_key = "actorupdate"
         
     async def on(self, id):
         try:

@@ -4,7 +4,7 @@
             "agitator": "",
             "heater": "8BLRqagLicCdEBDdc77Sgr",
             "id": "oHxKz3z5RjbsxfSz6KUgov",
-            "name": "Test",
+            "name": "Test1111111",
             "props": {},
             "sensor": "",
             "state": {},
@@ -40,6 +40,28 @@
             "state": {},
             "target_temp": null,
             "type": "CustomKettleLogic"
+        },
+        {
+            "agitator": "",
+            "heater": "",
+            "id": "ZfF2N2UnEHtgExNgZJyF5i",
+            "name": "Test",
+            "props": {},
+            "sensor": "",
+            "state": {},
+            "target_temp": null,
+            "type": "CustomKettleLogic"
+        },
+        {
+            "agitator": "",
+            "heater": "8BLRqagLicCdEBDdc77Sgr",
+            "id": "oTivUB7LueLeUWoZAnLhwp",
+            "name": "",
+            "props": {},
+            "sensor": "",
+            "state": {},
+            "target_temp": null,
+            "type": ""
         }
     ]
 }

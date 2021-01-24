@@ -11,6 +11,7 @@ from tabulate import tabulate
 class BasicController:
 
     def __init__(self, cbpi, file):
+        self.update_key = ""
         self.name = self.__class__.__name__
         self.cbpi = cbpi
         self.cbpi.register(self)
@@ -46,7 +47,7 @@ class BasicController:
         await self.push_udpate()
 
     async def push_udpate(self):
-        await self.cbpi.bus.fire("sensor/update", data=list(map(lambda x: self.create_dict(x), self.data)))
+        self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda x: self.create_dict(x), self.data))))
 
     def create_dict(self, data):
         return dict(name=data.get("name"), id=data.get("id"), type=data.get("type"), status=data.get("status"),props=data.get("props", []))

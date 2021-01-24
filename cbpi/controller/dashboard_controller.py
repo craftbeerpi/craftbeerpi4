@@ -30,8 +30,3 @@ class DashboardController():
     async def delete_content(self, dashboard_id):
         if os.path.exists('./config/dashboard/cbpi_dashboard_%s.json' % dashboard_id):
             os.remove('./config/dashboard/cbpi_dashboard_%s.json' % dashboard_id)
-
-
-    async def delete_dashboard(self, dashboard_id):
-        await DashboardContentModel.delete_by_dashboard_id(dashboard_id)
-        await self.model.delete(dashboard_id)

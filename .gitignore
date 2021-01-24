@@ -8,3 +8,6 @@ cbpi.egg-info
 logs
 venv
 cbpi/extension/ui
+node_modules
+.DS_STORE
+.vscode
