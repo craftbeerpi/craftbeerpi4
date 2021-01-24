@@ -231,7 +231,7 @@ class CraftBeerPi():
     def _setup_http_index(self):
         async def http_index(request):
             url = self.config.static.get("index_url")
-            py
+            
             if url is not None:
 
                 raise web.HTTPFound(url)

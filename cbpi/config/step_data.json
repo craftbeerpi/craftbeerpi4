@@ -1,0 +1,20 @@
+{
+    "basic": {
+        "name": "WOOHOo"
+    },
+    "profile": [
+        {
+            "id": "MSXuATqL56EAeCXrg3XLuY",
+            "name": "Test",
+            "props": {
+                "Param1": 123,
+                "Param2": "HALLO",
+                "Param3": 1,
+                "count": 6,
+                "wohoo": 0
+            },
+            "status": "D",
+            "type": "CustomStep2"
+        }
+    ]
+}
