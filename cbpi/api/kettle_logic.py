@@ -28,16 +28,11 @@ class CBPiKettleLogic(metaclass=ABCMeta):
             await asyncio.sleep(1)
         
     def get_state(self):
-        print("########STATE", self.state)
+        
         return dict(state=self.state)
 
     async def start(self):
-        print("")
-        print("")
-        print("")
-        print("##################START UP KETTLE")
-        print("")
-        print("")
+        
         self.running = True
 
     async def stop(self):

@@ -173,7 +173,7 @@ class PluginController():
         for method_name, method in cls.__dict__.items():
 
             if hasattr(method, "action"):
-                print(method_name)
+                
                 key = method.__getattribute__("key")
                 parameters = []
                 for p in  method.__getattribute__("parameters"):

@@ -2,7 +2,7 @@
 name: CraftBeerPi
 version: 4.0.8
 
-#: /myext
+index_url: /cbpi_ui/static/index.html
 
 port: 8000
 

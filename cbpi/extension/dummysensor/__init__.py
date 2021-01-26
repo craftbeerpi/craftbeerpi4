@@ -34,7 +34,6 @@ class CustomSensor(CBPiSensor):
     async def run(self):
 
         while self.running is True:
-            print("HALLO")
             self.value = random.randint(0,50)
             self.push_update(self.value)
             await asyncio.sleep(1)

@@ -1,0 +1,64 @@
+{
+    "elements": [
+        {
+            "id": "6c670263-7b19-426c-8769-19aac8ebb381",
+            "name": "CustomSVG",
+            "props": {
+                "name": "tank",
+                "width": "200"
+            },
+            "type": "CustomSVG",
+            "x": 295,
+            "y": 45
+        },
+        {
+            "id": "cbe859ca-b8e8-433f-952c-938a2f8a309b",
+            "name": "CustomSVG",
+            "props": {
+                "name": "tank",
+                "width": "100"
+            },
+            "type": "CustomSVG",
+            "x": 555,
+            "y": 55
+        },
+        {
+            "id": "1f1d5ee6-1ccc-409b-a240-c81d50b71627",
+            "name": "CustomSVG",
+            "props": {
+                "name": "kettle",
+                "width": "100"
+            },
+            "type": "CustomSVG",
+            "x": 795,
+            "y": 90
+        }
+    ],
+    "pathes": [
+        {
+            "coordinates": [
+                [
+                    305,
+                    75
+                ],
+                [
+                    160,
+                    190
+                ],
+                [
+                    245,
+                    460
+                ],
+                [
+                    525,
+                    395
+                ],
+                [
+                    560,
+                    75
+                ]
+            ],
+            "id": "d22d65d2-c4db-4553-856a-e9239a79e136"
+        }
+    ]
+}

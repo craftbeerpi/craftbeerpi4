@@ -13,8 +13,6 @@ import os
 import pathlib
 import shutil
 
-
-
 def create_plugin_file():
     import os.path
     if os.path.exists(os.path.join(".", 'config', "plugin_list.txt")) is False:
@@ -31,10 +29,38 @@ def create_config_file():
         shutil.copy(srcfile, destfile)
         print("Config Folder created")
 
+    if os.path.exists(os.path.join(".", 'config', "actor.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "actor.json")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
+    if os.path.exists(os.path.join(".", 'config', "sensor.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "sensor.json")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
+    if os.path.exists(os.path.join(".", 'config', "kettle.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "kettle.json")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
+    if os.path.exists(os.path.join(".", 'config', "step_data.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "step_data.json")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
+    if os.path.exists(os.path.join(".", 'config', "dashboard", "cbpi_dashboard_1.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
+        destfile = os.path.join(".", "config", "dashboard")
+        shutil.copy(srcfile, destfile)
+
+
 def create_home_folder_structure():
     pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config')).mkdir(parents=True, exist_ok=True)
-    print("Log Folder created")
+    pathlib.Path(os.path.join(".", 'config/dasboard')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config/dasboard/widgets')).mkdir(parents=True, exist_ok=True)
+    print("Folder created")
 
 def copy_splash():
     srcfile = os.path.join(os.path.dirname(__file__), "config", "splash.png")
@@ -123,7 +149,7 @@ def remove(package_name):
     match_uninstalled = re.search(pattern, data)
 
     if match_uninstalled is None:
-        print(data)
+        
         print("Faild to uninstall plugin")
         return False
 

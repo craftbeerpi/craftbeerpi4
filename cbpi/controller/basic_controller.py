@@ -90,11 +90,11 @@ class BasicController:
                 return 
 
             type = item["type"]
-            print(type)
-            print(self.types)
+            
+            
             clazz = self.types[type]["class"]
             item["instance"] = clazz(self.cbpi, item["id"], {})
-            print(item["instance"])
+            
             await item["instance"].start()
             item["instance"].task = self._loop.create_task(item["instance"].run())
             logging.info("Sensor started {}".format(id))
@@ -142,7 +142,7 @@ class BasicController:
         logging.info("{} call all Action {} {}".format(self.name, id, action))
         try:
             item = self.find_by_id(id)
-            print(item)
+            
             instance = item.get("instance")
             await instance.__getattribute__(action)(**parameter)
         except Exception as e:

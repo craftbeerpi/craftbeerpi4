@@ -4,6 +4,7 @@ from voluptuous import Schema
 
 from cbpi.http_endpoints.http_curd_endpoints import HttpCrudEndpoints
 from cbpi.utils import json_dumps
+import os
 
 
 class DashBoardHttpEndpoints(HttpCrudEndpoints):
@@ -11,9 +12,7 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.controller = cbpi.dashboard
-        self.cbpi.register(self, "/dashboard")
-
-
+        self.cbpi.register(self, "/dashboard", os.path.join(".","config", "dashboard", "widgets"))
 
 
     @request_mapping(path="/{id:\d+}/content", auth_required=False)
