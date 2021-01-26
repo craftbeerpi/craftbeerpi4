@@ -1,6 +1,22 @@
 # Development
 
-## Custom Sensor
+## Development Setup
+
+Custom Plugins are shipped as standard Python packages. Just create a python virtual env and add `cbpi`as dependency
+
+{% hint style="info" %}
+How to create virtual env in Python  
+[https://docs.python.org/3/tutorial/venv.html](https://docs.python.org/3/tutorial/venv.html)
+{% endhint %}
+
+```bash
+
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip insatll cbpi
+```
+
+##   Sensor
 
 ```python
 # -*- coding: utf-8 -*-
@@ -11,7 +27,9 @@ import random
 from aiohttp import web
 from cbpi.api import *
 
-
+'''
+Make sure to extend CBPiSensor
+'''
 
 @parameters([Property.Number(label="Param1", configurable=True), 
              Property.Text(label="Param2", configurable=True, default_value="HALLO"), 
