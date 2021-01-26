@@ -27,6 +27,27 @@ cbpi start
 
 The server is running under http://localhost:8000 by default.
 
+### Installation from GitHub
+
+You can install the latest master version direclty from GitHub.
+
+```text
+pip install https://github.com/Manuel83/craftbeerpi4/archive/master.zip
+```
+
+### Create a Python Virtual Environment
+
+The advantage of a virtual enviroment is to separate the python dependencies.  
+This is interesting for testing and to install several CBPi intances at the same time.
+
+{% embed url="https://docs.python.org/3/library/venv.html" %}
+
+```text
+python3 -m venv venv
+
+source venv/bin/activate
+```
+
 ## Links
 
 {% embed url="https://www.facebook.com/groups/craftbeerpi" %}
