@@ -58,8 +58,8 @@ def create_config_file():
 def create_home_folder_structure():
     pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/dasboard')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/dasboard/widgets')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config/dashboard')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
     print("Folder created")
 
 def copy_splash():
