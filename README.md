@@ -6,7 +6,12 @@ CraftBeerPi is an open source brewing controller.
 
 ## Installation
 
-CraftBeerPi is python based and will require at last python 3.7.x
+CraftBeerPi is python based and will require at last python 3.7.x  
+You can run CBPi 4.x on your Laptop. 
+
+Download an install Python 3.7  [https://www.python.org/downloads/](https://www.python.org/downloads/)
+
+Open a terminal window and run the following commands.
 
 ```text
 sudo python3 -m pip install cbpi
@@ -19,6 +24,8 @@ cbpi setup
 ```text
 cbpi start
 ```
+
+The server is running under http://localhost:8000 by default.
 
 ## Links
 
