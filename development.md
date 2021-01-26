@@ -9,12 +9,35 @@ How to create virtual env in Python
 [https://docs.python.org/3/tutorial/venv.html](https://docs.python.org/3/tutorial/venv.html)
 {% endhint %}
 
-```bash
+### 1. Create a virtual env with CBPi
 
+```bash
 python3 -m venv venv
 source venv/bin/activate
 python3 -m pip insatll cbpi
 ```
+
+### 2. Create Folder structure
+
+
+
+### 3. Add Custom Code
+
+
+
+### 4. Test the Code
+
+
+
+### 3. Build plugin
+
+
+
+### 4. Upload the plugin
+
+### Full Example
+
+[https://github.com/Manuel83/cbpi4-ui-plugin](https://github.com/Manuel83/cbpi4-ui-plugin)
 
 ##   Sensor
 
