@@ -4,6 +4,8 @@
 
 CraftBeerPi is an open source brewing controller.
 
+![](.gitbook/assets/bildschirmaufnahme-2021-01-24-um-11.47.30.mov)
+
 ## Installation
 
 CraftBeerPi is python based and will require at last python 3.7.x  
@@ -13,13 +15,26 @@ Download an install Python 3.7  [https://www.python.org/downloads/](https://www.
 
 Open a terminal window and run the following commands.
 
+#### Downloas the software via Python pip
+
 ```text
 sudo python3 -m pip install cbpi
 ```
 
-```text
+#### Setup Environment
+
+```bash
 cbpi setup
 ```
+
+The setup command will create a config folder in directory where you executed this command. The config folder contains all instance data. For example all your hardware configuration and log files.
+
+{% hint style="info" %}
+You can setup as many enviroments as you like on one computer / Raspberry pi.  
+Just navigate to a diffent folder and run the setup command again. This will create additional config folder
+{% endhint %}
+
+#### Run the Server
 
 ```text
 cbpi start
@@ -27,9 +42,19 @@ cbpi start
 
 The server is running under http://localhost:8000 by default.
 
+#### Access the User Interface
+
+```text
+http://<YOUR_IP>:8000/
+```
+
+{% hint style="info" %}
+Port 8000 is the default port. You can change this port in the config folder config.yaml
+{% endhint %}
+
 ### Installation from GitHub
 
-You can install the latest master version direclty from GitHub.
+You can install the latest development version direclty from GitHub.
 
 ```text
 pip install https://github.com/Manuel83/craftbeerpi4/archive/master.zip
@@ -46,6 +71,12 @@ This is interesting for testing and to install several CBPi intances at the same
 python3 -m venv venv
 
 source venv/bin/activate
+```
+
+## Uninstall
+
+```text
+pip uninstall cbpi
 ```
 
 ## Links
