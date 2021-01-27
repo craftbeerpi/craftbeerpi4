@@ -19,19 +19,11 @@ python3 -m pip insatll cbpi
 
 ### 2. Create Folder structure
 
-
-
 ### 3. Add Custom Code
-
-
 
 ### 4. Test the Code
 
-
-
 ### 3. Build plugin
-
-
 
 ### 4. Upload the plugin
 
@@ -39,7 +31,7 @@ python3 -m pip insatll cbpi
 
 [https://github.com/Manuel83/cbpi4-ui-plugin](https://github.com/Manuel83/cbpi4-ui-plugin)
 
-##   Sensor
+## Sensor
 
 ```python
 # -*- coding: utf-8 -*-
@@ -60,13 +52,13 @@ Make sure to extend CBPiSensor
              Property.Sensor(label="Param4"), 
              Property.Actor(label="Param5")])
 class CustomSensor(CBPiSensor):
-    
+
     def __init__(self, cbpi, id, props):
-    
+
         super(CustomSensor, self).__init__(cbpi, id, props)
         self.value = 0
 
-    
+
     @action(key="Test", parameters=[])
     async def action1(self, **kwargs):
         '''
@@ -83,7 +75,7 @@ class CustomSensor(CBPiSensor):
             self.value = random.randint(0,50)
             self.push_update(self.value)
             await asyncio.sleep(1)
-    
+
     def get_state(self):
         # return the current state of the sensor
         return dict(value=self.value)
@@ -94,7 +86,7 @@ def setup(cbpi):
     '''
     This method is called by the server during startup 
     Here you need to register your plugins at the server
-    
+
     :param cbpi: the cbpi core 
     :return: 
     '''
@@ -104,7 +96,6 @@ def setup(cbpi):
 ## Actor
 
 ```python
-
 import logging
 from unittest.mock import MagicMock, patch
 
@@ -141,10 +132,10 @@ class CustomActor(CBPiActor):
         print("ACTION !", kwargs)
         self.my_name = kwargs.get("name")
         pass
-    
+
     def init(self):
         print("INIT")
-        
+
         self.state = False
         pass
 
@@ -157,9 +148,9 @@ class CustomActor(CBPiActor):
         self.state = False
 
     def get_state(self):
-        
+
         return self.state
-    
+
     async def run(self):
         pass
 
@@ -168,7 +159,7 @@ def setup(cbpi):
     '''
     This method is called by the server during startup 
     Here you need to register your plugins at the server
-    
+
     :param cbpi: the cbpi core 
     :return: 
     '''

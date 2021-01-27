@@ -22,9 +22,9 @@ cbpi start
 
 ## Links
 
-{% embed url="https://www.facebook.com/groups/craftbeerpi" %}
+{% embed url="https://www.facebook.com/groups/craftbeerpi" caption="" %}
 
-{% embed url="https://www.youtube.com/channel/UCy47sYaG8YLwJWw2iY5\_aNg" %}
+{% embed url="https://www.youtube.com/channel/UCy47sYaG8YLwJWw2iY5\_aNg" caption="" %}
 
-{% embed url="http://web.craftbeerpi.com" %}
+{% embed url="http://web.craftbeerpi.com" caption="" %}
 
