@@ -31,13 +31,12 @@ class BasicController:
         logging.info("{} Load ".format(self.name))
         with open(self.path) as json_file:
             data = json.load(json_file)
-            
             self.data  = data["data"]
-
             if self.autostart is True:
                 for d in self.data:
                     logging.info("{} Starting ".format(self.name))
                     await self.start(d.get("id"))
+                await self.push_udpate()
         
     async def save(self):
         logging.info("{} Save ".format(self.name))
@@ -76,6 +75,7 @@ class BasicController:
             instance = item.get("instance")
             await instance.stop()
             await instance.task
+            await self.push_udpate()
         except Exception as e:
             logging.error("{} Cant stop {} - {}".format(self.name, id, e))
 
@@ -84,20 +84,17 @@ class BasicController:
         try:
             item = self.find_by_id(id)
             instance = item.get("instance")
-            
             if instance is not None and instance.running is True:
                 logging.warning("{} already running {}".format(self.name, id))
                 return 
 
             type = item["type"]
-            
-            
             clazz = self.types[type]["class"]
             item["instance"] = clazz(self.cbpi, item["id"], {})
-            
             await item["instance"].start()
             item["instance"].task = self._loop.create_task(item["instance"].run())
-            logging.info("Sensor started {}".format(id))
+            logging.info("{} started {}".format(self.name, id))
+            
         except Exception as e:
             logging.error("{} Cant start {} - {}".format(self.name, id, e))
 

@@ -7,11 +7,7 @@ from aiohttp import web
 from cbpi.api import *
 
 
-@parameters([Property.Number(label="Param1", configurable=True), 
-             Property.Text(label="Param2", configurable=True, default_value="HALLO"), 
-             Property.Select(label="Param3", options=[1,2,4]), 
-             Property.Sensor(label="Param4"), 
-             Property.Actor(label="Param5")])
+@parameters([])
 class CustomSensor(CBPiSensor):
     
     def __init__(self, cbpi, id, props):
@@ -36,7 +32,7 @@ class CustomSensor(CBPiSensor):
         while self.running is True:
             self.value = random.randint(0,50)
             self.push_update(self.value)
-            await asyncio.sleep(1)
+            await asyncio.sleep(10)
     
     def get_state(self):
         return dict(value=self.value)

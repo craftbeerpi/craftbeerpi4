@@ -9,3 +9,6 @@ port: 8000
 username: cbpi
 password: 123
 
+plugins:
+- cbpi4-ui
+

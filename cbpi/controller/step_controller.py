@@ -222,8 +222,8 @@ class StepController:
         return next((i for i, item in enumerate(self.profile) if item["id"] == id), None)
 
     async def push_udpate(self):
-        await self.cbpi.bus.fire("step/update", data=list(map(lambda x: self.create_dict(x), self.profile)))
-    
+        self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda x: self.create_dict(x), self.profile))))
+        
     async def start_step(self,step):
         logging.info("Start Step")
         step.get("instance").start()

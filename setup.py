@@ -28,9 +28,10 @@ setup(name='cbpi',
           "voluptuous==0.12.1",
           "pyfiglet==0.8.post1",
           'pandas==1.1.5',
+          'click==7.1.2',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
-          'cbpi4-ui==0.0.2',
+          'cbpi4-ui==0.0.3',
       ],
         dependency_links=[
         'https://testpypi.python.org/pypi'

@@ -23,16 +23,16 @@ class CBPiKettleLogic(metaclass=ABCMeta):
         self.cbpi.log.log_data(self.id, value)
 
     async def run(self):
+        self.state = True
         while self.running:
             print("RUNNING KETTLE")
             await asyncio.sleep(1)
+        self.state = False
         
     def get_state(self):
-        
-        return dict(state=self.state)
+        return dict(running=self.running)
 
     async def start(self):
-        
         self.running = True
 
     async def stop(self):

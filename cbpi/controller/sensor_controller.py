@@ -11,7 +11,7 @@ class SensorController(BasicController):
             instance = data.get("instance")
             state = state=instance.get_state()
         except Exception as e:
-            logging.error("Faild to crate actor dict {} ".format(e))
+            logging.error("Faild to create sensor dict {} ".format(e))
             state = dict() 
 
         return dict(name=data.get("name"), id=data.get("id"), type=data.get("type"), state=state,props=data.get("props", []))

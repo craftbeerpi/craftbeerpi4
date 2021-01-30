@@ -182,6 +182,31 @@ class KettleHttpEndpoints():
         await self.controller.off(id)
         return web.Response(status=204)
     
+    @request_mapping(path="/{id}/toggle", method="POST", auth_required=False)
+    async def http_toggle(self, request) -> web.Response:
+        """
+
+        ---
+        description: Switch actor on
+        tags:
+        - Kettle
+
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Kettle ID"
+          required: true
+          type: "string"
+          
+        responses:
+            "204":
+                description: successful operation
+            "405":
+                description: invalid HTTP Met
+        """
+        id = request.match_info['id']
+        await self.controller.toggle(id)
+        return web.Response(status=204)
 
     @request_mapping(path="/{id}/action", method="POST", auth_required=auth)
     async def http_action(self, request) -> web.Response:
@@ -233,11 +258,20 @@ class KettleHttpEndpoints():
           required: true
           type: "integer"
           format: "int64"
+        - in: body
+          name: body
+          description: Update Temp
+          required: true
+          schema:
+            type: object
+            properties:
+              temp:
+                type: integer
         responses:
             "204":
                 description: successful operation
         """
         id = request.match_info['id']
-        #data = await request.json()
-        await self.controller.set_target_temp(id,999)
+        data = await request.json()
+        await self.controller.set_target_temp(id,data.get("temp"))
         return web.Response(status=204)

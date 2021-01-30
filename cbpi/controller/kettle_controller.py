@@ -13,6 +13,7 @@ class KettleController(BasicController):
             item = self.find_by_id(id)
             instance = item.get("instance")
             await instance.start()
+            await self.push_udpate()
         except Exception as e:
             logging.error("Faild to switch on KettleLogic {} {}".format(id, e))
 
@@ -21,6 +22,19 @@ class KettleController(BasicController):
             item = self.find_by_id(id)
             instance = item.get("instance")
             await instance.stop()
+            await self.push_udpate()
+        except Exception as e:
+            logging.error("Faild to switch on KettleLogic {} {}".format(id, e))
+
+    async def toggle(self, id):
+        try:
+            item = self.find_by_id(id)
+            instance = item.get("instance")
+            if instance is None or instance.running == False: 
+                await self.start(id)
+            else:
+                await instance.stop()
+            await self.push_udpate()
         except Exception as e:
             logging.error("Faild to switch on KettleLogic {} {}".format(id, e))
 
@@ -35,7 +49,7 @@ class KettleController(BasicController):
     def create_dict(self, data):
         try:
             instance = data.get("instance")
-            state = dict(state=instance.get_state())
+            state = instance.get_state()
         except Exception as e:
             logging.error("Faild to create KettleLogic dict {} ".format(e))
             state = dict() 

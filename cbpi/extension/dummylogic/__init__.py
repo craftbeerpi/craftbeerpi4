@@ -2,11 +2,7 @@ import asyncio
 
 from cbpi.api import *
 
-@parameters([Property.Number(label="Param1", configurable=True), 
-             Property.Text(label="Param2", configurable=True, default_value="HALLO"), 
-             Property.Select(label="Param3", options=[1,2,4]), 
-             Property.Sensor(label="Param4"), 
-             Property.Actor(label="Param5")])
+@parameters([])
 class CustomLogic(CBPiKettleLogic):
 
     pass

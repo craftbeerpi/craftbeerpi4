@@ -15,12 +15,40 @@
             "id": "Aifjxmw4QdPfU3XbR6iyis",
             "name": "Pump1",
             "props": {},
-            "state": false,
+            "state": true,
             "type": "CustomActor"
         },
         {
             "id": "HX2bKdobuANehPggYcynnj",
             "name": "Pump2",
+            "props": {},
+            "state": false,
+            "type": "CustomActor"
+        },
+        {
+            "id": "NjammuygecdvMpoGYc3rXt",
+            "name": "Heater Boil",
+            "props": {},
+            "state": false,
+            "type": "CustomActor"
+        },
+        {
+            "id": "j4PnSfuWRhgZDgrQScLN7e",
+            "name": "Vent1",
+            "props": {},
+            "state": true,
+            "type": "CustomActor"
+        },
+        {
+            "id": "ZGJqoybWv3eWrEeGJLopFs",
+            "name": "Water In",
+            "props": {},
+            "state": false,
+            "type": "CustomActor"
+        },
+        {
+            "id": "NfYJEWbTXPUSUQzS83dfAn",
+            "name": "Vent Out",
             "props": {},
             "state": false,
             "type": "CustomActor"

@@ -7,19 +7,15 @@ import re
 import requests
 import yaml
 from cbpi.utils.utils import load_config
-
+from zipfile import ZipFile
 from cbpi.craftbeerpi import CraftBeerPi
 import os
 import pathlib
 import shutil
+import yaml
+import click
 
-def create_plugin_file():
-    import os.path
-    if os.path.exists(os.path.join(".", 'config', "plugin_list.txt")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "plugin_list.txt")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-        print("Plugin Folder created")
+from jinja2 import Template
 
 def create_config_file():
     import os.path
@@ -74,9 +70,7 @@ def clear_db():
         os.remove(os.path.join(".", "craftbeerpi.db"))
         print("database Cleared")
 
-
 def check_for_setup():
-
     if os.path.exists(os.path.join(".", "config", "config.yaml")) is False:
         print("***************************************************")
         print("CraftBeerPi Config File not found: %s" % os.path.join(".", "config", "config.yaml"))
@@ -87,137 +81,164 @@ def check_for_setup():
         return True
 
 
-def list_plugins():
-    print("***************************************************")
-    print("CraftBeerPi 4.x Plugin List")
-    print("***************************************************")
-    print("")
-    plugins_yaml = "https://raw.githubusercontent.com/Manuel83/craftbeerpi-plugins/master/plugins_v4.yaml"
-    r = requests.get(plugins_yaml)
-    data = yaml.load(r.content, Loader=yaml.FullLoader)
-    for name, value in data.items():
-        print(name)
-    print("")
-    print("***************************************************")
-
-def add(package_name):
-
+def plugins_add(package_name):
     if package_name is None:
-        print("Missing Plugin Name: cbpi add --name=")
+        print("Pleaes provide a plugin Name")
+        return
+    try:
+        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
+            data = yaml.load(f, Loader=yaml.FullLoader)
+            if package_name in data["plugins"]:
+                print("")
+                print("Plugin {} already active".format(package_name))
+                print("")
+                return
+            data["plugins"].append(package_name)
+        with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
+            yaml.dump(data, outfile, default_flow_style=False)
+        print("")
+        print("Plugin {} activated".format(package_name))
+        print("")
+    except Exception as e:
+        print(e)
+        pass
+
+
+
+def plugin_remove(package_name):
+    if package_name is None:
+        print("Pleaes provide a plugin Name")
+        return
+    try:
+        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
+            data = yaml.load(f, Loader=yaml.FullLoader)
+            
+            data["plugins"] = list(filter(lambda k: package_name not in k, data["plugins"]))
+            with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
+                yaml.dump(data, outfile, default_flow_style=False)
+        print("")        
+        print("Plugin {} deactivated".format(package_name))
+        print("")
+    except Exception as e:
+        print(e)
+        pass
+
+def plugins_list():
+
+    print("--------------------------------------")
+    print("List of active pluigins")
+    try:
+        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
+            data = yaml.load(f, Loader=yaml.FullLoader)
+            
+            for p in data["plugins"]:
+                print("- {}".format(p))
+    except Exception as e:
+        print(e)
+        pass
+    print("--------------------------------------")
+
+def plugin_create(name):
+
+    if os.path.exists(os.path.join(".", name)) is True:
+        print("Cant create Plugin. Folder {} already exists ".format(name))
         return
 
-    data = subprocess.check_output([sys.executable, "-m", "pip", "install", package_name])
-    data = data.decode('UTF-8')
+    url = 'https://github.com/Manuel83/craftbeerpi4-plugin-template/archive/main.zip'
+    r = requests.get(url)
+    with open('temp.zip', 'wb') as f:
+        f.write(r.content)
 
-    patter_already_installed = "Requirement already satisfied: %s" % package_name
-    pattern = "Successfully installed %s-([-0-9a-zA-Z._]*)" % package_name
-
-    match_already_installed = re.search(patter_already_installed, data)
-    match_installed = re.search(pattern, data)
-
-    if match_already_installed is not None:
-        print("Plugin already installed")
-        return False
-
-    if match_installed is None:
-        print(data)
-        print("Faild to install plugin")
-        return False
-
-    version = match_installed.groups()[0]
-    plugins = load_config("./config/plugin_list.txt")
-    if plugins is None:
-        plugins = {}
-    now = datetime.datetime.now()
-    plugins[package_name] = dict(version=version, installation_date=now.strftime("%Y-%m-%d %H:%M:%S"))
-
-    with open('./config/plugin_list.txt', 'w') as outfile:
-        yaml.dump(plugins, outfile, default_flow_style=False)
-
-    print("Plugin %s added" % package_name)
-    return True
+    with ZipFile('temp.zip', 'r') as repo_zip:
+        repo_zip.extractall()
 
 
-def remove(package_name):
-    if package_name is None:
-        print("Missing Plugin Name: cbpi add --name=")
-        return
-    data = subprocess.check_output([sys.executable, "-m", "pip", "uninstall", "-y", package_name])
-    data = data.decode('UTF-8')
+    os.rename("./craftbeerpi4-plugin-template-main", os.path.join(".", name))
+    os.rename(os.path.join(".", name, "src"), os.path.join(".", name, name))
 
-    pattern = "Successfully uninstalled %s-([-0-9a-zA-Z._]*)" % package_name
-    match_uninstalled = re.search(pattern, data)
+    import jinja2
 
-    if match_uninstalled is None:
-        
-        print("Faild to uninstall plugin")
-        return False
-
-    plugins = load_config("./config/plugin_list.txt")
-    if plugins is None:
-        plugins = {}
-
-    if package_name not in plugins:
-        return False
-
-    del plugins[package_name]
-    with open('./config/plugin_list.txt', 'w') as outfile:
-        yaml.dump(plugins, outfile, default_flow_style=False)
-
-    print("Plugin %s removed" % package_name)
-    return True
-
-def main():
+    templateLoader = jinja2.FileSystemLoader(searchpath=os.path.join(".", name))
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    TEMPLATE_FILE = "setup.py"
+    template = templateEnv.get_template(TEMPLATE_FILE)
+    outputText = template.render(name=name) 
     
-    parser = argparse.ArgumentParser(description='Welcome to CraftBeerPi 4')
-    parser.add_argument("action", type=str, help="start,stop,restart,setup,plugins")
-    parser.add_argument('--debug', dest='debug', action='store_true')
-    parser.add_argument("--name", type=str, help="Plugin name")
-    args = parser.parse_args()
+    with open(os.path.join(".", name, "setup.py"), "w") as fh:
+        fh.write(outputText)
 
-    if args.debug is True:
-        level =logging.DEBUG
-    else:
-        level =logging.INFO
-    #logging.basicConfig(level=logging.INFO, filename='./logs/app.log', filemode='a', format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
-    logging.basicConfig(level=level, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    TEMPLATE_FILE = "MANIFEST.in"
+    template = templateEnv.get_template(TEMPLATE_FILE)
+    outputText = template.render(name=name) 
+    with open(os.path.join(".", name, "MANIFEST.in"), "w") as fh:
+        fh.write(outputText)
+    
+    TEMPLATE_FILE = os.path.join("/", name , "config.yaml")
+    template = templateEnv.get_template(TEMPLATE_FILE)
+    outputText = template.render(name=name) 
+    
+    with open(os.path.join(".", name, name, "config.yaml"), "w") as fh:
+        fh.write(outputText)
+    print("")
+    print("")
+    print("Plugin {} created! See https://craftbeerpi.gitbook.io/craftbeerpi4/development how to run your plugin ".format(name))
+    print("")
+    print("Happy Development! Cheers")
+    print("")
+    print("")
 
-    if args.action == "setup":
-        print("Setting up CBPi")
-        create_home_folder_structure()
-        create_plugin_file()
-        create_config_file()
-        copy_splash()
+
+
+@click.group()
+def main():   
+    level =logging.INFO
+    logging.basicConfig(level=level, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')  
+    pass
+
+
+@click.command()
+def setup():
+    '''Create Config folder'''
+    print("Setting up CraftBeerPi")
+    create_home_folder_structure()
+    create_config_file()
+
+@click.command()
+def start():
+    if check_for_setup() is False:
         return
+    print("START")
+    cbpi = CraftBeerPi()
+    cbpi.start()
 
-    if args.action == "cleardb":
-        clear_db()
-        return
+@click.command()
+def plugins():
+    '''List active plugins'''
+    plugins_list()
+    return
 
-    if args.action == "plugins":
-        list_plugins()
-        return
+@click.command()
+@click.argument('name')
+def add(name):
+    '''Activate Plugin'''
+    plugins_add(name)
 
+@click.command()
+@click.argument('name')
+def remove(name):
+    '''Deactivate Plugin'''
+    plugin_remove(name)
+    
 
-    if args.action == "add":
+@click.command()
+@click.argument('name')
+def create(name):
+    '''Deactivate Plugin'''
+    plugin_create(name)
 
-        add(args.name)
-        return
-
-    if args.action == "remove":
-        remove(args.name)
-        return
-
-    if args.action == "start":
-        if check_for_setup() is False:
-            return
-
-        cbpi = CraftBeerPi()
-        cbpi.start()
-        return
-
-    parser.print_help()
-
-
-
-
+main.add_command(setup)
+main.add_command(start)
+main.add_command(plugins)
+main.add_command(add)
+main.add_command(remove)
+main.add_command(create)

@@ -4,18 +4,20 @@
             "agitator": "",
             "heater": "8BLRqagLicCdEBDdc77Sgr",
             "id": "oHxKz3z5RjbsxfSz6KUgov",
-            "name": "Test1111111",
+            "name": "MashTun",
             "props": {},
-            "sensor": "",
-            "state": {},
-            "target_temp": null,
+            "sensor": "8ohkXvFA9UrkHLsxQL38wu",
+            "state": {
+                "running": false
+            },
+            "target_temp": 52,
             "type": "CustomKettleLogic"
         },
         {
             "agitator": "",
             "heater": "",
             "id": "WxAkesrkqiHH3Gywc4fMci",
-            "name": "Test",
+            "name": "HLT",
             "props": {
                 "Param2": "13",
                 "Param3": 1,
@@ -25,43 +27,20 @@
             "sensor": "",
             "state": {},
             "target_temp": null,
-            "type": "CustomKettleLogic"
-        },
-        {
-            "agitator": "",
-            "heater": "8BLRqagLicCdEBDdc77Sgr",
-            "id": "gc9Bwp38jtyxkVWH5oYRNZ",
-            "name": "Test",
-            "props": {
-                "Param3": 1,
-                "Param5": "8BLRqagLicCdEBDdc77Sgr"
-            },
-            "sensor": "",
-            "state": {},
-            "target_temp": null,
-            "type": "CustomKettleLogic"
-        },
-        {
-            "agitator": "",
-            "heater": "",
-            "id": "ZfF2N2UnEHtgExNgZJyF5i",
-            "name": "Test",
-            "props": {},
-            "sensor": "",
-            "state": {},
-            "target_temp": null,
-            "type": "CustomKettleLogic"
-        },
-        {
-            "agitator": "",
-            "heater": "8BLRqagLicCdEBDdc77Sgr",
-            "id": "oTivUB7LueLeUWoZAnLhwp",
-            "name": "",
-            "props": {},
-            "sensor": "",
-            "state": {},
-            "target_temp": null,
             "type": ""
+        },
+        {
+            "agitator": "",
+            "heater": "NjammuygecdvMpoGYc3rXt",
+            "id": "a7bWex85Z9Td4atwgazpXW",
+            "name": "Boil",
+            "props": {},
+            "sensor": "",
+            "state": {
+                "running": false
+            },
+            "target_temp": 55,
+            "type": "CustomKettleLogic"
         }
     ]
 }

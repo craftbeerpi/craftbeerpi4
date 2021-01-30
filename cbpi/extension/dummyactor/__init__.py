@@ -20,11 +20,7 @@ except Exception:
     import RPi.GPIO as GPIO
 
 
-@parameters([Property.Number(label="Param1", configurable=True), 
-             Property.Text(label="Param2", configurable=True, default_value="HALLO"), 
-             Property.Select(label="Param3", options=[1,2,4]), 
-             Property.Sensor(label="Param4"), 
-             Property.Actor(label="Param5")])
+@parameters([])
 class CustomActor(CBPiActor):
     my_name = ""
 
@@ -37,7 +33,6 @@ class CustomActor(CBPiActor):
     
     def init(self):
         print("INIT")
-        
         self.state = False
         pass
 
