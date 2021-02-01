@@ -23,8 +23,8 @@ class ConfigController:
         return self.cache
 
     async def init(self):
-        this_directory = os.path.dirname(__file__)
-        self.static = load_config("./config/config.yaml")
+        this_directory = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2])
+        self.static = load_config("{}/config/config.yaml".format(this_directory))
         items = await self.model.get_all()
         for key, value in items.items():
             self.cache[value.name] = value
