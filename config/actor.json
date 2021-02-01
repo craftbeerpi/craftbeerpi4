@@ -1,57 +1,24 @@
 {
     "data": [
         {
-            "id": "8BLRqagLicCdEBDdc77Sgr",
-            "name": "Heater",
+            "id": "YwGzXvWMpmbLb6XobesL8n",
+            "name": "111",
             "props": {
-                "Param3": 2,
-                "Param4": "",
-                "Param5": "8BLRqagLicCdEBDdc77Sgr"
+                "GPIO": 4,
+                "Inverted": "Yes"
             },
             "state": false,
-            "type": "CustomActor"
+            "type": "GPIOActor"
         },
         {
-            "id": "Aifjxmw4QdPfU3XbR6iyis",
-            "name": "Pump1",
-            "props": {},
-            "state": true,
-            "type": "CustomActor"
-        },
-        {
-            "id": "HX2bKdobuANehPggYcynnj",
-            "name": "Pump2",
-            "props": {},
+            "id": "EsmZwWi9Qp3bzmXqq7N3Ly",
+            "name": "HALO",
+            "props": {
+                "Frequency": "20",
+                "GPIO": 5
+            },
             "state": false,
-            "type": "CustomActor"
-        },
-        {
-            "id": "NjammuygecdvMpoGYc3rXt",
-            "name": "Heater Boil",
-            "props": {},
-            "state": false,
-            "type": "CustomActor"
-        },
-        {
-            "id": "j4PnSfuWRhgZDgrQScLN7e",
-            "name": "Vent1",
-            "props": {},
-            "state": true,
-            "type": "CustomActor"
-        },
-        {
-            "id": "ZGJqoybWv3eWrEeGJLopFs",
-            "name": "Water In",
-            "props": {},
-            "state": false,
-            "type": "CustomActor"
-        },
-        {
-            "id": "NfYJEWbTXPUSUQzS83dfAn",
-            "name": "Vent Out",
-            "props": {},
-            "state": false,
-            "type": "CustomActor"
+            "type": "GPIOPWMActor"
         }
     ]
 }

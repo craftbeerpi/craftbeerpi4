@@ -5,7 +5,7 @@
             "name": "Sensor1",
             "props": {},
             "state": {
-                "value": 0
+                "value": 35
             },
             "type": "CustomSensor"
         }

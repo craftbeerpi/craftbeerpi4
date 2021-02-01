@@ -3,25 +3,10 @@ from unittest.mock import MagicMock, patch
 
 from cbpi.api import *
 
-
 logger = logging.getLogger(__name__)
 
-try:
-    import RPi.GPIO as GPIO
-except Exception:
-    logger.error("Failed to load RPi.GPIO. Using Mock")
-    MockRPi = MagicMock()
-    modules = {
-        "RPi": MockRPi,
-        "RPi.GPIO": MockRPi.GPIO
-    }
-    patcher = patch.dict("sys.modules", modules)
-    patcher.start()
-    import RPi.GPIO as GPIO
-
-
 @parameters([])
-class CustomActor(CBPiActor):
+class DummyActor(CBPiActor):
     my_name = ""
 
     # Custom property which can be configured by the user
@@ -30,18 +15,17 @@ class CustomActor(CBPiActor):
         print("ACTION !", kwargs)
         self.my_name = kwargs.get("name")
         pass
-    
-    def init(self):
-        print("INIT")
-        self.state = False
-        pass
+
+    async def start(self):
+        await super().start()
 
     async def on(self, power=0):
-        logger.info("ACTOR 1111 %s ON" % self.id)
+        logger.info("ACTOR %s ON " %  self.id)
         self.state = True
 
     async def off(self):
         logger.info("ACTOR %s OFF " % self.id)
+        
         self.state = False
 
     def get_state(self):
@@ -61,4 +45,4 @@ def setup(cbpi):
     :return: 
     '''
 
-    cbpi.plugin.register("CustomActor", CustomActor)
+    cbpi.plugin.register("DummyActor", DummyActor)

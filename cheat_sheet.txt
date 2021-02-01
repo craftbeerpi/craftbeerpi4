@@ -8,4 +8,8 @@ python3 setup.py sdist
 twine upload dist/*
 
 
+# Checkout Pull Request
+git fetch origin pull/ID/head:BRANCHNAME
+git checkout BRANCHNAME
+
 

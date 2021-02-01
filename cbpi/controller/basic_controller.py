@@ -90,7 +90,8 @@ class BasicController:
 
             type = item["type"]
             clazz = self.types[type]["class"]
-            item["instance"] = clazz(self.cbpi, item["id"], {})
+            print("#####",item)
+            item["instance"] = clazz(self.cbpi, item["id"], item["props"])
             await item["instance"].start()
             item["instance"].task = self._loop.create_task(item["instance"].run())
             logging.info("{} started {}".format(self.name, id))
@@ -122,9 +123,9 @@ class BasicController:
     async def update(self, id, data) -> dict:
         logging.info("{} Get Update".format(self.name))
         await self.stop(id)
-        if self.autostart is True:
-            await self.start(id)        
         self.data = list(map(lambda old: {**old, **data} if old["id"] == id else old, self.data))
+        if self.autostart is True:
+            await self.start(id)    
         await self.save()
         return self.find_by_id(id)
 

@@ -7,9 +7,7 @@
             "name": "MashTun",
             "props": {},
             "sensor": "8ohkXvFA9UrkHLsxQL38wu",
-            "state": {
-                "running": false
-            },
+            "state": {},
             "target_temp": 52,
             "type": "CustomKettleLogic"
         },
@@ -36,9 +34,7 @@
             "name": "Boil",
             "props": {},
             "sensor": "",
-            "state": {
-                "running": false
-            },
+            "state": {},
             "target_temp": 55,
             "type": "CustomKettleLogic"
         }

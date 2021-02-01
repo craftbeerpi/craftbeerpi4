@@ -31,7 +31,7 @@ setup(name='cbpi',
           'click==7.1.2',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
-          'cbpi4-ui==0.0.3',
+          'cbpi4-ui',
       ],
         dependency_links=[
         'https://testpypi.python.org/pypi'
