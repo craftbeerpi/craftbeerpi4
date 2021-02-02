@@ -7,16 +7,13 @@ from hbmqtt.mqtt.constants import QOS_1, QOS_2
 from asyncio_mqtt import Client, MqttError, Will
 import asyncio
 
-
 class CBPiMqttClient:
-
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.cbpi.bus.register("#", self.listen)
         self.client = None
         self._loop = asyncio.get_event_loop() 
         self._loop.create_task(self.init_client(self.cbpi))
-
 
     async def init_client(self, cbpi):
 

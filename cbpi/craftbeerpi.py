@@ -28,7 +28,6 @@ from cbpi.eventbus import CBPiEventBus
 from cbpi.http_endpoints.http_login import Login
 from cbpi.utils import *
 from cbpi.websocket import CBPiWebSocket
-from cbpi.satellite import CBPiSatellite
 from cbpi.http_endpoints.http_actor import ActorHttpEndpoints
 
 from cbpi.http_endpoints.http_config import ConfigHttpEndpoints
@@ -91,7 +90,6 @@ class CraftBeerPi:
         self.job = JobController(self)
         self.config = ConfigController(self)
         self.ws = CBPiWebSocket(self)
-        self.satellite = CBPiSatellite(self)
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
         self.plugin = PluginController(self)
