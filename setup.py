@@ -31,10 +31,11 @@ setup(name='cbpi',
           'click==7.1.2',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
-          'cbpi4-ui',
+          'cbpi4-ui @ git+https://github.com/Manuel83/craftbeerpi4-ui.git',
       ],
         dependency_links=[
-        'https://testpypi.python.org/pypi'
+        'https://testpypi.python.org/pypi',
+        
         ],
       entry_points = {
         "console_scripts": [
