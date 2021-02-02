@@ -28,6 +28,7 @@ from cbpi.eventbus import CBPiEventBus
 from cbpi.http_endpoints.http_login import Login
 from cbpi.utils import *
 from cbpi.websocket import CBPiWebSocket
+from cbpi.satellite import CBPiSatellite
 from cbpi.http_endpoints.http_actor import ActorHttpEndpoints
 
 from cbpi.http_endpoints.http_config import ConfigHttpEndpoints
@@ -69,10 +70,12 @@ class CraftBeerPi:
 
     def __init__(self):
         self.path = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])  # The path to the package dir
+        
         self.version = __version__
 
-        self.static_config = load_config("{}/config/config.yaml".format(self.path))
-        self.database_file = "{}/craftbeerpi.db".format(self.path)
+        self.static_config = load_config(os.path.join(".", 'config', "config.yaml"))
+        print(self.path, self.static_config)
+        self.database_file = os.path.join(".", 'config', "craftbeerpi.db")
         logger.info("Init CraftBeerPI")
 
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
@@ -88,7 +91,7 @@ class CraftBeerPi:
         self.job = JobController(self)
         self.config = ConfigController(self)
         self.ws = CBPiWebSocket(self)
-
+        self.satellite = CBPiSatellite(self)
         self.actor = ActorController(self)
         self.sensor = SensorController(self)
         self.plugin = PluginController(self)

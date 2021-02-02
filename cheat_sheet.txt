@@ -9,7 +9,6 @@ twine upload dist/*
 
 
 # Checkout Pull Request
-git fetch origin pull/ID/head:BRANCHNAME
-git checkout BRANCHNAME
+git fetch origin pull/ID/head:BRANCHNAMEgit checkout BRANCHNAME
 
 

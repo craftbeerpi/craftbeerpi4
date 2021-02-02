@@ -3,6 +3,10 @@ import json
 from cbpi.utils.encoder import ComplexEncoder
 from hbmqtt.mqtt.constants import QOS_0
 from hbmqtt.client import MQTTClient
+from hbmqtt.mqtt.constants import QOS_1, QOS_2
+from asyncio_mqtt import Client, MqttError, Will
+import asyncio
+
 
 class CBPiMqttClient:
 
@@ -10,13 +14,18 @@ class CBPiMqttClient:
         self.cbpi = cbpi
         self.cbpi.bus.register("#", self.listen)
         self.client = None
-        self.cbpi.app.on_startup.append(self.init_client)
+        self._loop = asyncio.get_event_loop() 
+        self._loop.create_task(self.init_client(self.cbpi))
 
 
     async def init_client(self, cbpi):
 
-        self.client = MQTTClient()
-        await self.client.connect('mqtt://localhost:1883')
+        async with Client("localhost", will=Will(topic="cbpi/diconnect", payload="MY CLIENT"))as client:
+            async with client.filtered_messages("cbpi/#") as messages:
+                await client.subscribe("cbpi/#")
+                async for message in messages:
+                    await self.cbpi.actor.on("YwGzXvWMpmbLb6XobesL8n")
+                    print(message.topic, message.payload.decode())
 
 
     async def listen(self, topic, **kwargs):
@@ -31,10 +40,6 @@ def setup(cbpi):
     :param cbpi: the cbpi core
     :return:
     '''
-    print("MQTT")
-    print("###################")
-    print("###################")
-    print("###################")
-    print("###################")
+    
     client = CBPiMqttClient(cbpi)
 

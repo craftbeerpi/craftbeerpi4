@@ -24,6 +24,7 @@ class ConfigController:
 
     async def init(self):
         this_directory = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2])
+        
         self.static = load_config("{}/config/config.yaml".format(this_directory))
         items = await self.model.get_all()
         for key, value in items.items():

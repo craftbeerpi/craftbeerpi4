@@ -1,22 +1,67 @@
 {
-    "elements": [],
+    "elements": [
+        {
+            "id": "fb8e005c-e936-4bd3-882e-ba4020496067",
+            "name": "Kettle",
+            "props": {
+                "heigth": "150",
+                "width": "100"
+            },
+            "type": "Kettle",
+            "x": 230,
+            "y": 70
+        },
+        {
+            "id": "84a4fb23-9226-4c3d-922b-24be78811c4a",
+            "name": "Actor",
+            "props": {
+                "actor": "YwGzXvWMpmbLb6XobesL8n"
+            },
+            "type": "ActorButton",
+            "x": 130,
+            "y": 250
+        }
+    ],
     "pathes": [
         {
+            "condition": [
+                "YwGzXvWMpmbLb6XobesL8n"
+            ],
             "coordinates": [
                 [
-                    35,
-                    170
+                    70,
+                    70
                 ],
                 [
-                    105,
-                    65
+                    40,
+                    350
                 ],
                 [
-                    185,
-                    140
+                    200,
+                    435
+                ],
+                [
+                    115,
+                    530
                 ]
             ],
-            "id": "d374b969-a94d-4d75-a529-1aafd4a79e04"
+            "id": "23789f6d-ec5b-4704-8cc0-e6614b14b5c6"
+        },
+        {
+            "condition": [
+                "YwGzXvWMpmbLb6XobesL8n"
+            ],
+            "coordinates": [
+                [
+                    100,
+                    180
+                ],
+                [
+                    220,
+                    135
+                ]
+            ],
+            "id": "fa887fcf-69e6-4a25-bb42-b65a13cc4012"
         }
     ]
 }

@@ -1,13 +1,3 @@
 {
-    "data": [
-        {
-            "id": "8ohkXvFA9UrkHLsxQL38wu",
-            "name": "Sensor1",
-            "props": {},
-            "state": {
-                "value": 35
-            },
-            "type": "CustomSensor"
-        }
-    ]
+    "data": []
 }
