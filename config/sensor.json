@@ -1,3 +1,16 @@
 {
-    "data": []
+    "data": [
+        {
+            "id": "RedQfuxfy4mYe6PwioY95y",
+            "name": "Test",
+            "props": {
+                "Interval": 5,
+                "Sensor": "DEF"
+            },
+            "state": {
+                "value": 0
+            },
+            "type": "OneWire"
+        }
+    ]
 }

@@ -1,6 +1,8 @@
 import logging
 import json
 import os
+from os import listdir
+from os.path import isfile, join
 
 class DashboardController():
 
@@ -33,3 +35,7 @@ class DashboardController():
         if os.path.exists(self.path):
             os.remove(self.path)
 
+    async def get_custom_widgets(self):
+        path = os.path.join(".", 'config', "dashboard", "widgets")
+        onlyfiles = [os.path.splitext(f)[0] for f in listdir(path) if isfile(join(path, f)) and f.endswith(".svg")]
+        return onlyfiles

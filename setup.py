@@ -31,6 +31,7 @@ setup(name='cbpi',
           'click==7.1.2',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
+          'asyncio-mqtt',
           'cbpi4-ui @ git+https://github.com/Manuel83/craftbeerpi4-ui.git',
       ],
         dependency_links=[

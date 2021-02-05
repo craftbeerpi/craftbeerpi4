@@ -93,3 +93,19 @@ class DashBoardHttpEndpoints(HttpCrudEndpoints):
         dashboard_id = int(request.match_info['id'])
         await self.cbpi.dashboard.delete_content(dashboard_id)
         return web.Response(status=204)
+
+    @request_mapping(path="/widgets", method="GET", auth_required=False)
+    async def get_custom_widgets(self, request):
+        """
+        ---
+        description: Get Custom Widgets
+        tags:
+        - Dashboard
+        responses:
+            "200":
+                description: successful operation
+        """
+  
+      
+        return web.json_response(await self.cbpi.dashboard.get_custom_widgets(), dumps=json_dumps)
+      

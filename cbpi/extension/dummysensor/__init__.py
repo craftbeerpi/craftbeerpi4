@@ -30,9 +30,13 @@ class CustomSensor(CBPiSensor):
     async def run(self):
 
         while self.running is True:
+            print(self.get_config_value("TEMP_UNIT", "NONE"))
+            print(self.get_static_config_value("port", "NONE"))
+            await self.set_config_value("BREWERY_NAME", "WOOHOO HELLO")
+
             self.value = random.randint(0,50)
             self.push_update(self.value)
-            await asyncio.sleep(10)
+            await asyncio.sleep(1)
     
     def get_state(self):
         return dict(value=self.value)

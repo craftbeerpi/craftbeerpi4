@@ -3,7 +3,7 @@ from cbpi.job.aiohttp import get_scheduler_from_app
 
 from cbpi.api import request_mapping
 from cbpi.utils import json_dumps
-
+from cbpi import __version__
 
 class SystemHttpEndpoints:
 
@@ -27,7 +27,8 @@ class SystemHttpEndpoints:
             sensor=self.cbpi.sensor.get_state(),
             kettle=self.cbpi.kettle.get_state(),
             step=self.cbpi.step.get_state(),
-            config=self.cbpi.config.get_state())
+            config=self.cbpi.config.get_state(),
+            version=__version__)
             , dumps=json_dumps)
 
     @request_mapping(path="/logs", auth_required=False)

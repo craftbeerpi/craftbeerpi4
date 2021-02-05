@@ -2,7 +2,7 @@ import logging
 from abc import abstractmethod, ABCMeta
 from cbpi.api.extension import CBPiExtension
 
-
+from cbpi.api.config import ConfigType
 
 
 class CBPiSensor(metaclass=ABCMeta):
@@ -34,6 +34,18 @@ class CBPiSensor(metaclass=ABCMeta):
 
     def get_unit(self):
         pass
+
+    def get_static_config_value(self,name,default):
+        return self.cbpi.static_config.get(name, default)
+
+    def get_config_value(self,name,default):
+        return self.cbpi.config.get(name, default=default)
+
+    async def set_config_value(self,name,value):
+        return await self.cbpi.config.set(name,value)
+
+    async def add_config_value(self, name, value, type: ConfigType, description, options=None):
+        await self.cbpi.add(name, value, type, description, options=None)
 
     def push_update(self, value):
         try:
