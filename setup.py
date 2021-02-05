@@ -32,7 +32,7 @@ setup(name='cbpi',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
           'asyncio-mqtt',
-          'cbpi4-ui @ git+https://github.com/Manuel83/craftbeerpi4-ui.git',
+          'cbpi4-ui',
       ],
         dependency_links=[
         'https://testpypi.python.org/pypi',
