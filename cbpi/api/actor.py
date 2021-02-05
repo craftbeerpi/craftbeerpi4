@@ -1,6 +1,7 @@
 from abc import ABCMeta
 import asyncio
 from cbpi.api.extension import CBPiExtension
+from cbpi.api.config import ConfigType
 
 __all__ = ["CBPiActor"]
 
@@ -39,6 +40,18 @@ class CBPiActor(metaclass=ABCMeta):
 
     async def stop(self):
         self.running = False
+
+    def get_static_config_value(self,name,default):
+        return self.cbpi.static_config.get(name, default)
+
+    def get_config_value(self,name,default):
+        return self.cbpi.config.get(name, default=default)
+
+    async def set_config_value(self,name,value):
+        return await self.cbpi.config.set(name,value)
+
+    async def add_config_value(self, name, value, type: ConfigType, description, options=None):
+        await self.cbpi.add(name, value, type, description, options=None)
 
     async def on(self, power):
         '''
