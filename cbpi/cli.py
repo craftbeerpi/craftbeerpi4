@@ -227,14 +227,16 @@ def setup():
 
 
 @click.command()
-@click.option('--list', is_flag=True)
-def onewire(list):
+@click.option('--list', is_flag=True, help="List all 1Wire Devices")
+@click.option('--setup', is_flag=True, help="Setup 1Wire on Raspberry Pi")
+def onewire(list, setup):
     '''Setup 1wire on Raspberry Pi'''
+    if setup is True:
+        setup_one_wire()
     if list is True:
         list_one_wire()
-    else:
-        print("Setting up 1Wire")
-        setup_one_wire()
+
+
 
 @click.command()
 def start():
