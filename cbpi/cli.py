@@ -14,6 +14,7 @@ import pathlib
 import shutil
 import yaml
 import click
+from subprocess import call
 
 from jinja2 import Template
 
@@ -60,6 +61,23 @@ def create_home_folder_structure():
     pathlib.Path(os.path.join(MAIN_DIR, 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
     print("Folder created")
 
+
+def setup_one_wire():
+    print("Setting up 1Wire")
+    with open('/boot/config.txt', 'wb') as f:
+        f.write("dtoverlay=w1-gpio,gpiopin=4,pullup=on")
+    print("/boot/config.txt created")
+
+def list_one_wire():
+    print("List 1Wire")
+    call(["modprobe", "w1-gpio"])
+    call(["modprobe", "w1-therm"])
+    try:
+        for dirname in os.listdir('/sys/bus/w1/devices'):
+            if (dirname.startswith("28") or dirname.startswith("10")):
+                print(dirname)
+    except Exception as e:
+        print(e)
 
 def copy_splash():
     srcfile = os.path.join(MAIN_DIR, "config", "splash.png")
@@ -209,6 +227,16 @@ def setup():
 
 
 @click.command()
+@click.option('--list', is_flag=True)
+def onewire(list):
+    if list is True:
+        list_one_wire()
+        
+    else:
+        print("Setting up 1Wire")
+        setup_one_wire()
+
+@click.command()
 def start():
     if check_for_setup() is False:
         return
@@ -248,6 +276,7 @@ def create(name):
 main.add_command(setup)
 main.add_command(start)
 main.add_command(plugins)
+main.add_command(onewire)
 main.add_command(add)
 main.add_command(remove)
 main.add_command(create)

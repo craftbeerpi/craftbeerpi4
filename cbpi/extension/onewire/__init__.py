@@ -17,7 +17,7 @@ def getSensors():
                 arr.append(dirname)
         return arr
     except:
-        return ["ABC","DEF"]
+        return []
 
 
 class ReadThread (threading.Thread):
