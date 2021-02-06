@@ -229,9 +229,9 @@ def setup():
 @click.command()
 @click.option('--list', is_flag=True)
 def onewire(list):
+    '''Setup 1wire on Raspberry Pi'''
     if list is True:
         list_one_wire()
-        
     else:
         print("Setting up 1Wire")
         setup_one_wire()
