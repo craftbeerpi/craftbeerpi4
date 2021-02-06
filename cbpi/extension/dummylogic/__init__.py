@@ -5,12 +5,11 @@ from cbpi.api import *
 @parameters([])
 class CustomLogic(CBPiKettleLogic):
 
-    pass
-
-    @action(key="test", parameters=[])
-    async def action1(self, **kwargs):
-        print("ACTION")
-   
+    async def run(self):
+        self.state = True
+        while self.running:
+            await asyncio.sleep(1)
+        self.state = False
 
 
 

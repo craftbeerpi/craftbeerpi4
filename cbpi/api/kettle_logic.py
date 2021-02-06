@@ -25,7 +25,6 @@ class CBPiKettleLogic(metaclass=ABCMeta):
     async def run(self):
         self.state = True
         while self.running:
-            print("RUNNING KETTLE")
             await asyncio.sleep(1)
         self.state = False
         
