@@ -41,6 +41,29 @@
             "type": "ActorButton",
             "x": 505,
             "y": 140
+        },
+        {
+            "id": "3cae292a-f12d-4c9e-8e0e-2fd93a9b253e",
+            "name": "TargetTemp",
+            "props": {
+                "color": "#fff",
+                "kettle": "oHxKz3z5RjbsxfSz6KUgov",
+                "size": "12",
+                "unit": "\u00b0"
+            },
+            "type": "TargetTemp",
+            "x": 160,
+            "y": 75
+        },
+        {
+            "id": "bb90e1ab-7b2d-4623-8df3-3139f91b7087",
+            "name": "Steps",
+            "props": {
+                "width": "200"
+            },
+            "type": "Steps",
+            "x": 595,
+            "y": 50
         }
     ],
     "pathes": [

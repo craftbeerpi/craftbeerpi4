@@ -1,6 +1,5 @@
 from abc import ABCMeta
 import asyncio
-from cbpi.api.extension import CBPiExtension
 from cbpi.api.config import ConfigType
 
 __all__ = ["CBPiActor"]

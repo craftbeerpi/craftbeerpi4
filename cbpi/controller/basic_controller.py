@@ -90,7 +90,6 @@ class BasicController:
 
             type = item["type"]
             clazz = self.types[type]["class"]
-            print("#####",item)
             item["instance"] = clazz(self.cbpi, item["id"], item["props"])
             await item["instance"].start()
             item["instance"].task = self._loop.create_task(item["instance"].run())

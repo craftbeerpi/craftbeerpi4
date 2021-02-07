@@ -32,7 +32,7 @@ setup(name='cbpi',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
           'asyncio-mqtt',
-          'cbpi4-ui',
+          'cbpi4ui',
       ],
         dependency_links=[
         'https://testpypi.python.org/pypi',

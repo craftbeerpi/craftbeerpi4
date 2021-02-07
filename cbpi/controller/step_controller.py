@@ -227,7 +227,7 @@ class StepController:
     async def start_step(self,step):
         logging.info("Start Step")
         step.get("instance").start()
-        step["instance"].task = self._loop.create_task(step["instance"].run(), name=step["name"])
+        step["instance"].task = self._loop.create_task(step["instance"].run())
         step["instance"].task .add_done_callback(self.done)
         step["status"] = "A"
 
