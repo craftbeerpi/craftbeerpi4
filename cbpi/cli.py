@@ -18,8 +18,8 @@ from subprocess import call
 
 from jinja2 import Template
 
-MAIN_DIR = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])
-
+# MAIN_DIR = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])
+MAIN_DIR = "."
 
 def create_config_file():
     if os.path.exists(os.path.join(MAIN_DIR, 'config', "config.yaml")) is False:
