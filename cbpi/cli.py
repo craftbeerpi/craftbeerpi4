@@ -18,47 +18,45 @@ from subprocess import call
 
 from jinja2 import Template
 
-# MAIN_DIR = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])
-MAIN_DIR = "."
 
 def create_config_file():
-    if os.path.exists(os.path.join(MAIN_DIR, 'config', "config.yaml")) is False:
+    if os.path.exists(os.path.join(".", 'config', "config.yaml")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "config.yaml")
-        destfile = os.path.join(MAIN_DIR, 'config')
+        destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
         print("Config Folder created")
 
-    if os.path.exists(os.path.join(MAIN_DIR, 'config', "actor.json")) is False:
+    if os.path.exists(os.path.join(".", 'config', "actor.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "actor.json")
-        destfile = os.path.join(MAIN_DIR, 'config')
+        destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(MAIN_DIR, 'config', "sensor.json")) is False:
+    if os.path.exists(os.path.join(".", 'config', "sensor.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "sensor.json")
-        destfile = os.path.join(MAIN_DIR, 'config')
+        destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(MAIN_DIR, 'config', "kettle.json")) is False:
+    if os.path.exists(os.path.join(".", 'config', "kettle.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "kettle.json")
-        destfile = os.path.join(MAIN_DIR, 'config')
+        destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(MAIN_DIR, 'config', "step_data.json")) is False:
+    if os.path.exists(os.path.join(".", 'config', "step_data.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "step_data.json")
-        destfile = os.path.join(MAIN_DIR, 'config')
+        destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(MAIN_DIR, 'config', "dashboard", "cbpi_dashboard_1.json")) is False:
+    if os.path.exists(os.path.join(".", 'config', "dashboard", "cbpi_dashboard_1.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
-        destfile = os.path.join(MAIN_DIR, "config", "dashboard")
+        destfile = os.path.join(".", "config", "dashboard")
         shutil.copy(srcfile, destfile)
 
 
 def create_home_folder_structure():
-    pathlib.Path(os.path.join(MAIN_DIR, 'logs/sensors')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(MAIN_DIR, 'config')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(MAIN_DIR, 'config/dashboard')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(MAIN_DIR, 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config/dashboard')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
     print("Folder created")
 
 
@@ -80,21 +78,21 @@ def list_one_wire():
         print(e)
 
 def copy_splash():
-    srcfile = os.path.join(MAIN_DIR, "config", "splash.png")
-    destfile = os.path.join(MAIN_DIR, 'config')
+    srcfile = os.path.join(".", "config", "splash.png")
+    destfile = os.path.join(".", 'config')
     shutil.copy(srcfile, destfile)
     print("Splash Srceen created")
 
 
 def clear_db():
     import os.path
-    if os.path.exists(os.path.join(MAIN_DIR, "craftbeerpi.db")) is True:
-        os.remove(os.path.join(MAIN_DIR, "craftbeerpi.db"))
+    if os.path.exists(os.path.join(".", "craftbeerpi.db")) is True:
+        os.remove(os.path.join(".", "craftbeerpi.db"))
         print("database Cleared")
 
 
 def check_for_setup():
-    if os.path.exists(os.path.join(MAIN_DIR, "config", "config.yaml")) is False:
+    if os.path.exists(os.path.join(".", "config", "config.yaml")) is False:
         print("***************************************************")
         print("CraftBeerPi Config File not found: %s" % os.path.join(".", "config", "config.yaml"))
         print("Please run 'cbpi setup' before starting the server ")
@@ -109,7 +107,7 @@ def plugins_add(package_name):
         print("Pleaes provide a plugin Name")
         return
     try:
-        with open(os.path.join(MAIN_DIR, 'config', "config.yaml"), 'rt') as f:
+        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
             if package_name in data["plugins"]:
                 print("")
@@ -117,7 +115,7 @@ def plugins_add(package_name):
                 print("")
                 return
             data["plugins"].append(package_name)
-        with open(os.path.join(MAIN_DIR, 'config', "config.yaml"), 'w') as outfile:
+        with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
             yaml.dump(data, outfile, default_flow_style=False)
         print("")
         print("Plugin {} activated".format(package_name))
@@ -132,11 +130,11 @@ def plugin_remove(package_name):
         print("Pleaes provide a plugin Name")
         return
     try:
-        with open(os.path.join(MAIN_DIR, 'config', "config.yaml"), 'rt') as f:
+        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
 
             data["plugins"] = list(filter(lambda k: package_name not in k, data["plugins"]))
-            with open(os.path.join(MAIN_DIR, 'config', "config.yaml"), 'w') as outfile:
+            with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
                 yaml.dump(data, outfile, default_flow_style=False)
         print("")
         print("Plugin {} deactivated".format(package_name))
@@ -150,7 +148,7 @@ def plugins_list():
     print("--------------------------------------")
     print("List of active pluigins")
     try:
-        with open(os.path.join(MAIN_DIR, 'config', "config.yaml"), 'rt') as f:
+        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
 
             for p in data["plugins"]:
@@ -162,7 +160,7 @@ def plugins_list():
 
 
 def plugin_create(name):
-    if os.path.exists(os.path.join(MAIN_DIR, name)) is True:
+    if os.path.exists(os.path.join(".", name)) is True:
         print("Cant create Plugin. Folder {} already exists ".format(name))
         return
 
@@ -174,8 +172,8 @@ def plugin_create(name):
     with ZipFile('temp.zip', 'r') as repo_zip:
         repo_zip.extractall()
 
-    os.rename(MAIN_DIR + "/craftbeerpi4-plugin-template-main", os.path.join(MAIN_DIR, name))
-    os.rename(os.path.join(MAIN_DIR, name, "src"), os.path.join(MAIN_DIR, name, name))
+    os.rename("./craftbeerpi4-plugin-template-main", os.path.join(".", name))
+    os.rename(os.path.join(".", name, "src"), os.path.join(".", name, name))
 
     import jinja2
 
@@ -185,7 +183,7 @@ def plugin_create(name):
     template = templateEnv.get_template(TEMPLATE_FILE)
     outputText = template.render(name=name)
 
-    with open(os.path.join(MAIN_DIR, name, "setup.py"), "w") as fh:
+    with open(os.path.join(".", name, "setup.py"), "w") as fh:
         fh.write(outputText)
 
     TEMPLATE_FILE = "MANIFEST.in"
@@ -198,7 +196,7 @@ def plugin_create(name):
     template = templateEnv.get_template(TEMPLATE_FILE)
     outputText = template.render(name=name)
 
-    with open(os.path.join(MAIN_DIR, name, name, "config.yaml"), "w") as fh:
+    with open(os.path.join(".", name, name, "config.yaml"), "w") as fh:
         fh.write(outputText)
     print("")
     print("")
