@@ -20,7 +20,7 @@ except Exception:
     import RPi.GPIO as GPIO
 
 
-@parameters([Property.Select(label="GPIO", description="The GPIO Pin", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Select(label="Inverted", description="No: Active on high; Yes: Active on low", options=["Yes", "No"])])
+@parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Select(label="Inverted", options=["Yes", "No"],description="No: Active on high; Yes: Active on low")])
 class GPIOActor(CBPiActor):
 
     
