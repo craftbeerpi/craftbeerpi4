@@ -23,33 +23,33 @@ MAIN_DIR = "."
 
 def create_config_file():
     if os.path.exists(os.path.join(MAIN_DIR, 'config', "config.yaml")) is False:
-        srcfile = os.path.join(MAIN_DIR, "config", "config.yaml")
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "config.yaml")
         destfile = os.path.join(MAIN_DIR, 'config')
         shutil.copy(srcfile, destfile)
         print("Config Folder created")
 
     if os.path.exists(os.path.join(MAIN_DIR, 'config', "actor.json")) is False:
-        srcfile = os.path.join(MAIN_DIR, "config", "actor.json")
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "actor.json")
         destfile = os.path.join(MAIN_DIR, 'config')
         shutil.copy(srcfile, destfile)
 
     if os.path.exists(os.path.join(MAIN_DIR, 'config', "sensor.json")) is False:
-        srcfile = os.path.join(MAIN_DIR, "config", "sensor.json")
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "sensor.json")
         destfile = os.path.join(MAIN_DIR, 'config')
         shutil.copy(srcfile, destfile)
 
     if os.path.exists(os.path.join(MAIN_DIR, 'config', "kettle.json")) is False:
-        srcfile = os.path.join(MAIN_DIR, "config", "kettle.json")
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "kettle.json")
         destfile = os.path.join(MAIN_DIR, 'config')
         shutil.copy(srcfile, destfile)
 
     if os.path.exists(os.path.join(MAIN_DIR, 'config', "step_data.json")) is False:
-        srcfile = os.path.join(MAIN_DIR, "config", "step_data.json")
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "step_data.json")
         destfile = os.path.join(MAIN_DIR, 'config')
         shutil.copy(srcfile, destfile)
 
     if os.path.exists(os.path.join(MAIN_DIR, 'config', "dashboard", "cbpi_dashboard_1.json")) is False:
-        srcfile = os.path.join(MAIN_DIR, "config", "dashboard", "cbpi_dashboard_1.json")
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
         destfile = os.path.join(MAIN_DIR, "config", "dashboard")
         shutil.copy(srcfile, destfile)
 
