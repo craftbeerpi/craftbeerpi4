@@ -18,9 +18,8 @@ def commit(m):
         build += 1
         new_version = "__version__ = \"{}.{}.{}.{}\"".format(major,minor,patch, build)
         with open(file,'w',encoding = 'utf-8') as file:
-            print("New Version {}".format(new_version) )
+            print("New Version {}.{}.{}.{}".format(major,minor,patch, build)) 
             file.write(new_version)
-
 
     subprocess.run(["git", "add", "-A"])
     subprocess.run(["git", "commit", "-m", "\"{}\"".format(m)])
