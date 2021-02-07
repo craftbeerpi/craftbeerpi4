@@ -13,5 +13,6 @@ pyfiglet==0.8.post1
 pandas==1.1.5
 shortuuid==1.0.1
 tabulate==0.8.7
-cbpi4-ui
+cbpi4ui
+click
 asyncio-mqtt
