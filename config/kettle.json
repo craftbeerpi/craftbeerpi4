@@ -8,7 +8,7 @@
             "props": {},
             "sensor": "8ohkXvFA9UrkHLsxQL38wu",
             "state": {},
-            "target_temp": 25,
+            "target_temp": 45,
             "type": "CustomKettleLogic"
         }
     ]

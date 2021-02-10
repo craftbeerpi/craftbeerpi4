@@ -2,7 +2,7 @@
     "data": [
         {
             "id": "YwGzXvWMpmbLb6XobesL8n",
-            "name": "111",
+            "name": "Actor 1",
             "props": {
                 "GPIO": 4,
                 "Inverted": "Yes"
@@ -12,7 +12,7 @@
         },
         {
             "id": "EsmZwWi9Qp3bzmXqq7N3Ly",
-            "name": "HALO",
+            "name": "Actor 2",
             "props": {
                 "Frequency": "20",
                 "GPIO": 5

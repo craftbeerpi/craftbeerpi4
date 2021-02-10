@@ -11,6 +11,15 @@
                 "value": 0
             },
             "type": "OneWire"
+        },
+        {
+            "id": "JUGteK9KrSVPDxboWjBS4N",
+            "name": "Test2",
+            "props": {},
+            "state": {
+                "value": 0
+            },
+            "type": "CustomSensor"
         }
     ]
 }

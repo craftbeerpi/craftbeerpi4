@@ -4,15 +4,27 @@
     },
     "profile": [
         {
-            "id": "Gkjdsu45XPcfJimz4yHc4w",
-            "name": "Test",
+            "id": "SeL6hT9WxvA5yTsTakZuu8",
+            "name": "Pump Left",
             "props": {
-                "Kettle": "oHxKz3z5RjbsxfSz6KUgov",
-                "Temp": "2",
-                "Timer": "1"
+                "Actor": "YwGzXvWMpmbLb6XobesL8n",
+                "Timer": "5"
             },
-            "status": "P",
-            "type": "MashStep"
+            "status": "D",
+            "type": "ActorStep"
+        },
+        {
+            "id": "YwyRyzA2ePiiXXnET5gEeH",
+            "name": "Pump Right",
+            "props": {
+                "Actor": "EsmZwWi9Qp3bzmXqq7N3Ly",
+                "Kettle": "oHxKz3z5RjbsxfSz6KUgov",
+                "Sensor": "JUGteK9KrSVPDxboWjBS4N",
+                "Temp": "2",
+                "Timer": "5"
+            },
+            "status": "D",
+            "type": "ActorStep"
         }
     ]
 }

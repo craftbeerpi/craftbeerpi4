@@ -12,6 +12,7 @@ class ActorController(BasicController):
             item = self.find_by_id(id)
             instance = item.get("instance")
             await instance.on()
+            await self.push_udpate()
         except Exception as e:
             logging.error("Faild to switch on Actor {} {}".format(id, e))
 
@@ -20,6 +21,7 @@ class ActorController(BasicController):
             item = self.find_by_id(id)
             instance = item.get("instance")
             await instance.off()
+            await self.push_udpate()
         except Exception as e:
             logging.error("Faild to switch on Actor {} {}".format(id, e))
 

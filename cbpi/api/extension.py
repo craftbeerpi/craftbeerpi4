@@ -50,3 +50,5 @@ class CBPiExtension():
         except:
             logger.warning("Faild to load config %s/config.yaml" % path)
 
+    
+

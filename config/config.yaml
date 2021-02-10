@@ -3,7 +3,7 @@ version: 4.0
 
 index_url: /cbpi_ui/static/index.html
 plugins:
-- cbpi4-ui
+- cbpi4ui
 
 port: 8080
 # login data
