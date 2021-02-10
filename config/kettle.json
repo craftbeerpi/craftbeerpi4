@@ -1,15 +1,18 @@
 {
     "data": [
         {
-            "agitator": "EsmZwWi9Qp3bzmXqq7N3Ly",
+            "agitator": "YwGzXvWMpmbLb6XobesL8n",
             "heater": "EsmZwWi9Qp3bzmXqq7N3Ly",
             "id": "oHxKz3z5RjbsxfSz6KUgov",
             "name": "MashTun",
-            "props": {},
-            "sensor": "8ohkXvFA9UrkHLsxQL38wu",
+            "props": {
+                "OffsetOff": "23",
+                "OffsetOn": "22"
+            },
+            "sensor": "RedQfuxfy4mYe6PwioY95y",
             "state": {},
-            "target_temp": 45,
-            "type": "CustomKettleLogic"
+            "target_temp": 73,
+            "type": "Hysteresis"
         }
     ]
 }

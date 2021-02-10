@@ -64,6 +64,17 @@
             "type": "Steps",
             "x": 595,
             "y": 50
+        },
+        {
+            "id": "9dfc216e-21d7-44af-b10f-cf4158144134",
+            "name": "KettleControl",
+            "props": {
+                "kettle": "oHxKz3z5RjbsxfSz6KUgov",
+                "orientation": "vertical"
+            },
+            "type": "KettleControl",
+            "x": 70,
+            "y": 80
         }
     ],
     "pathes": [

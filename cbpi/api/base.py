@@ -23,6 +23,9 @@ class CBPiBase(metaclass=ABCMeta):
     def get_kettle(self,id):
         return self.cbpi.kettle.find_by_id(id)
 
+    def get_kettle_target_temp(self,id):
+        return self.cbpi.kettle.find_by_id(id).get("target_temp")
+
     async def set_target_temp(self,id, temp):
         await self.cbpi.kettle.set_target_temp(id, temp)
 

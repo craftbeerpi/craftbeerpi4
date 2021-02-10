@@ -15,17 +15,7 @@ class CustomSensor(CBPiSensor):
         self.value = 0
 
 
-    @action(key="Test", parameters=[])
-    async def action1(self, **kwargs):
-        print("ACTION!", kwargs)
 
-    @action(key="Test1", parameters=[])
-    async def action2(self, **kwargs):
-        print("ACTION!", kwargs)
-    
-    @action(key="Test2", parameters=[])
-    async def action3(self, **kwargs):
-        print("ACTION!", kwargs)
 
     async def run(self):
         

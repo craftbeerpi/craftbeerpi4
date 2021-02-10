@@ -74,7 +74,9 @@ class BasicController:
             item = self.find_by_id(id)
             instance = item.get("instance")
             await instance.stop()
+            print("STOP ACTION")
             await instance.task
+            print("STOP ACTION", instance)
             await self.push_udpate()
         except Exception as e:
             logging.error("{} Cant stop {} - {}".format(self.name, id, e))
