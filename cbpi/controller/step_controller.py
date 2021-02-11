@@ -100,7 +100,7 @@ class StepController:
             await self.start_step(step)
             await self.save()
             return 
-
+        await self.cbpi.notification.notify(message="HALLO")
         logging.info("BREWING COMPLETE")
         
     async def next(self):

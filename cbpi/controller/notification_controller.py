@@ -16,6 +16,6 @@ class NotificationController(object):
         self.cbpi.register(self)
 
 
-    async def notify(self, key, message, type=None):
+    async def notify(self, message, type=None):
         self.cbpi.ws.send(dict(topic="notifiaction", type=type, message=message))
 

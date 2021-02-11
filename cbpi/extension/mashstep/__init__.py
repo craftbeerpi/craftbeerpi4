@@ -26,7 +26,7 @@ class MashStep(CBPiStep):
     
     def start_timer(self):
         if self.timer is None:
-            self.time = int(self.props.get("Timer", 0)) 
+            self.time = int(self.props.get("Timer", 0)) * 60
             self.timer = Timer(self.time, self.timer_done, self.timer_update)
         self.timer.start()
 
@@ -83,7 +83,7 @@ class WaitStep(CBPiStep):
     
     def start_timer(self):
         if self.timer is None:
-            self.time = int(self.props.get("Timer", 0)) 
+            self.time = int(self.props.get("Timer", 0)) * 60
             self.timer = Timer(self.time, self.timer_done, self.timer_update)
         self.timer.start()
 
@@ -112,7 +112,7 @@ class WaitStep(CBPiStep):
         while True:
             await asyncio.sleep(1)
 
-@parameters([Property.Number(label="Timer", description="Time in Seconds", configurable=True),
+@parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True),
                 Property.Actor(label="Actor")])
 class ActorStep(CBPiStep):
 
@@ -131,7 +131,7 @@ class ActorStep(CBPiStep):
     
     def start_timer(self):
         if self.timer is None:
-            self.time = int(self.props.get("Timer", 0)) 
+            self.time = int(self.props.get("Timer", 0)) * 60
             self.timer = Timer(self.time, self.timer_done, self.timer_update)
         self.timer.start()
 

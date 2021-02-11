@@ -10,8 +10,10 @@
                 "OffsetOn": "22"
             },
             "sensor": "RedQfuxfy4mYe6PwioY95y",
-            "state": {},
-            "target_temp": 73,
+            "state": {
+                "running": false
+            },
+            "target_temp": 80,
             "type": "Hysteresis"
         }
     ]

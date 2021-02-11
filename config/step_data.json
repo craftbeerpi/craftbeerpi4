@@ -10,7 +10,7 @@
                 "Actor": "YwGzXvWMpmbLb6XobesL8n",
                 "Timer": "5"
             },
-            "status": "D",
+            "status": "P",
             "type": "ActorStep"
         },
         {
@@ -23,7 +23,7 @@
                 "Temp": "2",
                 "Timer": "5"
             },
-            "status": "P",
+            "status": "I",
             "type": "ActorStep"
         }
     ]

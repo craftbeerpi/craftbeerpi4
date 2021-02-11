@@ -33,6 +33,7 @@ setup(name='cbpi',
           'tabulate==0.8.7',
           'asyncio-mqtt',
           'cbpi4ui',
+          'RPi.GPIO; sys_platform == "linux"'
       ],
         dependency_links=[
         'https://testpypi.python.org/pypi',
