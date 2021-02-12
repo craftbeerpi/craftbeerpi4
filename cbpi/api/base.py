@@ -18,7 +18,7 @@ class CBPiBase(metaclass=ABCMeta):
         return await self.cbpi.config.set(name,value)
 
     async def add_config_value(self, name, value, type: ConfigType, description, options=None):
-        await self.cbpi.add(name, value, type, description, options=None)
+        await self.cbpi.config.add(name, value, type, description, options=None)
 
     def get_kettle(self,id):
         return self.cbpi.kettle.find_by_id(id)
