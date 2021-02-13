@@ -1,8 +1,20 @@
 from setuptools import setup, find_packages
 from cbpi import __version__
-import platform
 
-INSTALL_REQUIRES= [
+setup(name='cbpi',
+      version=__version__,
+      description='CraftBeerPi',
+      author='Manuel Fritsch',
+      author_email='manuel@craftbeerpi.com',
+      url='http://web.craftbeerpi.com',
+      packages=find_packages(),
+      include_package_data=True,
+      package_data={
+        # If any package contains *.txt or *.rst files, include them:
+      '': ['*.txt', '*.rst', '*.yaml'],
+      'cbpi': ['*','*.txt', '*.rst', '*.yaml']},
+
+      install_requires=[
           "aiohttp==3.7.3",
           "aiohttp-auth==0.1.1",
           "aiohttp-route-decorator==0.1.4",
@@ -21,27 +33,8 @@ INSTALL_REQUIRES= [
           'tabulate==0.8.7',
           'asyncio-mqtt',
           'cbpi4ui',
-      ]
-
-if (platform.node()=="raspberrypi"):
-    INSTALL_REQUIRES.append("RPi.GPIO")
-
-
-setup(name='cbpi',
-      version=__version__,
-      description='CraftBeerPi',
-      author='Manuel Fritsch',
-      author_email='manuel@craftbeerpi.com',
-      url='http://web.craftbeerpi.com',
-      packages=find_packages(),
-      include_package_data=True,
-      package_data={
-        # If any package contains *.txt or *.rst files, include them:
-      '': ['*.txt', '*.rst', '*.yaml'],
-      'cbpi': ['*','*.txt', '*.rst', '*.yaml']},
-
-      install_requires=INSTALL_REQUIRES
-        ,
+          'RPi.GPIO; sys_platform == "linux"'
+      ],
         dependency_links=[
         'https://testpypi.python.org/pypi',
         
