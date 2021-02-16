@@ -48,6 +48,7 @@ class ReadThread (threading.Thread):
                         self.value = temp
             except:
                 pass
+            
             time.sleep(1)
 
 @parameters([Property.Select(label="Sensor", options=getSensors()), Property.Select(label="Interval", options=[1,5,10,30,60], description="Interval in Seconds")])
@@ -70,15 +71,15 @@ class OneWire(CBPiSensor):
     
     async def stop(self):
         try:
-            print("STOP THE SENSOR")
             self.t.stop()
             self.running = False
         except:
             pass
 
     async def run(self):
-        while self.running is True:
+        while True:
             self.value = self.t.value
+            self.log_data(self.value)
             self.push_update(self.value)
             await asyncio.sleep(self.interval)
     

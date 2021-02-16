@@ -14,6 +14,6 @@ class ComplexEncoder(JSONEncoder):
             else:
                 raise TypeError()
         except Exception as e:
-            print(e)
+            
             pass
         return None

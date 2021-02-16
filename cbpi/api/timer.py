@@ -5,35 +5,42 @@ import math
 
 class Timer(object):
 
-    def __init__(self, timeout, callback, update = None) -> None:
+    def __init__(self, timeout, on_done = None, on_update = None) -> None:
         super().__init__()
         self.timeout = timeout
         self._timemout = self.timeout
         self._task = None
-        self._callback = callback
-        self._update = update
+        self._callback = on_done
+        self._update = on_update
         self.start_time = None
-        
+    
+    def done(self, task):
+        if self._callback is not None:
+            asyncio.create_task(self._callback(self))
+
     async def _job(self):
         self.start_time = time.time()
         self.count = int(round(self._timemout, 0))
         try:
-            for seconds in range(self.count, -1, -1):
+            for seconds in range(self.count, 0, -1):
                 if self._update is not None:
-                    await self._update(seconds, self.format_time(seconds))
+                    await self._update(self,seconds)
                 await asyncio.sleep(1)
-            self._callback()
+            
         except asyncio.CancelledError:
             end = time.time()
             duration = end - self.start_time
             self._timemout = self._timemout - duration
+            
                  
     def start(self):
         self._task = asyncio.create_task(self._job())
+        self._task.add_done_callback(self.done)
 
     async def stop(self):
-        self._task.cancel()
-        await self._task
+        if self._task and self._task.done() is False:
+            self._task.cancel()
+            await self._task
 
     def reset(self):
         if self.is_running is True:
@@ -51,7 +58,8 @@ class Timer(object):
     def get_time(self):
         return self.format_time(int(round(self._timemout,0)))
 
-    def format_time(self, time):
+    @classmethod
+    def format_time(cls, time):
             pattern = '{0:02d}:{1:02d}:{2:02d}'
             seconds = time % 60
             minutes = math.floor(time / 60) % 60

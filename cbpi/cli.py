@@ -24,8 +24,7 @@ def create_config_file():
         srcfile = os.path.join(os.path.dirname(__file__), "config", "config.yaml")
         destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
-        print("Config Folder created")
-
+        
     if os.path.exists(os.path.join(".", 'config', "actor.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "actor.json")
         destfile = os.path.join(".", 'config')
@@ -46,10 +45,16 @@ def create_config_file():
         destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
 
+    if os.path.exists(os.path.join(".", 'config', "config.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "config.json")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
     if os.path.exists(os.path.join(".", 'config', "dashboard", "cbpi_dashboard_1.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
         destfile = os.path.join(".", "config", "dashboard")
         shutil.copy(srcfile, destfile)
+    print("Config Folder created")
 
 
 def create_home_folder_structure():

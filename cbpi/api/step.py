@@ -1,84 +1,99 @@
-import json
-import time
 import asyncio
+import json
 import logging
-from abc import abstractmethod, ABCMeta
-import logging
-from cbpi.api.config import ConfigType
-from cbpi.api.base import CBPiBase
+import time
+from abc import ABCMeta, abstractmethod
 from enum import Enum
-__all__ = ["Stop_Reason", "CBPiStep"]
-class Stop_Reason(Enum):
-    STOP = 1
-    NEXT = 2
 
+from cbpi.api.base import CBPiBase
+from cbpi.api.config import ConfigType
 
-class CBPiStep(CBPiBase, metaclass=ABCMeta):
-    def __init__(self, cbpi, id, name, props) :
-        self.cbpi = cbpi
-        self.props = {**props}
-        self.id = id
+__all__ = ["StepResult", "StepState", "StepMove", "CBPiStep"]
+
+from enum import Enum
+
+class StepResult(Enum):
+    STOP=1
+    NEXT=2
+    DONE=3
+    ERROR=4
+
+class StepState(Enum):
+    INITIAL="I"
+    DONE="D"
+    ACTIVE="A"
+    ERROR="E"
+    STOP="S"
+
+class StepMove(Enum):
+    UP=-1
+    DONW=1
+
+class CBPiStep(CBPiBase):
+
+    def __init__(self, cbpi, id, name, props, on_done) -> None:
         self.name = name
-        self.status = 0
-        self.running = False
-        self.stop_reason = None
-        self.pause = False
-        self.task = None
-        self._task = None
-        self._exception_count = 0
-        self._max_exceptions = 2
-        self.state_msg = ""
+        self.cbpi = cbpi
+        self.id = id
+        self.timer = None
+        self._done_callback = on_done
+        self.props = props
+        self.cancel_reason: StepResult = None
+        self.summary = ""
 
-    def get_state(self):
-        return self.state_msg
-
-    def push_update(self):
-        self.cbpi.step.push_udpate()
-
-    async def stop(self):
-        self.stop_reason = Stop_Reason.STOP
-        self._task.cancel()
-        await self._task
+    def _done(self, task):
+        self._done_callback(self, task.result())
 
     async def start(self):
-        self.stop_reason = None
-        self._task = asyncio.create_task(self.run())
-        self._task.add_done_callback(self.cbpi.step.done)
-        
-    async def next(self):
-        self.stop_reason = Stop_Reason.NEXT
-        self._task.cancel()
+        self.task = asyncio.create_task(self._run())
+        self.task.add_done_callback(self._done)
 
-    async def reset(self): 
-        pass
-    
-    
+    async def next(self):   
+        self.cancel_reason = StepResult.NEXT
+        self.task.cancel()
+        await self.task
 
-    def on_props_update(self, props):
-        self.props = props
-
-    async def update(self, props):
-        await self.cbpi.step.update_props(self.id, props)
-
-    async def run(self): 
+    async def stop(self):   
         try:
-            while True:
-                try:
-                    await self.execute()
-                except asyncio.CancelledError as e:
-                    raise e
-                except Exception as e:
-                    self._exception_count += 1
-                    logging.error("Step has thrown exception")
-                    if self._exception_count >= self._max_exceptions:
-                        self.stop_reason = "MAX_EXCEPTIONS"
-                        return (self.id, self.stop_reason)
-        except asyncio.CancelledError as e:
-            return self.id, self.stop_reason
-            
-        
-    @abstractmethod
-    async def execute(self):
-        pass
-   
+            self.cancel_reason = StepResult.STOP
+            self.task.cancel()
+            await self.task
+        except:
+            pass
 
+    async def reset(self):
+        pass
+
+    async def on_props_update(self, props):
+        self.props = {**self.props, **props}
+
+    async def save_props(self, props):
+        pass
+    
+    async def push_update(self):
+        self.cbpi.step.push_udpate()
+
+    async def on_start(self):
+        pass
+
+    async def on_stop(self):
+        pass
+
+    async def _run(self):
+        try:
+            await self.on_start()
+            await self.run()
+            self.cancel_reason = StepResult.DONE
+        except asyncio.CancelledError as e:        
+            pass
+        finally:
+            await self.on_stop()
+        
+        return self.cancel_reason
+
+    @abstractmethod
+    async def run(self):
+        pass
+
+    def __str__(self):
+        return "name={} props={}, type={}".format(self.name, self.props, self.__class__.__name__)

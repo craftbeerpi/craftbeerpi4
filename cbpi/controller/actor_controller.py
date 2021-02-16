@@ -1,27 +1,31 @@
-from cbpi.controller.basic_controller import BasicController
+from cbpi.api.dataclasses import Actor
+from cbpi.controller.basic_controller2 import BasicController
 import logging
 from tabulate import tabulate
 class ActorController(BasicController):
 
     def __init__(self, cbpi):
-        super(ActorController, self).__init__(cbpi, "actor.json")
+        super(ActorController, self).__init__(cbpi, Actor,"actor.json")
         self.update_key = "actorupdate"
-        
+
+
     async def on(self, id):
         try:
             item = self.find_by_id(id)
-            instance = item.get("instance")
-            await instance.on()
-            await self.push_udpate()
+
+            if item.instance.state is False:
+                await item.instance.on()
+                await self.push_udpate()
+                await self.cbpi.satellite.publish("cbpi/actor/on", "ACTOR ON")
         except Exception as e:
             logging.error("Faild to switch on Actor {} {}".format(id, e))
 
     async def off(self, id):
         try:
             item = self.find_by_id(id)
-            instance = item.get("instance")
-            await instance.off()
-            await self.push_udpate()
+            if item.instance.state is True:
+                await item.instance.off()
+                await self.push_udpate()
         except Exception as e:
             logging.error("Faild to switch on Actor {} {}".format(id, e))
 
@@ -33,12 +37,3 @@ class ActorController(BasicController):
         except Exception as e:
             logging.error("Faild to switch on Actor {} {}".format(id, e))
             
-
-    def create_dict(self, data):
-        try:
-            instance = data.get("instance")
-            state = state=instance.get_state()
-        except Exception as e:
-            logging.error("Faild to create actor dict {} ".format(e))
-            state = dict() 
-        return dict(name=data.get("name"), id=data.get("id"), type=data.get("type"), state=state,props=data.get("props", []))

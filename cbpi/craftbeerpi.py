@@ -1,3 +1,4 @@
+
 import logging
 from os import urandom
 import os
@@ -15,7 +16,6 @@ from cbpi.controller.job_controller import JobController
 from cbpi.controller.actor_controller import ActorController
 from cbpi.controller.config_controller import ConfigController
 from cbpi.controller.kettle_controller import KettleController
-from cbpi.controller.notification_controller import NotificationController
 from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
@@ -23,7 +23,7 @@ from cbpi.controller.step_controller import StepController
 from cbpi.controller.system_controller import SystemController
 
 from cbpi.controller.log_file_controller import LogController
-from cbpi.database.model import DBModel
+
 from cbpi.eventbus import CBPiEventBus
 from cbpi.http_endpoints.http_login import Login
 from cbpi.utils import *
@@ -73,7 +73,7 @@ class CraftBeerPi:
         self.version = __version__
 
         self.static_config = load_config(os.path.join(".", 'config', "config.yaml"))
-        print(self.path, self.static_config)
+        
         self.database_file = os.path.join(".", 'config', "craftbeerpi.db")
         logger.info("Init CraftBeerPI")
 
@@ -96,8 +96,8 @@ class CraftBeerPi:
         self.log = LogController(self)
         self.system = SystemController(self)
         self.kettle = KettleController(self)
-        self.step = StepController(self)
-
+        self.step : StepController = StepController(self)
+        #self.satellite: SatelliteController = SatelliteController(self)
         self.dashboard = DashboardController(self)
 
         self.http_step = StepHttpEndpoints(self)
@@ -108,7 +108,6 @@ class CraftBeerPi:
         self.http_dashboard = DashBoardHttpEndpoints(self)
         self.http_plugin = PluginHttpEndpoints(self)
         self.http_system = SystemHttpEndpoints(self)
-        self.notification = NotificationController(self)
         self.http_log = LogHttpEndpoints(self)
         self.login = Login(self)
 
@@ -205,7 +204,10 @@ class CraftBeerPi:
                       api_version=self.version,
                       contact="info@craftbeerpi.com")
 
-    def notify(self, key: str, message: str, type: str = "info") -> None:
+
+
+
+    def notify(self, message: str, type: str = "info") -> None:
         '''
         This is a convinience method to send notification to the client
         
@@ -214,8 +216,8 @@ class CraftBeerPi:
         :param type: notification type (info,warning,danger,successs)
         :return: 
         '''
-        self.bus.sync_fire(topic="notification/%s" % key, key=key, message=message, type=type)
-
+        self.ws.send(dict(topic="notifiaction", type=type, message=message))
+        
     async def call_initializer(self, app):
         self.initializer = sorted(self.initializer, key=lambda k: k['order'])
         for i in self.initializer:
@@ -247,17 +249,19 @@ class CraftBeerPi:
         self._print_logo()
 
         await self.job.init()
-        await DBModel.setup()
+        
         await self.config.init()
         self._setup_http_index()
         self.plugin.load_plugins()
         self.plugin.load_plugins_from_evn()
         await self.sensor.init()
         await self.step.init()
+        
         await self.actor.init()
         await self.kettle.init()
         await self.call_initializer(self.app)
         await self.dashboard.init()
+        #await self.satellite.init()
         self._swagger_setup()
 
         return self.app

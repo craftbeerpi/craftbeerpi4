@@ -24,7 +24,7 @@ class CBPiBase(metaclass=ABCMeta):
         return self.cbpi.kettle.find_by_id(id)
 
     def get_kettle_target_temp(self,id):
-        return self.cbpi.kettle.find_by_id(id).get("target_temp")
+        return self.cbpi.kettle.find_by_id(id).target_temp
 
     async def set_target_temp(self,id, temp):
         await self.cbpi.kettle.set_target_temp(id, temp)
@@ -33,6 +33,7 @@ class CBPiBase(metaclass=ABCMeta):
         return self.cbpi.sensor.find_by_id(id)
     
     def get_sensor_value(self,id):
+        
         return self.cbpi.sensor.get_sensor_value(id)
 
     def get_actor(self,id):
@@ -46,22 +47,17 @@ class CBPiBase(metaclass=ABCMeta):
             logging.error("Faild to read actor state in step - actor {}".format(id))
             return None
 
-        
-
     async def actor_on(self,id):
         
         try:
-            print("\n\n ON\n\n\n\n" )
             await self.cbpi.actor.on(id)
         except Exception as e:
             pass
 
     async def actor_off(self,id):
         try:
-            print("\n\n OFF\n\n\n\n" )
             await self.cbpi.actor.off(id)
         except Exception as e:
-            print("E", e)
             pass
 
 

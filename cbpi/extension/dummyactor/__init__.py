@@ -12,7 +12,7 @@ class DummyActor(CBPiActor):
     # Custom property which can be configured by the user
     @action("test", parameters={})
     async def action1(self, **kwargs):
-        print("ACTION !", kwargs)
+        
         self.my_name = kwargs.get("name")
         pass
 

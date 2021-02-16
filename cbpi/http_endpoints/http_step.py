@@ -1,3 +1,5 @@
+from cbpi.controller.step_controller import StepController
+from cbpi.api.dataclasses import Props, Step
 from aiohttp import web
 from cbpi.api import *
 
@@ -5,7 +7,7 @@ class StepHttpEndpoints():
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.controller = cbpi.step
+        self.controller : StepController = cbpi.step
         self.cbpi.register(self, "/step2")
 
     def create_dict(self, data):
@@ -47,10 +49,15 @@ class StepHttpEndpoints():
                 description: successful operation
         """
 
+        
+        
+
         data = await request.json()
-        result = await self.controller.add(data)
-        return web.json_response(self.create_dict(result))
-    
+        step = Step(name=data.get("name"), props=Props(data.get("props", {})), type=data.get("type"))
+        response_data = await self.controller.add(step)
+        return web.json_response(data=response_data.to_dict())
+
+
     @request_mapping(path="/{id}", method="PUT", auth_required=False)
     async def http_update(self, request):
 
@@ -73,9 +80,8 @@ class StepHttpEndpoints():
         
         data = await request.json()
         id = request.match_info['id']
-        result = await self.controller.update(id, data)
-        print("RESULT", result)
-        return web.json_response(self.create_dict(result))
+        step = Step(id, data.get("name"), Props(data.get("props", {})), data.get("type"))
+        return web.json_response((await self.controller.update(step)).to_dict())
 
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
     async def http_delete(self, request):

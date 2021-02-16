@@ -12,3 +12,6 @@ node_modules
 .DS_STORE
 .vscode
 .DS_Store 
+.vscode/
+config/
+logs/

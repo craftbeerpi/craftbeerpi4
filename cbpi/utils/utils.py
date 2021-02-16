@@ -13,7 +13,7 @@ def load_config(fname):
             data = yaml.load(f, Loader=yaml.FullLoader)
         return data
     except Exception as e:
-        print(e)
+        
         pass
 
 def json_dumps(obj):

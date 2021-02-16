@@ -1,10 +1,10 @@
 
 import asyncio
+from cbpi.api.step import CBPiStep, StepResult
 from cbpi.api.timer import Timer
 
 from cbpi.api import *
 import logging
-
 
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True), 
              Property.Number(label="Temp", configurable=True),
@@ -12,157 +12,98 @@ import logging
              Property.Kettle(label="Kettle")])
 class MashStep(CBPiStep):
 
-    def __init__(self, cbpi, id, name, props):
-        super().__init__(cbpi, id, name, props)
-        self.timer = None
+    async def on_timer_done(self,timer):
+        self.summary = ""
+        await self.next()
 
-    def timer_done(self):
-        self.state_msg = "Done"
-        asyncio.create_task(self.next())
+    async def on_timer_update(self,timer, seconds):
+        self.summary = Timer.format_time(seconds)
+        await self.push_update()
 
-    async def timer_update(self, seconds, time):
-        self.state_msg = "{}".format(time)
-        self.push_update()
-    
-    def start_timer(self):
+    async def on_start(self):
         if self.timer is None:
-            self.time = int(self.props.get("Timer", 0)) * 60
-            self.timer = Timer(self.time, self.timer_done, self.timer_update)
-        self.timer.start()
+            self.timer = Timer(10,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
-    async def stop_timer(self):
-        if self.timer is not None:
-            await self.timer.stop()
-            self.state_msg = "{}".format(self.timer.get_time())
+        self.summary = "Waiting for Target Temp"
+        await self.push_update()
 
-    async def next(self):
-        if self.timer is not None:
-            await self.timer.stop()
-            self.state_msg = ""
-        await super().next()
-
-    async def stop(self):
-        await super().stop()
-        await self.stop_timer()
+    async def on_stop(self):
+        await self.timer.stop()
+        self.summary = ""
+        await self.push_update()
 
     async def reset(self):
-        self.state_msg = ""
-        self.timer = None
-        await super().reset()
+        self.timer = Timer(10,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
-    async def execute(self):
-        if self.timer is None:
-            self.state_msg = "Waiting for Target Temp"
-            self.push_update()
-        else:
-            if self.timer is not None and self.timer.is_running() is False:
-                self.start_timer()
-        sensor_value = 0
-        
+    async def run(self):
         while True:
             await asyncio.sleep(1)
-            sensor_value = self.get_sensor_value(self.props.get("Sensor"))
-            if sensor_value.get("value") >= 2 and self.timer == None:
+            sensor_value = self.get_sensor_value(self.props.Sensor)
+            if sensor_value.get("value") >= int(self.props.Temp) and self.timer == None:
                 self.start_timer()
-                    
+        return StepResult.DONE
+
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True)])
 class WaitStep(CBPiStep):
 
-    def __init__(self, cbpi, id, name, props):
-        super().__init__(cbpi, id, name, props)
-        self.timer = None
+    async def on_timer_done(self,timer):
+        self.summary = ""
+        await self.next()
 
-    def timer_done(self):
-        self.state_msg = "Done"
-        
-        asyncio.create_task(self.next())
+    async def on_timer_update(self,timer, seconds):
+        self.summary = Timer.format_time(seconds)
+        await self.push_update()
 
-    async def timer_update(self, seconds, time):
-        self.state_msg = "{}".format(time)
-        self.push_update()
-    
-    def start_timer(self):
+    async def on_start(self):
         if self.timer is None:
-            self.time = int(self.props.get("Timer", 0)) * 60
-            self.timer = Timer(self.time, self.timer_done, self.timer_update)
+            self.timer = Timer(int(self.props.Timer),on_update=self.on_timer_update, on_done=self.on_timer_done)
         self.timer.start()
 
-    async def stop_timer(self):
-        if self.timer is not None:
-            await self.timer.stop()
-            self.state_msg = "{}".format(self.timer.get_time())
-
-    async def next(self):
-        if self.timer is not None:
-            await self.timer.stop()
-            self.state_msg = ""
-        await super().next()
-
-    async def stop(self):
-        await super().stop()
-        await self.stop_timer()
+    async def on_stop(self):
+        await self.timer.stop()
+        self.summary = ""
+        await self.push_update()
 
     async def reset(self):
-        self.state_msg = ""
-        self.timer = None
-        await super().reset()
+        self.timer = Timer(int(self.props.Timer),on_update=self.on_timer_update, on_done=self.on_timer_done)
 
-    async def execute(self):
-        self.start_timer()
+    async def run(self):
         while True:
             await asyncio.sleep(1)
+        return StepResult.DONE
 
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True),
                 Property.Actor(label="Actor")])
 class ActorStep(CBPiStep):
+    async def on_timer_done(self,timer):
+        self.summary = ""
+        await self.next()
 
-    def __init__(self, cbpi, id, name, props):
-        super().__init__(cbpi, id, name, props)
-        self.timer = None
+    async def on_timer_update(self,timer, seconds):
+        self.summary = Timer.format_time(seconds)
+        await self.push_update()
 
-    def timer_done(self):
-        self.state_msg = "Done"
-        asyncio.create_task(self.actor_off(self.actor_id))
-        asyncio.create_task(self.next())
-
-    async def timer_update(self, seconds, time):
-        self.state_msg = "{}".format(time)
-        self.push_update()
-    
-    def start_timer(self):
+    async def on_start(self):
         if self.timer is None:
-            self.time = int(self.props.get("Timer", 0)) * 60
-            self.timer = Timer(self.time, self.timer_done, self.timer_update)
+            self.timer = Timer(int(self.props.Timer),on_update=self.on_timer_update, on_done=self.on_timer_done)
         self.timer.start()
+        await self.actor_on(self.props.Actor)
 
-    async def stop_timer(self):
-        if self.timer is not None:
-            await self.timer.stop()
-            self.state_msg = "{}".format(self.timer.get_time())
-
-    async def next(self):
-        if self.timer is not None:
-            await self.timer.stop()
-            self.state_msg = ""
-        await super().next()
-
-    async def stop(self):
-        await super().stop()
-        await self.actor_off(self.actor_id)
-        await self.stop_timer()
-
+    async def on_stop(self):
+        await self.actor_off(self.props.Actor)
+        await self.timer.stop()
+        self.summary = ""
+        await self.push_update()
+        
     async def reset(self):
-        self.state_msg = ""
-        self.timer = None
-        await super().reset()
+        self.timer = Timer(int(self.props.Timer),on_update=self.on_timer_update, on_done=self.on_timer_done)
 
-    async def execute(self):
-        self.start_timer()
-        self.actor_id = self.props.get("Actor")
-        await self.actor_on(self.actor_id)
+    async def run(self):
+
         while True:
             await asyncio.sleep(1)
-            
+        return StepResult.DONE
+
 def setup(cbpi):
     '''
     This method is called by the server during startup 
@@ -170,9 +111,13 @@ def setup(cbpi):
 
     :param cbpi: the cbpi core 
     :return: 
-    '''
+    '''    
     
-    cbpi.plugin.register("ActorStep", ActorStep)
     cbpi.plugin.register("WaitStep", WaitStep)
     cbpi.plugin.register("MashStep", MashStep)
+    cbpi.plugin.register("ActorStep", ActorStep)
+    
+    
+    
+
     

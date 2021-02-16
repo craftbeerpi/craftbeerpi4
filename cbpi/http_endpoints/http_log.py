@@ -135,7 +135,7 @@ class LogHttpEndpoints:
                 description: successful operation.
         """
         log_name = request.match_info['name']
-        print(log_name)
+        
         data = self.cbpi.log.get_logfile_names(log_name)
         return web.json_response(data, dumps=json_dumps)
 

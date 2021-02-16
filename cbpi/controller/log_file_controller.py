@@ -51,7 +51,7 @@ class LogController:
         # remove duplicates
         names = set(names)
 
-        print(names)
+        
         result = None
 
         def dateparse(time_in_secs):
@@ -92,7 +92,7 @@ class LogController:
         else:
             data[name] = result.interpolate().tolist()
 
-        print(data)
+        
         return data
 
 

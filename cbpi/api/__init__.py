@@ -14,8 +14,7 @@ __all__ = ["CBPiActor",
            "SensorException",
            "ActorException",
            "CBPiSensor",
-           "CBPiStep",
-           "Stop_Reason"]
+           "CBPiStep"]
 
 from cbpi.api.actor import *
 from cbpi.api.sensor import *

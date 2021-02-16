@@ -1,3 +1,5 @@
+from cbpi.controller.kettle_controller import KettleController
+from cbpi.api.dataclasses import Kettle, Props
 from aiohttp import web
 from cbpi.api import *
 
@@ -7,7 +9,7 @@ class KettleHttpEndpoints():
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.controller = cbpi.kettle
+        self.controller : KettleController = cbpi.kettle
         self.cbpi.register(self, "/kettle")
 
     @request_mapping(path="/", auth_required=False)
@@ -70,9 +72,10 @@ class KettleHttpEndpoints():
                 description: successful operation
         """
         data = await request.json()
-        response_data = await self.controller.add(data)
-
-        return web.json_response(data=self.controller.create_dict(response_data))
+        
+        kettle = Kettle(name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), agitator=data.get("agitator"), props=Props(data.get("props", {})), type=data.get("type"))
+        response_data = await self.controller.add(kettle)
+        return web.json_response(data=response_data.to_dict())
         
 
     @request_mapping(path="/{id}", method="PUT", auth_required=False)
@@ -108,7 +111,8 @@ class KettleHttpEndpoints():
         """
         id = request.match_info['id']
         data = await request.json()
-        return web.json_response(data=self.controller.create_dict(await self.controller.update(id, data)))
+        kettle = Kettle(id=id, name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), agitator=data.get("agitator"), props=Props(data.get("props", {})), type=data.get("type"))
+        return web.json_response(data=(await self.controller.update(kettle)).to_dict())
     
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
     async def http_delete_one(self, request):
