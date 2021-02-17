@@ -38,6 +38,7 @@ class StepHttpEndpoints():
         tags:
         - Step
         parameters:
+        
         - in: body
           name: body
           description: Created an step
@@ -214,4 +215,43 @@ class StepHttpEndpoints():
         await self.controller.save_basic(data)
     
         return web.Response(status=204)
-        
+    
+    @request_mapping(path="/action/{id}", method="POST", auth_required=False)
+    async def http_call_action(self, request):
+        """
+        ---
+        description: Call action
+        tags:
+        - Step
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Step id"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: call action
+          required: false
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+              parameter:
+                type: "array"
+                items:
+                    type: string
+        responses:
+            "204":
+                description: successful operation
+        """
+        data = await request.json()
+
+        id = request.match_info['id']
+        await self.controller.call_action(id,data.get("action"), data.get("parameter",[]))
+        return web.Response(status=204)
+
+
+    

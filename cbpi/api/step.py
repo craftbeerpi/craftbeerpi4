@@ -27,7 +27,7 @@ class StepState(Enum):
 
 class StepMove(Enum):
     UP=-1
-    DONW=1
+    DOWN=1
 
 class CBPiStep(CBPiBase):
 

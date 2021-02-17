@@ -261,3 +261,11 @@ class StepController:
         self.basic_data = {**self.basic_data, **data,}
         await self.save()
         self.push_udpate()
+
+    async def call_action(self, id, action, parameter) -> None:
+        logging.info("Step Controller - call all Action {} {}".format(id, action))
+        try:
+            item = self.find_by_id(id)
+            await item.instance.__getattribute__(action)(**parameter)
+        except Exception as e:
+            logging.error("Step Controller -Faild to call action on {} {} {}".format(id, action, e))
