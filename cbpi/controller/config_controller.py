@@ -15,6 +15,7 @@ class ConfigController:
         self.cbpi = cbpi
         self.cbpi.register(self)
         self.path = os.path.join(".", 'config', "config.json")
+        self.path_static = os.path.join(".", 'config', "config.yaml")
 
     def get_state(self):
         
@@ -26,6 +27,7 @@ class ConfigController:
         
 
     async def init(self):
+        self.static = load_config(self.path_static)
         with open(self.path) as json_file:
             data = json.load(json_file)
             for key, value in data.items():

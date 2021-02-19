@@ -22,7 +22,7 @@ class MashStep(CBPiStep):
 
     async def on_start(self):
         if self.timer is None:
-            self.timer = Timer(10,on_update=self.on_timer_update, on_done=self.on_timer_done)
+            self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
         self.summary = "Waiting for Target Temp"
         await self.push_update()
 
@@ -32,7 +32,7 @@ class MashStep(CBPiStep):
         await self.push_update()
 
     async def reset(self):
-        self.timer = Timer(10,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
         while True:
@@ -55,7 +55,7 @@ class WaitStep(CBPiStep):
 
     async def on_start(self):
         if self.timer is None:
-            self.timer = Timer(int(self.props.Timer),on_update=self.on_timer_update, on_done=self.on_timer_done)
+            self.timer = Timer(int(self.props.Timer) * 60,on_update=self.on_timer_update, on_done=self.on_timer_done)
         self.timer.start()
 
     async def on_stop(self):
@@ -64,7 +64,7 @@ class WaitStep(CBPiStep):
         await self.push_update()
 
     async def reset(self):
-        self.timer = Timer(int(self.props.Timer),on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer = Timer(int(self.props.Timer) * 60,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
         while True:
@@ -84,7 +84,7 @@ class ActorStep(CBPiStep):
 
     async def on_start(self):
         if self.timer is None:
-            self.timer = Timer(int(self.props.Timer),on_update=self.on_timer_update, on_done=self.on_timer_done)
+            self.timer = Timer(int(self.props.Timer) * 60,on_update=self.on_timer_update, on_done=self.on_timer_done)
         self.timer.start()
         await self.actor_on(self.props.Actor)
 
@@ -95,7 +95,7 @@ class ActorStep(CBPiStep):
         await self.push_update()
         
     async def reset(self):
-        self.timer = Timer(int(self.props.Timer),on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
 
@@ -120,7 +120,7 @@ class BoilStep(CBPiStep):
 
     async def on_start(self):
         if self.timer is None:
-            self.timer = Timer(10,on_update=self.on_timer_update, on_done=self.on_timer_done)
+            self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
         self.summary = "Waiting for Target Temp"
         await self.push_update()
@@ -131,7 +131,7 @@ class BoilStep(CBPiStep):
         await self.push_update()
 
     async def reset(self):
-        self.timer = Timer(10,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     @action("Start Timer", [])
     async def star_timer(self):
