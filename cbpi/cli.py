@@ -67,7 +67,7 @@ def create_home_folder_structure():
 
 def setup_one_wire():
     print("Setting up 1Wire")
-    with open('/boot/config.txt', 'wb') as f:
+    with open('/boot/config.txt', 'w') as f:
         f.write("dtoverlay=w1-gpio,gpiopin=4,pullup=on")
     print("/boot/config.txt created")
 
