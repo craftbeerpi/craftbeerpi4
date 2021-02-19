@@ -1,0 +1,32 @@
+{
+    "BREWERY_NAME": {
+        "description": "Brewery Name",
+        "name": "BREWERY_NAME",
+        "options": null,
+        "type": "string",
+        "value": "MANUL"
+    },
+    "NAME": {
+        "description": "Brew Name",
+        "name": "NAME",
+        "options": null,
+        "type": "string",
+        "value": "HEDER"
+    },
+    "TEMP_UNIT": {
+        "description": "Temperature Unit",
+        "name": "TEMP_UNIT",
+        "options": [
+            {
+                "label": "C",
+                "value": "C"
+            },
+            {
+                "label": "F",
+                "value": "F"
+            }
+        ],
+        "type": "select",
+        "value": "F"
+    }
+}
