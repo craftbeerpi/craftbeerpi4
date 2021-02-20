@@ -117,11 +117,12 @@ class BasicController:
         return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types()}
 
     async def add(self, item):
+        print(item)
         logging.info("{} Add".format(self.name))
         item.id = shortuuid.uuid()
         self.data.append(item)
         if self.autostart is True:
-            await self.start(id)
+            await self.start(item.id)
         await self.save()
         return item 
 
