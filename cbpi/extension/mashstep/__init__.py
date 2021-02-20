@@ -12,6 +12,14 @@ import logging
              Property.Kettle(label="Kettle")])
 class MashStep(CBPiStep):
 
+    @action(key="Custom Step Action", parameters=[])
+    async def hello(self, **kwargs):
+        print("ACTION")
+
+    @action(key="Custom Step Action 2", parameters=[])
+    async def hello2(self, **kwargs):
+        print("ACTION2")
+        
     async def on_timer_done(self,timer):
         self.summary = ""
         await self.next()
@@ -44,6 +52,14 @@ class MashStep(CBPiStep):
 
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True)])
 class WaitStep(CBPiStep):
+
+    @action(key="Custom Step Action", parameters=[])
+    async def hello(self, **kwargs):
+        print("ACTION")
+
+    @action(key="Custom Step Action 2", parameters=[])
+    async def hello2(self, **kwargs):
+        print("ACTION2")
 
     async def on_timer_done(self,timer):
         self.summary = ""

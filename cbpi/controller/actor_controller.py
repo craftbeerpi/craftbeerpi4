@@ -16,7 +16,7 @@ class ActorController(BasicController):
             if item.instance.state is False:
                 await item.instance.on()
                 await self.push_udpate()
-                await self.cbpi.satellite.publish("cbpi/actor/on", "ACTOR ON")
+                #await self.cbpi.satellite.publish("cbpi/actor/on", "ACTOR ON")
         except Exception as e:
             logging.error("Faild to switch on Actor {} {}".format(id, e))
 
