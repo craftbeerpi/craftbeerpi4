@@ -1,6 +1,0 @@
-cbpi4-ui-plugin:
-  installation_date: '2021-01-06 16:03:31'
-  version: '0.0.2'
-cbpi4-ui:
-  installation_date: '2021-01-06 16:03:31'
-  version: '0.0.1'

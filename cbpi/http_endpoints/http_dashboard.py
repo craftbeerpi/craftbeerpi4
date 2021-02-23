@@ -1,13 +1,13 @@
-from aiohttp import web
-from cbpi.api import *
-from voluptuous import Schema
-
-from cbpi.http_endpoints.http_curd_endpoints import HttpCrudEndpoints
-from cbpi.utils import json_dumps
 import os
 
+from aiohttp import web
+from cbpi.api import *
 
-class DashBoardHttpEndpoints(HttpCrudEndpoints):
+from cbpi.utils import json_dumps
+from voluptuous import Schema
+
+
+class DashBoardHttpEndpoints:
 
     def __init__(self, cbpi):
         self.cbpi = cbpi

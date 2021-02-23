@@ -22,7 +22,7 @@ class CBPiMqttClient:
                 await client.subscribe("cbpi/#")
                 async for message in messages:
                     await self.cbpi.actor.on("YwGzXvWMpmbLb6XobesL8n")
-                    print(message.topic, message.payload.decode())
+                    
 
 
     async def listen(self, topic, **kwargs):

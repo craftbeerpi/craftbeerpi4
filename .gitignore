@@ -5,9 +5,13 @@ dist
 .idea
 *.log
 cbpi.egg-info
-logs
+log
 venv
 cbpi/extension/ui
 node_modules
 .DS_STORE
 .vscode
+.DS_Store 
+.vscode/
+config/*
+logs/

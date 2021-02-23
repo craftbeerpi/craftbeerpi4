@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from unittest.mock import MagicMock, patch
 
@@ -26,7 +27,6 @@ if (mode == None):
 @parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Select(label="Inverted", options=["Yes", "No"],description="No: Active on high; Yes: Active on low")])
 class GPIOActor(CBPiActor):
 
-    
     def get_GPIO_state(self, state):
         # ON
         if state == 1:
@@ -35,14 +35,12 @@ class GPIOActor(CBPiActor):
         if state == 0:
             return 0 if self.inverted == False else 1
 
-    async def start(self):
-        await super().start()
-        self.gpio = self.props.get("GPIO")
+    async def on_start(self):
+        self.gpio = self.props.GPIO
         self.inverted = True if self.props.get("Inverted", "No") == "Yes" else False
         GPIO.setup(self.gpio, GPIO.OUT)
         GPIO.output(self.gpio, self.get_GPIO_state(0))
         self.state = False
-        pass
 
     async def on(self, power=0):
         logger.info("ACTOR %s ON - GPIO %s " %  (self.id, self.gpio))
@@ -55,11 +53,12 @@ class GPIOActor(CBPiActor):
         self.state = False
 
     def get_state(self):
-        
         return self.state
     
     async def run(self):
-        pass
+        while True:
+            await asyncio.sleep(1)
+            
 
 @parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Number("Frequency", configurable=True)])
 class GPIOPWMActor(CBPiActor):
@@ -68,7 +67,6 @@ class GPIOPWMActor(CBPiActor):
     @action("test", parameters={})
     async def power(self, **kwargs):        
         self.p.ChangeDutyCycle(1)
-
 
     async def start(self):
         await super().start()
@@ -97,7 +95,9 @@ class GPIOPWMActor(CBPiActor):
         return self.state
     
     async def run(self):
-        pass
+        while True:
+            
+            await asyncio.sleep(1)
 
 def setup(cbpi):
 

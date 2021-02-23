@@ -10,5 +10,5 @@ username: cbpi
 password: 123
 
 plugins:
-- cbpi4-ui
+- cbpi4ui
 

@@ -41,7 +41,7 @@ class PluginController():
                         "Plugin %s is not supporting version 4" % filename)
 
             except Exception as e:
-                print(e)
+                
                 logger.error(e)
 
     def load_plugins_from_evn(self):

@@ -1,6 +1,5 @@
 from abc import ABCMeta
 import asyncio
-from cbpi.api.extension import CBPiExtension
 from cbpi.api.config import ConfigType
 
 __all__ = ["CBPiActor"]
@@ -27,19 +26,36 @@ class CBPiActor(metaclass=ABCMeta):
 
     def log_data(self, value):
         self.cbpi.log.log_data(self.id, value)
-
-    async def run(self):
-        while self.running:
-            await asyncio.sleep(1)
         
     def get_state(self):
         return dict(state=self.state)
 
     async def start(self):
-        self.running = True
+        pass
 
     async def stop(self):
-        self.running = False
+        pass
+
+    async def on_start(self):
+        pass
+
+    async def on_stop(self):
+        pass
+
+    async def run(self):
+        pass
+    
+    async def _run(self):
+
+        try:
+            await self.on_start()
+            self.cancel_reason = await self.run()
+        except asyncio.CancelledError as e:
+            pass
+        finally:
+            await self.on_stop()
+
+
 
     def get_static_config_value(self,name,default):
         return self.cbpi.static_config.get(name, default)

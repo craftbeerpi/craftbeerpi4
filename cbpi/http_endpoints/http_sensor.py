@@ -1,3 +1,4 @@
+from cbpi.api.dataclasses import Props, Sensor
 from aiohttp import web
 from cbpi.api import *
 auth = False
@@ -57,9 +58,10 @@ class SensorHttpEndpoints():
                 description: successful operation
         """
         data = await request.json()
-        response_data = await self.controller.add(data)
+        sensor = Sensor(name=data.get("name"), props=Props(data.get("props", {})), type=data.get("type"))
+        response_data = await self.controller.add(sensor)
 
-        return web.json_response(data=self.controller.create_dict(response_data))
+        return web.json_response(data=response_data.to_dict())
         
 
     @request_mapping(path="/{id}", method="PUT", auth_required=False)
@@ -95,7 +97,8 @@ class SensorHttpEndpoints():
         """
         id = request.match_info['id']
         data = await request.json()
-        return web.json_response(data=self.controller.create_dict(await self.controller.update(id, data)))
+        sensor = Sensor(id=id, name=data.get("name"), props=Props(data.get("props", {})), type=data.get("type"))
+        return web.json_response(data=(await self.controller.update(sensor)).to_dict())
     
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
     async def http_delete_one(self, request):

@@ -1,21 +1,20 @@
 import asyncio
-
-from tabulate import tabulate
+import copy
 import json
-import copy 
-import shortuuid
 import logging
 import os.path
 
-from ..api.step import CBPiStep
+import shortuuid
+from cbpi.api.dataclasses import Props, Step
+from tabulate import tabulate
 
+from ..api.step import StepMove, StepResult, StepState
 
 
 class StepController:
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.woohoo = "HALLLO"
         self.logger = logging.getLogger(__name__)
         self.path = os.path.join(".", 'config', "step_data.json")
         self._loop = asyncio.get_event_loop() 
@@ -28,6 +27,27 @@ class StepController:
     async def init(self):
         logging.info("INIT STEP Controller")
         self.load(startActive=True)
+
+
+    def create(self, data):
+        
+        id = data.get("id")
+        name = data.get("name")
+        type = data.get("type")
+        status = StepState(data.get("status", "I"))
+        props = data.get("props", {})
+
+        try:
+            type_cfg = self.types.get(type)
+            clazz = type_cfg.get("class")
+            
+            instance = clazz(self.cbpi, id, name, Props(props), self.done)
+        except Exception as e:
+            logging.warning("Failed to create step instance %s - %s"  % (id, e))
+            instance = None
+ 
+        return Step(id, name, type=type, status=status, instance=instance, props=Props(props) )
+
 
     def load(self, startActive=False):
         
@@ -43,68 +63,88 @@ class StepController:
             self.profile = data["profile"]
 
         # Start step after start up
-        self.profile = list(map(lambda item: {**item, "instance": self.create_step(item.get("id"), item.get("type"), item.get("name"), item.get("props", {}))}, self.profile))
+        self.profile = list(map(lambda item: self.create(item), self.profile))
         if startActive is True:
             active_step = self.find_by_status("A")
-            if active_step is not None:    
+            if active_step is not None:     
                 self._loop.create_task(self.start_step(active_step))
 
-    async def add(self, data):
-        logging.info("Add step")
-        id = shortuuid.uuid()
-        item = {**{"status": "I", "props": {}}, **data, "id": id, "instance": self.create_step(id, data.get("type"), data.get("name"), data.get("props", {}))}
+    async def add(self, item: Step):
+        logging.debug("Add step")
+        item.id = shortuuid.uuid()
+        item.status = StepState.INITIAL
+        print(item)
+        try:
+            type_cfg = self.types.get(item.type)
+            clazz = type_cfg.get("class")
+            print("CLASS", clazz)
+            item.instance = clazz(self.cbpi, item.id, item.name, item.props, self.done)
+        except Exception as e:
+            logging.warning("Failed to create step instance %s - %s "  % (id, e))
+            item.instance = None
         self.profile.append(item)
         await self.save()
         return item 
 
-    async def update(self, id, data):
-        logging.info("update step")
+    async def update(self, item: Step):
         
-        self.profile = list(map(lambda old: {**old, **data} if old["id"] == id else old, self.profile))
+        logging.info("update step")
+        try:
+            type_cfg = self.types.get(item.type)
+            clazz = type_cfg.get("class")
+
+            item.instance = clazz(self.cbpi, item.id, item.name, item.props, self.done)
+        except Exception as e:
+            logging.warning("Failed to create step instance %s - %s "  % (item.id, e))
+            item.instance = None
+        
+        self.profile = list(map(lambda old: item if old.id == item.id else old, self.profile))
         await self.save()
-        return self.find_by_id(id)
+        return item
 
     async def save(self):
         logging.debug("save profile")
-        data = dict(basic=self.basic_data, profile=list(map(lambda x: dict(name=x["name"], type=x.get("type"), id=x["id"], status=x["status"],props=x["props"]), self.profile)))
+        data = dict(basic=self.basic_data, profile=list(map(lambda item: item.to_dict(), self.profile)))
         with open(self.path, "w") as file:
             json.dump(data, file, indent=4, sort_keys=True)
-        await self.push_udpate()
+        self.push_udpate()
 
     async def start(self):
-        # already running
-        if self.find_by_status("A") is not None:
+        
+        if self.find_by_status(StepState.ACTIVE) is not None:
             logging.error("Steps already running")
             return
-        # Find next inactive step
-        step = self.find_by_status("P")
+        
+        step = self.find_by_status(StepState.STOP)
         if step is not None:
-            
             logging.info("Resume step")
-            
             await self.start_step(step)
             await self.save()
             return 
 
-        step = self.find_by_status("I")
+        step = self.find_by_status(StepState.INITIAL)
         if step is not None:
             logging.info("Start Step")
-    
             await self.start_step(step)
             await self.save()
             return 
 
+        self.cbpi.notify(message="BREWING COMPLETE")
         logging.info("BREWING COMPLETE")
         
     async def next(self):
         logging.info("Trigger Next")
-        step = self.find_by_status("A")
+        step = self.find_by_status(StepState.ACTIVE)
         if step is not None:
-            instance = step.get("instance")
-            if instance is not None:
-                logging.info("Next")
-                instance.next()
-                await instance.task
+            if step.instance is not None:
+                await step.instance.next()
+
+        step = self.find_by_status(StepState.STOP)
+        if step is not None:
+            if step.instance is not None:
+                step.status = StepState.DONE
+                await self.save()
+                await self.start()
         else:
             logging.info("No Step is running")
         
@@ -118,128 +158,114 @@ class StepController:
             logging.info("Nothing to resume")
 
     async def stop(self):
-        logging.info("STOP STEP")
-        step = self.find_by_status("A")
-        if step != None and step.get("instance") is not None:
+        step = self.find_by_status(StepState.ACTIVE)
+        if step != None:
             logging.info("CALLING STOP STEP")
-            instance = step.get("instance")
-            instance.stop()
-            # wait for task to be finished
-            await instance.task
-            logging.info("STEP STOPPED")
-            step["status"] = "P"
-            await self.save()
+            try:
+                await step.instance.stop()
+                step.status = StepState.STOP
+                await self.save()
+            except Exception as e:
+                logging.error("Failed to stop step - Id: %s" % step.id)
 
     async def reset_all(self): 
-        step = self.find_by_status("A")
-        if step is not None:
+        if self.find_by_status(StepState.ACTIVE) is not None:
             logging.error("Please stop before reset")
             return 
+
         for item in self.profile:
-            logging.info("Reset %s"  % item.get("name"))
-            item["status"] = "I"
-            await item["instance"].reset()
-        await self.push_udpate()
+            logging.info("Reset %s"  % item)
+            item.status = StepState.INITIAL
+            try:
+                await item.instance.reset()
+            except:
+                logging.warning("No Step Instance - Id: %s", item.id)
+        await self.save()
+        self.push_udpate()
 
-    def create_step(self, id, type, name, props):
-
-        try:
-            type_cfg = self.types.get(type)
-            clazz = type_cfg.get("class")
-            return clazz(self.cbpi, id, name, {**props})
-        except:
-            pass
-
-    def create_dict(self, data):
-        return dict(name=data["name"], id=data["id"], type=data.get("type"), status=data["status"],props=data["props"], state_text=data["instance"].get_state())
-
-    def get_types2(self):
+    def get_types(self):
         result = {}
         for key, value in self.types.items():
             result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
         return result
 
     def get_state(self):
-        return {"basic": self.basic_data, "profile": list(map(lambda x: self.create_dict(x), self.profile)), "types":self.get_types2()}
+        return {"basic": self.basic_data, "profile": list(map(lambda item: item.to_dict(), self.profile)), "types":self.get_types()}
 
-    async def move(self, id, direction):
+    async def move(self, id, direction: StepMove):
         index = self.get_index_by_id(id)
         if direction not in [-1, 1]:
             self.logger.error("Cant move. Direction 1 and -1 allowed")
             return
         self.profile[index], self.profile[index+direction] = self.profile[index+direction], self.profile[index]
         await self.save()
-        await self.push_udpate()
+        self.push_udpate()
 
     async def delete(self, id):
         step = self.find_by_id(id)
-        if step.get("status") == "A":
+
+        if step is None:
+            logging.error("Cant find step - Nothing deleted - Id: %s", id)
+            return
+
+        if step.status == StepState.ACTIVE:
             logging.error("Cant delete active Step %s", id)
             return 
 
-        self.profile = list(filter(lambda x: x["id"] != id, self.profile))
+        self.profile = list(filter(lambda item: item.id != id, self.profile))
         await self.save()
-        
-
+    
     async def shutdown(self, app):    
         logging.info("Mash Profile Shutdonw")
         for p in self.profile:
-            instance = p.get("instance")
+            instance = p.instance
             # Stopping all running task
             if instance.task != None and instance.task.done() is False:
                 logging.info("Stop Step")
-                instance.stop()
+                await instance.stop()
                 await instance.task
         await self.save()
 
-    def done(self, task):
-        id, reason = task.result()
-        if reason == "MAX_EXCEPTIONS":
-            step_current = self.find_by_id(id)
-            step_current["status"] = "E"
-            self._loop.create_task(self.save())
-            return
+    def done(self, step, result):       
+        if result == StepResult.NEXT:
+            step_current = self.find_by_id(step.id)
+            step_current.status = StepState.DONE
+            async def wrapper():
+                await self.save()
+                await self.start()
+            asyncio.create_task(wrapper())
 
-        if reason == "NEXT":
-            step_current = self.find_by_status("A")
-            if step_current is not None:
-
-                step_current["status"] = "D"
-                async def wrapper():
-                    ## TODO DONT CALL SAVE
-                    await self.save()
-                    await self.start()
-                self._loop.create_task(wrapper())
-            
 
     def find_by_status(self, status):
-        return next((item for item in self.profile if item["status"] == status), None)
+        return next((item for item in self.profile if item.status == status), None)
 
     def find_by_id(self, id):
-        return next((item for item in self.profile if item["id"] == id), None)
+        return next((item for item in self.profile if item.id == id), None)
     
     def get_index_by_id(self, id):
-        return next((i for i, item in enumerate(self.profile) if item["id"] == id), None)
+        return next((i for i, item in enumerate(self.profile) if item.id == id), None)
 
-    async def push_udpate(self):
-        self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda x: self.create_dict(x), self.profile))))
+    def push_udpate(self):
+        self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda item: item.to_dict(), self.profile))))
         
     async def start_step(self,step):
-        logging.info("Start Step")
-        step.get("instance").start()
-        step["instance"].task = self._loop.create_task(step["instance"].run(), name=step["name"])
-        step["instance"].task .add_done_callback(self.done)
-        step["status"] = "A"
-
-    async def update_props(self, id, props):
-        logging.info("SAVE PROPS")
-        step = self.find_by_id(id)
-        step["props"] = props
-        await self.save()
-        await self.push_udpate()
+        try:
+            logging.info("Try to start step %s" % step)
+            await step.instance.start()
+            step.status = StepState.ACTIVE
+        except Exception as e:
+            logging.error("Faild to start step %s" % step)
 
     async def save_basic(self, data):
         logging.info("SAVE Basic Data")
         self.basic_data = {**self.basic_data, **data,}
         await self.save()
-        await self.push_udpate()
+        self.push_udpate()
+
+    async def call_action(self, id, action, parameter) -> None:
+        logging.info("Step Controller - call all Action {} {}".format(id, action))
+        try:
+            item = self.find_by_id(id)
+            await item.instance.__getattribute__(action)(**parameter)
+        except Exception as e:
+            logging.error("Step Controller -Faild to call action on {} {} {}".format(id, action, e))

@@ -43,7 +43,7 @@ class HTTPSensor(CBPiSensor):
                     self.log_data(value)
                     await cbpi.bus.fire("sensor/%s/data" % self.id, value=value)
             except Exception as e:
-                print(e)
+                
                 pass
 
 class HTTPSensorEndpoint(CBPiExtension):
@@ -96,7 +96,7 @@ class HTTPSensorEndpoint(CBPiExtension):
         if self.pattern_check.match(value) is None:
             return web.json_response(status=422, data={'error': "Data not matching pattern ^[a-zA-Z0-9,.]{0,10}$"})
 
-        print("HTTP SENSOR ", key, value)
+        
         cache[key] = value
 
         return web.Response(status=204)

@@ -1,3 +1,5 @@
+from cbpi.controller.step_controller import StepController
+from cbpi.api.dataclasses import Props, Step
 from aiohttp import web
 from cbpi.api import *
 
@@ -5,7 +7,7 @@ class StepHttpEndpoints():
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.controller = cbpi.step
+        self.controller : StepController = cbpi.step
         self.cbpi.register(self, "/step2")
 
     def create_dict(self, data):
@@ -36,6 +38,7 @@ class StepHttpEndpoints():
         tags:
         - Step
         parameters:
+        
         - in: body
           name: body
           description: Created an step
@@ -47,10 +50,15 @@ class StepHttpEndpoints():
                 description: successful operation
         """
 
+        
+        
+
         data = await request.json()
-        result = await self.controller.add(data)
-        return web.json_response(self.create_dict(result))
-    
+        step = Step(name=data.get("name"), props=Props(data.get("props", {})), type=data.get("type"))
+        response_data = await self.controller.add(step)
+        return web.json_response(data=response_data.to_dict())
+
+
     @request_mapping(path="/{id}", method="PUT", auth_required=False)
     async def http_update(self, request):
 
@@ -73,9 +81,8 @@ class StepHttpEndpoints():
         
         data = await request.json()
         id = request.match_info['id']
-        result = await self.controller.update(id, data)
-        print("RESULT", result)
-        return web.json_response(self.create_dict(result))
+        step = Step(id, data.get("name"), Props(data.get("props", {})), data.get("type"))
+        return web.json_response((await self.controller.update(step)).to_dict())
 
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
     async def http_delete(self, request):
@@ -208,4 +215,43 @@ class StepHttpEndpoints():
         await self.controller.save_basic(data)
     
         return web.Response(status=204)
-        
+    
+    @request_mapping(path="/action/{id}", method="POST", auth_required=False)
+    async def http_call_action(self, request):
+        """
+        ---
+        description: Call action
+        tags:
+        - Step
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Step id"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: call action
+          required: false
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+              parameter:
+                type: "array"
+                items:
+                    type: string
+        responses:
+            "204":
+                description: successful operation
+        """
+        data = await request.json()
+
+        id = request.match_info['id']
+        await self.controller.call_action(id,data.get("action"), data.get("parameter",[]))
+        return web.Response(status=204)
+
+
+    

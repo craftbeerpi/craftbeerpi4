@@ -24,8 +24,7 @@ def create_config_file():
         srcfile = os.path.join(os.path.dirname(__file__), "config", "config.yaml")
         destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
-        print("Config Folder created")
-
+        
     if os.path.exists(os.path.join(".", 'config', "actor.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "actor.json")
         destfile = os.path.join(".", 'config')
@@ -46,10 +45,16 @@ def create_config_file():
         destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
 
+    if os.path.exists(os.path.join(".", 'config', "config.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "config.json")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
     if os.path.exists(os.path.join(".", 'config', "dashboard", "cbpi_dashboard_1.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
         destfile = os.path.join(".", "config", "dashboard")
         shutil.copy(srcfile, destfile)
+    print("Config Folder created")
 
 
 def create_home_folder_structure():
@@ -177,7 +182,7 @@ def plugin_create(name):
 
     import jinja2
 
-    templateLoader = jinja2.FileSystemLoader(searchpath=os.path.join(".", name))
+    templateLoader = jinja2.FileSystemLoader(searchpath=os.path.join(MAIN_DIR, name))
     templateEnv = jinja2.Environment(loader=templateLoader)
     TEMPLATE_FILE = "setup.py"
     template = templateEnv.get_template(TEMPLATE_FILE)
@@ -189,7 +194,7 @@ def plugin_create(name):
     TEMPLATE_FILE = "MANIFEST.in"
     template = templateEnv.get_template(TEMPLATE_FILE)
     outputText = template.render(name=name)
-    with open(os.path.join(".", name, "MANIFEST.in"), "w") as fh:
+    with open(os.path.join(MAIN_DIR, name, "MANIFEST.in"), "w") as fh:
         fh.write(outputText)
 
     TEMPLATE_FILE = os.path.join("/", name, "config.yaml")

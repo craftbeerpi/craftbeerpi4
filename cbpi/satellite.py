@@ -38,21 +38,21 @@ class CBPiSatellite:
     async def websocket_handler(self, request):
         
         
-        print("HALLO SATELLITE")
+        
         ws = web.WebSocketResponse()
         await ws.prepare(request)
         self._clients.add(ws)
         try:
             peername = request.transport.get_extra_info('peername')
             if peername is not None:
-                print(peername)
+                
                 host = peername[0]
                 port = peername[1]
             else:
                 host, port = "Unknowen"
             self.logger.info("Client Connected - Host: %s Port: %s  - client count: %s " % (host, port, len(self._clients)))
         except Exception as e:
-            print(e)
+            pass
         
         
         try:

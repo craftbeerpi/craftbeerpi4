@@ -15,26 +15,13 @@ class CustomSensor(CBPiSensor):
         self.value = 0
 
 
-    @action(key="Test", parameters=[])
-    async def action1(self, **kwargs):
-        print("ACTION!", kwargs)
 
-    @action(key="Test1", parameters=[])
-    async def action2(self, **kwargs):
-        print("ACTION!", kwargs)
-    
-    @action(key="Test2", parameters=[])
-    async def action3(self, **kwargs):
-        print("ACTION!", kwargs)
 
     async def run(self):
-
+        
         while self.running is True:
-            print(self.get_config_value("TEMP_UNIT", "NONE"))
-            print(self.get_static_config_value("port", "NONE"))
-            await self.set_config_value("BREWERY_NAME", "WOOHOO HELLO")
-
-            self.value = random.randint(0,50)
+        
+            self.value = random.randint(0,10)
             self.push_update(self.value)
             await asyncio.sleep(1)
     

@@ -2,13 +2,13 @@ from aiohttp import web
 from cbpi.api import *
 
 from cbpi.utils import json_dumps
-from cbpi.http_endpoints.http_curd_endpoints import HttpCrudEndpoints
 
 
-class ConfigHttpEndpoints(HttpCrudEndpoints):
+
+class ConfigHttpEndpoints:
 
     def __init__(self, cbpi):
-        super().__init__(cbpi)
+        self.cbpi = cbpi
         self.controller = cbpi.config
         self.cbpi.register(self, "/config")
 

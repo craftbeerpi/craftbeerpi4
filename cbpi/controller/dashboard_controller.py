@@ -4,7 +4,7 @@ import os
 from os import listdir
 from os.path import isfile, join
 
-class DashboardController():
+class DashboardController:
 
 
     def __init__(self, cbpi):

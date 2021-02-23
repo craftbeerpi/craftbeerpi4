@@ -1,11 +1,12 @@
+import asyncio
 import logging
 from abc import abstractmethod, ABCMeta
 from cbpi.api.extension import CBPiExtension
 
-from cbpi.api.config import ConfigType
 
+from cbpi.api.base import CBPiBase
 
-class CBPiSensor(metaclass=ABCMeta):
+class CBPiSensor(CBPiBase, metaclass=ABCMeta):
 
     def __init__(self, cbpi, id, props):
         self.cbpi = cbpi
@@ -22,10 +23,6 @@ class CBPiSensor(metaclass=ABCMeta):
     def log_data(self, value):
         self.cbpi.log.log_data(self.id, value)
 
-    @abstractmethod
-    async def run(self):
-        self.logger.warning("Sensor Init not implemented")
-
     def get_state(self):
         pass
 
@@ -35,18 +32,6 @@ class CBPiSensor(metaclass=ABCMeta):
     def get_unit(self):
         pass
 
-    def get_static_config_value(self,name,default):
-        return self.cbpi.static_config.get(name, default)
-
-    def get_config_value(self,name,default):
-        return self.cbpi.config.get(name, default=default)
-
-    async def set_config_value(self,name,value):
-        return await self.cbpi.config.set(name,value)
-
-    async def add_config_value(self, name, value, type: ConfigType, description, options=None):
-        await self.cbpi.add(name, value, type, description, options=None)
-
     def push_update(self, value):
         try:
             self.cbpi.ws.send(dict(topic="sensorstate", id=self.id, value=value))
@@ -54,8 +39,26 @@ class CBPiSensor(metaclass=ABCMeta):
             logging.error("Faild to push sensor update")
 
     async def start(self):
-        self.running = True
+        pass
 
     async def stop(self):
-        
-        self.running = False
+        pass
+
+    async def on_start(self):
+        pass
+
+    async def on_stop(self):
+        pass
+
+    async def run(self):
+        pass
+    
+    async def _run(self):
+
+        try:
+            await self.on_start()
+            self.cancel_reason = await self.run()
+        except asyncio.CancelledError as e:
+            pass
+        finally:
+            await self.on_stop()
