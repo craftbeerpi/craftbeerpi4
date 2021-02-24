@@ -13,6 +13,7 @@ class Timer(object):
         self._callback = on_done
         self._update = on_update
         self.start_time = None
+        self.remaining_time = None
     
     def done(self, task):
         if self._callback is not None:
@@ -25,6 +26,7 @@ class Timer(object):
             for seconds in range(self.count, 0, -1):
                 if self._update is not None:
                     await self._update(self,seconds)
+                self.remaining_time = seconds
                 await asyncio.sleep(1)
             
         except asyncio.CancelledError:
