@@ -15,7 +15,7 @@ setup(name='cbpi',
       'cbpi': ['*','*.txt', '*.rst', '*.yaml']},
 
       install_requires=[
-          "aiohttp==3.7.3",
+          "aiohttp==3.7.4",
           "aiohttp-auth==0.1.1",
           "aiohttp-route-decorator==0.1.4",
           "aiohttp-security==0.4.0",
