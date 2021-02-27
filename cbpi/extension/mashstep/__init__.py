@@ -2,7 +2,6 @@
 import asyncio
 from cbpi.api.step import CBPiStep, StepResult
 from cbpi.api.timer import Timer
-
 from cbpi.api import *
 import logging
 
@@ -12,14 +11,18 @@ import logging
              Property.Kettle(label="Kettle")])
 class MashStep(CBPiStep):
 
-    @action(key="Custom Step Action", parameters=[])
-    async def hello(self, **kwargs):
-        print("ACTION")
-
-    @action(key="Custom Step Action 2", parameters=[])
-    async def hello2(self, **kwargs):
-        print("ACTION2")
+    @action(key="Custom RESET", parameters=[])
+    async def custom_reset(self, **kwargs):
+        self.summary = ""
+        await self.push_update()
         
+
+    @action(key="Custom Action", parameters=[Property.Number(label="Value", configurable=True)])
+    async def custom_action(self, Value, **kwargs):
+        self.summary = "VALUE FROM ACTION {}".format(Value)
+        await self.push_update()
+        self.cbpi.notify("ACTION 2 CALLED".format(Value))
+
     async def on_timer_done(self,timer):
         self.summary = ""
         await self.next()
@@ -40,6 +43,7 @@ class MashStep(CBPiStep):
         await self.push_update()
 
     async def reset(self):
+        self.summary = ""
         self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
@@ -56,10 +60,12 @@ class WaitStep(CBPiStep):
     @action(key="Custom Step Action", parameters=[])
     async def hello(self, **kwargs):
         print("ACTION")
+        self.cbpi.notify("ACTION 1 CALLED")
 
     @action(key="Custom Step Action 2", parameters=[])
     async def hello2(self, **kwargs):
         print("ACTION2")
+        self.cbpi.notify("ACTION 2 CALLED")
 
     async def on_timer_done(self,timer):
         self.summary = ""

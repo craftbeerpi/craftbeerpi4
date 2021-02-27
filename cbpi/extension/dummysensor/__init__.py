@@ -13,18 +13,12 @@ class CustomSensor(CBPiSensor):
     def __init__(self, cbpi, id, props):
         super(CustomSensor, self).__init__(cbpi, id, props)
         self.value = 0
-
-
-
-
     async def run(self):
         
         while self.running is True:
-        
             self.value = random.randint(0,10)
             self.push_update(self.value)
             await asyncio.sleep(1)
-    
     def get_state(self):
         return dict(value=self.value)
 

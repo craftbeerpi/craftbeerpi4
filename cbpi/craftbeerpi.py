@@ -19,7 +19,7 @@ from cbpi.controller.kettle_controller import KettleController
 from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
-
+from cbpi.controller.recipe_controller import RecipeController
 from cbpi.controller.system_controller import SystemController
 
 from cbpi.controller.log_file_controller import LogController
@@ -35,7 +35,7 @@ from cbpi.http_endpoints.http_dashboard import DashBoardHttpEndpoints
 from cbpi.http_endpoints.http_kettle import KettleHttpEndpoints
 from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
-
+from cbpi.http_endpoints.http_recipe import RecipeHttpEndpoints
 from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
 from cbpi.http_endpoints.http_system import SystemHttpEndpoints
 from cbpi.http_endpoints.http_log import LogHttpEndpoints
@@ -97,10 +97,12 @@ class CraftBeerPi:
         self.system = SystemController(self)
         self.kettle = KettleController(self)
         self.step : StepController = StepController(self)
+        self.recipe : RecipeController = RecipeController(self)
         #self.satellite: SatelliteController = SatelliteController(self)
         self.dashboard = DashboardController(self)
 
         self.http_step = StepHttpEndpoints(self)
+        self.http_recipe = RecipeHttpEndpoints(self)
         self.http_sensor = SensorHttpEndpoints(self)
         self.http_config = ConfigHttpEndpoints(self)
         self.http_actor = ActorHttpEndpoints(self)

@@ -1,7 +1,8 @@
+from cbpi.utils.encoder import ComplexEncoder
 from aiohttp import web
 from cbpi.utils.utils import json_dumps
 from cbpi.api import request_mapping
-
+import json
 class LogHttpEndpoints:
 
     def __init__(self,cbpi):
@@ -140,7 +141,7 @@ class LogHttpEndpoints:
         return web.json_response(data, dumps=json_dumps)
 
     @request_mapping(path="/{name}", method="GET", auth_required=False)
-    async def delete_log(self, request):
+    async def get_log(self, request):
         """
         ---
         description: delete log data for sensor
@@ -163,19 +164,82 @@ class LogHttpEndpoints:
         data = await self.cbpi.log.get_data(log_name)
         return web.json_response(data, dumps=json_dumps)
 
+
+    @request_mapping(path="/", method="POST", auth_required=False)
+    async def get_log2(self, request):
+        """
+        ---
+        description: delete log data for sensor
+        tags:
+        - Log
+        parameters:
+        - in: body
+          name: body
+          description: Sensor Ids
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+        produces:
+        - application/json
+        responses:
+            "200":
+                description: successful operation.
+        """
+        data = await request.json()
+        print(data)
+        return web.json_response(await self.cbpi.log.get_data2(data), dumps=json_dumps)
+
+
     @request_mapping(path="/{name}", method="DELETE", auth_required=False)
-    async def delete_all_logs(self, request):
+    async def clear_log(self, request):
         """
         ---
         description: Get log data for sensor
         tags:
         - Log
         parameters:
-
+        - name: "name"
+          in: "path"
+          description: "Sensor ID"
+          required: true
+          type: "integer"
+          format: "int64"
         responses:
             "204":
                 description: successful operation.
         """
         log_name = request.match_info['name']
-        await self.cbpi.log.clear_logs(log_name)
+        self.cbpi.log.clear_log(log_name)
         return web.Response(status=204)
+
+    @request_mapping(path="/logs", method="POST", auth_required=False)
+    async def get_logs(self, request):
+        """
+        ---
+        description: Get Logs
+        tags:
+        - Log
+        parameters:
+        - in: body
+          name: body
+          description: Sensor Ids
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+        produces:
+        - application/json
+        responses:
+            "200":
+                description: successful operation.
+        """
+        data = await request.json()
+        
+        result = await self.cbpi.log.get_data(data)
+        print("JSON")
+        print(json.dumps(result, cls=ComplexEncoder))
+        print("JSON----")
+        return web.json_response(result, dumps=json_dumps)

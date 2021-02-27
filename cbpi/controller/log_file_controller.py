@@ -38,12 +38,10 @@ class LogController:
     async def get_data(self, names, sample_rate='60s'):
 
         '''
-
         :param names: name as string or list of names as string
         :param sample_rate: rate for resampling the data
         :return:
         '''
-
         # make string to array
         if isinstance(names, list) is False:
             names = [names]
@@ -87,13 +85,22 @@ class LogController:
 
         if len(names) > 1:
             for name in names:
-
                 data[name] = result[name].interpolate(limit_direction='both', limit=10).tolist()
         else:
             data[name] = result.interpolate().tolist()
 
-        
         return data
+
+    async def get_data2(self, ids) -> dict:
+        def dateparse(time_in_secs):
+            return datetime.datetime.strptime(time_in_secs, '%Y-%m-%d %H:%M:%S')
+        
+        result = dict()
+        for id in ids:
+            df = pd.read_csv("./logs/sensor_%s.log" % id, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime',"Values"], header=None) 
+            result[id] = {"time": df.index.astype(str).tolist(), "value":df.Values.tolist()}
+        return result
+
 
 
     def get_logfile_names(self, name:str ) -> list:
@@ -106,14 +113,9 @@ class LogController:
         return [os.path.basename(x) for x in glob.glob('./logs/sensor_%s.log*' % name)]
 
     def clear_log(self, name:str ) -> str:
-        '''
-
-        :param name: log name as string. pattern /logs/sensor_%s.log*
-        :return: None
-        '''
+        
         all_filenames = glob.glob('./logs/sensor_%s.log*' % name)
         for f in all_filenames:
-
             os.remove(f)
 
         if name in self.datalogger:

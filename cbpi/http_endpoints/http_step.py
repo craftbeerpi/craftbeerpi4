@@ -253,5 +253,25 @@ class StepHttpEndpoints():
         await self.controller.call_action(id,data.get("action"), data.get("parameter",[]))
         return web.Response(status=204)
 
+    @request_mapping(path="/clear", method="POST", auth_required=False)
+    async def http_clear(self, request):
+        
+        """
+
+        ---
+        description: Clear ALll
+        tags:
+        - Step
+        responses:
+            "204":
+                description: successful operation
+        """
+        
+        await self.controller.clear()
+        return web.Response(status=204)
+
+
+    
+
 
     

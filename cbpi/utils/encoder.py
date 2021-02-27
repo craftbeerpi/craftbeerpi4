@@ -1,6 +1,7 @@
 import datetime
 from json import JSONEncoder
 
+from pandas import Timestamp
 
 class ComplexEncoder(JSONEncoder):
 
@@ -11,7 +12,11 @@ class ComplexEncoder(JSONEncoder):
                 return obj.to_json()
             elif isinstance(obj, datetime.datetime):
                 return obj.__str__()
+            elif isinstance(obj, Timestamp):
+                print("TIMe")
+                return obj.__str__()
             else:
+                print(type(obj))
                 raise TypeError()
         except Exception as e:
             

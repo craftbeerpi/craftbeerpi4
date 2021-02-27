@@ -206,6 +206,7 @@ class ActorHttpEndpoints():
         """
         actor_id = request.match_info['id']
         data = await request.json()
-        await self.controller.call_action(actor_id, data.get("name"), data.get("parameter"))
+        print(data)
+        await self.controller.call_action(actor_id, data.get("action"), data.get("parameter"))
 
         return web.Response(status=204)

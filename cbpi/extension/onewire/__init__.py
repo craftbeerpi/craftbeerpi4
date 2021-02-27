@@ -7,7 +7,7 @@ from aiohttp import web
 from cbpi.api import *
 import os, re, threading, time
 from subprocess import call
-
+import random
 
 def getSensors():
     try:
@@ -56,7 +56,7 @@ class OneWire(CBPiSensor):
     
     def __init__(self, cbpi, id, props):
         super(OneWire, self).__init__(cbpi, id, props)
-        self.value = 0
+        self.value = 200
 
     async def start(self):
         await super().start()
@@ -79,6 +79,7 @@ class OneWire(CBPiSensor):
     async def run(self):
         while True:
             self.value = self.t.value
+            
             self.log_data(self.value)
             self.push_update(self.value)
             await asyncio.sleep(self.interval)

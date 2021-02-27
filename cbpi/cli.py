@@ -62,6 +62,7 @@ def create_home_folder_structure():
     pathlib.Path(os.path.join(".", 'config')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config/dashboard')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config/recipes')).mkdir(parents=True, exist_ok=True)
     print("Folder created")
 
 

@@ -3,7 +3,8 @@ import copy
 import json
 import logging
 import os.path
-
+from os import listdir
+from os.path import isfile, join
 import shortuuid
 from cbpi.api.dataclasses import Props, Step
 from tabulate import tabulate
@@ -54,14 +55,15 @@ class StepController:
         # create file if not exists
         if os.path.exists(self.path) is False:
             with open(self.path, "w") as file:
-                json.dump(dict(basic={}, profile=[]), file, indent=4, sort_keys=True)
+                json.dump(dict(basic={}, steps=[]), file, indent=4, sort_keys=True)
 
         #load from json file
         with open(self.path) as json_file:
             data = json.load(json_file)
             self.basic_data  = data["basic"]
-            self.profile = data["profile"]
+            self.profile = data["steps"]
 
+        
         # Start step after start up
         self.profile = list(map(lambda item: self.create(item), self.profile))
         if startActive is True:
@@ -73,7 +75,6 @@ class StepController:
         logging.debug("Add step")
         item.id = shortuuid.uuid()
         item.status = StepState.INITIAL
-        print(item)
         try:
             type_cfg = self.types.get(item.type)
             clazz = type_cfg.get("class")
@@ -104,7 +105,7 @@ class StepController:
 
     async def save(self):
         logging.debug("save profile")
-        data = dict(basic=self.basic_data, profile=list(map(lambda item: item.to_dict(), self.profile)))
+        data = dict(basic=self.basic_data, steps=list(map(lambda item: item.to_dict(), self.profile)))
         with open(self.path, "w") as file:
             json.dump(data, file, indent=4, sort_keys=True)
         self.push_udpate()
@@ -131,7 +132,11 @@ class StepController:
 
         self.cbpi.notify(message="BREWING COMPLETE")
         logging.info("BREWING COMPLETE")
-        
+    
+    async def previous(self):
+        logging.info("Trigger Next")
+
+
     async def next(self):
         logging.info("Trigger Next")
         step = self.find_by_status(StepState.ACTIVE)
@@ -190,7 +195,7 @@ class StepController:
         return result
 
     def get_state(self):
-        return {"basic": self.basic_data, "profile": list(map(lambda item: item.to_dict(), self.profile)), "types":self.get_types()}
+        return {"basic": self.basic_data, "steps": list(map(lambda item: item.to_dict(), self.profile)), "types":self.get_types()}
 
     async def move(self, id, direction: StepMove):
         index = self.get_index_by_id(id)
@@ -215,7 +220,7 @@ class StepController:
         self.profile = list(filter(lambda item: item.id != id, self.profile))
         await self.save()
     
-    async def shutdown(self, app):    
+    async def shutdown(self, app=None):    
         logging.info("Mash Profile Shutdonw")
         for p in self.profile:
             instance = p.instance
@@ -225,6 +230,7 @@ class StepController:
                 await instance.stop()
                 await instance.task
         await self.save()
+        self.push_udpate()
 
     def done(self, step, result):       
         if result == StepResult.NEXT:
@@ -245,8 +251,11 @@ class StepController:
     def get_index_by_id(self, id):
         return next((i for i, item in enumerate(self.profile) if item.id == id), None)
 
-    def push_udpate(self):
-        self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda item: item.to_dict(), self.profile))))
+    def push_udpate(self, complete=False):
+        if complete is True:
+            self.cbpi.ws.send(dict(topic="mash_profile_update", data=self.get_state()))
+        else:
+            self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda item: item.to_dict(), self.profile))))
         
     async def start_step(self,step):
         try:
@@ -269,3 +278,31 @@ class StepController:
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
             logging.error("Step Controller -Faild to call action on {} {} {}".format(id, action, e))
+
+    async def load_recipe(self, data):
+        try:
+            await self.shutdown()
+        except: 
+            pass
+        def add_runtime_data(item):
+            item["status"] = "I"
+            item["id"] = shortuuid.uuid()
+        list(map(lambda item: add_runtime_data(item), data.get("steps")))
+        with open(self.path, "w") as file:
+            json.dump(data, file, indent=4, sort_keys=True)
+        self.load()
+        self.push_udpate(complete=True)
+
+    async def clear(self):
+        try:
+            await self.shutdown()
+        except: 
+            pass
+        
+        data = dict(basic=dict(), steps=[])
+        with open(self.path, "w") as file:
+            json.dump(data, file, indent=4, sort_keys=True)
+        
+        self.load()
+        self.push_udpate(complete=True)
+

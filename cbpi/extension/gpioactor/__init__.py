@@ -27,6 +27,16 @@ if (mode == None):
 @parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Select(label="Inverted", options=["Yes", "No"],description="No: Active on high; Yes: Active on low")])
 class GPIOActor(CBPiActor):
 
+    @action(key="Cusotm Action", parameters=[Property.Number("Value", configurable=True), Property.Kettle("Kettle")])
+    async def custom_action(self, **kwargs):
+        print("ACTION", kwargs)
+        self.cbpi.notify("ACTION CALLED")
+    
+    @action(key="Cusotm Action2", parameters=[Property.Number("Value", configurable=True)])
+    async def custom_action2(self, **kwargs):
+        print("ACTION2")
+        self.cbpi.notify("ACTION CALLED")
+
     def get_GPIO_state(self, state):
         # ON
         if state == 1:
