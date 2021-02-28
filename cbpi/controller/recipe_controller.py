@@ -39,10 +39,7 @@ class RecipeController:
         return id
 
     async def save(self, name, data):
-        time = datetime.now().strftime("%y-%m-%d.%H_%M")
-        self.recipes_by_id[name] = data["basic"]["name"] + '.' + time
-        data["basic"]["id"] = name
-        data["basic"]["creation_time"] = time
+        self.recipes_by_id[name] = data["basic"]["name"] + '.' + data["basic"]["creation_time"]
         path = os.path.join(".", 'config', "recipes", "{}.yaml".format(self.recipes_by_id[name]))
         with open(path, "w") as file:
             yaml.dump(data, file, indent=4, sort_keys=True)
@@ -87,6 +84,9 @@ class RecipeController:
             data = yaml.load(file, Loader=yaml.FullLoader)
             data["basic"]["name"] = new_name
             new_id = shortuuid.uuid()
+            time = datetime.now().strftime("%y-%m-%d.%H_%M")
+            data["basic"]["id"] = new_id
+            data["basic"]["creation_time"] = time
             await self.save(new_id, data)
 
             return new_id
