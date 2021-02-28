@@ -1,5 +1,5 @@
-
 import logging
+from datetime import datetime
 import os.path
 from os import listdir
 from os.path import isfile, join
@@ -10,15 +10,15 @@ from ..api.step import StepMove, StepResult, StepState
 
 import re
 
-class RecipeController:
 
+class RecipeController:
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
-    
-    def urlify(self, s):
+        self.recipes_by_id = dict()
 
+    def urlify(self, s):
         # Remove all non-word characters (everything except numbers and letters)
         s = re.sub(r"[^\w\s]", '', s)
 
@@ -29,18 +29,25 @@ class RecipeController:
 
     async def create(self, name):
         id = shortuuid.uuid()
-        path = os.path.join(".", 'config', "recipes", "{}.yaml".format(id))
-        data = dict(basic=dict(name=name, author=self.cbpi.config.get("AUTHOR", "John Doe")), steps=[])
+        time = datetime.now().strftime("%y-%m-%d.%H_%M")
+        self.recipes_by_id[id] = name + '.' + time
+        path = os.path.join(".", 'config', "recipes", "{}.yaml".format(self.recipes_by_id[id]))
+        data = dict(basic=dict(name=name, author=self.cbpi.config.get("AUTHOR", "John Doe"), creation_time=time, id=id),
+                    steps=[])
         with open(path, "w") as file:
             yaml.dump(data, file)
         return id
 
     async def save(self, name, data):
-        path = os.path.join(".", 'config', "recipes", "{}.yaml".format(name))
+        time = datetime.now().strftime("%y-%m-%d.%H_%M")
+        self.recipes_by_id[name] = data["basic"]["name"] + '.' + time
+        data["basic"]["id"] = name
+        data["basic"]["creation_time"] = time
+        path = os.path.join(".", 'config', "recipes", "{}.yaml".format(self.recipes_by_id[name]))
         with open(path, "w") as file:
             yaml.dump(data, file, indent=4, sort_keys=True)
         self.cbpi.notify("{} saved".format(data["basic"].get("name")))
-        
+
     async def get_recipes(self):
         path = os.path.join(".", 'config', "recipes")
         onlyfiles = [os.path.splitext(f)[0] for f in listdir(path) if isfile(join(path, f)) and f.endswith(".yaml")]
@@ -51,24 +58,24 @@ class RecipeController:
             with open(recipe_path) as file:
                 data = yaml.load(file, Loader=yaml.FullLoader)
                 dataset = data["basic"]
+                self.recipes_by_id[dataset["id"]] = dataset["name"] + dataset["creation_time"]
                 dataset["file"] = filename
                 result.append(dataset)
         return result
-    
+
     async def get_by_name(self, name):
-        
         recipe_path = os.path.join(".", 'config', "recipes", "%s.yaml" % name)
         with open(recipe_path) as file:
-            return  yaml.load(file, Loader=yaml.FullLoader)
+            return yaml.load(file, Loader=yaml.FullLoader)
 
-           
     async def remove(self, name):
         path = os.path.join(".", 'config', "recipes", "{}.yaml".format(name))
+        rec_name = yaml.load(path, Loader=yaml.FullLoader)["basic"]["name"]
         os.remove(path)
-        self.cbpi.notify("{} delted".format(name))
+        self.recipes_by_id.__delitem__(rec_name)
+        self.cbpi.notify("{} deleted".format(rec_name))
 
     async def brew(self, name):
-
         recipe_path = os.path.join(".", 'config', "recipes", "%s.yaml" % name)
         with open(recipe_path) as file:
             data = yaml.load(file, Loader=yaml.FullLoader)
