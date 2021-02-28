@@ -10,6 +10,8 @@ from ..api.step import StepMove, StepResult, StepState
 
 import re
 
+TIME_FORMAT = "%y-%m-%d.%H_%M"
+
 
 class RecipeController:
 
@@ -29,7 +31,7 @@ class RecipeController:
 
     async def create(self, name):
         id = shortuuid.uuid()
-        time = datetime.now().strftime("%y-%m-%d.%H_%M")
+        time = datetime.now().strftime(TIME_FORMAT)
         self.recipes_by_id[id] = name + '.' + time
         path = os.path.join(".", 'config', "recipes", "{}.yaml".format(self.recipes_by_id[id]))
         data = dict(basic=dict(name=name, author=self.cbpi.config.get("AUTHOR", "John Doe"), creation_time=time, id=id),
@@ -84,7 +86,7 @@ class RecipeController:
             data = yaml.load(file, Loader=yaml.FullLoader)
             data["basic"]["name"] = new_name
             new_id = shortuuid.uuid()
-            time = datetime.now().strftime("%y-%m-%d.%H_%M")
+            time = datetime.now().strftime(TIME_FORMAT)
             data["basic"]["id"] = new_id
             data["basic"]["creation_time"] = time
             await self.save(new_id, data)
