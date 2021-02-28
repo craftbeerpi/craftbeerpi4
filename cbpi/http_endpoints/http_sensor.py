@@ -15,15 +15,21 @@ class SensorHttpEndpoints():
         """
 
         ---
-        description: Switch actor on
+        description: Get list of sensors.
         tags:
         - Sensor
         responses:
             "204":
-                description: successful operation
+                description: JSON-list of sensors, their name, label, types, ..
         """
         return web.json_response(data=self.controller.get_state())
         
+    @request_mapping(path="/{id}", method="GET", auth_required=False)
+    async def http_get_sensor(self, request):
+        id = request.match_info['id']
+        response_data = self.controller.get_sensor_value(id)
+        print(response_data)
+        return web.json_response(data=response_data)
 
     @request_mapping(path="/", method="POST", auth_required=False)
     async def http_add(self, request):

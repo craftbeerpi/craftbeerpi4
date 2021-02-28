@@ -15,12 +15,12 @@ class ActorHttpEndpoints():
         """
 
         ---
-        description: Switch actor on
+        description: Get list of actors.
         tags:
         - Actor
         responses:
-            "204":
-                description: successful operation
+            "200":
+                description: JSON-list of acors, their name, label, types, ...
         """
         return web.json_response(data=self.controller.get_state())
         
@@ -152,7 +152,7 @@ class ActorHttpEndpoints():
         """
 
         ---
-        description: Switch actor on
+        description: Switch actor off
         tags:
         - Actor
 

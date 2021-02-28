@@ -17,7 +17,7 @@ import click
 from subprocess import call
 
 from jinja2 import Template
-
+MAIN_DIR = "."
 
 def create_config_file():
     if os.path.exists(os.path.join(".", 'config', "config.yaml")) is False:
