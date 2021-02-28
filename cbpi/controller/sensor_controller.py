@@ -19,7 +19,7 @@ class SensorController(BasicController):
     
     def get_sensor_value(self, id):
         try:
-            item = self.find_by_id("FfatyDGZztAHAHSnJYN3os")
+            item = self.find_by_id(id)
             return item.instance.get_state()
         except Exception as e:
             logging.error("Faild read sensor value {} {} ".format(id, e))

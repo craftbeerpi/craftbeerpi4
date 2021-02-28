@@ -26,6 +26,16 @@ class SensorHttpEndpoints():
         
     @request_mapping(path="/{id}", method="GET", auth_required=False)
     async def http_get_sensor(self, request):
+        """
+
+        ---
+        description: Get value of sensor
+        tags:
+        - Sensor
+        responses:
+            "204":
+                description: JSON-list of sensors, their name, label, types, ..
+        """
         id = request.match_info['id']
         response_data = self.controller.get_sensor_value(id)
         print(response_data)
