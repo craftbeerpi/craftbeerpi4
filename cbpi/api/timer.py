@@ -22,17 +22,19 @@ class Timer(object):
         self.start_time = time.time()
         self.count = int(round(self._timemout, 0))
         try:
-            for seconds in range(self.count, 0, -1):
+            while self.count > 0:
+                self.count -= 1
                 if self._update is not None:
-                    await self._update(self,seconds)
+                    await self._update(self,self.count)
                 await asyncio.sleep(1)
-            
         except asyncio.CancelledError:
             end = time.time()
             duration = end - self.start_time
             self._timemout = self._timemout - duration
-            
-                 
+
+    async def add(self, seconds):
+        self.count = self.count + seconds
+
     def start(self):
         self._task = asyncio.create_task(self._job())
         self._task.add_done_callback(self.done)
