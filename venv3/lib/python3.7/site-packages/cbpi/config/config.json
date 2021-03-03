@@ -1,0 +1,39 @@
+{
+    "AUTHOR": {
+        "description": "Author",
+        "name": "AUTHOR",
+        "options": null,
+        "type": "string",
+        "value": "John Doe"
+    },
+    "BREWERY_NAME": {
+        "description": "Brewery Name",
+        "name": "BREWERY_NAME",
+        "options": null,
+        "type": "string",
+        "value": "CraftBeerPi Brewery"
+    },
+    "MASH_TUN": {
+        "description": "Default Mash Tun",
+        "name": "MASH_TUN",
+        "options": null,
+        "type": "kettle",
+        "value": ""
+    },
+    "TEMP_UNIT": {
+        "description": "Temperature Unit",
+        "name": "TEMP_UNIT",
+        "options": [
+            {
+                "label": "C",
+                "value": "C"
+            },
+            {
+                "label": "F",
+                "value": "F"
+            }
+        ],
+        "type": "select",
+        "value": "C"
+    }
+}

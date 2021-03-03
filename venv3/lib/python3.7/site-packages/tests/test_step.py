@@ -1,0 +1,99 @@
+import asyncio
+from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
+from cbpi.craftbeerpi import CraftBeerPi
+
+
+class StepTestCase(AioHTTPTestCase):
+
+    async def get_application(self):
+        self.cbpi = CraftBeerPi()
+        await self.cbpi.init_serivces()
+        return self.cbpi.app
+
+    @unittest_run_loop
+    async def test_get(self):
+
+        resp = await self.client.request("GET", "/step")
+        print(resp)
+        assert resp.status == 200
+
+        resp = await self.client.request("GET", "/step/types")
+        print(resp)
+        assert resp.status == 200
+
+
+    @unittest_run_loop
+    async def test_crud(self):
+        data = {
+            "name": "Test",
+            "type": "CustomStepCBPi",
+            "config": {}
+        }
+
+        # Add new step
+        resp = await self.client.post(path="/step/", json=data)
+        assert resp.status == 200
+
+        m = await resp.json()
+        print("Step", m)
+        sensor_id = m["id"]
+
+        # Get sensor
+        resp = await self.client.get(path="/step/%s" % sensor_id)
+        assert resp.status == 200
+
+        m2 = await resp.json()
+        sensor_id = m2["id"]
+
+        # Update Sensor
+        resp = await self.client.put(path="/step/%s" % sensor_id, json=m)
+        assert resp.status == 200
+
+        # # Delete Sensor
+        resp = await self.client.delete(path="/step/%s" % sensor_id)
+        assert resp.status == 204
+
+    def create_wait_callback(self, topic):
+        future = self.cbpi.app.loop.create_future()
+
+        async def test(**kwargs):
+            print("GOON")
+            future.set_result("OK")
+        self.cbpi.bus.register(topic, test, once=True)
+        return future
+
+    async def wait(self, future):
+        done, pending = await asyncio.wait({future})
+
+        if future in done:
+            pass
+
+    @unittest_run_loop
+    async def test_process(self):
+
+        step_ctlr = self.cbpi.step
+
+        await step_ctlr.clear_all()
+        await  step_ctlr.add(**{"name": "Kettle1", "type": "CustomStepCBPi", "config": {"name1": "1", "temp": 99}})
+        await  step_ctlr.add(**{"name": "Kettle1", "type": "CustomStepCBPi", "config": {"name1": "1", "temp": 99}})
+        await  step_ctlr.add(**{"name": "Kettle1", "type": "CustomStepCBPi", "config": {"name1": "1", "temp": 99}})
+
+        await step_ctlr.stop_all()
+
+        future = self.create_wait_callback("step/+/started")
+        await step_ctlr.start()
+        await self.wait(future)
+
+        for i in range(len(step_ctlr.cache)-1):
+            future = self.create_wait_callback("step/+/started")
+            await step_ctlr.next()
+            await self.wait(future)
+
+        await self.print_steps()
+
+    async def print_steps(self):
+
+        s = await self.cbpi.step.get_all()
+        print(s)
+        for k, v in s.items():
+            print(k, v.to_json())
