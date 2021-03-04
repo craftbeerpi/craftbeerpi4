@@ -14,6 +14,7 @@ class HTTPSensor(CBPiSensor):
     def __init__(self, cbpi, id, props):
         super(HTTPSensor, self).__init__(cbpi, id, props)
         self.running = True
+        self.value = 0
 
     async def run(self):
         '''
