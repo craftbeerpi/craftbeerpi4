@@ -9,42 +9,30 @@ import random
 
 cache = {}
 
-
+@parameters([Property.Text(label="Key", configurable=True, description="Http Key")])
 class HTTPSensor(CBPiSensor):
+    def __init__(self, cbpi, id, props):
+        super(HTTPSensor, self).__init__(cbpi, id, props)
+        self.running = True
 
-    # Custom Properties which will can be configured by the user
-
-    key = Property.Text(label="Key", configurable=True)
-
-    def init(self):
-        super().init()
-
-        self.state = True
-
-    def get_state(self):
-        return self.state
-
-    def get_value(self):
-
-        return self.value
-
-    def stop(self):
-        pass
-
-    async def run(self, cbpi):
-        self.value = 0
-        while True:
+    async def run(self):
+        '''
+        This method is executed asynchronousely 
+        In this example the code is executed every second
+        '''
+        while self.running is True:
+            try:
+                cache_value = cache.pop(self.props.get("Key"), None)
+                if cache_value is not None:
+                    self.value = cache_value
+                    self.push_update(self.value)
+            except Exception as e:
+                pass
             await asyncio.sleep(1)
 
-            try:
-                value = cache.pop(self.key, None)
-
-                if value is not None:
-                    self.log_data(value)
-                    await cbpi.bus.fire("sensor/%s/data" % self.id, value=value)
-            except Exception as e:
-                
-                pass
+    def get_state(self):
+        # return the current state of the sensor
+        return dict(value=self.value)
 
 class HTTPSensorEndpoint(CBPiExtension):
 
