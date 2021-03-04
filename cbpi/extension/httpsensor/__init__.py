@@ -24,7 +24,7 @@ class HTTPSensor(CBPiSensor):
             try:
                 cache_value = cache.pop(self.props.get("Key"), None)
                 if cache_value is not None:
-                    self.value = cache_value
+                    self.value = float(cache_value)
                     self.push_update(self.value)
             except Exception as e:
                 pass
