@@ -142,3 +142,12 @@ class Config:
         return "....name={} value={}".format(self.name, self.value)
     def to_dict(self):  
         return dict(name=self.name, value=self.value, type=self.type.value, description=self.description, options=self.options)
+
+@dataclass  
+class NotificationAction:
+    label: str 
+    method: Any = None
+    id: str = None
+
+    def to_dict(self):  
+        return dict(id=self.id, label=self.label)

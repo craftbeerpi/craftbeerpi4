@@ -4,6 +4,8 @@ import os
 from os import listdir
 from os.path import isfile, join
 
+from voluptuous.schema_builder import message
+
 class DashboardController:
 
 
@@ -29,6 +31,7 @@ class DashboardController:
     async def add_content(self, dashboard_id, data):
         with open(self.path, 'w') as outfile:
             json.dump(data, outfile, indent=4, sort_keys=True)
+        self.cbpi.notify(title="Dashboard", message="Saved Successfully", type="success")
         return {"status": "OK"}
 
     async def delete_content(self, dashboard_id):

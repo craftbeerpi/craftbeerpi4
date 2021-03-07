@@ -30,12 +30,12 @@ class GPIOActor(CBPiActor):
     @action(key="Cusotm Action", parameters=[Property.Number("Value", configurable=True), Property.Kettle("Kettle")])
     async def custom_action(self, **kwargs):
         print("ACTION", kwargs)
-        self.cbpi.notify("ACTION CALLED")
+        
     
     @action(key="Cusotm Action2", parameters=[Property.Number("Value", configurable=True)])
     async def custom_action2(self, **kwargs):
         print("ACTION2")
-        self.cbpi.notify("ACTION CALLED")
+        
 
     def get_GPIO_state(self, state):
         # ON

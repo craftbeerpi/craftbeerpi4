@@ -1,21 +1,33 @@
+from socket import timeout
+from typing import KeysView
+
+from voluptuous.schema_builder import message
+from cbpi.api.dataclasses import NotificationAction
 import logging
 from unittest.mock import MagicMock, patch
-
+from datetime import datetime
 from cbpi.api import *
 
 logger = logging.getLogger(__name__)
 
 @parameters([])
 class DummyActor(CBPiActor):
-    my_name = ""
+    
 
-    # Custom property which can be configured by the user
-    @action("test", parameters={})
-    async def action1(self, **kwargs):
-        
-        self.my_name = kwargs.get("name")
-        pass
+    def __init__(self, cbpi, id, props):
+        super().__init__(cbpi, id, props)
+    
+    async def yes(self, **kwargs):
+        print("YES!")
+        await self.cbpi.step.next()
 
+    
+
+    @action("HELLO WORLD", {})
+    async def helloWorld(self, **kwargs):
+        print("HELLO WORLD")
+        self.cbpi.notify(title="HELLO WORLD", message="DO YOU WANT TO START THE NEXT STEP", action=[NotificationAction("YES", self.yes), NotificationAction("NO")])
+    
     async def start(self):
         await super().start()
 

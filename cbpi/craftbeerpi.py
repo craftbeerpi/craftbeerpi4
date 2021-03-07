@@ -1,4 +1,5 @@
 
+from cbpi.controller.notification_controller import NotificationController
 import logging
 from os import urandom
 import os
@@ -39,7 +40,9 @@ from cbpi.http_endpoints.http_recipe import RecipeHttpEndpoints
 from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
 from cbpi.http_endpoints.http_system import SystemHttpEndpoints
 from cbpi.http_endpoints.http_log import LogHttpEndpoints
+from cbpi.http_endpoints.http_notification import NotificationHttpEndpoints
 
+import shortuuid
 logger = logging.getLogger(__name__)
 
 
@@ -98,9 +101,9 @@ class CraftBeerPi:
         self.kettle = KettleController(self)
         self.step : StepController = StepController(self)
         self.recipe : RecipeController = RecipeController(self)
+        self.notification : NotificationController = NotificationController(self)
         #self.satellite: SatelliteController = SatelliteController(self)
         self.dashboard = DashboardController(self)
-
         self.http_step = StepHttpEndpoints(self)
         self.http_recipe = RecipeHttpEndpoints(self)
         self.http_sensor = SensorHttpEndpoints(self)
@@ -111,6 +114,7 @@ class CraftBeerPi:
         self.http_plugin = PluginHttpEndpoints(self)
         self.http_system = SystemHttpEndpoints(self)
         self.http_log = LogHttpEndpoints(self)
+        self.http_notification = NotificationHttpEndpoints(self)
         self.login = Login(self)
 
     def _setup_shutdownhook(self):
@@ -208,18 +212,10 @@ class CraftBeerPi:
 
 
 
+    def notify(self, title: str, message: str, type: str = "info", action=[]) -> None:
+        self.notification.notify(title, message, type, action)
 
-    def notify(self, message: str, type: str = "info") -> None:
-        '''
-        This is a convinience method to send notification to the client
-        
-        :param key: notification key
-        :param message: notification message
-        :param type: notification type (info,warning,danger,successs)
-        :return: 
-        '''
-        self.ws.send(dict(topic="notifiaction", type=type, message=message))
-        
+
     async def call_initializer(self, app):
         self.initializer = sorted(self.initializer, key=lambda k: k['order'])
         for i in self.initializer:

@@ -1,4 +1,5 @@
 import asyncio
+import cbpi
 import copy
 import json
 import logging
@@ -6,7 +7,7 @@ import os.path
 from os import listdir
 from os.path import isfile, join
 import shortuuid
-from cbpi.api.dataclasses import Props, Step
+from cbpi.api.dataclasses import NotificationAction, Props, Step
 from tabulate import tabulate
 
 from ..api.step import StepMove, StepResult, StepState
@@ -129,8 +130,7 @@ class StepController:
             await self.start_step(step)
             await self.save()
             return 
-
-        self.cbpi.notify(message="BREWING COMPLETE")
+        self.cbpi.notify("Brewing Complete", "Now the yeast will take over",action=[NotificationAction("OK")])
         logging.info("BREWING COMPLETE")
     
     async def previous(self):

@@ -39,7 +39,7 @@ class RecipeController:
         path = os.path.join(".", 'config', "recipes", "{}.yaml".format(name))
         with open(path, "w") as file:
             yaml.dump(data, file, indent=4, sort_keys=True)
-        self.cbpi.notify("{} saved".format(data["basic"].get("name")))
+        
         
     async def get_recipes(self):
         path = os.path.join(".", 'config', "recipes")
@@ -65,7 +65,7 @@ class RecipeController:
     async def remove(self, name):
         path = os.path.join(".", 'config', "recipes", "{}.yaml".format(name))
         os.remove(path)
-        self.cbpi.notify("{} delted".format(name))
+        
 
     async def brew(self, name):
 

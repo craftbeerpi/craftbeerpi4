@@ -21,7 +21,7 @@ class MashStep(CBPiStep):
     async def custom_action(self, Value, **kwargs):
         self.summary = "VALUE FROM ACTION {}".format(Value)
         await self.push_update()
-        self.cbpi.notify("ACTION 2 CALLED".format(Value))
+        
 
     async def on_timer_done(self,timer):
         self.summary = ""
@@ -60,12 +60,12 @@ class WaitStep(CBPiStep):
     @action(key="Custom Step Action", parameters=[])
     async def hello(self, **kwargs):
         print("ACTION")
-        self.cbpi.notify("ACTION 1 CALLED")
+        
 
     @action(key="Custom Step Action 2", parameters=[])
     async def hello2(self, **kwargs):
         print("ACTION2")
-        self.cbpi.notify("ACTION 2 CALLED")
+        
 
     async def on_timer_done(self,timer):
         self.summary = ""
@@ -157,7 +157,7 @@ class BoilStep(CBPiStep):
 
     @action("Start Timer", [])
     async def star_timer(self):
-        self.cbpi.notify("Timer started")
+        
         self.timer.start()
 
     async def run(self):
