@@ -11,18 +11,9 @@ import logging
              Property.Kettle(label="Kettle")])
 class MashStep(CBPiStep):
 
-    @action(key="Custom RESET", parameters=[])
-    async def custom_reset(self, **kwargs):
-        self.summary = ""
-        await self.push_update()
+    
         
-
-    @action(key="Custom Action", parameters=[Property.Number(label="Value", configurable=True)])
-    async def custom_action(self, Value, **kwargs):
-        self.summary = "VALUE FROM ACTION {}".format(Value)
-        await self.push_update()
         
-
     async def on_timer_done(self,timer):
         self.summary = ""
         await self.next()
@@ -53,6 +44,8 @@ class MashStep(CBPiStep):
             if sensor_value.get("value") >= int(self.props.Temp) and self.timer == None:
                 self.timer.start()
         return StepResult.DONE
+
+    
 
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True)])
 class WaitStep(CBPiStep):

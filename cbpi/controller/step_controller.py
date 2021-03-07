@@ -37,18 +37,17 @@ class StepController:
         name = data.get("name")
         type = data.get("type")
         status = StepState(data.get("status", "I"))
-        props = data.get("props", {})
+        props = Props(data.get("props", {}))
 
         try:
             type_cfg = self.types.get(type)
             clazz = type_cfg.get("class")
-            
-            instance = clazz(self.cbpi, id, name, Props(props), self.done)
+            instance = clazz(self.cbpi, id, name, props, self.done)
         except Exception as e:
             logging.warning("Failed to create step instance %s - %s"  % (id, e))
             instance = None
  
-        return Step(id, name, type=type, status=status, instance=instance, props=Props(props) )
+        return Step(id, name, type=type, status=status, instance=instance, props=props )
 
 
     def load(self, startActive=False):
@@ -94,7 +93,6 @@ class StepController:
         try:
             type_cfg = self.types.get(item.type)
             clazz = type_cfg.get("class")
-
             item.instance = clazz(self.cbpi, item.id, item.name, item.props, self.done)
         except Exception as e:
             logging.warning("Failed to create step instance %s - %s "  % (item.id, e))
@@ -139,6 +137,9 @@ class StepController:
 
     async def next(self):
         logging.info("Trigger Next")
+        print("\n\n\n\n")
+        print(self.profile)
+        print("\n\n\n\n")
         step = self.find_by_status(StepState.ACTIVE)
         if step is not None:
             if step.instance is not None:

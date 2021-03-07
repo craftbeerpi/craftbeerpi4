@@ -21,13 +21,7 @@ class DummyActor(CBPiActor):
         print("YES!")
         await self.cbpi.step.next()
 
-    
 
-    @action("HELLO WORLD", {})
-    async def helloWorld(self, **kwargs):
-        print("HELLO WORLD")
-        self.cbpi.notify(title="HELLO WORLD", message="DO YOU WANT TO START THE NEXT STEP", action=[NotificationAction("YES", self.yes), NotificationAction("NO")])
-    
     async def start(self):
         await super().start()
 
