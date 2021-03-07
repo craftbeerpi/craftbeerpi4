@@ -28,6 +28,15 @@ class CBPiBase(metaclass=ABCMeta):
 
     async def set_target_temp(self,id, temp):
         await self.cbpi.kettle.set_target_temp(id, temp)
+    
+    def get_fermenter(self,id):
+        return self.cbpi.fermenter.find_by_id(id)
+
+    def get_fermenter_target_temp(self,id):
+        return self.cbpi.fermenter.find_by_id(id).target_temp
+
+    async def set_fermenter_target_temp(self,id, temp):
+        await self.cbpi.fermenter.set_target_temp(id, temp)
 
     def get_sensor(self,id):
         return self.cbpi.sensor.find_by_id(id)

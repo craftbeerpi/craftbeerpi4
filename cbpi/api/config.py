@@ -5,6 +5,7 @@ class ConfigType(Enum):
     NUMBER = "number"
     SELECT = "select"
     KETTLE = "kettle"
+    FERMENTER = "fermenter"
     ACTOR = "actor"
     SENSOR = "sensor"
 

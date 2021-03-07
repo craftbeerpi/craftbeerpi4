@@ -49,6 +49,20 @@ CREATE TABLE IF NOT EXISTS kettle
     diameter INTEGER
 );
 
+CREATE TABLE IF NOT EXISTS fermenter
+(
+    id INTEGER PRIMARY KEY NOT NULL,
+    name VARCHAR(80),
+    sensor INTEGER,
+    cooler INTEGER,
+    automatic VARCHAR(255),
+    logic VARCHAR(50),
+    config VARCHAR(1000),
+    target_temp INTEGER,
+    height INTEGER,
+    diameter INTEGER
+);
+
 CREATE TABLE IF NOT EXISTS config
 (
     name VARCHAR(50) PRIMARY KEY NOT NULL,

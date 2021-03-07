@@ -1,0 +1,34 @@
+{
+    "data": [
+        {
+            "heater": null,
+            "id": "gTetr9nv3FN8ZkcAtYsYjc",
+            "name": "testing",
+            "props": {},
+            "sensor": "eCa5Mnmr25G24oAAcqFZY2",
+            "state": false,
+            "target_temp": 0,
+            "type": null
+        },
+        {
+            "heater": null,
+            "id": "LE4EorYLq4bNugRkvR2wc6",
+            "name": "tzest",
+            "props": {},
+            "sensor": "eCa5Mnmr25G24oAAcqFZY2",
+            "state": false,
+            "target_temp": 0,
+            "type": "Hysteresis"
+        },
+        {
+            "heater": null,
+            "id": "6ScZZMfqGswGfFcmNggzST",
+            "name": "a",
+            "props": {},
+            "sensor": "kr6vwViDyusVsVJMMmoHqQ",
+            "state": false,
+            "target_temp": 0,
+            "type": "Hysteresis"
+        }
+    ]
+}

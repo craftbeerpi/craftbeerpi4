@@ -1,5 +1,25 @@
 {
     "data": [
-        
+        {
+            "id": "kr6vwViDyusVsVJMMmoHqQ",
+            "name": "abc",
+            "props": {},
+            "state": false,
+            "type": "MyCustomSensorss"
+        },
+        {
+            "id": "ehD8mesfHRnqk35GrxHZc6",
+            "name": "tttt",
+            "props": {},
+            "state": false,
+            "type": "MyCustomSensorss"
+        },
+        {
+            "id": "UYCNrTf8bWPxX5TXEbpB76",
+            "name": "abv",
+            "props": {},
+            "state": false,
+            "type": "HTTPSensor"
+        }
     ]
 }
