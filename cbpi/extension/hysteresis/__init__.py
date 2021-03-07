@@ -15,8 +15,8 @@ class Hysteresis(CBPiKettleLogic):
             self.heater = self.kettle.heater
             logging.info("Hysteresis {} {} {} {}".format(self.offset_on, self.offset_off, self.id, self.heater))
 
-            self.get_actor_state()
-
+            # self.get_actor_state()
+	    
 
             while True:
                 
