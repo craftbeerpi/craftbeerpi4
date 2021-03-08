@@ -11,18 +11,9 @@ import logging
              Property.Kettle(label="Kettle")])
 class MashStep(CBPiStep):
 
-    @action(key="Custom RESET", parameters=[])
-    async def custom_reset(self, **kwargs):
-        self.summary = ""
-        await self.push_update()
+    
         
-
-    @action(key="Custom Action", parameters=[Property.Number(label="Value", configurable=True)])
-    async def custom_action(self, Value, **kwargs):
-        self.summary = "VALUE FROM ACTION {}".format(Value)
-        await self.push_update()
-        self.cbpi.notify("ACTION 2 CALLED".format(Value))
-
+        
     async def on_timer_done(self,timer):
         self.summary = ""
         await self.next()
@@ -50,9 +41,12 @@ class MashStep(CBPiStep):
         while True:
             await asyncio.sleep(1)
             sensor_value = self.get_sensor_value(self.props.Sensor)
-            if sensor_value.get("value") >= int(self.props.Temp) and self.timer == None:
+            if sensor_value.get("value") >= int(self.props.Temp) and self.timer.is_running is not True:
                 self.timer.start()
+                self.timer.is_running = True
         return StepResult.DONE
+
+    
 
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True)])
 class WaitStep(CBPiStep):
@@ -60,12 +54,12 @@ class WaitStep(CBPiStep):
     @action(key="Custom Step Action", parameters=[])
     async def hello(self, **kwargs):
         print("ACTION")
-        self.cbpi.notify("ACTION 1 CALLED")
+        
 
     @action(key="Custom Step Action 2", parameters=[])
     async def hello2(self, **kwargs):
         print("ACTION2")
-        self.cbpi.notify("ACTION 2 CALLED")
+        
 
     async def on_timer_done(self,timer):
         self.summary = ""
@@ -157,15 +151,16 @@ class BoilStep(CBPiStep):
 
     @action("Start Timer", [])
     async def star_timer(self):
-        self.cbpi.notify("Timer started")
+        
         self.timer.start()
 
     async def run(self):
         while True:
             await asyncio.sleep(1)
             sensor_value = self.get_sensor_value(self.props.Sensor)
-            if sensor_value is not None and sensor_value.get("value") >= int(self.props.Temp) and self.timer == None:
+            if sensor_value.get("value") >= int(self.props.Temp) and self.timer.is_running is not True:
                 self.timer.start()
+                self.timer.is_running = True
         return StepResult.DONE
 
 def setup(cbpi):
