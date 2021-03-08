@@ -68,7 +68,7 @@ def create_home_folder_structure():
 
 def setup_one_wire():
     print("Setting up 1Wire")
-    with open('/boot/config.txt', 'wb') as f:
+    with open('/boot/config.txt', 'w') as f:
         f.write("dtoverlay=w1-gpio,gpiopin=4,pullup=on")
     print("/boot/config.txt created")
 
@@ -183,7 +183,7 @@ def plugin_create(name):
 
     import jinja2
 
-    templateLoader = jinja2.FileSystemLoader(searchpath=os.path.join(MAIN_DIR, name))
+    templateLoader = jinja2.FileSystemLoader(searchpath=os.path.join(".", name))
     templateEnv = jinja2.Environment(loader=templateLoader)
     TEMPLATE_FILE = "setup.py"
     template = templateEnv.get_template(TEMPLATE_FILE)
@@ -195,7 +195,7 @@ def plugin_create(name):
     TEMPLATE_FILE = "MANIFEST.in"
     template = templateEnv.get_template(TEMPLATE_FILE)
     outputText = template.render(name=name)
-    with open(os.path.join(MAIN_DIR, name, "MANIFEST.in"), "w") as fh:
+    with open(os.path.join(".", name, "MANIFEST.in"), "w") as fh:
         fh.write(outputText)
 
     TEMPLATE_FILE = os.path.join("/", name, "config.yaml")

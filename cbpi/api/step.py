@@ -67,8 +67,8 @@ class CBPiStep(CBPiBase):
     async def on_props_update(self, props):
         self.props = {**self.props, **props}
 
-    async def save_props(self, props):
-        pass
+    async def save_props(self):
+        await self.cbpi.step.save()
     
     async def push_update(self):
         self.cbpi.step.push_udpate()

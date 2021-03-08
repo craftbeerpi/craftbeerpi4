@@ -51,7 +51,6 @@ class RecipeController:
         path = os.path.join(".", 'config', "recipes", "{}.yaml".format(self.recipes_by_id[name]))
         with open(path, "w") as file:
             yaml.dump(data, file, indent=4, sort_keys=True)
-
         
     async def get_recipes(self):
         path = os.path.join(".", 'config', "recipes")
@@ -79,7 +78,6 @@ class RecipeController:
             rec = yaml.load(file, Loader=yaml.FullLoader)
         rec_name, rec_id = rec["basic"]["name"], rec["basic"]["id"]
         os.remove(path)
-
 
     async def brew(self, name):
         recipe_path = os.path.join(".", 'config', "recipes", "{}.yaml".format(self.__get_filename(name)))

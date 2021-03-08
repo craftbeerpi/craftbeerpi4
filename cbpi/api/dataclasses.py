@@ -34,9 +34,9 @@ class Props:
             return self.__data__[key]
         else:
             return d
-        
-    def to_dict(self):
+    
 
+    def to_dict(self):
         def parse_object(value):
             if isinstance(value, Props):
                 return value.to_dict()
@@ -46,7 +46,6 @@ class Props:
                 return value
 
         return dict((key, parse_object(value)) for (key, value) in self.__data__.items())
-
 
 
 @dataclass
@@ -142,3 +141,12 @@ class Config:
         return "....name={} value={}".format(self.name, self.value)
     def to_dict(self):  
         return dict(name=self.name, value=self.value, type=self.type.value, description=self.description, options=self.options)
+
+@dataclass  
+class NotificationAction:
+    label: str 
+    method: Any = None
+    id: str = None
+
+    def to_dict(self):  
+        return dict(id=self.id, label=self.label)
