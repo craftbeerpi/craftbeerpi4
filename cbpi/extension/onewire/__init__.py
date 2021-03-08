@@ -77,7 +77,7 @@ class OneWire(CBPiSensor):
             pass
 
     async def run(self):
-        while True:
+        while self.running == True:
             self.value = self.t.value
             
             self.log_data(self.value)

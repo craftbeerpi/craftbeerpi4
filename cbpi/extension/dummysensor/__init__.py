@@ -15,7 +15,7 @@ class CustomSensor(CBPiSensor):
         self.value = 0
     async def run(self):
 
-        while True:
+        while self.running == True:
             self.value = random.randint(10,100)
             self.log_data(self.value)
             
