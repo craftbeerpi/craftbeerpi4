@@ -18,7 +18,7 @@ class Hysteresis(CBPiKettleLogic):
             # self.get_actor_state()
 	    
 
-            while True:
+            while self.running == True:
                 
                 sensor_value = self.get_sensor_value(self.kettle.sensor).get("value")
                 target_temp = self.get_kettle_target_temp(self.id)

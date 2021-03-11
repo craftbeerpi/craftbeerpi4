@@ -76,9 +76,9 @@ class BasicController:
     async def stop(self, id):
         logging.info("{} Stop Id {} ".format(self.name, id))
         try:
-            print("STOP NOW")
             item = self.find_by_id(id)
             await item.instance.stop()
+            item.instance.running = False
             await self.push_udpate()
         except Exception as e:
             logging.error("{} Cant stop {} - {}".format(self.name, id, e))
@@ -87,7 +87,7 @@ class BasicController:
         logging.info("{} Start Id {} ".format(self.name, id))
         try:
             item = self.find_by_id(id)
-            if item.instance is not None and item.instance.state is True:
+            if item.instance is not None and item.instance.running is True:
                 logging.warning("{} already running {}".format(self.name, id))
                 return 
             if item.type is None:
@@ -97,6 +97,7 @@ class BasicController:
             item.instance = clazz(self.cbpi, item.id, item.props)
             
             await item.instance.start()
+            item.instance.running = True
             item.instance.task = self._loop.create_task(item.instance._run())
             
             logging.info("{} started {}".format(self.name, id))

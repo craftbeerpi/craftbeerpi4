@@ -38,7 +38,7 @@ class MashStep(CBPiStep):
         self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
-        while True:
+        while self.running == True:
             await asyncio.sleep(1)
             sensor_value = self.get_sensor_value(self.props.Sensor)
             if sensor_value.get("value") >= int(self.props.Temp) and self.timer.is_running is not True:
@@ -83,7 +83,7 @@ class WaitStep(CBPiStep):
         self.timer = Timer(int(self.props.Timer) * 60,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
-        while True:
+        while self.running == True:
             await asyncio.sleep(1)
         return StepResult.DONE
 
@@ -114,8 +114,7 @@ class ActorStep(CBPiStep):
         self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
-
-        while True:
+        while self.running == True:
             await asyncio.sleep(1)
         return StepResult.DONE
 
@@ -155,7 +154,7 @@ class BoilStep(CBPiStep):
         self.timer.start()
 
     async def run(self):
-        while True:
+        while self.running == True:
             await asyncio.sleep(1)
             sensor_value = self.get_sensor_value(self.props.Sensor)
             if sensor_value.get("value") >= int(self.props.Temp) and self.timer.is_running is not True:
