@@ -14,6 +14,8 @@ setup(name='cbpi',
       '': ['*.txt', '*.rst', '*.yaml'],
       'cbpi': ['*','*.txt', '*.rst', '*.yaml']},
 
+      python_requires='>=3',
+
       install_requires=[
           "aiohttp==3.7.4",
           "aiohttp-auth==0.1.1",
