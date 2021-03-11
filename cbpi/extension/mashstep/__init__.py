@@ -41,8 +41,9 @@ class MashStep(CBPiStep):
         while True:
             await asyncio.sleep(1)
             sensor_value = self.get_sensor_value(self.props.Sensor)
-            if sensor_value.get("value") >= int(self.props.Temp) and self.timer == None:
+            if sensor_value.get("value") >= int(self.props.Temp) and self.timer.is_running is not True:
                 self.timer.start()
+                self.timer.is_running = True
         return StepResult.DONE
 
     
@@ -157,8 +158,9 @@ class BoilStep(CBPiStep):
         while True:
             await asyncio.sleep(1)
             sensor_value = self.get_sensor_value(self.props.Sensor)
-            if sensor_value is not None and sensor_value.get("value") >= int(self.props.Temp) and self.timer == None:
+            if sensor_value.get("value") >= int(self.props.Temp) and self.timer.is_running is not True:
                 self.timer.start()
+                self.timer.is_running = True
         return StepResult.DONE
 
 def setup(cbpi):
