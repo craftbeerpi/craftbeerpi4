@@ -17,7 +17,7 @@ import click
 from subprocess import call
 
 from jinja2 import Template
-
+MAIN_DIR = "."
 
 def create_config_file():
     if os.path.exists(os.path.join(".", 'config', "config.yaml")) is False:
@@ -37,6 +37,11 @@ def create_config_file():
 
     if os.path.exists(os.path.join(".", 'config', "kettle.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "kettle.json")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
+    if os.path.exists(os.path.join(".", 'config', "fermenter.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "fermenter.json")
         destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
 

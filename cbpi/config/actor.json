@@ -1,5 +1,25 @@
 {
     "data": [
-       
+        {
+            "id": "6CNB5aS7qQxDFhF4zPqRJd",
+            "name": "dsfsd",
+            "props": {},
+            "state": false,
+            "type": "MyCustomActors"
+        },
+        {
+            "id": "TtTuZZ7hE8r46cNTCkHz3D",
+            "name": "abc",
+            "props": {},
+            "state": false,
+            "type": "DummyActor"
+        },
+        {
+            "id": "Sk6VnCE2629RxukRVFkhMB",
+            "name": "fgfdg",
+            "props": {},
+            "state": false,
+            "type": "MyCustomActors"
+        }
     ]
 }

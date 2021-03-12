@@ -17,6 +17,7 @@ from cbpi.controller.job_controller import JobController
 from cbpi.controller.actor_controller import ActorController
 from cbpi.controller.config_controller import ConfigController
 from cbpi.controller.kettle_controller import KettleController
+from cbpi.controller.fermenter_controller import FermenterController
 from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
@@ -34,6 +35,7 @@ from cbpi.http_endpoints.http_actor import ActorHttpEndpoints
 from cbpi.http_endpoints.http_config import ConfigHttpEndpoints
 from cbpi.http_endpoints.http_dashboard import DashBoardHttpEndpoints
 from cbpi.http_endpoints.http_kettle import KettleHttpEndpoints
+from cbpi.http_endpoints.http_fermenter import FermenterHttpEndpoints
 from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
 from cbpi.http_endpoints.http_recipe import RecipeHttpEndpoints
@@ -99,6 +101,7 @@ class CraftBeerPi:
         self.log = LogController(self)
         self.system = SystemController(self)
         self.kettle = KettleController(self)
+        self.fermenter = FermenterController(self)
         self.step : StepController = StepController(self)
         self.recipe : RecipeController = RecipeController(self)
         self.notification : NotificationController = NotificationController(self)
@@ -110,6 +113,7 @@ class CraftBeerPi:
         self.http_config = ConfigHttpEndpoints(self)
         self.http_actor = ActorHttpEndpoints(self)
         self.http_kettle = KettleHttpEndpoints(self)
+        self.http_fermenter = FermenterHttpEndpoints(self)
         self.http_dashboard = DashBoardHttpEndpoints(self)
         self.http_plugin = PluginHttpEndpoints(self)
         self.http_system = SystemHttpEndpoints(self)
@@ -257,6 +261,7 @@ class CraftBeerPi:
         
         await self.actor.init()
         await self.kettle.init()
+        await self.fermenter.init()
         await self.call_initializer(self.app)
         await self.dashboard.init()
         #await self.satellite.init()

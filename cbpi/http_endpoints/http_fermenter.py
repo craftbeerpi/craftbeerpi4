@@ -1,26 +1,28 @@
-from cbpi.api.dataclasses import Actor, Props
+from cbpi.controller.fermenter_controller import FermenterController
+from cbpi.api.dataclasses import Fermenter, Props
 from aiohttp import web
 from cbpi.api import *
+
 auth = False
 
-class ActorHttpEndpoints():
+class FermenterHttpEndpoints():
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.controller = cbpi.actor
-        self.cbpi.register(self, "/actor")
+        self.controller : FermenterController = cbpi.fermenter
+        self.cbpi.register(self, "/fermenter")
 
     @request_mapping(path="/", auth_required=False)
     async def http_get_all(self, request):
         """
 
         ---
-        description: Get list of actors.
+        description: Switch actor on
         tags:
-        - Actor
+        - Fermenter
         responses:
-            "200":
-                description: JSON-list of acors, their name, label, types, ...
+            "204":
+                description: successful operation
         """
         return web.json_response(data=self.controller.get_state())
         
@@ -31,7 +33,7 @@ class ActorHttpEndpoints():
         ---
         description: add one Actor
         tags:
-        - Actor
+        - Fermenter
         parameters:
         - in: body
           name: body
@@ -44,13 +46,22 @@ class ActorHttpEndpoints():
             properties:
               name:
                 type: string
+              sensor:
+                type: "integer"
+                format: "int64"
+              cooler:
+                type: "integer"
+                format: "int64"
+              target_temp:
+                type: "integer"
+                format: "int64"
               type:
                 type: string
               props:
                 type: object
             example: 
-              name: "Actor 1"
-              type: "CustomActor"
+              name: "Fermenter 1"
+              type: "CustomFermenterLogic"
               props: {}
               
         responses:
@@ -58,9 +69,9 @@ class ActorHttpEndpoints():
                 description: successful operation
         """
         data = await request.json()
-        actor = Actor(name=data.get("name"), props=Props(data.get("props", {})), type=data.get("type"))
-        response_data = await self.controller.add(actor)
-
+        
+        fermenter = Fermenter(name=data.get("name"), sensor=data.get("sensor"), cooler=data.get("cooler"), props=Props(data.get("props", {})), type=data.get("type"))
+        response_data = await self.controller.add(fermenter)
         return web.json_response(data=response_data.to_dict())
         
 
@@ -70,7 +81,7 @@ class ActorHttpEndpoints():
         ---
         description: Update an actor
         tags:
-        - Actor
+        - Fermenter
         parameters:
         - name: "id"
           in: "path"
@@ -97,8 +108,8 @@ class ActorHttpEndpoints():
         """
         id = request.match_info['id']
         data = await request.json()
-        actor = Actor(id=id, name=data.get("name"), props=Props(data.get("props", {})), type=data.get("type"))
-        return web.json_response(data=(await self.controller.update(actor)).to_dict())
+        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), cooler=data.get("cooler"), props=Props(data.get("props", {})), type=data.get("type"))
+        return web.json_response(data=(await self.controller.update(fermenter)).to_dict())
     
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
     async def http_delete_one(self, request):
@@ -106,7 +117,7 @@ class ActorHttpEndpoints():
         ---
         description: Delete an actor
         tags:
-        - Actor
+        - Fermenter
         parameters:
         - name: "id"
           in: "path"
@@ -128,8 +139,7 @@ class ActorHttpEndpoints():
         ---
         description: Switch actor on
         tags:
-        - Actor
-
+        - Fermenter
         parameters:
         - name: "id"
           in: "path"
@@ -144,7 +154,7 @@ class ActorHttpEndpoints():
                 description: invalid HTTP Met
         """
         id = request.match_info['id']
-        await self.controller.on(id)
+        await self.controller.start(id)
         return web.Response(status=204)
 
     @request_mapping(path="/{id}/off", method="POST", auth_required=False)
@@ -152,9 +162,9 @@ class ActorHttpEndpoints():
         """
 
         ---
-        description: Switch actor off
+        description: Switch actor on
         tags:
-        - Actor
+        - Fermenter
 
         parameters:
         - name: "id"
@@ -173,6 +183,31 @@ class ActorHttpEndpoints():
         await self.controller.off(id)
         return web.Response(status=204)
     
+    @request_mapping(path="/{id}/toggle", method="POST", auth_required=False)
+    async def http_toggle(self, request) -> web.Response:
+        """
+
+        ---
+        description: Switch actor on
+        tags:
+        - Fermenter
+
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "string"
+          
+        responses:
+            "204":
+                description: successful operation
+            "405":
+                description: invalid HTTP Met
+        """
+        id = request.match_info['id']
+        await self.controller.toggle(id)
+        return web.Response(status=204)
 
     @request_mapping(path="/{id}/action", method="POST", auth_required=auth)
     async def http_action(self, request) -> web.Response:
@@ -181,7 +216,7 @@ class ActorHttpEndpoints():
         ---
         description: Toogle an actor on or off
         tags:
-        - Actor
+        - Fermenter
         parameters:
         - name: "id"
           in: "path"
@@ -206,7 +241,38 @@ class ActorHttpEndpoints():
         """
         actor_id = request.match_info['id']
         data = await request.json()
-        print(data)
-        await self.controller.call_action(actor_id, data.get("action"), data.get("parameter"))
+        await self.controller.call_action(actor_id, data.get("name"), data.get("parameter"))
 
+        return web.Response(status=204)
+    @request_mapping(path="/{id}/target_temp", method="POST", auth_required=auth)
+    async def http_target(self, request) -> web.Response:
+        """
+
+        ---
+        description: Toogle an actor on or off
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: Update Temp
+          required: true
+          schema:
+            type: object
+            properties:
+              temp:
+                type: integer
+        responses:
+            "204":
+                description: successful operation
+        """
+        id = request.match_info['id']
+        data = await request.json()
+        await self.controller.set_target_temp(id,data.get("temp"))
         return web.Response(status=204)

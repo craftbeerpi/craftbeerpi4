@@ -102,6 +102,29 @@ class Kettle:
         return dict(id=self.id, name=self.name, state=state,  target_temp=self.target_temp, heater=self.heater, agitator=self.agitator, sensor=self.sensor, type=self.type, props=self.props.to_dict())
 
 @dataclass
+class Fermenter:
+    id: str = None
+    name: str = None
+    props: Props = Props()
+    instance: str = None
+    cooler: Actor = None
+    sensor: Sensor = None
+    type: str = None
+    target_temp: int = 0
+
+    def __str__(self):
+        return "name={} props={} temp={}".format(self.name, self.props, self.target_temp)
+    def to_dict(self):
+
+        if self.instance is not None:
+            
+            state = self.instance.state
+            print("READ STATE", state)
+        else:
+            state = False
+        return dict(id=self.id, name=self.name, state=state,  target_temp=self.target_temp, heater=self.cooler, sensor=self.sensor, type=self.type, props=self.props.to_dict())
+
+@dataclass
 class Step:
     id: str = None
     name: str = None
@@ -125,6 +148,7 @@ class ConfigType(Enum):
     ACTOR="actor"
     SENSOR="sensor"
     KETTLE="kettle"
+    FERMENTER="fermenter"
     NUMBER="number"
     SELECT="select"
 
