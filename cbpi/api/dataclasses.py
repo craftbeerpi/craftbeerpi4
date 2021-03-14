@@ -60,7 +60,7 @@ class Actor:
     def __str__(self):
         return "name={} props={}, state={}, type={}".format(self.name, self.props, self.state, self.type)
     def to_dict(self):
-        return dict(id=self.id, name=self.name, type=self.type, props=self.props.to_dict(), state=self.instance.get_state())
+        return dict(id=self.id, name=self.name, type=self.type, props=self.props.to_dict(), state2="HELLO WORLD", state=self.instance.get_state())
 
 
 @dataclass
@@ -150,3 +150,12 @@ class NotificationAction:
 
     def to_dict(self):  
         return dict(id=self.id, label=self.label)
+
+class NotificationType(Enum):
+    INFO="info"
+    WARNING="warning"
+    ERROR="error"
+    SUCCESS="success"
+
+    def __str__(self):
+        return self.value

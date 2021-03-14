@@ -78,7 +78,6 @@ class StepController:
         try:
             type_cfg = self.types.get(item.type)
             clazz = type_cfg.get("class")
-            print("CLASS", clazz)
             item.instance = clazz(self.cbpi, item.id, item.name, item.props, self.done)
         except Exception as e:
             logging.warning("Failed to create step instance %s - %s "  % (id, e))
@@ -258,6 +257,8 @@ class StepController:
         else:
             self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda item: item.to_dict(), self.profile))))
         
+        self.cbpi.push_update(topic="cbpi/stepupdate", data=list(map(lambda item: item.to_dict(), self.profile)))
+
     async def start_step(self,step):
         try:
             logging.info("Try to start step %s" % step)

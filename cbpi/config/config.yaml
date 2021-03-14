@@ -6,6 +6,12 @@ index_url: /cbpi_ui/static/index.html
 
 port: 8000
 
+mqtt: false
+mqtt_host: localhost
+mqtt_port: 1883
+mqtt_username: ""
+mqtt_password: ""
+
 username: cbpi
 password: 123
 

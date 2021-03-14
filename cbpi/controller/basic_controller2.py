@@ -30,7 +30,6 @@ class BasicController:
         await self.load()
     
     def create(self, data):
-        
         return self.resource(data.get("id"), data.get("name"), type=data.get("type"), props=Props(data.get("props", {})) )
 
     async def load(self):
@@ -53,9 +52,10 @@ class BasicController:
         with open(self.path, "w") as file:
             json.dump(data, file, indent=4, sort_keys=True)
         await self.push_udpate()
-
+        
     async def push_udpate(self):
         self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
+        self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
 
     def find_by_id(self, id):
         return next((item for item in self.data if item.id == id), None)

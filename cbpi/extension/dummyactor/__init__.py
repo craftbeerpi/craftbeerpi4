@@ -2,7 +2,7 @@ from socket import timeout
 from typing import KeysView
 
 from voluptuous.schema_builder import message
-from cbpi.api.dataclasses import NotificationAction
+from cbpi.api.dataclasses import NotificationAction, NotificationType
 import logging
 from unittest.mock import MagicMock, patch
 from datetime import datetime
@@ -17,10 +17,9 @@ class DummyActor(CBPiActor):
     def __init__(self, cbpi, id, props):
         super().__init__(cbpi, id, props)
     
-    async def yes(self, **kwargs):
-        print("YES!")
-        await self.cbpi.step.next()
-
+    @action("SAY HELLO", {})
+    async def helloWorld(self, **kwargs):
+        self.cbpi.notify("HELLO", "WOOHO", NotificationType.ERROR)
 
     async def start(self):
         await super().start()

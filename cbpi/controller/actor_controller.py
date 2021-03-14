@@ -8,15 +8,14 @@ class ActorController(BasicController):
         super(ActorController, self).__init__(cbpi, Actor,"actor.json")
         self.update_key = "actorupdate"
 
-
     async def on(self, id):
         try:
             item = self.find_by_id(id)
-
             if item.instance.state is False:
                 await item.instance.on()
                 await self.push_udpate()
-                #await self.cbpi.satellite.publish("cbpi/actor/on", "ACTOR ON")
+                self.cbpi.push_update("cbpi/actor/"+id, item.to_dict(), True)
+                
         except Exception as e:
             logging.error("Faild to switch on Actor {} {}".format(id, e))
 
@@ -26,14 +25,16 @@ class ActorController(BasicController):
             if item.instance.state is True:
                 await item.instance.off()
                 await self.push_udpate()
+                self.cbpi.push_update("cbpi/actor/"+id, item.to_dict())
         except Exception as e:
-            logging.error("Faild to switch on Actor {} {}".format(id, e))
+            logging.error("Faild to switch on Actor {} {}".format(id, e), True)
 
     async def toogle(self, id):
         try:
             item = self.find_by_id(id)
             instance = item.get("instance")
             await instance.toggle()
+            self.cbpi.push_update("cbpi/actor/update", item.to_dict())
         except Exception as e:
             logging.error("Faild to switch on Actor {} {}".format(id, e))
             

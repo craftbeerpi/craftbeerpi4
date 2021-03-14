@@ -1,4 +1,8 @@
 
+import asyncio
+import json
+from voluptuous.schema_builder import message
+from cbpi.api.dataclasses import NotificationType
 from cbpi.controller.notification_controller import NotificationController
 import logging
 from os import urandom
@@ -22,6 +26,7 @@ from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
 from cbpi.controller.recipe_controller import RecipeController
 from cbpi.controller.system_controller import SystemController
+from cbpi.controller.satellite_controller import SatelliteController
 
 from cbpi.controller.log_file_controller import LogController
 
@@ -102,7 +107,10 @@ class CraftBeerPi:
         self.step : StepController = StepController(self)
         self.recipe : RecipeController = RecipeController(self)
         self.notification : NotificationController = NotificationController(self)
-        #self.satellite: SatelliteController = SatelliteController(self)
+        self.satellite = None
+        if self.static_config.get("mqtt", False) is True:
+            self.satellite: SatelliteController = SatelliteController(self)
+        
         self.dashboard = DashboardController(self)
         self.http_step = StepHttpEndpoints(self)
         self.http_recipe = RecipeHttpEndpoints(self)
@@ -212,9 +220,11 @@ class CraftBeerPi:
 
 
 
-    def notify(self, title: str, message: str, type: str = "info", action=[]) -> None:
+    def notify(self, title: str, message: str, type: NotificationType = NotificationType.INFO, action=[]) -> None:
         self.notification.notify(title, message, type, action)
-
+        
+    def push_update(self, topic, data, retain=False) -> None:
+        asyncio.create_task(self.satellite.publish(topic=topic, message=json.dumps(data), retain=retain))
 
     async def call_initializer(self, app):
         self.initializer = sorted(self.initializer, key=lambda k: k['order'])
@@ -249,6 +259,8 @@ class CraftBeerPi:
         await self.job.init()
         
         await self.config.init()
+        if self.satellite is not None:
+            await self.satellite.init()
         self._setup_http_index()
         self.plugin.load_plugins()
         self.plugin.load_plugins_from_evn()
@@ -259,7 +271,8 @@ class CraftBeerPi:
         await self.kettle.init()
         await self.call_initializer(self.app)
         await self.dashboard.init()
-        #await self.satellite.init()
+
+        
         self._swagger_setup()
 
         return self.app

@@ -1,3 +1,4 @@
+from cbpi.api.dataclasses import NotificationType
 import logging
 import json
 import os
@@ -29,9 +30,10 @@ class DashboardController:
             return {}
     
     async def add_content(self, dashboard_id, data):
+        print(data)
         with open(self.path, 'w') as outfile:
             json.dump(data, outfile, indent=4, sort_keys=True)
-        self.cbpi.notify(title="Dashboard", message="Saved Successfully", type="success")
+        self.cbpi.notify(title="Dashboard", message="Saved Successfully", type=NotificationType.SUCCESS)
         return {"status": "OK"}
 
     async def delete_content(self, dashboard_id):

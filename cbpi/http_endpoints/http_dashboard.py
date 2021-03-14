@@ -69,6 +69,7 @@ class DashBoardHttpEndpoints:
         data = await request.json()
         dashboard_id = int(request.match_info['id'])
         await self.cbpi.dashboard.add_content(dashboard_id, data)
+        print("##### SAVE")
         return web.Response(status=204)
 
     @request_mapping(path="/{id:\d+}/content", method="DELETE", auth_required=False)
