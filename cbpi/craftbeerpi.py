@@ -224,7 +224,9 @@ class CraftBeerPi:
         self.notification.notify(title, message, type, action)
         
     def push_update(self, topic, data, retain=False) -> None:
-        asyncio.create_task(self.satellite.publish(topic=topic, message=json.dumps(data), retain=retain))
+
+        if self.satellite is not None:
+            asyncio.create_task(self.satellite.publish(topic=topic, message=json.dumps(data), retain=retain))
 
     async def call_initializer(self, app):
         self.initializer = sorted(self.initializer, key=lambda k: k['order'])
