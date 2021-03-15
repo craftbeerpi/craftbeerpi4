@@ -5,15 +5,12 @@ from cbpi.api.timer import Timer
 from cbpi.api import *
 import logging
 
+
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True), 
              Property.Number(label="Temp", configurable=True),
              Property.Sensor(label="Sensor"),
              Property.Kettle(label="Kettle")])
 class MashStep(CBPiStep):
-
-    
-        
-        
     async def on_timer_done(self,timer):
         self.summary = ""
         await self.next()
@@ -25,6 +22,8 @@ class MashStep(CBPiStep):
     async def on_start(self):
         if self.timer is None:
             self.timer = Timer(int(self.props.Timer) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        if self.cbpi.kettle is not None:
+            await self.cbpi.kettle.set_target_temp(self.props.Kettle, int(self.props.Temp))
         self.summary = "Waiting for Target Temp"
         await self.push_update()
 
@@ -72,6 +71,8 @@ class WaitStep(CBPiStep):
     async def on_start(self):
         if self.timer is None:
             self.timer = Timer(int(self.props.Timer) * 60,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        if self.cbpi.kettle is not None:
+            await self.cbpi.kettle.set_target_temp(self.props.Kettle, int(self.props.Temp))
         self.timer.start()
 
     async def on_stop(self):
