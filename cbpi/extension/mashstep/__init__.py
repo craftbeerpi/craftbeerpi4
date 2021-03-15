@@ -1,7 +1,7 @@
 import asyncio
 
-from cbpi.api import *
-from cbpi.api.step import StepResult
+from cbpi.api import parameters, Property, action
+from cbpi.api.step import StepResult, CBPiStep
 from cbpi.api.timer import Timer
 
 
