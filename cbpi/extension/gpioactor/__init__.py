@@ -105,7 +105,7 @@ class GPIOPWMActor(CBPiActor):
         return self.state
     
     async def run(self):
-        while self.runnin == True:
+        while self.running == True:
             
             await asyncio.sleep(1)
 
