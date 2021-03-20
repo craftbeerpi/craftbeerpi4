@@ -127,6 +127,7 @@ class ConfigType(Enum):
     KETTLE="kettle"
     NUMBER="number"
     SELECT="select"
+    STEP="step"
 
 @dataclass  
 class Config:
