@@ -7,5 +7,6 @@ class ConfigType(Enum):
     KETTLE = "kettle"
     ACTOR = "actor"
     SENSOR = "sensor"
+    STEP = "step"
 
 
