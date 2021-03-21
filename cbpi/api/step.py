@@ -1,33 +1,32 @@
 import asyncio
-import json
-import logging
-import time
-from abc import ABCMeta, abstractmethod
-from enum import Enum
+from abc import abstractmethod
 
 from cbpi.api.base import CBPiBase
-from cbpi.api.config import ConfigType
 
 __all__ = ["StepResult", "StepState", "StepMove", "CBPiStep"]
 
 from enum import Enum
 
+
 class StepResult(Enum):
-    STOP=1
-    NEXT=2
-    DONE=3
-    ERROR=4
+    STOP = 1
+    NEXT = 2
+    DONE = 3
+    ERROR = 4
+
 
 class StepState(Enum):
-    INITIAL="I"
-    DONE="D"
-    ACTIVE="A"
-    ERROR="E"
-    STOP="S"
+    INITIAL = "I"
+    DONE = "D"
+    ACTIVE = "A"
+    ERROR = "E"
+    STOP = "S"
+
 
 class StepMove(Enum):
-    UP=-1
-    DOWN=1
+    UP = -1
+    DOWN = 1
+
 
 class CBPiStep(CBPiBase):
 
@@ -40,21 +39,25 @@ class CBPiStep(CBPiBase):
         self.props = props
         self.cancel_reason: StepResult = None
         self.summary = ""
+        self.running: bool = False
 
     def _done(self, task):
         self._done_callback(self, task.result())
 
     async def start(self):
+        self.running = True
         self.task = asyncio.create_task(self._run())
         self.task.add_done_callback(self._done)
 
-    async def next(self):   
+    async def next(self):
+        self.running = False
         self.cancel_reason = StepResult.NEXT
         self.task.cancel()
         await self.task
 
-    async def stop(self):   
+    async def stop(self):
         try:
+            self.running = False
             self.cancel_reason = StepResult.STOP
             self.task.cancel()
             await self.task
@@ -69,7 +72,7 @@ class CBPiStep(CBPiBase):
 
     async def save_props(self):
         await self.cbpi.step.save()
-    
+
     async def push_update(self):
         self.cbpi.step.push_udpate()
 
@@ -84,11 +87,11 @@ class CBPiStep(CBPiBase):
             await self.on_start()
             await self.run()
             self.cancel_reason = StepResult.DONE
-        except asyncio.CancelledError as e:        
+        except asyncio.CancelledError as e:
             pass
         finally:
             await self.on_stop()
-        
+
         return self.cancel_reason
 
     @abstractmethod
