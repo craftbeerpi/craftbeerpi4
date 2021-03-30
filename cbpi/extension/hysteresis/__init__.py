@@ -4,7 +4,7 @@ import logging
 from cbpi.api import *
 
 @parameters([Property.Number(label="OffsetOn", configurable=True, description="Offset below target temp when heater should switched on"),
-             Property.Number(label="OffsetOff", configurable=True, description="Offset above target temp when heater should switched off")])
+             Property.Number(label="OffsetOff", configurable=True, description="Offset below target temp when heater should switched off")])
 class Hysteresis(CBPiKettleLogic):
     
     async def run(self):
@@ -24,7 +24,7 @@ class Hysteresis(CBPiKettleLogic):
                 target_temp = self.get_kettle_target_temp(self.id)
                 if sensor_value < target_temp - self.offset_on:
                     await self.actor_on(self.heater)
-                elif sensor_value >= target_temp + self.offset_off:
+                elif sensor_value >= target_temp - self.offset_off:
                     await self.actor_off(self.heater)
                 await asyncio.sleep(1)
 
