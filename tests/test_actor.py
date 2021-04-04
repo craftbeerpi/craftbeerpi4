@@ -1,5 +1,6 @@
 import logging
 from unittest import mock
+from unittest.mock import MagicMock, Mock
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from cbpi.craftbeerpi import CraftBeerPi
 

@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from abc import abstractmethod
 
 from cbpi.api.base import CBPiBase
@@ -6,6 +7,11 @@ from cbpi.api.base import CBPiBase
 __all__ = ["StepResult", "StepState", "StepMove", "CBPiStep"]
 
 from enum import Enum
+
+logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+    datefmt='%Y-%m-%d:%H:%M:%S',
+    level=logging.INFO)
+
 
 
 class StepResult(Enum):
@@ -39,12 +45,20 @@ class CBPiStep(CBPiBase):
         self.props = props
         self.cancel_reason: StepResult = None
         self.summary = ""
+        self.task = None
         self.running: bool = False
+        self.logger = logging.getLogger(__name__)
 
     def _done(self, task):
-        self._done_callback(self, task.result())
+        if self._done_callback is not None:
+            try:
+                result = task.result()
+                self._done_callback(self, result)
+            except Exception as e:
+                self.logger.error(e)
 
     async def start(self):
+        self.logger.info("Start {}".format(self.name))
         self.running = True
         self.task = asyncio.create_task(self._run())
         self.task.add_done_callback(self._done)
@@ -58,12 +72,13 @@ class CBPiStep(CBPiBase):
     async def stop(self):
         try:
             self.running = False
-            self.cancel_reason = StepResult.STOP
-            self.task.cancel()
-            await self.task
-        except:
-            pass
-
+            if self.task is not None and self.task.done() is False:
+                self.cancel_reason = StepResult.STOP
+                self.task.cancel()
+                await self.task
+        except Exception as e:
+            self.logger.error(e)
+        
     async def reset(self):
         pass
 
@@ -100,3 +115,9 @@ class CBPiStep(CBPiBase):
 
     def __str__(self):
         return "name={} props={}, type={}".format(self.name, self.props, self.__class__.__name__)
+
+class CBPiFermentationStep(CBPiStep):
+
+    def __init__(self, cbpi, fermenter, step, props, on_done) -> None:
+        self.fermenter = fermenter
+        super().__init__(cbpi, step.id, step.name, props, on_done)

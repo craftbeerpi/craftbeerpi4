@@ -23,7 +23,6 @@ class StepController:
         self.basic_data = {}
         self.step = None
         self.types = {}
-        
         self.cbpi.app.on_cleanup.append(self.shutdown)
     
     async def init(self):
@@ -225,7 +224,7 @@ class StepController:
         for p in self.profile:
             instance = p.instance
             # Stopping all running task
-            if instance.task != None and instance.task.done() is False:
+            if hasattr(instance, "task") and instance.task != None and instance.task.done() is False:
                 logging.info("Stop Step")
                 await instance.stop()
                 await instance.task

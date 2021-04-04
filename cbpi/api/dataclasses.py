@@ -2,7 +2,8 @@ from cbpi.api.config import ConfigType
 from enum import Enum
 from typing import Any
 from cbpi.api.step import StepState
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
 
 class Props:
 
@@ -96,10 +97,12 @@ class Kettle:
         if self.instance is not None:
             
             state = self.instance.state
-            print("READ STATE", state)
+
         else:
             state = False
         return dict(id=self.id, name=self.name, state=state,  target_temp=self.target_temp, heater=self.heater, agitator=self.agitator, sensor=self.sensor, type=self.type, props=self.props.to_dict())
+
+
 
 @dataclass
 class Step:
@@ -115,7 +118,37 @@ class Step:
     def to_dict(self):
 
         msg = self.instance.summary if self.instance is not None else ""
-        
+        return dict(id=self.id, name=self.name, state_text=msg, type=self.type, status=self.status.value, props=self.props.to_dict())
+
+@dataclass
+class Fermenter:
+    id: str = None
+    name: str = None
+    brewname: str = None
+    props: Props = Props()
+    target_temp: int = 0
+    steps: List[Step]= field(default_factory=list)
+    def __str__(self):
+        return "id={} name={} brewname={} props={} temp={} steps={}".format(self.id, self.name, self.brewname, self.props, self.target_temp, self.steps)
+    def to_dict(self):
+        steps = list(map(lambda item: item.to_dict(), self.steps))
+        return dict(id=self.id, name=self.name, target_temp=self.target_temp, steps=steps, props=self.props.to_dict() if self.props is not None else None)
+
+
+@dataclass
+class FermenterStep:
+    id: str = None
+    name: str = None
+    fermenter: Fermenter = None
+    props: Props = Props()
+    type: str = None
+    status: StepState = StepState.INITIAL
+    instance: str = None
+
+    def __str__(self):
+        return "name={} props={}, type={}, instance={}".format(self.name, self.props, self.type, self.instance)
+    def to_dict(self):
+        msg = self.instance.summary if self.instance is not None else ""
         return dict(id=self.id, name=self.name, state_text=msg, type=self.type, status=self.status.value, props=self.props.to_dict())
 
 
