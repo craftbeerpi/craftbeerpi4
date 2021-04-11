@@ -30,7 +30,7 @@ class Props:
         return key in self.__data__
 
     def get(self, key, d=None):
-        if key in self.__data__:
+        if key in self.__data__ and self.__data__[key] != "": 
             return self.__data__[key]
         else:
             return d
