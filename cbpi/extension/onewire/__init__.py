@@ -64,13 +64,8 @@ class OneWire(CBPiSensor):
         await super().start()
         self.name = self.props.get("Sensor")
         self.interval = self.props.get("Interval", 60)
-        self.offset = self.props.get("offset")
-        if self.offset == "" or self.offset is None: 
-            self.offset = 0
-        else:
-            self.offset = float(self.offset)
+        self.offset = float(self.props.get("offset",0))
 
-        print(self.offset)
         self.t = ReadThread(self.name)
         self.t.daemon = True
         def shudown():
