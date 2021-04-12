@@ -13,27 +13,29 @@ class Timer(object):
         self._callback = on_done
         self._update = on_update
         self.start_time = None
+        self.end_time = None
     
     def done(self, task):
         if self._callback is not None:
             asyncio.create_task(self._callback(self))
 
     async def _job(self):
-        self.start_time = time.time()
-        self.count = int(round(self._timemout, 0))
+        self.start_time = int(time.time())
+        self.end_time = self.start_time + int(round(self._timemout, 0))
+        self.count = self.end_time - self.start_time
         try:
             while self.count > 0:
-                self.count -= 1
+                self.count = (self.end_time - int(time.time()))
                 if self._update is not None:
                     await self._update(self,self.count)
                 await asyncio.sleep(1)
         except asyncio.CancelledError:
-            end = time.time()
+            end = int(time.time())
             duration = end - self.start_time
             self._timemout = self._timemout - duration
 
     async def add(self, seconds):
-        self.count = self.count + seconds
+        self.end_time = self.end_time + seconds
 
     def start(self):
         self._task = asyncio.create_task(self._job())

@@ -51,7 +51,9 @@ class ReadThread (threading.Thread):
             
             time.sleep(1)
 
-@parameters([Property.Select(label="Sensor", options=getSensors()), Property.Select(label="Interval", options=[1,5,10,30,60], description="Interval in Seconds")])
+@parameters([Property.Select(label="Sensor", options=getSensors()), 
+             Property.Number(label="offset",configurable = True, default_value = 0, description="Offset for the PT Sensor (Default is 0)"),
+             Property.Select(label="Interval", options=[1,5,10,30,60], description="Interval in Seconds")])
 class OneWire(CBPiSensor):
     
     def __init__(self, cbpi, id, props):
@@ -62,6 +64,8 @@ class OneWire(CBPiSensor):
         await super().start()
         self.name = self.props.get("Sensor")
         self.interval = self.props.get("Interval", 60)
+        self.offset = float(self.props.get("offset",0))
+
         self.t = ReadThread(self.name)
         self.t.daemon = True
         def shudown():
@@ -78,7 +82,11 @@ class OneWire(CBPiSensor):
 
     async def run(self):
         while self.running == True:
-            self.value = self.t.value
+            self.TEMP_UNIT=self.get_config_value("TEMP_UNIT", "C")
+            if self.TEMP_UNIT == "C": # Report temp in C if nothing else is selected in settings
+                self.value = round((self.t.value + self.offset),2)
+            else: # Report temp in F if unit selected in settings
+                self.value = round((9.0 / 5.0 * self.t.value + 32 + self.offset), 2)
             
             self.log_data(self.value)
             self.push_update(self.value)
