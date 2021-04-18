@@ -14,6 +14,24 @@ from cbpi.api.dataclasses import NotificationAction, NotificationType
              Property.Sensor(label="Sensor"),
              Property.Kettle(label="Kettle")])
 class MashStep(CBPiStep):
+
+    @action("Start Timer", [])
+    async def start_timer(self):
+        if self.timer.is_running is not True:
+            self.cbpi.notify(self.name, 'Timer started', NotificationType.INFO)
+            self.timer.start()
+            self.timer.is_running = True
+        else:
+            self.cbpi.notify(self.name, 'Timer is already running', NotificationType.WARNING)
+
+    @action("Add 5 Minutes to Timer", [])
+    async def add_timer(self):
+        if self.timer.is_running == True:
+            self.cbpi.notify(self.name, '5 Minutes added', NotificationType.INFO)
+            await self.timer.add(300)       
+        else:
+            self.cbpi.notify(self.name, 'Timer must be running to add time', NotificationType.WARNING)
+
     async def on_timer_done(self, timer):
         self.summary = ""
         await self.next()
@@ -134,15 +152,16 @@ class BoilStep(CBPiStep):
 
     @action("Start Timer", [])
     async def start_timer(self):
-        if self.timer.is_running == None:
+        if self.timer.is_running is not True:
             self.cbpi.notify(self.name, 'Timer started', NotificationType.INFO)
             self.timer.start()
+            self.timer.is_running = True
         else:
             self.cbpi.notify(self.name, 'Timer is already running', NotificationType.WARNING)
 
     @action("Add 5 Minutes to Timer", [])
     async def add_timer(self):
-        if self.timer.is_running != None:
+        if self.timer.is_running == True:
             self.cbpi.notify(self.name, '5 Minutes added', NotificationType.INFO)
             await self.timer.add(300)       
         else:
@@ -166,13 +185,13 @@ class BoilStep(CBPiStep):
 
     async def on_start(self):
         if self.timer is None:
-            self.timer = Timer(int(self.props.Timer) * 60, on_update=self.on_timer_update, on_done=self.on_timer_done)
+            self.timer = Timer(int(self.props.get("Timer",0)) * 60, on_update=self.on_timer_update, on_done=self.on_timer_done)
         if self.cbpi.kettle is not None:
-            await self.cbpi.kettle.set_target_temp(self.props.Kettle, int(self.props.Temp))
+            await self.cbpi.kettle.set_target_temp(self.props.get("Kettle", None), int(self.props.get("Temp",0)))
         self.summary = "Waiting for Target Temp"
         await self.push_update()
         self.first_wort_hop_flag = False 
-        self.first_wort_hop=self.props.First_Wort 
+        self.first_wort_hop=self.props.get("First_Wort", "No")
         self.hops_added=["","","","","",""]
         self.remaining_seconds = None
 
@@ -182,7 +201,7 @@ class BoilStep(CBPiStep):
         await self.push_update()
 
     async def reset(self):
-        self.timer = Timer(int(self.props.Timer) * 60, on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer = Timer(int(self.props.get("Timer",0)) * 60, on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
         if self.first_wort_hop_flag == False and self.first_wort_hop == "Yes":
@@ -191,20 +210,16 @@ class BoilStep(CBPiStep):
 
         while self.running == True:
             await asyncio.sleep(1)
-            sensor_value = self.get_sensor_value(self.props.Sensor)
+            sensor_value = self.get_sensor_value(self.props.get("Sensor", None))
             
-            if sensor_value.get("value") >= int(self.props.Temp) and self.timer.is_running is not True:
+            if sensor_value.get("value") >= int(self.props.get("Temp",0)) and self.timer.is_running is not True:
                 self.timer.start()
-                estimated_completion_time = datetime.fromtimestamp(time.time()+ (int(self.props.Timer))*60)
+                estimated_completion_time = datetime.fromtimestamp(time.time()+ (int(self.props.get("Timer",0)))*60)
                 self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%H:%M")), NotificationType.INFO)
                 self.timer.is_running = True
             else:
-                await self.check_hop_timer(1, self.props.Hop_1)
-                await self.check_hop_timer(2, self.props.Hop_2)
-                await self.check_hop_timer(3, self.props.Hop_3)
-                await self.check_hop_timer(4, self.props.Hop_4)
-                await self.check_hop_timer(5, self.props.Hop_5)
-                await self.check_hop_timer(6, self.props.Hop_6)
+                for x in range(1, 6):
+                    await self.check_hop_timer(x, self.props.get("Hop_%s" % x, None))
 
         return StepResult.DONE
 
