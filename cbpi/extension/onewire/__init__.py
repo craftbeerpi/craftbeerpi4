@@ -52,7 +52,7 @@ class ReadThread (threading.Thread):
             time.sleep(1)
 
 @parameters([Property.Select(label="Sensor", options=getSensors()), 
-             Property.Number(label="offset",configurable = True, default_value = 0, description="Offset for the PT Sensor (Default is 0)"),
+             Property.Number(label="offset",configurable = True, default_value = 0, description="Sensor Offset (Default is 0)"),
              Property.Select(label="Interval", options=[1,5,10,30,60], description="Interval in Seconds")])
 class OneWire(CBPiSensor):
     
