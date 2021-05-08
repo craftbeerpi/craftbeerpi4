@@ -31,8 +31,8 @@ setup(name='cbpi',
           'click==7.1.2',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
-          'asyncio-mqtt',
-          'cbpi4ui',
+          'asyncio-mqtt==0.9.0',
+          'cbpi4ui==0.0.13',
           'RPi.GPIO; sys_platform == "linux"'
       ],
         dependency_links=[

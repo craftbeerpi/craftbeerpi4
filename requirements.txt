@@ -11,8 +11,8 @@ requests==2.25.1
 voluptuous==0.12.1 
 pyfiglet==0.8.post1 
 pandas==1.1.5
+click==7.1.2
 shortuuid==1.0.1
 tabulate==0.8.7
-cbpi4ui
-click
-asyncio-mqtt
+asyncio-mqtt==0.9.0
+cbpi4ui==0.0.13
