@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ConfigType(Enum):
     STRING = "string"
     NUMBER = "number"
@@ -7,5 +8,3 @@ class ConfigType(Enum):
     KETTLE = "kettle"
     ACTOR = "actor"
     SENSOR = "sensor"
-
-

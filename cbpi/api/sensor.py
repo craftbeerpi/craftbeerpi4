@@ -6,8 +6,8 @@ from cbpi.api.extension import CBPiExtension
 
 from cbpi.api.base import CBPiBase
 
-class CBPiSensor(CBPiBase, metaclass=ABCMeta):
 
+class CBPiSensor(CBPiBase, metaclass=ABCMeta):
     def __init__(self, cbpi, id, props):
         self.cbpi = cbpi
         self.id = id
@@ -52,7 +52,7 @@ class CBPiSensor(CBPiBase, metaclass=ABCMeta):
 
     async def run(self):
         pass
-    
+
     async def _run(self):
 
         try:

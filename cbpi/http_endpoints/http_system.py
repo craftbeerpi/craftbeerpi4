@@ -5,9 +5,9 @@ from cbpi.api import request_mapping
 from cbpi.utils import json_dumps
 from cbpi import __version__
 
-class SystemHttpEndpoints:
 
-    def __init__(self,cbpi):
+class SystemHttpEndpoints:
+    def __init__(self, cbpi):
         self.cbpi = cbpi
         self.cbpi.register(self, url_prefix="/system")
 
@@ -22,14 +22,17 @@ class SystemHttpEndpoints:
             "200":
                 description: successful operation
         """
-        return web.json_response(data=dict(
-            actor=self.cbpi.actor.get_state(),
-            sensor=self.cbpi.sensor.get_state(),
-            kettle=self.cbpi.kettle.get_state(),
-            step=self.cbpi.step.get_state(),
-            config=self.cbpi.config.get_state(),
-            version=__version__)
-            , dumps=json_dumps)
+        return web.json_response(
+            data=dict(
+                actor=self.cbpi.actor.get_state(),
+                sensor=self.cbpi.sensor.get_state(),
+                kettle=self.cbpi.kettle.get_state(),
+                step=self.cbpi.step.get_state(),
+                config=self.cbpi.config.get_state(),
+                version=__version__,
+            ),
+            dumps=json_dumps,
+        )
 
     @request_mapping(path="/logs", auth_required=False)
     async def http_get_log(self, request):
@@ -42,7 +45,7 @@ class SystemHttpEndpoints:
 
     @request_mapping(path="/logs/{name}", method="DELETE", auth_required=False)
     async def delete_log(self, request):
-        log_name = request.match_info['name']
+        log_name = request.match_info["name"]
         self.cbpi.log.delete_log(log_name)
 
     @request_mapping(path="/logs", method="DELETE", auth_required=False)
@@ -50,7 +53,9 @@ class SystemHttpEndpoints:
         self.cbpi.log.delete_logs()
         return web.Response(status=204)
 
-    @request_mapping("/events", method="GET", name="get_all_events", auth_required=False)
+    @request_mapping(
+        "/events", method="GET", name="get_all_events", auth_required=False
+    )
     def get_all_events(self, request):
         """
         ---
@@ -83,7 +88,9 @@ class SystemHttpEndpoints:
                 pass
         return web.json_response(data=result)
 
-    @request_mapping("/restart", method="POST", name="RestartServer", auth_required=False)
+    @request_mapping(
+        "/restart", method="POST", name="RestartServer", auth_required=False
+    )
     def restart(self, request):
         """
         ---
@@ -96,7 +103,9 @@ class SystemHttpEndpoints:
         """
         return web.Response(text="NOT IMPLEMENTED")
 
-    @request_mapping("/shutdown", method="POST", name="ShutdownSerer", auth_required=False)
+    @request_mapping(
+        "/shutdown", method="POST", name="ShutdownSerer", auth_required=False
+    )
     def shutdown(self, request):
         """
         ---

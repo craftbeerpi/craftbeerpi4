@@ -5,8 +5,9 @@ from pip._vendor.msgpack.exceptions import *
 from collections import namedtuple
 
 
-class ExtType(namedtuple('ExtType', 'code data')):
+class ExtType(namedtuple("ExtType", "code data")):
     """ExtType represents ext type in msgpack."""
+
     def __new__(cls, code, data):
         if not isinstance(code, int):
             raise TypeError("code must be int")
@@ -18,7 +19,8 @@ class ExtType(namedtuple('ExtType', 'code data')):
 
 
 import os
-if os.environ.get('MSGPACK_PUREPYTHON'):
+
+if os.environ.get("MSGPACK_PUREPYTHON"):
     from pip._vendor.msgpack.fallback import Packer, unpackb, Unpacker
 else:
     try:

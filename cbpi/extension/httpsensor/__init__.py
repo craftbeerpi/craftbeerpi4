@@ -43,25 +43,23 @@ class HTTPSensor(CBPiSensor):
                     self.log_data(value)
                     await cbpi.bus.fire("sensor/%s/data" % self.id, value=value)
             except Exception as e:
-                
+
                 pass
 
+
 class HTTPSensorEndpoint(CBPiExtension):
-
-
     def __init__(self, cbpi):
-        '''
+        """
         Initializer
 
         :param cbpi:
-        '''
+        """
         self.pattern_check = re.compile("^[a-zA-Z0-9,.]{0,10}$")
 
         self.cbpi = cbpi
         # register component for http, events
         # In addtion the sub folder static is exposed to access static content via http
         self.cbpi.register(self, "/httpsensor")
-
 
     @request_mapping(path="/{key}/{value}", auth_required=False)
     async def http_new_value2(self, request):
@@ -88,15 +86,20 @@ class HTTPSensorEndpoint(CBPiExtension):
         """
 
         global cache
-        key = request.match_info['key']
-        value = request.match_info['value']
+        key = request.match_info["key"]
+        value = request.match_info["value"]
         if self.pattern_check.match(key) is None:
-            return web.json_response(status=422, data={'error': "Key not matching pattern ^[a-zA-Z0-9,.]{0,10}$"})
+            return web.json_response(
+                status=422,
+                data={"error": "Key not matching pattern ^[a-zA-Z0-9,.]{0,10}$"},
+            )
 
         if self.pattern_check.match(value) is None:
-            return web.json_response(status=422, data={'error': "Data not matching pattern ^[a-zA-Z0-9,.]{0,10}$"})
+            return web.json_response(
+                status=422,
+                data={"error": "Data not matching pattern ^[a-zA-Z0-9,.]{0,10}$"},
+            )
 
-        
         cache[key] = value
 
         return web.Response(status=204)
@@ -104,13 +107,12 @@ class HTTPSensorEndpoint(CBPiExtension):
 
 def setup(cbpi):
 
-    '''
-    This method is called by the server during startup 
+    """
+    This method is called by the server during startup
     Here you need to register your plugins at the server
-    
-    :param cbpi: the cbpi core 
-    :return: 
-    '''
+
+    :param cbpi: the cbpi core
+    :return:
+    """
     cbpi.plugin.register("HTTPSensor", HTTPSensor)
     cbpi.plugin.register("HTTPSensorEndpoint", HTTPSensorEndpoint)
-

@@ -33,7 +33,7 @@ class install_lib(orig.install_lib):
         Given a package name and exclusion path within that package,
         compute the full exclusion path.
         """
-        parts = pkg.split('.') + [exclusion_path]
+        parts = pkg.split(".") + [exclusion_path]
         return os.path.join(self.install_dir, *parts)
 
     @staticmethod
@@ -44,7 +44,7 @@ class install_lib(orig.install_lib):
         """
         while pkg_name:
             yield pkg_name
-            pkg_name, sep, child = pkg_name.rpartition('.')
+            pkg_name, sep, child = pkg_name.rpartition(".")
 
     def _get_SVEM_NSPs(self):
         """
@@ -57,7 +57,7 @@ class install_lib(orig.install_lib):
         if not self.distribution.namespace_packages:
             return []
 
-        install_cmd = self.get_finalized_command('install')
+        install_cmd = self.get_finalized_command("install")
         svem = install_cmd.single_version_externally_managed
 
         return self.distribution.namespace_packages if svem else []
@@ -69,23 +69,28 @@ class install_lib(orig.install_lib):
         cache files).
         """
         # always exclude the package module itself
-        yield '__init__.py'
+        yield "__init__.py"
 
-        yield '__init__.pyc'
-        yield '__init__.pyo'
+        yield "__init__.pyc"
+        yield "__init__.pyo"
 
-        if not hasattr(imp, 'get_tag'):
+        if not hasattr(imp, "get_tag"):
             return
 
-        base = os.path.join('__pycache__', '__init__.' + imp.get_tag())
-        yield base + '.pyc'
-        yield base + '.pyo'
-        yield base + '.opt-1.pyc'
-        yield base + '.opt-2.pyc'
+        base = os.path.join("__pycache__", "__init__." + imp.get_tag())
+        yield base + ".pyc"
+        yield base + ".pyo"
+        yield base + ".opt-1.pyc"
+        yield base + ".opt-2.pyc"
 
     def copy_tree(
-            self, infile, outfile,
-            preserve_mode=1, preserve_times=1, preserve_symlinks=0, level=1
+        self,
+        infile,
+        outfile,
+        preserve_mode=1,
+        preserve_times=1,
+        preserve_symlinks=0,
+        level=1,
     ):
         assert preserve_mode and preserve_times and not preserve_symlinks
         exclude = self.get_exclusions()
@@ -102,8 +107,7 @@ class install_lib(orig.install_lib):
 
         def pf(src, dst):
             if dst in exclude:
-                log.warn("Skipping installation of %s (namespace package)",
-                         dst)
+                log.warn("Skipping installation of %s (namespace package)", dst)
                 return False
 
             log.info("copying %s -> %s", src, os.path.dirname(dst))

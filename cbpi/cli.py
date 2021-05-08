@@ -20,78 +20,92 @@ from jinja2 import Template
 
 
 def create_config_file():
-    if os.path.exists(os.path.join(".", 'config', "config.yaml")) is False:
+    if os.path.exists(os.path.join(".", "config", "config.yaml")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "config.yaml")
-        destfile = os.path.join(".", 'config')
+        destfile = os.path.join(".", "config")
         shutil.copy(srcfile, destfile)
-        
-    if os.path.exists(os.path.join(".", 'config', "actor.json")) is False:
+
+    if os.path.exists(os.path.join(".", "config", "actor.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "actor.json")
-        destfile = os.path.join(".", 'config')
+        destfile = os.path.join(".", "config")
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(".", 'config', "sensor.json")) is False:
+    if os.path.exists(os.path.join(".", "config", "sensor.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "sensor.json")
-        destfile = os.path.join(".", 'config')
+        destfile = os.path.join(".", "config")
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(".", 'config', "kettle.json")) is False:
+    if os.path.exists(os.path.join(".", "config", "kettle.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "kettle.json")
-        destfile = os.path.join(".", 'config')
+        destfile = os.path.join(".", "config")
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(".", 'config', "step_data.json")) is False:
+    if os.path.exists(os.path.join(".", "config", "step_data.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "step_data.json")
-        destfile = os.path.join(".", 'config')
+        destfile = os.path.join(".", "config")
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(".", 'config', "config.json")) is False:
+    if os.path.exists(os.path.join(".", "config", "config.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "config.json")
-        destfile = os.path.join(".", 'config')
+        destfile = os.path.join(".", "config")
         shutil.copy(srcfile, destfile)
 
-    if os.path.exists(os.path.join(".", 'config', "dashboard", "cbpi_dashboard_1.json")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
+    if (
+        os.path.exists(
+            os.path.join(".", "config", "dashboard", "cbpi_dashboard_1.json")
+        )
+        is False
+    ):
+        srcfile = os.path.join(
+            os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json"
+        )
         destfile = os.path.join(".", "config", "dashboard")
         shutil.copy(srcfile, destfile)
     print("Config Folder created")
 
 
 def create_home_folder_structure():
-    pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/dashboard')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/recipes')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", "logs/sensors")).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", "config")).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", "config/dashboard")).mkdir(
+        parents=True, exist_ok=True
+    )
+    pathlib.Path(os.path.join(".", "config/dashboard/widgets")).mkdir(
+        parents=True, exist_ok=True
+    )
+    pathlib.Path(os.path.join(".", "config/recipes")).mkdir(parents=True, exist_ok=True)
     print("Folder created")
 
 
 def setup_one_wire():
     print("Setting up 1Wire")
-    with open('/boot/config.txt', 'wb') as f:
+    with open("/boot/config.txt", "wb") as f:
         f.write("dtoverlay=w1-gpio,gpiopin=4,pullup=on")
     print("/boot/config.txt created")
+
 
 def list_one_wire():
     print("List 1Wire")
     call(["modprobe", "w1-gpio"])
     call(["modprobe", "w1-therm"])
     try:
-        for dirname in os.listdir('/sys/bus/w1/devices'):
-            if (dirname.startswith("28") or dirname.startswith("10")):
+        for dirname in os.listdir("/sys/bus/w1/devices"):
+            if dirname.startswith("28") or dirname.startswith("10"):
                 print(dirname)
     except Exception as e:
         print(e)
 
+
 def copy_splash():
     srcfile = os.path.join(".", "config", "splash.png")
-    destfile = os.path.join(".", 'config')
+    destfile = os.path.join(".", "config")
     shutil.copy(srcfile, destfile)
     print("Splash Srceen created")
 
 
 def clear_db():
     import os.path
+
     if os.path.exists(os.path.join(".", "craftbeerpi.db")) is True:
         os.remove(os.path.join(".", "craftbeerpi.db"))
         print("database Cleared")
@@ -100,7 +114,10 @@ def clear_db():
 def check_for_setup():
     if os.path.exists(os.path.join(".", "config", "config.yaml")) is False:
         print("***************************************************")
-        print("CraftBeerPi Config File not found: %s" % os.path.join(".", "config", "config.yaml"))
+        print(
+            "CraftBeerPi Config File not found: %s"
+            % os.path.join(".", "config", "config.yaml")
+        )
         print("Please run 'cbpi setup' before starting the server ")
         print("***************************************************")
         return False
@@ -113,7 +130,7 @@ def plugins_add(package_name):
         print("Pleaes provide a plugin Name")
         return
     try:
-        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
+        with open(os.path.join(".", "config", "config.yaml"), "rt") as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
             if package_name in data["plugins"]:
                 print("")
@@ -121,7 +138,7 @@ def plugins_add(package_name):
                 print("")
                 return
             data["plugins"].append(package_name)
-        with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
+        with open(os.path.join(".", "config", "config.yaml"), "w") as outfile:
             yaml.dump(data, outfile, default_flow_style=False)
         print("")
         print("Plugin {} activated".format(package_name))
@@ -136,11 +153,13 @@ def plugin_remove(package_name):
         print("Pleaes provide a plugin Name")
         return
     try:
-        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
+        with open(os.path.join(".", "config", "config.yaml"), "rt") as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
 
-            data["plugins"] = list(filter(lambda k: package_name not in k, data["plugins"]))
-            with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
+            data["plugins"] = list(
+                filter(lambda k: package_name not in k, data["plugins"])
+            )
+            with open(os.path.join(".", "config", "config.yaml"), "w") as outfile:
                 yaml.dump(data, outfile, default_flow_style=False)
         print("")
         print("Plugin {} deactivated".format(package_name))
@@ -154,7 +173,7 @@ def plugins_list():
     print("--------------------------------------")
     print("List of active pluigins")
     try:
-        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
+        with open(os.path.join(".", "config", "config.yaml"), "rt") as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
 
             for p in data["plugins"]:
@@ -170,12 +189,12 @@ def plugin_create(name):
         print("Cant create Plugin. Folder {} already exists ".format(name))
         return
 
-    url = 'https://github.com/Manuel83/craftbeerpi4-plugin-template/archive/main.zip'
+    url = "https://github.com/Manuel83/craftbeerpi4-plugin-template/archive/main.zip"
     r = requests.get(url)
-    with open('temp.zip', 'wb') as f:
+    with open("temp.zip", "wb") as f:
         f.write(r.content)
 
-    with ZipFile('temp.zip', 'r') as repo_zip:
+    with ZipFile("temp.zip", "r") as repo_zip:
         repo_zip.extractall()
 
     os.rename("./craftbeerpi4-plugin-template-main", os.path.join(".", name))
@@ -208,7 +227,9 @@ def plugin_create(name):
     print("")
     print(
         "Plugin {} created! See https://craftbeerpi.gitbook.io/craftbeerpi4/development how to run your plugin ".format(
-            name))
+            name
+        )
+    )
     print("")
     print("Happy Development! Cheers")
     print("")
@@ -218,28 +239,29 @@ def plugin_create(name):
 @click.group()
 def main():
     level = logging.INFO
-    logging.basicConfig(level=level, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    logging.basicConfig(
+        level=level, format="%(asctime)s - %(levelname)s - %(name)s - %(message)s"
+    )
     pass
 
 
 @click.command()
 def setup():
-    '''Create Config folder'''
+    """Create Config folder"""
     print("Setting up CraftBeerPi")
     create_home_folder_structure()
     create_config_file()
 
 
 @click.command()
-@click.option('--list', is_flag=True, help="List all 1Wire Devices")
-@click.option('--setup', is_flag=True, help="Setup 1Wire on Raspberry Pi")
+@click.option("--list", is_flag=True, help="List all 1Wire Devices")
+@click.option("--setup", is_flag=True, help="Setup 1Wire on Raspberry Pi")
 def onewire(list, setup):
-    '''Setup 1wire on Raspberry Pi'''
+    """Setup 1wire on Raspberry Pi"""
     if setup is True:
         setup_one_wire()
     if list is True:
         list_one_wire()
-
 
 
 @click.command()
@@ -253,29 +275,29 @@ def start():
 
 @click.command()
 def plugins():
-    '''List active plugins'''
+    """List active plugins"""
     plugins_list()
     return
 
 
 @click.command()
-@click.argument('name')
+@click.argument("name")
 def add(name):
-    '''Activate Plugin'''
+    """Activate Plugin"""
     plugins_add(name)
 
 
 @click.command()
-@click.argument('name')
+@click.argument("name")
 def remove(name):
-    '''Deactivate Plugin'''
+    """Deactivate Plugin"""
     plugin_remove(name)
 
 
 @click.command()
-@click.argument('name')
+@click.argument("name")
 def create(name):
-    '''Deactivate Plugin'''
+    """Deactivate Plugin"""
     plugin_create(name)
 
 

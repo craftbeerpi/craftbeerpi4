@@ -54,7 +54,7 @@ class Mixin2to3(_Mixin2to3):
                 self.fixer_names.extend(get_fixers_from_package(p))
 
     def __exclude_fixers(self):
-        excluded_fixers = getattr(self, 'exclude_fixers', [])
+        excluded_fixers = getattr(self, "exclude_fixers", [])
         if self.distribution.use_2to3_exclude_fixers is not None:
             excluded_fixers.extend(self.distribution.use_2to3_exclude_fixers)
         for fixer_name in excluded_fixers:

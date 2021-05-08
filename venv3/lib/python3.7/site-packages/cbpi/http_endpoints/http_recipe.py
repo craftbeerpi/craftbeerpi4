@@ -3,11 +3,11 @@ from cbpi.api.dataclasses import Props, Step
 from aiohttp import web
 from cbpi.api import *
 
-class RecipeHttpEndpoints():
 
+class RecipeHttpEndpoints:
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.controller : RecipeController = cbpi.recipe
+        self.controller: RecipeController = cbpi.recipe
         self.cbpi.register(self, "/recipe")
 
     @request_mapping(path="/", method="GET", auth_required=False)
@@ -40,7 +40,7 @@ class RecipeHttpEndpoints():
             "200":
                 description: successful operation
         """
-        name = request.match_info['name']
+        name = request.match_info["name"]
         return web.json_response(await self.controller.get_by_name(name))
 
     @request_mapping(path="/create", method="POST", auth_required=False)
@@ -51,16 +51,17 @@ class RecipeHttpEndpoints():
         description: Add Recipe
         tags:
         - Recipe
-        
+
         responses:
             "200":
                 description: successful operation
         """
         data = await request.json()
         print(data)
-        return web.json_response(dict(id=await self.controller.create(data.get("name"))))
-       
-    
+        return web.json_response(
+            dict(id=await self.controller.create(data.get("name")))
+        )
+
     @request_mapping(path="/{name}", method="PUT", auth_required=False)
     async def http_save(self, request):
 
@@ -81,16 +82,16 @@ class RecipeHttpEndpoints():
           required: false
           schema:
             type: object
-            
+
         responses:
             "200":
                 description: successful operation
         """
         data = await request.json()
-        name = request.match_info['name']
+        name = request.match_info["name"]
         await self.controller.save(name, data)
         return web.Response(status=204)
-    
+
     @request_mapping(path="/{name}", method="DELETE", auth_required=False)
     async def http_remove(self, request):
 
@@ -105,13 +106,13 @@ class RecipeHttpEndpoints():
           description: "Recipe Id"
           required: true
           type: "string"
-        
-            
+
+
         responses:
             "200":
                 description: successful operation
         """
-        name = request.match_info['name']
+        name = request.match_info["name"]
         await self.controller.remove(name)
         return web.Response(status=204)
 
@@ -129,16 +130,16 @@ class RecipeHttpEndpoints():
           description: "Recipe Id"
           required: true
           type: "string"
-        
-            
+
+
         responses:
             "200":
                 description: successful operation
         """
-        name = request.match_info['name']
+        name = request.match_info["name"]
         await self.controller.brew(name)
         return web.Response(status=204)
-    
+
     @request_mapping(path="/{id}/clone", method="POST", auth_required=False)
     async def http_clone(self, request):
 
@@ -163,8 +164,9 @@ class RecipeHttpEndpoints():
             "200":
                 description: successful operation
         """
-        id = request.match_info['id']
+        id = request.match_info["id"]
         data = await request.json()
-        
-        return web.json_response(dict(id=await self.controller.clone(id, data.get("name"))))
-        
+
+        return web.json_response(
+            dict(id=await self.controller.clone(id, data.get("name")))
+        )

@@ -1,4 +1,3 @@
-
 class Error(Exception):
     """Base validation exception."""
 
@@ -28,11 +27,10 @@ class Invalid(Error):
         return self.args[0]
 
     def __str__(self):
-        path = ' @ data[%s]' % ']['.join(map(repr, self.path)) \
-            if self.path else ''
+        path = " @ data[%s]" % "][".join(map(repr, self.path)) if self.path else ""
         output = Exception.__str__(self)
         if self.error_type:
-            output += ' for ' + self.error_type
+            output += " for " + self.error_type
         return output + path
 
     def prepend(self, path):
@@ -44,7 +42,7 @@ class MultipleInvalid(Invalid):
         self.errors = errors[:] if errors else []
 
     def __repr__(self):
-        return 'MultipleInvalid(%r)' % self.errors
+        return "MultipleInvalid(%r)" % self.errors
 
     @property
     def msg(self):
@@ -191,9 +189,11 @@ class ExactSequenceInvalid(Invalid):
 
 class NotEnoughValid(Invalid):
     """The value did not pass enough validations."""
+
     pass
 
 
 class TooManyValid(Invalid):
     """The value passed more than expected validations."""
+
     pass

@@ -1,7 +1,8 @@
-'''Base classes and helpers for building zone specific tzinfo classes'''
+"""Base classes and helpers for building zone specific tzinfo classes"""
 
 from datetime import datetime, timedelta, tzinfo
 from bisect import bisect_right
+
 try:
     set
 except NameError:
@@ -16,7 +17,7 @@ _timedelta_cache = {}
 
 
 def memorized_timedelta(seconds):
-    '''Create only one instance of each distinct timedelta'''
+    """Create only one instance of each distinct timedelta"""
     try:
         return _timedelta_cache[seconds]
     except KeyError:
@@ -24,12 +25,13 @@ def memorized_timedelta(seconds):
         _timedelta_cache[seconds] = delta
         return delta
 
+
 _epoch = datetime.utcfromtimestamp(0)
 _datetime_cache = {0: _epoch}
 
 
 def memorized_datetime(seconds):
-    '''Create only one instance of each distinct datetime'''
+    """Create only one instance of each distinct datetime"""
     try:
         return _datetime_cache[seconds]
     except KeyError:
@@ -39,27 +41,25 @@ def memorized_datetime(seconds):
         _datetime_cache[seconds] = dt
         return dt
 
+
 _ttinfo_cache = {}
 
 
 def memorized_ttinfo(*args):
-    '''Create only one instance of each distinct tuple'''
+    """Create only one instance of each distinct tuple"""
     try:
         return _ttinfo_cache[args]
     except KeyError:
-        ttinfo = (
-            memorized_timedelta(args[0]),
-            memorized_timedelta(args[1]),
-            args[2]
-        )
+        ttinfo = (memorized_timedelta(args[0]), memorized_timedelta(args[1]), args[2])
         _ttinfo_cache[args] = ttinfo
         return ttinfo
+
 
 _notime = memorized_timedelta(0)
 
 
 def _to_seconds(td):
-    '''Convert a timedelta to seconds'''
+    """Convert a timedelta to seconds"""
     return td.seconds + td.days * 24 * 60 * 60
 
 
@@ -74,49 +74,50 @@ class BaseTzInfo(tzinfo):
 
 
 class StaticTzInfo(BaseTzInfo):
-    '''A timezone that has a constant offset from UTC
+    """A timezone that has a constant offset from UTC
 
     These timezones are rare, as most locations have changed their
     offset at some point in their history
-    '''
+    """
+
     def fromutc(self, dt):
-        '''See datetime.tzinfo.fromutc'''
+        """See datetime.tzinfo.fromutc"""
         if dt.tzinfo is not None and dt.tzinfo is not self:
-            raise ValueError('fromutc: dt.tzinfo is not self')
+            raise ValueError("fromutc: dt.tzinfo is not self")
         return (dt + self._utcoffset).replace(tzinfo=self)
 
     def utcoffset(self, dt, is_dst=None):
-        '''See datetime.tzinfo.utcoffset
+        """See datetime.tzinfo.utcoffset
 
         is_dst is ignored for StaticTzInfo, and exists only to
         retain compatibility with DstTzInfo.
-        '''
+        """
         return self._utcoffset
 
     def dst(self, dt, is_dst=None):
-        '''See datetime.tzinfo.dst
+        """See datetime.tzinfo.dst
 
         is_dst is ignored for StaticTzInfo, and exists only to
         retain compatibility with DstTzInfo.
-        '''
+        """
         return _notime
 
     def tzname(self, dt, is_dst=None):
-        '''See datetime.tzinfo.tzname
+        """See datetime.tzinfo.tzname
 
         is_dst is ignored for StaticTzInfo, and exists only to
         retain compatibility with DstTzInfo.
-        '''
+        """
         return self._tzname
 
     def localize(self, dt, is_dst=False):
-        '''Convert naive time to local time'''
+        """Convert naive time to local time"""
         if dt.tzinfo is not None:
-            raise ValueError('Not naive datetime (tzinfo is already set)')
+            raise ValueError("Not naive datetime (tzinfo is already set)")
         return dt.replace(tzinfo=self)
 
     def normalize(self, dt, is_dst=False):
-        '''Correct the timezone information on the given datetime.
+        """Correct the timezone information on the given datetime.
 
         This is normally a no-op, as StaticTzInfo timezones never have
         ambiguous cases to correct:
@@ -137,15 +138,15 @@ class StaticTzInfo(BaseTzInfo):
         >>> fmt = '%Y-%m-%d %H:%M:%S %Z (%z)'
         >>> gmt.normalize(dt).strftime(fmt)
         '2011-05-07 08:02:03 GMT (+0000)'
-        '''
+        """
         if dt.tzinfo is self:
             return dt
         if dt.tzinfo is None:
-            raise ValueError('Naive time - no tzinfo set')
+            raise ValueError("Naive time - no tzinfo set")
         return dt.astimezone(self)
 
     def __repr__(self):
-        return '<StaticTzInfo %r>' % (self.zone,)
+        return "<StaticTzInfo %r>" % (self.zone,)
 
     def __reduce__(self):
         # Special pickle to zone remains a singleton and to cope with
@@ -154,12 +155,13 @@ class StaticTzInfo(BaseTzInfo):
 
 
 class DstTzInfo(BaseTzInfo):
-    '''A timezone that has a variable offset from UTC
+    """A timezone that has a variable offset from UTC
 
     The offset might change if daylight saving time comes into effect,
     or at a point in history when the region decides to change their
     timezone definition.
-    '''
+    """
+
     # Overridden in subclass
 
     # Sorted list of DST transition times, UTC
@@ -183,25 +185,26 @@ class DstTzInfo(BaseTzInfo):
         else:
             _tzinfos = {}
             self._tzinfos = _tzinfos
-            self._utcoffset, self._dst, self._tzname = (
-                self._transition_info[0])
+            self._utcoffset, self._dst, self._tzname = self._transition_info[0]
             _tzinfos[self._transition_info[0]] = self
             for inf in self._transition_info[1:]:
                 if inf not in _tzinfos:
                     _tzinfos[inf] = self.__class__(inf, _tzinfos)
 
     def fromutc(self, dt):
-        '''See datetime.tzinfo.fromutc'''
-        if (dt.tzinfo is not None and
-                getattr(dt.tzinfo, '_tzinfos', None) is not self._tzinfos):
-            raise ValueError('fromutc: dt.tzinfo is not self')
+        """See datetime.tzinfo.fromutc"""
+        if (
+            dt.tzinfo is not None
+            and getattr(dt.tzinfo, "_tzinfos", None) is not self._tzinfos
+        ):
+            raise ValueError("fromutc: dt.tzinfo is not self")
         dt = dt.replace(tzinfo=None)
         idx = max(0, bisect_right(self._utc_transition_times, dt) - 1)
         inf = self._transition_info[idx]
         return (dt + inf[0]).replace(tzinfo=self._tzinfos[inf])
 
     def normalize(self, dt):
-        '''Correct the timezone information on the given datetime
+        """Correct the timezone information on the given datetime
 
         If date arithmetic crosses DST boundaries, the tzinfo
         is not magically adjusted. This method normalizes the
@@ -244,9 +247,9 @@ class DstTzInfo(BaseTzInfo):
         >>> fmt = '%Y-%m-%d %H:%M:%S %Z (%z)'
         >>> am.normalize(dt).strftime(fmt)
         '2011-05-06 20:02:03 CEST (+0200)'
-        '''
+        """
         if dt.tzinfo is None:
-            raise ValueError('Naive time - no tzinfo set')
+            raise ValueError("Naive time - no tzinfo set")
 
         # Convert dt in localtime to UTC
         offset = dt.tzinfo._utcoffset
@@ -256,7 +259,7 @@ class DstTzInfo(BaseTzInfo):
         return self.fromutc(dt)
 
     def localize(self, dt, is_dst=False):
-        '''Convert naive time to local time.
+        """Convert naive time to local time.
 
         This method should be used to construct localtimes, rather
         than passing a tzinfo argument to a datetime constructor.
@@ -313,16 +316,15 @@ class DstTzInfo(BaseTzInfo):
         ... except NonExistentTimeError:
         ...     print('Non-existent')
         Non-existent
-        '''
+        """
         if dt.tzinfo is not None:
-            raise ValueError('Not naive datetime (tzinfo is already set)')
+            raise ValueError("Not naive datetime (tzinfo is already set)")
 
         # Find the two best possibilities.
         possible_loc_dt = set()
         for delta in [timedelta(days=-1), timedelta(days=1)]:
             loc_dt = dt + delta
-            idx = max(0, bisect_right(
-                self._utc_transition_times, loc_dt) - 1)
+            idx = max(0, bisect_right(self._utc_transition_times, loc_dt) - 1)
             inf = self._transition_info[idx]
             tzinfo = self._tzinfos[inf]
             loc_dt = tzinfo.normalize(dt.replace(tzinfo=tzinfo))
@@ -344,15 +346,16 @@ class DstTzInfo(BaseTzInfo):
             # obtain the correct timezone by winding the clock forward a few
             # hours.
             elif is_dst:
-                return self.localize(
-                    dt + timedelta(hours=6), is_dst=True) - timedelta(hours=6)
+                return self.localize(dt + timedelta(hours=6), is_dst=True) - timedelta(
+                    hours=6
+                )
 
             # If we are forcing the post-DST side of the DST transition, we
             # obtain the correct timezone by winding the clock back.
             else:
-                return self.localize(
-                    dt - timedelta(hours=6),
-                    is_dst=False) + timedelta(hours=6)
+                return self.localize(dt - timedelta(hours=6), is_dst=False) + timedelta(
+                    hours=6
+                )
 
         # If we get this far, we have multiple possible timezones - this
         # is an ambiguous case occuring during the end-of-DST transition.
@@ -387,14 +390,13 @@ class DstTzInfo(BaseTzInfo):
         # i.e., behave like end-of-DST transition
         dates = {}  # utc -> local
         for local_dt in filtered_possible_loc_dt:
-            utc_time = (
-                local_dt.replace(tzinfo=None) - local_dt.tzinfo._utcoffset)
+            utc_time = local_dt.replace(tzinfo=None) - local_dt.tzinfo._utcoffset
             assert utc_time not in dates
             dates[utc_time] = local_dt
         return dates[[min, max][not is_dst](dates)]
 
     def utcoffset(self, dt, is_dst=None):
-        '''See datetime.tzinfo.utcoffset
+        """See datetime.tzinfo.utcoffset
 
         The is_dst parameter may be used to remove ambiguity during DST
         transitions.
@@ -415,7 +417,7 @@ class DstTzInfo(BaseTzInfo):
         ...     print('Ambiguous')
         Ambiguous
 
-        '''
+        """
         if dt is None:
             return None
         elif dt.tzinfo is not self:
@@ -425,7 +427,7 @@ class DstTzInfo(BaseTzInfo):
             return self._utcoffset
 
     def dst(self, dt, is_dst=None):
-        '''See datetime.tzinfo.dst
+        """See datetime.tzinfo.dst
 
         The is_dst parameter may be used to remove ambiguity during DST
         transitions.
@@ -454,7 +456,7 @@ class DstTzInfo(BaseTzInfo):
         ...     print('Ambiguous')
         Ambiguous
 
-        '''
+        """
         if dt is None:
             return None
         elif dt.tzinfo is not self:
@@ -464,7 +466,7 @@ class DstTzInfo(BaseTzInfo):
             return self._dst
 
     def tzname(self, dt, is_dst=None):
-        '''See datetime.tzinfo.tzname
+        """See datetime.tzinfo.tzname
 
         The is_dst parameter may be used to remove ambiguity during DST
         transitions.
@@ -492,7 +494,7 @@ class DstTzInfo(BaseTzInfo):
         ... except AmbiguousTimeError:
         ...     print('Ambiguous')
         Ambiguous
-        '''
+        """
         if dt is None:
             return self.zone
         elif dt.tzinfo is not self:
@@ -503,16 +505,22 @@ class DstTzInfo(BaseTzInfo):
 
     def __repr__(self):
         if self._dst:
-            dst = 'DST'
+            dst = "DST"
         else:
-            dst = 'STD'
+            dst = "STD"
         if self._utcoffset > _notime:
-            return '<DstTzInfo %r %s+%s %s>' % (
-                self.zone, self._tzname, self._utcoffset, dst
+            return "<DstTzInfo %r %s+%s %s>" % (
+                self.zone,
+                self._tzname,
+                self._utcoffset,
+                dst,
             )
         else:
-            return '<DstTzInfo %r %s%s %s>' % (
-                self.zone, self._tzname, self._utcoffset, dst
+            return "<DstTzInfo %r %s%s %s>" % (
+                self.zone,
+                self._tzname,
+                self._utcoffset,
+                dst,
             )
 
     def __reduce__(self):
@@ -522,7 +530,7 @@ class DstTzInfo(BaseTzInfo):
             self.zone,
             _to_seconds(self._utcoffset),
             _to_seconds(self._dst),
-            self._tzname
+            self._tzname,
         )
 
 
@@ -562,8 +570,7 @@ def unpickler(zone, utcoffset=None, dstoffset=None, tzname=None):
     # get changed from the initial guess by the database maintainers to
     # match reality when this information is discovered.
     for localized_tz in tz._tzinfos.values():
-        if (localized_tz._utcoffset == utcoffset and
-                localized_tz._dst == dstoffset):
+        if localized_tz._utcoffset == utcoffset and localized_tz._dst == dstoffset:
             return localized_tz
 
     # This (utcoffset, dstoffset) information has been removed from the

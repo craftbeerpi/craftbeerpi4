@@ -4,7 +4,6 @@ from cbpi.craftbeerpi import CraftBeerPi
 
 
 class IndexTestCase(AioHTTPTestCase):
-
     async def get_application(self):
         self.cbpi = CraftBeerPi()
         await self.cbpi.init_serivces()
@@ -12,7 +11,6 @@ class IndexTestCase(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_endpoints(self):
-
 
         # Test Index Page
         resp = await self.client.post(path="/system/restart")
@@ -26,4 +24,3 @@ class IndexTestCase(AioHTTPTestCase):
 
         resp = await self.client.get(path="/system/events")
         assert resp.status == 200
-

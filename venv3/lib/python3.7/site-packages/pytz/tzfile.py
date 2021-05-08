@@ -1,6 +1,6 @@
-'''
+"""
 $Id: tzfile.py,v 1.8 2004/06/03 00:15:24 zenzen Exp $
-'''
+"""
 
 from datetime import datetime
 from struct import unpack, calcsize
@@ -11,37 +11,46 @@ from pytz.tzinfo import memorized_datetime, memorized_timedelta
 
 def _byte_string(s):
     """Cast a string or byte string to an ASCII byte string."""
-    return s.encode('ASCII')
+    return s.encode("ASCII")
 
-_NULL = _byte_string('\0')
+
+_NULL = _byte_string("\0")
 
 
 def _std_string(s):
     """Cast a string or byte string to an ASCII string."""
-    return str(s.decode('ASCII'))
+    return str(s.decode("ASCII"))
 
 
 def build_tzinfo(zone, fp):
-    head_fmt = '>4s c 15x 6l'
+    head_fmt = ">4s c 15x 6l"
     head_size = calcsize(head_fmt)
-    (magic, format, ttisgmtcnt, ttisstdcnt, leapcnt, timecnt,
-        typecnt, charcnt) = unpack(head_fmt, fp.read(head_size))
+    (
+        magic,
+        format,
+        ttisgmtcnt,
+        ttisstdcnt,
+        leapcnt,
+        timecnt,
+        typecnt,
+        charcnt,
+    ) = unpack(head_fmt, fp.read(head_size))
 
     # Make sure it is a tzfile(5) file
-    assert magic == _byte_string('TZif'), 'Got magic %s' % repr(magic)
+    assert magic == _byte_string("TZif"), "Got magic %s" % repr(magic)
 
     # Read out the transition times, localtime indices and ttinfo structures.
-    data_fmt = '>%(timecnt)dl %(timecnt)dB %(ttinfo)s %(charcnt)ds' % dict(
-        timecnt=timecnt, ttinfo='lBB' * typecnt, charcnt=charcnt)
+    data_fmt = ">%(timecnt)dl %(timecnt)dB %(ttinfo)s %(charcnt)ds" % dict(
+        timecnt=timecnt, ttinfo="lBB" * typecnt, charcnt=charcnt
+    )
     data_size = calcsize(data_fmt)
     data = unpack(data_fmt, fp.read(data_size))
 
     # make sure we unpacked the right number of values
     assert len(data) == 2 * timecnt + 3 * typecnt + 1
-    transitions = [memorized_datetime(trans)
-                   for trans in data[:timecnt]]
-    lindexes = list(data[timecnt:2 * timecnt])
-    ttinfo_raw = data[2 * timecnt:-1]
+    transitions = [memorized_datetime(trans) for trans in data[:timecnt]]
+    lindexes = list(data[timecnt : 2 * timecnt])
+    ttinfo_raw = data[2 * timecnt : -1]
     tznames_raw = data[-1]
     del data
 
@@ -56,20 +65,22 @@ def build_tzinfo(zone, fp):
             nul = tznames_raw.find(_NULL, tzname_offset)
             if nul < 0:
                 nul = len(tznames_raw)
-            tznames[tzname_offset] = _std_string(
-                tznames_raw[tzname_offset:nul])
-        ttinfo.append((ttinfo_raw[i],
-                       bool(ttinfo_raw[i + 1]),
-                       tznames[tzname_offset]))
+            tznames[tzname_offset] = _std_string(tznames_raw[tzname_offset:nul])
+        ttinfo.append((ttinfo_raw[i], bool(ttinfo_raw[i + 1]), tznames[tzname_offset]))
         i += 3
 
     # Now build the timezone object
     if len(ttinfo) == 1 or len(transitions) == 0:
         ttinfo[0][0], ttinfo[0][2]
-        cls = type(zone, (StaticTzInfo,), dict(
-            zone=zone,
-            _utcoffset=memorized_timedelta(ttinfo[0][0]),
-            _tzname=ttinfo[0][2]))
+        cls = type(
+            zone,
+            (StaticTzInfo,),
+            dict(
+                zone=zone,
+                _utcoffset=memorized_timedelta(ttinfo[0][0]),
+                _tzname=ttinfo[0][2],
+            ),
+        )
     else:
         # Early dates use the first standard time ttinfo
         i = 0
@@ -115,19 +126,26 @@ def build_tzinfo(zone, fp):
             dst = int((dst + 30) // 60) * 60
             transition_info.append(memorized_ttinfo(utcoffset, dst, tzname))
 
-        cls = type(zone, (DstTzInfo,), dict(
-            zone=zone,
-            _utc_transition_times=transitions,
-            _transition_info=transition_info))
+        cls = type(
+            zone,
+            (DstTzInfo,),
+            dict(
+                zone=zone,
+                _utc_transition_times=transitions,
+                _transition_info=transition_info,
+            ),
+        )
 
     return cls()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     import os.path
     from pprint import pprint
-    base = os.path.join(os.path.dirname(__file__), 'zoneinfo')
-    tz = build_tzinfo('Australia/Melbourne',
-                      open(os.path.join(base, 'Australia', 'Melbourne'), 'rb'))
-    tz = build_tzinfo('US/Eastern',
-                      open(os.path.join(base, 'US', 'Eastern'), 'rb'))
+
+    base = os.path.join(os.path.dirname(__file__), "zoneinfo")
+    tz = build_tzinfo(
+        "Australia/Melbourne", open(os.path.join(base, "Australia", "Melbourne"), "rb")
+    )
+    tz = build_tzinfo("US/Eastern", open(os.path.join(base, "US", "Eastern"), "rb"))
     pprint(tz._utc_transition_times)

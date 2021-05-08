@@ -7,7 +7,9 @@ class TomlError(RuntimeError):
         self.filename = filename
 
     def __str__(self):
-        return '{}({}, {}): {}'.format(self.filename, self.line, self.col, self.message)
+        return "{}({}, {}): {}".format(self.filename, self.line, self.col, self.message)
 
     def __repr__(self):
-        return 'TomlError({!r}, {!r}, {!r}, {!r})'.format(self.message, self.line, self.col, self.filename)
+        return "TomlError({!r}, {!r}, {!r}, {!r})".format(
+            self.message, self.line, self.col, self.filename
+        )

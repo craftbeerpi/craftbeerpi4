@@ -4,7 +4,7 @@ from voluptuous.error import LiteralInvalid, TypeInvalid, Invalid
 from voluptuous.schema_builder import Schema, default_factory, raises
 from voluptuous import validators
 
-__author__ = 'tusharmakkar08'
+__author__ = "tusharmakkar08"
 
 
 def _fix_str(v):
@@ -86,7 +86,7 @@ class DefaultTo(object):
         return v
 
     def __repr__(self):
-        return 'DefaultTo(%s)' % (self.default_value(),)
+        return "DefaultTo(%s)" % (self.default_value(),)
 
 
 class SetTo(object):
@@ -106,7 +106,7 @@ class SetTo(object):
         return self.value()
 
     def __repr__(self):
-        return 'SetTo(%s)' % (self.value(),)
+        return "SetTo(%s)" % (self.value(),)
 
 
 class Set(object):
@@ -128,12 +128,11 @@ class Set(object):
         try:
             set_v = set(v)
         except Exception as e:
-            raise TypeInvalid(
-                self.msg or 'cannot be presented as set: {0}'.format(e))
+            raise TypeInvalid(self.msg or "cannot be presented as set: {0}".format(e))
         return set_v
 
     def __repr__(self):
-        return 'Set()'
+        return "Set()"
 
 
 class Literal(object):
@@ -142,9 +141,7 @@ class Literal(object):
 
     def __call__(self, value, msg=None):
         if self.lit != value:
-            raise LiteralInvalid(
-                msg or '%s not match for %s' % (value, self.lit)
-            )
+            raise LiteralInvalid(msg or "%s not match for %s" % (value, self.lit))
         else:
             return self.lit
 

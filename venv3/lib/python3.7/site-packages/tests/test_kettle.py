@@ -4,8 +4,6 @@ from cbpi.craftbeerpi import CraftBeerPi
 
 
 class KettleTestCase(AioHTTPTestCase):
-
-
     async def get_application(self):
         self.cbpi = CraftBeerPi()
         await self.cbpi.init_serivces()
@@ -47,7 +45,6 @@ class KettleTestCase(AioHTTPTestCase):
         resp = await self.client.post("/kettle/1/automatic")
         assert resp.status == 204
 
-
     @unittest_run_loop
     async def test_crud(self):
         data = {
@@ -56,11 +53,9 @@ class KettleTestCase(AioHTTPTestCase):
             "heater": "1",
             "automatic": None,
             "logic": "CustomKettleLogic",
-            "config": {
-                "test": "WOOHO"
-            },
+            "config": {"test": "WOOHO"},
             "agitator": None,
-            "target_temp": None
+            "target_temp": None,
         }
 
         # Add new sensor
@@ -85,5 +80,3 @@ class KettleTestCase(AioHTTPTestCase):
         # # Delete Sensor
         resp = await self.client.delete(path="/kettle/%s" % sensor_id)
         assert resp.status == 204
-
-

@@ -6,7 +6,7 @@ Hebrew chars from Jerusalem by Gedaliah Friedenberg <gfrieden@nyx.cs.du.edu>
         Use "ushebrew.flc" for U.S.-style keyboard mapping ("febrew" script)
         Use "8859-8.flc" for ISO 8859-8 text
         Or use UTF-8
-WARNING! FIGfonts aren't bidirectional; this is strictly right-to-left 
+WARNING! FIGfonts aren't bidirectional; this is strictly right-to-left
         (by default) even for the Latin characters.
 figlet release 2.2 -- November 1996
 
@@ -884,14 +884,14 @@ of new full-width/kern/smush alternatives, but default output is NOT changed.
  /_  _\@
    \/  @
        @@
--0x0002  
+-0x0002
 aleph = t, bet/vet = c, gimel = d, dalet = s, he = v, vav = u, zayin = z  @
 het = j, tet = y, yod = h, kaf/chaf = f, final kaf = l, lamed = k, mem = n@
 final mem = o, nun = b, final nun = i, samekh = x, ayin = g, pe/fe = p,   @
 final pe = ;, tsadi = m, final tsadi = ., qof = e, resh = r, shin/sin = a @
 tav = , comma = ', period = /, semicolon = `, slash = q, apostrophe = w   @
 Star of David = *                                                         @@
--0x0003  
+-0x0003
 aleph = a, bet/vet = b, gimel = g, dalet = d, he = h, vav = v, zayin = z  @
 het = c, tet = t, yod = y, kaf/chaf = k, final kaf = f, lamed = l, mem = m@
 final mem = o, nun = n, final nun = i, samekh = e, ayin = _, pe/fe = p,   @

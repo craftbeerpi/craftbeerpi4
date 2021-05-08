@@ -13,10 +13,10 @@ def _have_cython():
     """
     Return True if Cython can be imported.
     """
-    cython_impl = 'Cython.Distutils.build_ext'
+    cython_impl = "Cython.Distutils.build_ext"
     try:
         # from (cython_impl) import build_ext
-        __import__(cython_impl, fromlist=['build_ext']).build_ext
+        __import__(cython_impl, fromlist=["build_ext"]).build_ext
         return True
     except Exception:
         pass
@@ -47,9 +47,9 @@ class Extension(_Extension):
         if _have_cython():
             # the build has Cython, so allow it to compile the .pyx files
             return
-        lang = self.language or ''
-        target_ext = '.cpp' if lang.lower() == 'c++' else '.c'
-        sub = functools.partial(re.sub, '.pyx$', target_ext)
+        lang = self.language or ""
+        target_ext = ".cpp" if lang.lower() == "c++" else ".c"
+        sub = functools.partial(re.sub, ".pyx$", target_ext)
         self.sources = list(map(sub, self.sources))
 
 

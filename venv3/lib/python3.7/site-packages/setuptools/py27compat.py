@@ -15,14 +15,12 @@ def get_all_headers(message, key):
 
 
 if six.PY2:
+
     def get_all_headers(message, key):
         return message.getheaders(key)
 
 
-linux_py2_ascii = (
-    platform.system() == 'Linux' and
-    six.PY2
-)
+linux_py2_ascii = platform.system() == "Linux" and six.PY2
 
 rmtree_safe = str if linux_py2_ascii else lambda x: x
 """Workaround for http://bugs.python.org/issue24672"""

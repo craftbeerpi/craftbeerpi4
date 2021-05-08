@@ -7,7 +7,6 @@ from cbpi.craftbeerpi import CraftBeerPi, load_config
 
 
 class UtilsTestCase(AioHTTPTestCase):
-
     async def get_application(self):
         self.cbpi = CraftBeerPi()
         await self.cbpi.init_serivces()
@@ -17,9 +16,9 @@ class UtilsTestCase(AioHTTPTestCase):
     async def test_log_data(self):
 
         log_name = "test"
-        #clear all logs
+        # clear all logs
         self.cbpi.log.clear_log(log_name)
-        assert len(glob.glob('./logs/sensor_%s.log*' % log_name)) == 0
+        assert len(glob.glob("./logs/sensor_%s.log*" % log_name)) == 0
 
         # write log entries
         for i in range(5):
@@ -28,7 +27,7 @@ class UtilsTestCase(AioHTTPTestCase):
             await asyncio.sleep(1)
 
         # read log data
-        data = await self.cbpi.log.get_data(log_name, sample_rate='1s')
+        data = await self.cbpi.log.get_data(log_name, sample_rate="1s")
         assert len(data["time"]) == 5
 
         assert self.cbpi.log.zip_log_data(log_name) is not None
@@ -36,6 +35,3 @@ class UtilsTestCase(AioHTTPTestCase):
         self.cbpi.log.clear_zip(log_name)
 
         self.cbpi.log.clear_log(log_name)
-
-
-

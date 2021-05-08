@@ -8,12 +8,12 @@ from voluptuous import Schema
 
 
 class DashBoardHttpEndpoints:
-
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.controller = cbpi.dashboard
-        self.cbpi.register(self, "/dashboard", os.path.join(".","config", "dashboard", "widgets"))
-
+        self.cbpi.register(
+            self, "/dashboard", os.path.join(".", "config", "dashboard", "widgets")
+        )
 
     @request_mapping(path="/{id:\d+}/content", auth_required=False)
     async def get_content(self, request):
@@ -33,9 +33,10 @@ class DashBoardHttpEndpoints:
             "200":
                 description: successful operation
         """
-        dashboard_id = int(request.match_info['id'])
-        return web.json_response(await self.cbpi.dashboard.get_content(dashboard_id), dumps=json_dumps)
-
+        dashboard_id = int(request.match_info["id"])
+        return web.json_response(
+            await self.cbpi.dashboard.get_content(dashboard_id), dumps=json_dumps
+        )
 
     @request_mapping(path="/{id:\d+}/content", method="POST", auth_required=False)
     async def add_content(self, request):
@@ -67,7 +68,7 @@ class DashBoardHttpEndpoints:
                 description: successful operation
         """
         data = await request.json()
-        dashboard_id = int(request.match_info['id'])
+        dashboard_id = int(request.match_info["id"])
         await self.cbpi.dashboard.add_content(dashboard_id, data)
         return web.Response(status=204)
 
@@ -89,8 +90,8 @@ class DashBoardHttpEndpoints:
             "200":
                 description: successful operation
         """
-  
-        dashboard_id = int(request.match_info['id'])
+
+        dashboard_id = int(request.match_info["id"])
         await self.cbpi.dashboard.delete_content(dashboard_id)
         return web.Response(status=204)
 
@@ -105,7 +106,7 @@ class DashBoardHttpEndpoints:
             "200":
                 description: successful operation
         """
-  
-      
-        return web.json_response(await self.cbpi.dashboard.get_custom_widgets(), dumps=json_dumps)
-      
+
+        return web.json_response(
+            await self.cbpi.dashboard.get_custom_widgets(), dumps=json_dumps
+        )

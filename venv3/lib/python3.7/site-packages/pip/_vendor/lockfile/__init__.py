@@ -65,10 +65,21 @@ if not hasattr(threading, "current_thread"):
 if not hasattr(threading.Thread, "get_name"):
     threading.Thread.get_name = threading.Thread.getName
 
-__all__ = ['Error', 'LockError', 'LockTimeout', 'AlreadyLocked',
-           'LockFailed', 'UnlockError', 'NotLocked', 'NotMyLock',
-           'LinkFileLock', 'MkdirFileLock', 'SQLiteFileLock',
-           'LockBase', 'locked']
+__all__ = [
+    "Error",
+    "LockError",
+    "LockTimeout",
+    "AlreadyLocked",
+    "LockFailed",
+    "UnlockError",
+    "NotLocked",
+    "NotMyLock",
+    "LinkFileLock",
+    "MkdirFileLock",
+    "SQLiteFileLock",
+    "LockBase",
+    "locked",
+]
 
 
 class Error(Exception):
@@ -80,6 +91,7 @@ class Error(Exception):
     ... except Exception:
     ...   pass
     """
+
     pass
 
 
@@ -92,6 +104,7 @@ class LockError(Error):
     ... except Error:
     ...   pass
     """
+
     pass
 
 
@@ -103,6 +116,7 @@ class LockTimeout(LockError):
     ... except LockError:
     ...   pass
     """
+
     pass
 
 
@@ -114,6 +128,7 @@ class AlreadyLocked(LockError):
     ... except LockError:
     ...   pass
     """
+
     pass
 
 
@@ -125,6 +140,7 @@ class LockFailed(LockError):
     ... except LockError:
     ...   pass
     """
+
     pass
 
 
@@ -137,6 +153,7 @@ class UnlockError(Error):
     ... except Error:
     ...   pass
     """
+
     pass
 
 
@@ -148,6 +165,7 @@ class NotLocked(UnlockError):
     ... except UnlockError:
     ...   pass
     """
+
     pass
 
 
@@ -159,6 +177,7 @@ class NotMyLock(UnlockError):
     ... except UnlockError:
     ...   pass
     """
+
     pass
 
 
@@ -209,6 +228,7 @@ class _SharedBase(object):
 
 class LockBase(_SharedBase):
     """Base class for platform-specific lock classes."""
+
     def __init__(self, path, threaded=True, timeout=None):
         """
         >>> lock = LockBase('somefile')
@@ -223,7 +243,7 @@ class LockBase(_SharedBase):
             # Thread objects in Python 2.4 and earlier do not have ident
             # attrs.  Worm around that.
             ident = getattr(t, "ident", hash(t))
-            self.tname = "-%x" % (ident & 0xffffffff)
+            self.tname = "-%x" % (ident & 0xFFFFFFFF)
         else:
             self.tname = ""
         dirname = os.path.dirname(self.lock_file)
@@ -235,11 +255,10 @@ class LockBase(_SharedBase):
         # and overwriting the already existing lock-file, then one
         # gets unlocked, deleting both lock-file and unique file,
         # finally the last lock errors out upon releasing.
-        self.unique_name = os.path.join(dirname,
-                                        "%s%s.%s%s" % (self.hostname,
-                                                       self.tname,
-                                                       self.pid,
-                                                       hash(self.path)))
+        self.unique_name = os.path.join(
+            dirname,
+            "%s%s.%s%s" % (self.hostname, self.tname, self.pid, hash(self.path)),
+        )
         self.timeout = timeout
 
     def is_locked(self):
@@ -261,13 +280,15 @@ class LockBase(_SharedBase):
         raise NotImplemented("implement in subclass")
 
     def __repr__(self):
-        return "<%s: %r -- %r>" % (self.__class__.__name__, self.unique_name,
-                                   self.path)
+        return "<%s: %r -- %r>" % (self.__class__.__name__, self.unique_name, self.path)
 
 
 def _fl_helper(cls, mod, *args, **kwds):
-    warnings.warn("Import from %s module instead of lockfile package" % mod,
-                  DeprecationWarning, stacklevel=2)
+    warnings.warn(
+        "Import from %s module instead of lockfile package" % mod,
+        DeprecationWarning,
+        stacklevel=2,
+    )
     # This is a bit funky, but it's only for awhile.  The way the unit tests
     # are constructed this function winds up as an unbound method, so it
     # actually takes three args, not two.  We want to toss out self.
@@ -286,8 +307,8 @@ def LinkFileLock(*args, **kwds):
     lockfile.linklockfile module.
     """
     from . import linklockfile
-    return _fl_helper(linklockfile.LinkLockFile, "lockfile.linklockfile",
-                      *args, **kwds)
+
+    return _fl_helper(linklockfile.LinkLockFile, "lockfile.linklockfile", *args, **kwds)
 
 
 def MkdirFileLock(*args, **kwds):
@@ -297,8 +318,10 @@ def MkdirFileLock(*args, **kwds):
     lockfile.mkdirlockfile module.
     """
     from . import mkdirlockfile
-    return _fl_helper(mkdirlockfile.MkdirLockFile, "lockfile.mkdirlockfile",
-                      *args, **kwds)
+
+    return _fl_helper(
+        mkdirlockfile.MkdirLockFile, "lockfile.mkdirlockfile", *args, **kwds
+    )
 
 
 def SQLiteFileLock(*args, **kwds):
@@ -308,8 +331,10 @@ def SQLiteFileLock(*args, **kwds):
     lockfile.mkdirlockfile module.
     """
     from . import sqlitelockfile
-    return _fl_helper(sqlitelockfile.SQLiteLockFile, "lockfile.sqlitelockfile",
-                      *args, **kwds)
+
+    return _fl_helper(
+        sqlitelockfile.SQLiteLockFile, "lockfile.sqlitelockfile", *args, **kwds
+    )
 
 
 def locked(path, timeout=None):
@@ -324,6 +349,7 @@ def locked(path, timeout=None):
          def myname(...):
              ...
     """
+
     def decor(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -333,15 +359,19 @@ def locked(path, timeout=None):
                 return func(*args, **kwargs)
             finally:
                 lock.release()
+
         return wrapper
+
     return decor
 
 
 if hasattr(os, "link"):
     from . import linklockfile as _llf
+
     LockFile = _llf.LinkLockFile
 else:
     from . import mkdirlockfile as _mlf
+
     LockFile = _mlf.MkdirLockFile
 
 FileLock = LockFile

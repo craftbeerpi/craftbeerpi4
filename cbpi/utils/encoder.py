@@ -3,8 +3,8 @@ from json import JSONEncoder
 
 from pandas import Timestamp
 
-class ComplexEncoder(JSONEncoder):
 
+class ComplexEncoder(JSONEncoder):
     def default(self, obj):
         try:
 
@@ -19,6 +19,6 @@ class ComplexEncoder(JSONEncoder):
                 print(type(obj))
                 raise TypeError()
         except Exception as e:
-            
+
             pass
         return None

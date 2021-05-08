@@ -4,9 +4,7 @@ from cbpi.api import *
 from cbpi.utils import json_dumps
 
 
-
 class ConfigHttpEndpoints:
-
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.controller = cbpi.config
@@ -40,7 +38,7 @@ class ConfigHttpEndpoints:
                 description: successful operation
         """
 
-        name = request.match_info['name']
+        name = request.match_info["name"]
         data = await request.json()
         await self.controller.set(name=name, value=data.get("value"))
         return web.Response(status=204)
@@ -75,7 +73,7 @@ class ConfigHttpEndpoints:
             "200":
                 description: successful operation
         """
-        name = request.match_info['name']
+        name = request.match_info["name"]
         if name not in self.cache:
             raise CBPiException("Parameter %s not found" % name)
 

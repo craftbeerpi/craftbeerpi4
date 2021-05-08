@@ -7,17 +7,13 @@ try:
 except Exception:
     print("Error importing RPi.GPIO!")
     MockRPi = MagicMock()
-    modules = {
-        "RPi": MockRPi,
-        "RPi.GPIO": MockRPi.GPIO
-    }
+    modules = {"RPi": MockRPi, "RPi.GPIO": MockRPi.GPIO}
     patcher = patch.dict("sys.modules", modules)
     patcher.start()
     import RPi.GPIO as GPIO
 
 
 class HelloWorld(object):
-
     def test(self, a):
         return a
 
@@ -37,13 +33,11 @@ class TestSwitch(unittest.TestCase):
         GPIO.output(self.GPIO_NUM, GPIO.LOW)
         patched_output.assert_called_once_with(self.GPIO_NUM, GPIO.LOW)
 
-
     def test_hello_world(self):
         h = HelloWorld()
-        with mock.patch.object(HelloWorld, 'test', wraps=h.test) as fake_increment:
-            #print(h.test("HALLO"))
+        with mock.patch.object(HelloWorld, "test", wraps=h.test) as fake_increment:
+            # print(h.test("HALLO"))
             print(h.test("ABC"))
             print(fake_increment.call_args)
             print(h.test("HALLO"))
             print(fake_increment.call_args_list)
-

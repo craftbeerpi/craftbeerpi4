@@ -7,13 +7,10 @@ import yaml
 __all__ = ["CBPiExtension"]
 
 
-
 logger = logging.getLogger(__file__)
 
 
-
-class CBPiExtension():
-
+class CBPiExtension:
     def init(self):
         pass
 
@@ -23,7 +20,7 @@ class CBPiExtension():
     def __init__(self, *args, **kwds):
 
         for a in kwds:
-            logger.debug("Parameter: %s Value: %s" % ( a, kwds.get(a)))
+            logger.debug("Parameter: %s Value: %s" % (a, kwds.get(a)))
             super(CBPiExtension, self).__setattr__(a, kwds.get(a))
         self.cbpi = kwds.get("cbpi")
         self.id = kwds.get("id")
@@ -43,12 +40,9 @@ class CBPiExtension():
         path = os.path.dirname(sys.modules[self.__class__.__module__].__file__)
 
         try:
-            with open("%s/config.yaml" % path, 'rt') as f:
+            with open("%s/config.yaml" % path, "rt") as f:
                 data = yaml.load(f)
 
             return data
         except:
             logger.warning("Faild to load config %s/config.yaml" % path)
-
-    
-

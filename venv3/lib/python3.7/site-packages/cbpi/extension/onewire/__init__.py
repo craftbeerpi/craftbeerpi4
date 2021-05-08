@@ -9,20 +9,22 @@ import os, re, threading, time
 from subprocess import call
 import random
 
+
 def getSensors():
     try:
         arr = []
-        for dirname in os.listdir('/sys/bus/w1/devices'):
-            if (dirname.startswith("28") or dirname.startswith("10")):
+        for dirname in os.listdir("/sys/bus/w1/devices"):
+            if dirname.startswith("28") or dirname.startswith("10"):
                 arr.append(dirname)
         return arr
     except:
         return []
 
 
-class ReadThread (threading.Thread):
+class ReadThread(threading.Thread):
 
     value = 0
+
     def __init__(self, sensor_name):
         threading.Thread.__init__(self)
         self.value = 0
@@ -38,22 +40,34 @@ class ReadThread (threading.Thread):
     def run(self):
 
         while self.runnig:
-            try:                
+            try:
                 if self.sensor_name is None:
                     return
-                with open('/sys/bus/w1/devices/w1_bus_master1/%s/w1_slave' % self.sensor_name, 'r') as content_file:
+                with open(
+                    "/sys/bus/w1/devices/w1_bus_master1/%s/w1_slave" % self.sensor_name,
+                    "r",
+                ) as content_file:
                     content = content_file.read()
-                    if (content.split('\n')[0].split(' ')[11] == "YES"):
+                    if content.split("\n")[0].split(" ")[11] == "YES":
                         temp = float(content.split("=")[-1]) / 1000  # temp in Celcius
                         self.value = temp
             except:
                 pass
-            
+
             time.sleep(1)
 
-@parameters([Property.Select(label="Sensor", options=getSensors()), Property.Select(label="Interval", options=[1,5,10,30,60], description="Interval in Seconds")])
+
+@parameters(
+    [
+        Property.Select(label="Sensor", options=getSensors()),
+        Property.Select(
+            label="Interval",
+            options=[1, 5, 10, 30, 60],
+            description="Interval in Seconds",
+        ),
+    ]
+)
 class OneWire(CBPiSensor):
-    
     def __init__(self, cbpi, id, props):
         super(OneWire, self).__init__(cbpi, id, props)
         self.value = 200
@@ -64,11 +78,13 @@ class OneWire(CBPiSensor):
         self.interval = self.props.get("Interval", 60)
         self.t = ReadThread(self.name)
         self.t.daemon = True
+
         def shudown():
             shudown.cb.shutdown()
+
         shudown.cb = self.t
         self.t.start()
-    
+
     async def stop(self):
         try:
             self.t.stop()
@@ -79,11 +95,11 @@ class OneWire(CBPiSensor):
     async def run(self):
         while True:
             self.value = self.t.value
-            
+
             self.log_data(self.value)
             self.push_update(self.value)
             await asyncio.sleep(self.interval)
-    
+
     def get_state(self):
         return dict(value=self.value)
 

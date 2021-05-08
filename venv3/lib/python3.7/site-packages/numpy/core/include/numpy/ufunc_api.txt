@@ -329,5 +329,3 @@ Returns 0 on success, -1 (with exception raised) on validation failure.
                                                  unused, const char
                                                  *signature, PyObject
                                                  *identity_value)
-
-

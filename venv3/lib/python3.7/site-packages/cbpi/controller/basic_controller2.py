@@ -1,4 +1,3 @@
-
 import logging
 import os.path
 import json
@@ -9,8 +8,8 @@ import asyncio
 
 from tabulate import tabulate
 
-class BasicController:
 
+class BasicController:
     def __init__(self, cbpi, resource, file):
         self.resource = resource
         self.update_key = ""
@@ -22,48 +21,58 @@ class BasicController:
         self.logger = logging.getLogger(__name__)
         self.data = []
         self.autostart = True
-        self._loop = asyncio.get_event_loop() 
-        self.path = os.path.join(".", 'config', file)
+        self._loop = asyncio.get_event_loop()
+        self.path = os.path.join(".", "config", file)
         self.cbpi.app.on_cleanup.append(self.shutdown)
-        
+
     async def init(self):
         await self.load()
-    
+
     def create(self, data):
-        
-        return self.resource(data.get("id"), data.get("name"), type=data.get("type"), props=Props(data.get("props", {})) )
+
+        return self.resource(
+            data.get("id"),
+            data.get("name"),
+            type=data.get("type"),
+            props=Props(data.get("props", {})),
+        )
 
     async def load(self):
         logging.info("{} Load ".format(self.name))
         with open(self.path) as json_file:
             data = json.load(json_file)
-            
+
             for i in data["data"]:
                 self.data.append(self.create(i))
-   
+
             if self.autostart is True:
                 for item in self.data:
                     logging.info("{} Starting ".format(self.name))
                     await self.start(item.id)
                 await self.push_udpate()
-        
+
     async def save(self):
         logging.info("{} Save ".format(self.name))
-        data = dict(data=list(map(lambda actor: actor.to_dict(), self.data))) 
+        data = dict(data=list(map(lambda actor: actor.to_dict(), self.data)))
         with open(self.path, "w") as file:
             json.dump(data, file, indent=4, sort_keys=True)
         await self.push_udpate()
 
     async def push_udpate(self):
-        self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
+        self.cbpi.ws.send(
+            dict(
+                topic=self.update_key,
+                data=list(map(lambda item: item.to_dict(), self.data)),
+            )
+        )
 
     def find_by_id(self, id):
         return next((item for item in self.data if item.id == id), None)
-    
+
     def get_index_by_id(self, id):
         return next((i for i, item in enumerate(self.data) if item.id == id), None)
 
-    async def shutdown(self, app):    
+    async def shutdown(self, app):
         logging.info("{} Shutdown ".format(self.name))
         tasks = []
         for item in self.data:
@@ -89,18 +98,18 @@ class BasicController:
             item = self.find_by_id(id)
             if item.instance is not None and item.instance.state is True:
                 logging.warning("{} already running {}".format(self.name, id))
-                return 
+                return
             if item.type is None:
                 logging.warning("{} No Type {}".format(self.name, id))
-                return 
+                return
             clazz = self.types[item.type]["class"]
             item.instance = clazz(self.cbpi, item.id, item.props)
-            
+
             await item.instance.start()
             item.instance.task = self._loop.create_task(item.instance._run())
-            
+
             logging.info("{} started {}".format(self.name, id))
-            
+
             await self.push_udpate()
         except Exception as e:
             logging.error("{} Cant start {} - {}".format(self.name, id, e))
@@ -109,12 +118,19 @@ class BasicController:
         logging.info("{} Get Types".format(self.name))
         result = {}
         for key, value in self.types.items():
-            result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
+            result[key] = dict(
+                name=value.get("name"),
+                properties=value.get("properties"),
+                actions=value.get("actions"),
+            )
         return result
 
     def get_state(self):
         logging.info("{} Get State".format(self.name))
-        return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types()}
+        return {
+            "data": list(map(lambda x: x.to_dict(), self.data)),
+            "types": self.get_types(),
+        }
 
     async def add(self, item):
         print(item)
@@ -124,15 +140,19 @@ class BasicController:
         if self.autostart is True:
             await self.start(item.id)
         await self.save()
-        return item 
+        return item
 
     async def update(self, item):
         logging.info("{} Get Update".format(self.name))
         await self.stop(item.id)
-        
-        self.data = list(map(lambda old_item: item if old_item.id == item.id else old_item, self.data))
+
+        self.data = list(
+            map(
+                lambda old_item: item if old_item.id == item.id else old_item, self.data
+            )
+        )
         if self.autostart is True:
-            await self.start(item.id)    
+            await self.start(item.id)
         await self.save()
         return self.find_by_id(item.id)
 
@@ -148,4 +168,6 @@ class BasicController:
             item = self.find_by_id(id)
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
-            logging.error("{} Faild to call action on {} {} {}".format(self.name, id, action, e))
+            logging.error(
+                "{} Faild to call action on {} {} {}".format(self.name, id, action, e)
+            )

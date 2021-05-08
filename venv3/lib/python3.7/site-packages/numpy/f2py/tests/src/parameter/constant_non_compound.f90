@@ -1,8 +1,8 @@
 ! Check that parameters are correct intercepted.
-! Specifically that types of constants without 
+! Specifically that types of constants without
 ! compound kind specs are correctly inferred
-! adapted Gibbs iteration code from pymc 
-! for this test case 
+! adapted Gibbs iteration code from pymc
+! for this test case
 subroutine foo_non_compound_int(x)
   implicit none
   integer, parameter :: ii = selected_int_kind(9)

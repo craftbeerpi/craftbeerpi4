@@ -239,5 +239,3 @@ The tests are run automatically on each commit at Travis CI:
 
 .. image:: https://travis-ci.org/kjd/idna.svg?branch=master
    :target: https://travis-ci.org/kjd/idna
-
-

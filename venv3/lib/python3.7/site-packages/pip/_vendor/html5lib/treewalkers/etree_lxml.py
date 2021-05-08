@@ -25,10 +25,14 @@ class Root(object):
 
         try:
             if et.docinfo.internalDTD:
-                self.children.append(Doctype(self,
-                                             ensure_str(et.docinfo.root_name),
-                                             ensure_str(et.docinfo.public_id),
-                                             ensure_str(et.docinfo.system_url)))
+                self.children.append(
+                    Doctype(
+                        self,
+                        ensure_str(et.docinfo.root_name),
+                        ensure_str(et.docinfo.public_id),
+                        ensure_str(et.docinfo.system_url),
+                    )
+                )
         except AttributeError:
             pass
 
@@ -83,11 +87,11 @@ class FragmentWrapper(object):
     def __init__(self, fragment_root, obj):
         self.root_node = fragment_root
         self.obj = obj
-        if hasattr(self.obj, 'text'):
+        if hasattr(self.obj, "text"):
             self.text = ensure_str(self.obj.text)
         else:
             self.text = None
-        if hasattr(self.obj, 'tail'):
+        if hasattr(self.obj, "tail"):
             self.tail = ensure_str(self.obj.tail)
         else:
             self.tail = None
@@ -137,7 +141,9 @@ class TreeWalker(base.NonRecursiveTreeWalker):
     def getNodeDetails(self, node):
         if isinstance(node, tuple):  # Text node
             node, key = node
-            assert key in ("text", "tail"), "Text nodes are text or tail, found %s" % key
+            assert key in ("text", "tail"), (
+                "Text nodes are text or tail, found %s" % key
+            )
             return base.TEXT, ensure_str(getattr(node, key))
 
         elif isinstance(node, Root):
@@ -172,8 +178,13 @@ class TreeWalker(base.NonRecursiveTreeWalker):
                     attrs[(match.group(1), match.group(2))] = value
                 else:
                     attrs[(None, name)] = value
-            return (base.ELEMENT, namespace, self.filter.fromXmlName(tag),
-                    attrs, len(node) > 0 or node.text)
+            return (
+                base.ELEMENT,
+                namespace,
+                self.filter.fromXmlName(tag),
+                attrs,
+                len(node) > 0 or node.text,
+            )
 
     def getFirstChild(self, node):
         assert not isinstance(node, tuple), "Text nodes have no children"
@@ -187,7 +198,9 @@ class TreeWalker(base.NonRecursiveTreeWalker):
     def getNextSibling(self, node):
         if isinstance(node, tuple):  # Text node
             node, key = node
-            assert key in ("text", "tail"), "Text nodes are text or tail, found %s" % key
+            assert key in ("text", "tail"), (
+                "Text nodes are text or tail, found %s" % key
+            )
             if key == "text":
                 # XXX: we cannot use a "bool(node) and node[0] or None" construct here
                 # because node[0] might evaluate to False if it has no child element
@@ -203,7 +216,9 @@ class TreeWalker(base.NonRecursiveTreeWalker):
     def getParentNode(self, node):
         if isinstance(node, tuple):  # Text node
             node, key = node
-            assert key in ("text", "tail"), "Text nodes are text or tail, found %s" % key
+            assert key in ("text", "tail"), (
+                "Text nodes are text or tail, found %s" % key
+            )
             if key == "text":
                 return node
             # else: fallback to "normal" processing

@@ -66,5 +66,3 @@ supported python 3.x.  We've recently merged with `Ian Cordasco <https://github.
 coherent version that works for Python 2.6+.
 
 :maintainer: Dan Blanchard
-
-

@@ -4,16 +4,15 @@ import os
 from os import listdir
 from os.path import isfile, join
 
+
 class DashboardController:
-
-
     def __init__(self, cbpi):
         self.caching = False
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
         self.cbpi.register(self)
 
-        self.path = os.path.join(".", 'config', "cbpi_dashboard_1.json")
+        self.path = os.path.join(".", "config", "cbpi_dashboard_1.json")
 
     async def init(self):
         pass
@@ -25,9 +24,9 @@ class DashboardController:
                 return data
         except:
             return {}
-    
+
     async def add_content(self, dashboard_id, data):
-        with open(self.path, 'w') as outfile:
+        with open(self.path, "w") as outfile:
             json.dump(data, outfile, indent=4, sort_keys=True)
         return {"status": "OK"}
 
@@ -36,6 +35,10 @@ class DashboardController:
             os.remove(self.path)
 
     async def get_custom_widgets(self):
-        path = os.path.join(".", 'config', "dashboard", "widgets")
-        onlyfiles = [os.path.splitext(f)[0] for f in listdir(path) if isfile(join(path, f)) and f.endswith(".svg")]
+        path = os.path.join(".", "config", "dashboard", "widgets")
+        onlyfiles = [
+            os.path.splitext(f)[0]
+            for f in listdir(path)
+            if isfile(join(path, f)) and f.endswith(".svg")
+        ]
         return onlyfiles

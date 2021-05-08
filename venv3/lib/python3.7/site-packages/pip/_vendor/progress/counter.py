@@ -20,7 +20,7 @@ from .helpers import WriteMixin
 
 
 class Counter(WriteMixin, Infinite):
-    message = ''
+    message = ""
     hide_cursor = True
 
     def update(self):
@@ -35,7 +35,7 @@ class Countdown(WriteMixin, Progress):
 
 
 class Stack(WriteMixin, Progress):
-    phases = (' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█')
+    phases = (" ", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█")
     hide_cursor = True
 
     def update(self):
@@ -45,4 +45,4 @@ class Stack(WriteMixin, Progress):
 
 
 class Pie(Stack):
-    phases = ('○', '◔', '◑', '◕', '●')
+    phases = ("○", "◔", "◑", "◕", "●")

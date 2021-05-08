@@ -5,12 +5,12 @@ import os
 import sys
 import errno
 
-from . import (LockBase, LockFailed, NotLocked, NotMyLock, LockTimeout,
-               AlreadyLocked)
+from . import LockBase, LockFailed, NotLocked, NotMyLock, LockTimeout, AlreadyLocked
 
 
 class MkdirLockFile(LockBase):
     """Lock file by creating a directory."""
+
     def __init__(self, path, threaded=True, timeout=None):
         """
         >>> lock = MkdirLockFile('somefile')
@@ -19,10 +19,9 @@ class MkdirLockFile(LockBase):
         LockBase.__init__(self, path, threaded, timeout)
         # Lock file itself is a directory.  Place the unique file name into
         # it.
-        self.unique_name = os.path.join(self.lock_file,
-                                        "%s.%s%s" % (self.hostname,
-                                                     self.tname,
-                                                     self.pid))
+        self.unique_name = os.path.join(
+            self.lock_file, "%s.%s%s" % (self.hostname, self.tname, self.pid)
+        )
 
     def acquire(self, timeout=None):
         timeout = timeout if timeout is not None else self.timeout
@@ -47,13 +46,12 @@ class MkdirLockFile(LockBase):
                         return
                     if timeout is not None and time.time() > end_time:
                         if timeout > 0:
-                            raise LockTimeout("Timeout waiting to acquire"
-                                              " lock for %s" %
-                                              self.path)
+                            raise LockTimeout(
+                                "Timeout waiting to acquire" " lock for %s" % self.path
+                            )
                         else:
                             # Someone else has the lock.
-                            raise AlreadyLocked("%s is already locked" %
-                                                self.path)
+                            raise AlreadyLocked("%s is already locked" % self.path)
                     time.sleep(wait)
                 else:
                     # Couldn't create the lock for some other reason
@@ -74,8 +72,7 @@ class MkdirLockFile(LockBase):
         return os.path.exists(self.lock_file)
 
     def i_am_locking(self):
-        return (self.is_locked() and
-                os.path.exists(self.unique_name))
+        return self.is_locked() and os.path.exists(self.unique_name)
 
     def break_lock(self):
         if os.path.exists(self.lock_file):

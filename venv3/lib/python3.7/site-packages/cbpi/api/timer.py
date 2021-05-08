@@ -4,8 +4,7 @@ import math
 
 
 class Timer(object):
-
-    def __init__(self, timeout, on_done = None, on_update = None) -> None:
+    def __init__(self, timeout, on_done=None, on_update=None) -> None:
         super().__init__()
         self.timeout = timeout
         self._timemout = self.timeout
@@ -13,7 +12,7 @@ class Timer(object):
         self._callback = on_done
         self._update = on_update
         self.start_time = None
-    
+
     def done(self, task):
         if self._callback is not None:
             asyncio.create_task(self._callback(self))
@@ -25,7 +24,7 @@ class Timer(object):
             while self.count > 0:
                 self.count -= 1
                 if self._update is not None:
-                    await self._update(self,self.count)
+                    await self._update(self, self.count)
                 await asyncio.sleep(1)
         except asyncio.CancelledError:
             end = time.time()
@@ -52,18 +51,18 @@ class Timer(object):
     def is_running(self):
         return not self._task.done()
 
-    def set_time(self,timeout):
+    def set_time(self, timeout):
         if self.is_running is True:
             return
         self.timeout = timeout
 
     def get_time(self):
-        return self.format_time(int(round(self._timemout,0)))
+        return self.format_time(int(round(self._timemout, 0)))
 
     @classmethod
     def format_time(cls, time):
-            pattern = '{0:02d}:{1:02d}:{2:02d}'
-            seconds = time % 60
-            minutes = math.floor(time / 60) % 60
-            hours = math.floor(time / 3600) 
-            return pattern.format(hours, minutes, seconds)
+        pattern = "{0:02d}:{1:02d}:{2:02d}"
+        seconds = time % 60
+        minutes = math.floor(time / 60) % 60
+        hours = math.floor(time / 3600)
+        return pattern.format(hours, minutes, seconds)

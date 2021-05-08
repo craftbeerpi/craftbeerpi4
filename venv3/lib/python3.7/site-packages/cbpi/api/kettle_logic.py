@@ -5,19 +5,17 @@ import logging
 import asyncio
 
 
-
 class CBPiKettleLogic(CBPiBase, metaclass=ABCMeta):
-
     def __init__(self, cbpi, id, props):
         self.cbpi = cbpi
         self.id = id
         self.props = props
-        self.state = False  
+        self.state = False
         self.running = False
 
     def init(self):
         pass
-    
+
     async def on_start(self):
         pass
 
@@ -26,7 +24,7 @@ class CBPiKettleLogic(CBPiBase, metaclass=ABCMeta):
 
     async def run(self):
         pass
-    
+
     async def _run(self):
 
         try:
@@ -36,16 +34,16 @@ class CBPiKettleLogic(CBPiBase, metaclass=ABCMeta):
             pass
         finally:
             await self.on_stop()
-        
+
     def get_state(self):
         return dict(running=self.state)
 
     async def start(self):
-        
+
         self.state = True
 
     async def stop(self):
-        
+
         self.task.cancel()
         await self.task
         self.state = False

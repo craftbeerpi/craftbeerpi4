@@ -7,18 +7,16 @@ from cbpi.craftbeerpi import CraftBeerPi
 
 
 class WebSocketTestCase(AioHTTPTestCase):
-
     async def get_application(self):
         self.cbpi = CraftBeerPi()
         await self.cbpi.init_serivces()
         return self.cbpi.app
 
-
     @unittest_run_loop
     async def test_brewing_process(self):
 
         count_step_done = 0
-        async with self.client.ws_connect('/ws') as ws:
+        async with self.client.ws_connect("/ws") as ws:
             await ws.send_json(data=dict(topic="step/stop"))
             await ws.send_json(data=dict(topic="step/start"))
             async for msg in ws:
@@ -41,7 +39,7 @@ class WebSocketTestCase(AioHTTPTestCase):
     @unittest_run_loop
     async def test_wrong_format(self):
 
-        async with self.client.ws_connect('/ws') as ws:
+        async with self.client.ws_connect("/ws") as ws:
             await ws.send_json(data=dict(a="close"))
             async for msg in ws:
                 print("MSG TYP", msg.type, msg.data)
@@ -53,4 +51,3 @@ class WebSocketTestCase(AioHTTPTestCase):
 
                 else:
                     raise Exception()
-

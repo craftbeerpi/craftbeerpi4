@@ -26,4 +26,3 @@ SUBROUTINE change_strings(strings, n_strs, out_strings)
 END SUBROUTINE change_strings
 
 END MODULE char_test
-

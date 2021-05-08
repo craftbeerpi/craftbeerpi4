@@ -5,11 +5,11 @@ from cbpi.api import *
 
 auth = False
 
-class KettleHttpEndpoints():
 
+class KettleHttpEndpoints:
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.controller : KettleController = cbpi.kettle
+        self.controller: KettleController = cbpi.kettle
         self.cbpi.register(self, "/kettle")
 
     @request_mapping(path="/", auth_required=False)
@@ -25,7 +25,6 @@ class KettleHttpEndpoints():
                 description: successful operation
         """
         return web.json_response(data=self.controller.get_state())
-        
 
     @request_mapping(path="/", method="POST", auth_required=False)
     async def http_add(self, request):
@@ -39,10 +38,10 @@ class KettleHttpEndpoints():
           name: body
           description: Created an actor
           required: true
-          
+
           schema:
             type: object
-            
+
             properties:
               name:
                 type: string
@@ -62,21 +61,27 @@ class KettleHttpEndpoints():
                 type: string
               props:
                 type: object
-            example: 
+            example:
               name: "Kettle 1"
               type: "CustomKettleLogic"
               props: {}
-              
+
         responses:
             "204":
                 description: successful operation
         """
         data = await request.json()
-        
-        kettle = Kettle(name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), agitator=data.get("agitator"), props=Props(data.get("props", {})), type=data.get("type"))
+
+        kettle = Kettle(
+            name=data.get("name"),
+            sensor=data.get("sensor"),
+            heater=data.get("heater"),
+            agitator=data.get("agitator"),
+            props=Props(data.get("props", {})),
+            type=data.get("type"),
+        )
         response_data = await self.controller.add(kettle)
         return web.json_response(data=response_data.to_dict())
-        
 
     @request_mapping(path="/{id}", method="PUT", auth_required=False)
     async def http_update(self, request):
@@ -109,11 +114,19 @@ class KettleHttpEndpoints():
             "200":
                 description: successful operation
         """
-        id = request.match_info['id']
+        id = request.match_info["id"]
         data = await request.json()
-        kettle = Kettle(id=id, name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), agitator=data.get("agitator"), props=Props(data.get("props", {})), type=data.get("type"))
+        kettle = Kettle(
+            id=id,
+            name=data.get("name"),
+            sensor=data.get("sensor"),
+            heater=data.get("heater"),
+            agitator=data.get("agitator"),
+            props=Props(data.get("props", {})),
+            type=data.get("type"),
+        )
         return web.json_response(data=(await self.controller.update(kettle)).to_dict())
-    
+
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
     async def http_delete_one(self, request):
         """
@@ -131,7 +144,7 @@ class KettleHttpEndpoints():
             "204":
                 description: successful operation
         """
-        id = request.match_info['id']
+        id = request.match_info["id"]
         await self.controller.delete(id)
         return web.Response(status=204)
 
@@ -149,14 +162,14 @@ class KettleHttpEndpoints():
           description: "Actor ID"
           required: true
           type: "string"
-          
+
         responses:
             "204":
                 description: successful operation
             "405":
                 description: invalid HTTP Met
         """
-        id = request.match_info['id']
+        id = request.match_info["id"]
         await self.controller.start(id)
         return web.Response(status=204)
 
@@ -175,17 +188,17 @@ class KettleHttpEndpoints():
           description: "Actor ID"
           required: true
           type: "string"
-          
+
         responses:
             "204":
                 description: successful operation
             "405":
                 description: invalid HTTP Met
         """
-        id = request.match_info['id']
+        id = request.match_info["id"]
         await self.controller.off(id)
         return web.Response(status=204)
-    
+
     @request_mapping(path="/{id}/toggle", method="POST", auth_required=False)
     async def http_toggle(self, request) -> web.Response:
         """
@@ -201,14 +214,14 @@ class KettleHttpEndpoints():
           description: "Kettle ID"
           required: true
           type: "string"
-          
+
         responses:
             "204":
                 description: successful operation
             "405":
                 description: invalid HTTP Met
         """
-        id = request.match_info['id']
+        id = request.match_info["id"]
         await self.controller.toggle(id)
         return web.Response(status=204)
 
@@ -242,11 +255,14 @@ class KettleHttpEndpoints():
             "204":
                 description: successful operation
         """
-        actor_id = request.match_info['id']
+        actor_id = request.match_info["id"]
         data = await request.json()
-        await self.controller.call_action(actor_id, data.get("name"), data.get("parameter"))
+        await self.controller.call_action(
+            actor_id, data.get("name"), data.get("parameter")
+        )
 
         return web.Response(status=204)
+
     @request_mapping(path="/{id}/target_temp", method="POST", auth_required=auth)
     async def http_target(self, request) -> web.Response:
         """
@@ -275,7 +291,7 @@ class KettleHttpEndpoints():
             "204":
                 description: successful operation
         """
-        id = request.match_info['id']
+        id = request.match_info["id"]
         data = await request.json()
-        await self.controller.set_target_temp(id,data.get("temp"))
+        await self.controller.set_target_temp(id, data.get("temp"))
         return web.Response(status=204)

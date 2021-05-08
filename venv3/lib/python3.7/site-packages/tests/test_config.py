@@ -8,13 +8,10 @@ from cbpi.craftbeerpi import CraftBeerPi
 
 
 class ConfigTestCase(AioHTTPTestCase):
-
-
     async def get_application(self):
         self.cbpi = CraftBeerPi()
         await self.cbpi.init_serivces()
         return self.cbpi.app
-
 
     @unittest_run_loop
     async def test_get(self):
@@ -37,7 +34,9 @@ class ConfigTestCase(AioHTTPTestCase):
             await db.execute("DELETE FROM config WHERE name = ? ", (key,))
             await db.commit()
 
-        await self.cbpi.config.add(key, value, type=ConfigType.STRING, description="test")
+        await self.cbpi.config.add(
+            key, value, type=ConfigType.STRING, description="test"
+        )
 
     @unittest_run_loop
     async def test_http_set(self):
@@ -46,7 +45,9 @@ class ConfigTestCase(AioHTTPTestCase):
         await self.cbpi.config.set(key, value)
         assert self.cbpi.config.get(key, 1) == value
 
-        resp = await self.client.request("PUT", "/config/%s/" % key, json={'value': '1'})
+        resp = await self.client.request(
+            "PUT", "/config/%s/" % key, json={"value": "1"}
+        )
         assert resp.status == 204
         assert self.cbpi.config.get(key, -1) == "1"
 

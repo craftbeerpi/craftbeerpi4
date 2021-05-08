@@ -7,9 +7,8 @@ class bdist_wininst(orig.bdist_wininst):
         Supplement reinitialize_command to work around
         http://bugs.python.org/issue20819
         """
-        cmd = self.distribution.reinitialize_command(
-            command, reinit_subcommands)
-        if command in ('install', 'install_lib'):
+        cmd = self.distribution.reinitialize_command(command, reinit_subcommands)
+        if command in ("install", "install_lib"):
             cmd.install_lib = None
         return cmd
 

@@ -14,8 +14,11 @@ except ImportError:
     ssl = None
 
 __all__ = [
-    'VerifyingHTTPSHandler', 'find_ca_bundle', 'is_available', 'cert_paths',
-    'opener_for'
+    "VerifyingHTTPSHandler",
+    "find_ca_bundle",
+    "is_available",
+    "cert_paths",
+    "opener_for",
 ]
 
 cert_paths = """
@@ -67,18 +70,19 @@ if not match_hostname:
 
         # Ported from python3-syntax:
         # leftmost, *remainder = dn.split(r'.')
-        parts = dn.split(r'.')
+        parts = dn.split(r".")
         leftmost = parts[0]
         remainder = parts[1:]
 
-        wildcards = leftmost.count('*')
+        wildcards = leftmost.count("*")
         if wildcards > max_wildcards:
             # Issue #17980: avoid denials of service by refusing more
             # than one wildcard per fragment.  A survey of established
             # policy among SSL implementations showed it to be a
             # reasonable choice.
             raise CertificateError(
-                "too many wildcards in certificate DNS name: " + repr(dn))
+                "too many wildcards in certificate DNS name: " + repr(dn)
+            )
 
         # speed up common case w/o wildcards
         if not wildcards:
@@ -87,11 +91,11 @@ if not match_hostname:
         # RFC 6125, section 6.4.3, subitem 1.
         # The client SHOULD NOT attempt to match a presented identifier in which
         # the wildcard character comprises a label other than the left-most label.
-        if leftmost == '*':
+        if leftmost == "*":
             # When '*' is a fragment by itself, it matches a non-empty dotless
             # fragment.
-            pats.append('[^.]+')
-        elif leftmost.startswith('xn--') or hostname.startswith('xn--'):
+            pats.append("[^.]+")
+        elif leftmost.startswith("xn--") or hostname.startswith("xn--"):
             # RFC 6125, section 6.4.3, subitem 3.
             # The client SHOULD NOT attempt to match a presented identifier
             # where the wildcard character is embedded within an A-label or
@@ -99,13 +103,13 @@ if not match_hostname:
             pats.append(re.escape(leftmost))
         else:
             # Otherwise, '*' matches any dotless string, e.g. www*
-            pats.append(re.escape(leftmost).replace(r'\*', '[^.]*'))
+            pats.append(re.escape(leftmost).replace(r"\*", "[^.]*"))
 
         # add the remaining fragments, ignore any wildcards
         for frag in remainder:
             pats.append(re.escape(frag))
 
-        pat = re.compile(r'\A' + r'\.'.join(pats) + r'\Z', re.IGNORECASE)
+        pat = re.compile(r"\A" + r"\.".join(pats) + r"\Z", re.IGNORECASE)
         return pat.match(hostname)
 
     def match_hostname(cert, hostname):
@@ -119,34 +123,37 @@ if not match_hostname:
         if not cert:
             raise ValueError("empty or no certificate")
         dnsnames = []
-        san = cert.get('subjectAltName', ())
+        san = cert.get("subjectAltName", ())
         for key, value in san:
-            if key == 'DNS':
+            if key == "DNS":
                 if _dnsname_match(value, hostname):
                     return
                 dnsnames.append(value)
         if not dnsnames:
             # The subject is only checked when there is no dNSName entry
             # in subjectAltName
-            for sub in cert.get('subject', ()):
+            for sub in cert.get("subject", ()):
                 for key, value in sub:
                     # XXX according to RFC 2818, the most specific Common Name
                     # must be used.
-                    if key == 'commonName':
+                    if key == "commonName":
                         if _dnsname_match(value, hostname):
                             return
                         dnsnames.append(value)
         if len(dnsnames) > 1:
-            raise CertificateError("hostname %r "
+            raise CertificateError(
+                "hostname %r "
                 "doesn't match either of %s"
-                % (hostname, ', '.join(map(repr, dnsnames))))
+                % (hostname, ", ".join(map(repr, dnsnames)))
+            )
         elif len(dnsnames) == 1:
-            raise CertificateError("hostname %r "
-                "doesn't match %r"
-                % (hostname, dnsnames[0]))
+            raise CertificateError(
+                "hostname %r " "doesn't match %r" % (hostname, dnsnames[0])
+            )
         else:
-            raise CertificateError("no appropriate commonName or "
-                "subjectAltName fields were found")
+            raise CertificateError(
+                "no appropriate commonName or " "subjectAltName fields were found"
+            )
 
 
 class VerifyingHTTPSHandler(HTTPSHandler):
@@ -171,11 +178,11 @@ class VerifyingHTTPSConn(HTTPSConnection):
 
     def connect(self):
         sock = socket.create_connection(
-            (self.host, self.port), getattr(self, 'source_address', None)
+            (self.host, self.port), getattr(self, "source_address", None)
         )
 
         # Handle the socket if a (proxy) tunnel is present
-        if hasattr(self, '_tunnel') and getattr(self, '_tunnel_host', None):
+        if hasattr(self, "_tunnel") and getattr(self, "_tunnel_host", None):
             self.sock = sock
             self._tunnel()
             # http://bugs.python.org/issue7776: Python>=3.4.1 and >=2.7.7
@@ -186,7 +193,7 @@ class VerifyingHTTPSConn(HTTPSConnection):
         else:
             actual_host = self.host
 
-        if hasattr(ssl, 'create_default_context'):
+        if hasattr(ssl, "create_default_context"):
             ctx = ssl.create_default_context(cafile=self.ca_bundle)
             self.sock = ctx.wrap_socket(sock, server_hostname=actual_host)
         else:
@@ -213,9 +220,10 @@ def opener_for(ca_bundle=None):
 def once(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        if not hasattr(func, 'always_returns'):
+        if not hasattr(func, "always_returns"):
             func.always_returns = func(*args, **kwargs)
         return func.always_returns
+
     return wrapper
 
 
@@ -238,23 +246,19 @@ def get_win_certfile():
                 pass
 
     _wincerts = CertFile()
-    _wincerts.addstore('CA')
-    _wincerts.addstore('ROOT')
+    _wincerts.addstore("CA")
+    _wincerts.addstore("ROOT")
     return _wincerts.name
 
 
 def find_ca_bundle():
     """Return an existing CA bundle path, or None"""
     extant_cert_paths = filter(os.path.isfile, cert_paths)
-    return (
-        get_win_certfile()
-        or next(extant_cert_paths, None)
-        or _certifi_where()
-    )
+    return get_win_certfile() or next(extant_cert_paths, None) or _certifi_where()
 
 
 def _certifi_where():
     try:
-        return __import__('certifi').where()
+        return __import__("certifi").where()
     except (ImportError, ResolutionError, ExtractionError):
         pass

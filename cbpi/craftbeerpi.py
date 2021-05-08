@@ -1,4 +1,3 @@
-
 import logging
 from os import urandom
 import os
@@ -56,30 +55,35 @@ async def error_middleware(request, handler):
         message = ex.reason
     except CBPiException as ex:
         message = str(ex)
-        return web.json_response(status=500, data={'error': message})
+        return web.json_response(status=500, data={"error": message})
     except MultipleInvalid as ex:
-        return web.json_response(status=500, data={'error': str(ex)})
+        return web.json_response(status=500, data={"error": str(ex)})
     except Exception as ex:
-        return web.json_response(status=500, data={'error': str(ex)})
+        return web.json_response(status=500, data={"error": str(ex)})
 
-    return web.json_response(status=500, data={'error': message})
+    return web.json_response(status=500, data={"error": message})
 
 
 class CraftBeerPi:
-
     def __init__(self):
-        self.path = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])  # The path to the package dir
-        
+        self.path = os.sep.join(
+            os.path.abspath(__file__).split(os.sep)[:-1]
+        )  # The path to the package dir
+
         self.version = __version__
 
-        self.static_config = load_config(os.path.join(".", 'config', "config.yaml"))
-        
-        self.database_file = os.path.join(".", 'config', "craftbeerpi.db")
+        self.static_config = load_config(os.path.join(".", "config", "config.yaml"))
+
+        self.database_file = os.path.join(".", "config", "craftbeerpi.db")
         logger.info("Init CraftBeerPI")
 
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
-        middlewares = [web.normalize_path_middleware(), session_middleware(EncryptedCookieStorage(urandom(32))),
-                       auth.auth_middleware(policy), error_middleware]
+        middlewares = [
+            web.normalize_path_middleware(),
+            session_middleware(EncryptedCookieStorage(urandom(32))),
+            auth.auth_middleware(policy),
+            error_middleware,
+        ]
         self.app = web.Application(middlewares=middlewares)
         self.app["cbpi"] = self
 
@@ -96,9 +100,9 @@ class CraftBeerPi:
         self.log = LogController(self)
         self.system = SystemController(self)
         self.kettle = KettleController(self)
-        self.step : StepController = StepController(self)
-        self.recipe : RecipeController = RecipeController(self)
-        #self.satellite: SatelliteController = SatelliteController(self)
+        self.step: StepController = StepController(self)
+        self.recipe: RecipeController = RecipeController(self)
+        # self.satellite: SatelliteController = SatelliteController(self)
         self.dashboard = DashboardController(self)
 
         self.http_step = StepHttpEndpoints(self)
@@ -123,21 +127,24 @@ class CraftBeerPi:
 
     def register_on_startup(self, obj):
 
-        for method in [getattr(obj, f) for f in dir(obj) if
-                       callable(getattr(obj, f)) and hasattr(getattr(obj, f), "on_startup")]:
+        for method in [
+            getattr(obj, f)
+            for f in dir(obj)
+            if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "on_startup")
+        ]:
             name = method.__getattribute__("name")
             order = method.__getattribute__("order")
             self.initializer.append(dict(name=name, method=method, order=order))
 
     def register(self, obj, url_prefix=None, static=None):
 
-        '''
+        """
         This method parses the provided object
-        
-        :param obj: the object wich will be parsed for registration 
+
+        :param obj: the object wich will be parsed for registration
         :param url_prefix: that prefix for HTTP Endpoints
         :return: None
-        '''
+        """
         self.register_http_endpoints(obj, url_prefix, static)
         self.bus.register_object(obj)
         # self.ws.register_object(obj)
@@ -148,23 +155,32 @@ class CraftBeerPi:
 
         if url_prefix is None:
             logger.debug(
-                "URL Prefix is None for %s. No endpoints will be registered. Please set / explicit if you want to add it to the root path" % obj)
+                "URL Prefix is None for %s. No endpoints will be registered. Please set / explicit if you want to add it to the root path"
+                % obj
+            )
             return
 
         routes = []
-        for method in [getattr(obj, f) for f in dir(obj) if
-                       callable(getattr(obj, f)) and hasattr(getattr(obj, f), "route")]:
+        for method in [
+            getattr(obj, f)
+            for f in dir(obj)
+            if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "route")
+        ]:
             http_method = method.__getattribute__("method")
             path = method.__getattribute__("path")
             class_name = method.__self__.__class__.__name__
             logger.debug(
-                "Register Endpoint : %s.%s %s %s%s " % (class_name, method.__name__, http_method, url_prefix, path))
+                "Register Endpoint : %s.%s %s %s%s "
+                % (class_name, method.__name__, http_method, url_prefix, path)
+            )
 
             def add_post():
                 routes.append(web.post(method.__getattribute__("path"), method))
 
             def add_get():
-                routes.append(web.get(method.__getattribute__("path"), method, allow_head=False))
+                routes.append(
+                    web.get(method.__getattribute__("path"), method, allow_head=False)
+                )
 
             def add_delete():
                 routes.append(web.delete(path, method))
@@ -176,7 +192,7 @@ class CraftBeerPi:
                 "POST": add_post,
                 "GET": add_get,
                 "DELETE": add_delete,
-                "PUT": add_put
+                "PUT": add_put,
             }
             switcher[http_method]()
 
@@ -185,50 +201,50 @@ class CraftBeerPi:
             sub = web.Application()
             sub.add_routes(routes)
             if static is not None:
-                sub.add_routes([web.static('/static', static, show_index=True)])
+                sub.add_routes([web.static("/static", static, show_index=True)])
             self.app.add_subapp(url_prefix, sub)
         else:
 
             self.app.add_routes(routes)
 
     def _swagger_setup(self):
-        '''
+        """
         Internal method to expose REST API documentation by swagger
-        
-        :return: 
-        '''
+
+        :return:
+        """
         long_description = """
         This is the api for CraftBeerPi
         """
-        setup_swagger(self.app,
-                      description=long_description,
-                      title="CraftBeerPi",
-                      api_version=self.version,
-                      contact="info@craftbeerpi.com")
-
-
-
+        setup_swagger(
+            self.app,
+            description=long_description,
+            title="CraftBeerPi",
+            api_version=self.version,
+            contact="info@craftbeerpi.com",
+        )
 
     def notify(self, message: str, type: str = "info") -> None:
-        '''
+        """
         This is a convinience method to send notification to the client
-        
+
         :param key: notification key
         :param message: notification message
         :param type: notification type (info,warning,danger,successs)
-        :return: 
-        '''
+        :return:
+        """
         self.ws.send(dict(topic="notifiaction", type=type, message=message))
-        
+
     async def call_initializer(self, app):
-        self.initializer = sorted(self.initializer, key=lambda k: k['order'])
+        self.initializer = sorted(self.initializer, key=lambda k: k["order"])
         for i in self.initializer:
             logger.info("CALL INITIALIZER %s - %s " % (i["name"], i["method"].__name__))
             await i["method"]()
 
     def _print_logo(self):
         from pyfiglet import Figlet
-        f = Figlet(font='big')
+
+        f = Figlet(font="big")
         logger.info("\n%s" % f.renderText("CraftBeerPi %s " % self.version))
         logger.info("www.CraftBeerPi.com")
         logger.info("(c) 2021 Manuel Fritsch")
@@ -243,27 +259,35 @@ class CraftBeerPi:
             else:
                 return web.Response(text="Hello from CraftbeerPi!")
 
-        self.app.add_routes([web.get('/', http_index),
-                             web.static('/static', os.path.join(os.path.dirname(__file__), "static"), show_index=True)])
+        self.app.add_routes(
+            [
+                web.get("/", http_index),
+                web.static(
+                    "/static",
+                    os.path.join(os.path.dirname(__file__), "static"),
+                    show_index=True,
+                ),
+            ]
+        )
 
     async def init_serivces(self):
 
         self._print_logo()
 
         await self.job.init()
-        
+
         await self.config.init()
         self._setup_http_index()
         self.plugin.load_plugins()
         self.plugin.load_plugins_from_evn()
         await self.sensor.init()
         await self.step.init()
-        
+
         await self.actor.init()
         await self.kettle.init()
         await self.call_initializer(self.app)
         await self.dashboard.init()
-        #await self.satellite.init()
+        # await self.satellite.init()
         self._swagger_setup()
 
         return self.app

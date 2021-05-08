@@ -12,16 +12,27 @@ class Distribution_parse_config_files:
     Do not edit the code in this class except to update functionality
     as implemented in distutils.
     """
+
     def parse_config_files(self, filenames=None):
         from configparser import ConfigParser
 
         # Ignore install directory options if we have a venv
         if sys.prefix != sys.base_prefix:
             ignore_options = [
-                'install-base', 'install-platbase', 'install-lib',
-                'install-platlib', 'install-purelib', 'install-headers',
-                'install-scripts', 'install-data', 'prefix', 'exec-prefix',
-                'home', 'user', 'root']
+                "install-base",
+                "install-platbase",
+                "install-lib",
+                "install-platlib",
+                "install-purelib",
+                "install-headers",
+                "install-scripts",
+                "install-data",
+                "prefix",
+                "exec-prefix",
+                "home",
+                "user",
+                "root",
+            ]
         else:
             ignore_options = []
 
@@ -43,9 +54,9 @@ class Distribution_parse_config_files:
                 opt_dict = self.get_option_dict(section)
 
                 for opt in options:
-                    if opt != '__name__' and opt not in ignore_options:
-                        val = parser.get(section,opt)
-                        opt = opt.replace('-', '_')
+                    if opt != "__name__" and opt not in ignore_options:
+                        val = parser.get(section, opt)
+                        opt = opt.replace("-", "_")
                         opt_dict[opt] = (filename, val)
 
             # Make the ConfigParser forget everything (so we retain
@@ -55,13 +66,13 @@ class Distribution_parse_config_files:
         # If there was a "global" section in the config file, use it
         # to set Distribution options.
 
-        if 'global' in self.command_options:
-            for (opt, (src, val)) in self.command_options['global'].items():
+        if "global" in self.command_options:
+            for (opt, (src, val)) in self.command_options["global"].items():
                 alias = self.negative_opt.get(opt)
                 try:
                     if alias:
                         setattr(self, alias, not strtobool(val))
-                    elif opt in ('verbose', 'dry_run'): # ugh!
+                    elif opt in ("verbose", "dry_run"):  # ugh!
                         setattr(self, opt, strtobool(val))
                     else:
                         setattr(self, opt, val)

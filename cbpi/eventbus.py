@@ -6,10 +6,8 @@ from cbpi.api import *
 
 
 class CBPiEventBus(object):
-
-
     class Node(object):
-        __slots__ = '_children', '_content'
+        __slots__ = "_children", "_content"
 
         def __init__(self):
             self._children = {}
@@ -25,13 +23,11 @@ class CBPiEventBus(object):
             self.supports_future = supports_future
 
     class Result:
-
         def __init__(self, result, timeout):
             self.result = result
             self.timeout = timeout
 
     class ResultContainer:
-
         def __init__(self, results, timeout=False):
             self.results = {}
             self.timeout = timeout
@@ -48,22 +44,23 @@ class CBPiEventBus(object):
                 raise CBPiException("Event Key %s not found." % key)
             return (r.result, r.timeout)
 
-
     def register(self, topic, method, once=False):
 
         if method in self.registry:
-            raise RuntimeError("Method %s already registerd. Please unregister first!" % method.__name__)
+            raise RuntimeError(
+                "Method %s already registerd. Please unregister first!"
+                % method.__name__
+            )
         self.logger.info("Topic %s", topic)
 
         node = self._root
-        for sym in topic.split('/'):
+        for sym in topic.split("/"):
             node = node._children.setdefault(sym, self.Node())
 
         if not isinstance(node._content, list):
             node._content = []
 
         sig = inspect.signature(method)
-
 
         if "future" in sig.parameters:
             supports_future = True
@@ -76,7 +73,7 @@ class CBPiEventBus(object):
     def get_callbacks(self, key):
         try:
             node = self._root
-            for sym in key.split('/'):
+            for sym in key.split("/"):
                 node = node._children[sym]
             if node._content is None:
                 raise KeyError(key)
@@ -107,21 +104,18 @@ class CBPiEventBus(object):
         else:
             self.loop = asyncio.get_event_loop()
 
-
-    def sync_fire(self,topic: str,timeout=1, **kwargs):
+    def sync_fire(self, topic: str, timeout=1, **kwargs):
         self.loop.create_task(self.fire(topic=topic, timeout=timeout, **kwargs))
 
     async def fire(self, topic: str, timeout=0.5, **kwargs):
 
         futures = {}
 
-
-        #self.logger.info("FIRE %s %s" % (topic, kwargs))
+        # self.logger.info("FIRE %s %s" % (topic, kwargs))
 
         async def wait(futures):
-            if(len(futures) > 0):
+            if len(futures) > 0:
                 await asyncio.wait(futures.values())
-
 
         for e in self.iter_match(topic):
             content_array = e
@@ -131,8 +125,12 @@ class CBPiEventBus(object):
                 if inspect.iscoroutinefunction(content_obj.method):
                     if content_obj.supports_future is True:
                         fut = self.loop.create_future()
-                        futures["%s.%s" % (content_obj.method.__module__, content_obj.name)] = fut
-                        self.loop.create_task(content_obj.method(**kwargs, topic = topic, future=fut))
+                        futures[
+                            "%s.%s" % (content_obj.method.__module__, content_obj.name)
+                        ] = fut
+                        self.loop.create_task(
+                            content_obj.method(**kwargs, topic=topic, future=fut)
+                        )
 
                     else:
                         self.loop.create_task(content_obj.method(**kwargs, topic=topic))
@@ -154,14 +152,21 @@ class CBPiEventBus(object):
                 is_timedout = True
             return self.ResultContainer(futures, is_timedout)
 
-
     def dump(self):
         def rec(node, i=0):
             result = []
             if node._content is not None:
                 for c in node._content:
 
-                    result.append(dict(topic=c.topic, supports_future=c.supports_future, method=c.method.__name__, path=c.method.__module__, once=c.once))
+                    result.append(
+                        dict(
+                            topic=c.topic,
+                            supports_future=c.supports_future,
+                            method=c.method.__name__,
+                            path=c.method.__module__,
+                            once=c.once,
+                        )
+                    )
 
             if node._children is not None:
                 for c in node._children:
@@ -174,8 +179,8 @@ class CBPiEventBus(object):
 
     def iter_match(self, topic):
 
-        lst = topic.split('/')
-        normal = not topic.startswith('$')
+        lst = topic.split("/")
+        normal = not topic.startswith("$")
 
         def rec(node, i=0):
             if i == len(lst):
@@ -186,11 +191,11 @@ class CBPiEventBus(object):
                 if part in node._children:
                     for content in rec(node._children[part], i + 1):
                         yield content
-                if '+' in node._children and (normal or i > 0):
-                    for content in rec(node._children['+'], i + 1):
+                if "+" in node._children and (normal or i > 0):
+                    for content in rec(node._children["+"], i + 1):
                         yield content
-            if '#' in node._children and (normal or i > 0):
-                content = node._children['#']._content
+            if "#" in node._children and (normal or i > 0):
+                content = node._children["#"]._content
                 if content is not None:
                     yield content
 
@@ -198,7 +203,11 @@ class CBPiEventBus(object):
 
     def register_object(self, obj):
 
-        for method in [getattr(obj, f) for f in dir(obj) if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "eventbus")]:
+        for method in [
+            getattr(obj, f)
+            for f in dir(obj)
+            if callable(getattr(obj, f)) and hasattr(getattr(obj, f), "eventbus")
+        ]:
             doc = None
             if method.__doc__ is not None:
                 try:
