@@ -1,4 +1,4 @@
 # CraftBeerPi
 
-You will finde the documentation here: https://craftbeerpi.gitbook.io/craftbeerpi4/
+You will find the documentation here: https://craftbeerpi.gitbook.io/craftbeerpi4/
 
