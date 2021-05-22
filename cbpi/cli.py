@@ -63,6 +63,7 @@ def create_home_folder_structure():
     pathlib.Path(os.path.join(".", 'config/dashboard')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config/recipes')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config/upload')).mkdir(parents=True, exist_ok=True) 
     print("Folder created")
 
 
@@ -101,6 +102,12 @@ def check_for_setup():
     if os.path.exists(os.path.join(".", "config", "config.yaml")) is False:
         print("***************************************************")
         print("CraftBeerPi Config File not found: %s" % os.path.join(".", "config", "config.yaml"))
+        print("Please run 'cbpi setup' before starting the server ")
+        print("***************************************************")
+        return False
+    if os.path.exists(os.path.join(".", "config", "upload")) is False:
+        print("***************************************************")
+        print("CraftBeerPi upload folder not found: %s" % os.path.join(".", "config/upload"))
         print("Please run 'cbpi setup' before starting the server ")
         print("***************************************************")
         return False

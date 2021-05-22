@@ -123,6 +123,7 @@ class CraftBeerPi:
         self.http_system = SystemHttpEndpoints(self)
         self.http_log = LogHttpEndpoints(self)
         self.http_notification = NotificationHttpEndpoints(self)
+
         self.login = Login(self)
 
     def _setup_shutdownhook(self):
@@ -162,7 +163,6 @@ class CraftBeerPi:
             logger.debug(
                 "URL Prefix is None for %s. No endpoints will be registered. Please set / explicit if you want to add it to the root path" % obj)
             return
-
         routes = []
         for method in [getattr(obj, f) for f in dir(obj) if
                        callable(getattr(obj, f)) and hasattr(getattr(obj, f), "route")]:
