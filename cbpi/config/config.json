@@ -35,5 +35,61 @@
         ],
         "type": "select",
         "value": "C"
+    },
+    "steps_boil": {
+        "description": "Boil step type",
+        "name": "steps_boil",
+        "options": null,
+        "type": "step",
+        "value": "BoilStep"
+    },
+    "steps_boil_temp": {
+        "description": "Default Boil Temperature for Recipe Creation",
+        "name": "steps_boil_temp",
+        "options": null,
+        "type": "number",
+        "value": "99"
+    },
+    "steps_cooldown": {
+        "description": "Cooldown step type",
+        "name": "steps_cooldown",
+        "options": null,
+        "type": "step",
+        "value": "CooldownStep"
+    },
+    "steps_cooldown_sensor": {
+        "description": "Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)",
+        "name": "steps_cooldown_sensor",
+        "options": null,
+        "type": "sensor",
+        "value": ""
+    },
+    "steps_cooldown_temp": {
+        "description": "Cooldown temp will send notification when this temeprature is reached",
+        "name": "steps_cooldown_temp",
+        "options": null,
+        "type": "number",
+        "value": "20"
+    },
+    "steps_mash": {
+        "description": "Mash step type",
+        "name": "steps_mash",
+        "options": null,
+        "type": "step",
+        "value": "MashStep"
+    },
+    "steps_mashin": {
+        "description": "MashIn step type",
+        "name": "steps_mashin",
+        "options": null,
+        "type": "step",
+        "value": "MashInStep"
+    },
+    "steps_mashout": {
+        "description": "MashOut step type",
+        "name": "steps_mashout",
+        "options": null,
+        "type": "step",
+        "value": "NotificationStep"
     }
 }

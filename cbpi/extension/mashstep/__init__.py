@@ -70,7 +70,7 @@ class MashInStep(CBPiStep):
         await self.next()
 
     async def on_timer_done(self,timer):
-        self.summary = "MashIn Temp reached. Please add Malt Pipe."
+        self.summary = "MashIn Temp reached. Please add Malt."
         await self.push_update()
         if self.AutoMode == True:
             await self.setAutoMode(False)
@@ -209,14 +209,6 @@ class MashStep(CBPiStep):
 
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True)])
 class WaitStep(CBPiStep):
-
-    @action(key="Custom Step Action", parameters=[])
-    async def hello(self, **kwargs):
-        print("ACTION")
-
-    @action(key="Custom Step Action 2", parameters=[])
-    async def hello2(self, **kwargs):
-        print("ACTION2")
 
     async def on_timer_done(self, timer):
         self.summary = ""
@@ -398,7 +390,6 @@ class BoilStep(CBPiStep):
 
 
 @parameters([Property.Number(label="Temp", configurable=True, description="Target temperature for cooldown. Notification will be send when temp is reached and Actor can be triggered"),
-             Property.Number(label="Interval", configurable=True, description="Interval [min] for Notification and caclulate predicted End time"),
              Property.Sensor(label="Sensor", description="Sensor that is used during cooldown"),
              Property.Actor(label="Actor", description="Actor can trigger a valve for the cooldwon to target temperature"),
              Property.Kettle(label="Kettle")])
@@ -421,7 +412,7 @@ class CooldownStep(CBPiStep):
         self.kettle = self.get_kettle(self.props.get("Kettle", None))
         self.actor = self.props.get("Actor", None)
         self.target_temp = int(self.props.get("Temp",0))
-        self.Interval = int(self.props.get("Interval",10)) # Interval in minutes on how often cooldwon end time is calculated
+        self.Interval = 10 # Interval in minutes on how often cooldwon end time is calculated
 
         self.cbpi.notify(self.name, 'Cool down to {}°'.format(self.target_temp), NotificationType.INFO)
         if self.timer is None:
