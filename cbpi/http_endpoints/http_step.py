@@ -270,6 +270,21 @@ class StepHttpEndpoints():
         await self.controller.clear()
         return web.Response(status=204)
 
+    @request_mapping(path="/savetobook", method="POST", auth_required=False)
+    async def http_savetobook(self, request):
+        
+        """
+
+        ---
+        description: Save Active Recipe to Recipe Book
+        tags:
+        - Step
+        responses:
+            "204":
+                description: successful operation
+        """
+        await self.controller.savetobook()
+        return web.Response(status=204)
 
     
 

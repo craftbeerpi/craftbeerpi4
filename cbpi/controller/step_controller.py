@@ -2,6 +2,7 @@ import asyncio
 import cbpi
 import copy
 import json
+import yaml
 import logging
 import os.path
 from os import listdir
@@ -306,4 +307,12 @@ class StepController:
         
         self.load()
         self.push_udpate(complete=True)
+
+    async def savetobook(self):
+        name = shortuuid.uuid()
+        path = os.path.join(".", 'config', "recipes", "{}.yaml".format(name))
+        data = dict(basic=self.basic_data, steps=list(map(lambda item: item.to_dict(), self.profile)))
+        with open(path, "w") as file:
+            yaml.dump(data, file)
+        self.push_udpate()
 

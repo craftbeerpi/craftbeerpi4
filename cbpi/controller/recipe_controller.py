@@ -37,6 +37,7 @@ class RecipeController:
 
     async def save(self, name, data):
         path = os.path.join(".", 'config', "recipes", "{}.yaml".format(name))
+        logging.info(data)
         with open(path, "w") as file:
             yaml.dump(data, file, indent=4, sort_keys=True)
         
