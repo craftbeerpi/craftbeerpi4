@@ -57,6 +57,12 @@ class RecipeUpload(CBPiExtension):
     def allowed_file(self, filename, extension):
         return '.' in filename and filename.rsplit('.', 1)[1] in set([extension])
 
+    def get_creation_path(self):
+        creation_path = self.cbpi.config.get("RECIPE_CREATION_PATH", "upload")
+        path = {'path': 'upload'} if creation_path == '' else {'path': creation_path}
+        return path
+
+
     @request_mapping(path='/', method="POST", auth_required=False)
     async def RecipeUpload(self, request):
         data = await request.post()
@@ -122,6 +128,21 @@ class RecipeUpload(CBPiExtension):
         xml_id = await request.json()
         await self.xml_recipe_creation(xml_id['id'])
         return web.Response(status=200)
+
+    @request_mapping(path="/getpath", auth_required=False)
+    async def http_getpath(self, request):
+        
+        """
+
+        ---
+        description: get path for recipe creation
+        tags:
+        - Upload
+        responses:
+            "200":
+                description: successful operation
+        """
+        return  web.json_response(data=self.get_creation_path())
 
     async def kbh_recipe_creation(self, Recipe_ID):
         self.kettle = None

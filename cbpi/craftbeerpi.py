@@ -46,6 +46,7 @@ from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
 from cbpi.http_endpoints.http_system import SystemHttpEndpoints
 from cbpi.http_endpoints.http_log import LogHttpEndpoints
 from cbpi.http_endpoints.http_notification import NotificationHttpEndpoints
+from cbpi.http_endpoints.http_upload import UploadHttpEndpoints
 
 import shortuuid
 logger = logging.getLogger(__name__)
@@ -123,6 +124,8 @@ class CraftBeerPi:
         self.http_system = SystemHttpEndpoints(self)
         self.http_log = LogHttpEndpoints(self)
         self.http_notification = NotificationHttpEndpoints(self)
+        self.http_upload = UploadHttpEndpoints(self)
+
 
         self.login = Login(self)
 
@@ -217,7 +220,6 @@ class CraftBeerPi:
                       title="CraftBeerPi",
                       api_version=self.version,
                       contact="info@craftbeerpi.com")
-
 
 
     def notify(self, title: str, message: str, type: NotificationType = NotificationType.INFO, action=[]) -> None:

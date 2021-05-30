@@ -20,6 +20,13 @@
         "type": "kettle",
         "value": ""
     },
+    "RECIPE_CREATION_PATH": {
+        "description": "API path to creation plugin. Default: empty",
+        "name": "RECIPE_CREATION_PATH",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
     "TEMP_UNIT": {
         "description": "Temperature Unit",
         "name": "TEMP_UNIT",

@@ -15,7 +15,9 @@ from typing import KeysView
 from cbpi.api.config import ConfigType
 from cbpi.api.base import CBPiBase
 import numpy as np
+#import scipy.optimize
 import warnings
+
 
 
 @parameters([Property.Text(label="Notification",configurable = True, description = "Text for notification"),
@@ -412,7 +414,7 @@ class CooldownStep(CBPiStep):
         self.kettle = self.get_kettle(self.props.get("Kettle", None))
         self.actor = self.props.get("Actor", None)
         self.target_temp = int(self.props.get("Temp",0))
-        self.Interval = 10 # Interval in minutes on how often cooldwon end time is calculated
+        self.Interval = 15 # Interval in minutes on how often cooldwon end time is calculated
 
         self.cbpi.notify(self.name, 'Cool down to {}°'.format(self.target_temp), NotificationType.INFO)
         if self.timer is None:
@@ -422,6 +424,7 @@ class CooldownStep(CBPiStep):
         self.time_array.append(time.time())
         self.next_check = self.start_time + self.Interval * 60
         self.count = 0
+        self.initial_date = None
 
     async def on_stop(self):
         await self.timer.stop()
@@ -441,13 +444,17 @@ class CooldownStep(CBPiStep):
         await self.push_update()
         while self.running == True:
             current_temp = self.get_sensor_value(self.props.get("Sensor", None)).get("value")
-            if self.count == 19:
+            if self.count == 10:
                 self.temp_array.append(current_temp)
-                self.time_array.append(time.time())
+                current_time = time.time()
+                if self.initial_date == None:
+                    self.initial_date = current_time 
+                self.time_array.append(current_time)
                 self.count = 0
             if time.time() >= self.next_check:
                 self.next_check = time.time() + (self.Interval * 60)
-                cooldown_model = np.poly1d(np.polyfit(self.temp_array, self.time_array, 4))
+
+                cooldown_model = np.poly1d(np.polyfit(self.temp_array, self.time_array, 2))
                 target_time=cooldown_model(self.target_temp)
                 target_timestring= datetime.fromtimestamp(target_time)
                 self.summary="ECT: {}".format(target_timestring.strftime("%H:%M"))

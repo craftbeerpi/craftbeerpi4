@@ -286,7 +286,6 @@ class StepHttpEndpoints():
         await self.controller.savetobook()
         return web.Response(status=204)
 
-    
 
 
     
