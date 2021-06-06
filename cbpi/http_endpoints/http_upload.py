@@ -1,45 +1,24 @@
-#from cbpi.controller.recipe_controller import RecipeController
+from cbpi.controller.upload_controller import UploadController
 from cbpi.api.dataclasses import Props, Step
 from aiohttp import web
 from cbpi.api import *
+import logging
 
 class UploadHttpEndpoints():
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
-#        self.controller : RecipeController = cbpi.recipe
-        self.cbpi.register(self, "/fileupload")
+        self.controller : UploadController = cbpi.upload
+        self.cbpi.register(self, "/upload")
 
 
     @request_mapping(path='/', method="POST", auth_required=False)
-    async def RecipeUpload(self, request):
-        """
-
-        ---
-        description: Upload XML file or database from KBH V2 
-        tags:
-        - FileUpload
-        requestBody:
-            content:
-                multipart/form-data:
-                    schema:
-                      type: object
-                      properties:
-                        orderId:
-                          type: integer
-                        userId:
-                          type: integer
-                        fileName:
-                          type: string
-                          format: binary
-        responses:
-            "200":
-                description: successful operation
-        """
-
+    async def FileUpload(self, request):
         data = await request.post()
-        fileData = data['File']
-        logging.info(fileData)
+        await self.controller.FileUpload(data)
+        return web.Response(status=200)
+
+
 
 
     @request_mapping(path='/kbh', method="GET", auth_required=False)
@@ -49,13 +28,13 @@ class UploadHttpEndpoints():
         ---
         description: Get Recipe list from Kleiner Brauhelfer 
         tags:
-        - FileUpload
+        - Upload
         responses:
             "200":
                 description: successful operation
         """
 
-        kbh_list = await get_kbh_recipes()
+        kbh_list = await self.controller.get_kbh_recipes()
         return web.json_response(kbh_list)
 
     @request_mapping(path='/kbh', method="POST", auth_required=False)
@@ -65,14 +44,20 @@ class UploadHttpEndpoints():
         ---
         description: Create Recipe from KBH database with selected ID
         tags:
-        - FileUpload
+        - Upload
+        parameters:
+        - name: "id"
+          in: "body"
+          description: "Recipe ID: {'id': ID}"
+          required: true
+          type: "string"
         responses:
             "200":
                 description: successful operation
         """
 
         kbh_id = await request.json()
-        await self.kbh_recipe_creation(kbh_id['id'])
+        await self.controller.kbh_recipe_creation(kbh_id['id'])
         return web.Response(status=200)
 
     @request_mapping(path='/xml', method="GET", auth_required=False)
@@ -82,13 +67,14 @@ class UploadHttpEndpoints():
         ---
         description: Get recipe list from xml file
         tags:
-        - FileUpload
+        - Upload
         responses:
             "200":
                 description: successful operation
         """
 
-        xml_list = await get_xml_recipes()
+        xml_list = await self.controller.get_xml_recipes()
+
         return web.json_response(xml_list)
 
     @request_mapping(path='/xml', method="POST", auth_required=False)
@@ -98,14 +84,21 @@ class UploadHttpEndpoints():
         ---
         description: Create recipe from xml file with selected id
         tags:
-        - FileUpload
+        - Upload
+        parameters:
+        - name: "id"
+          in: "body"
+          description: "Recipe ID: {'id': ID}"
+          required: true
+          type: "string"
+
         responses:
             "200":
                 description: successful operation
         """
 
         xml_id = await request.json()
-        await self.xml_recipe_creation(xml_id['id'])
+        await self.controller.xml_recipe_creation(xml_id['id'])
         return web.Response(status=200)
 
     @request_mapping(path="/getpath", auth_required=False)
@@ -116,10 +109,10 @@ class UploadHttpEndpoints():
         ---
         description: get path for recipe creation
         tags:
-        - FileUpload
+        - Upload
         responses:
             "200":
                 description: successful operation
         """
-        return  web.json_response(data=self.get_creation_path())
+        return  web.json_response(data=self.controller.get_creation_path())
 

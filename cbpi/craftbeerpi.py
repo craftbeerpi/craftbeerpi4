@@ -25,6 +25,8 @@ from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
 from cbpi.controller.recipe_controller import RecipeController
+from cbpi.controller.upload_controller import UploadController
+
 from cbpi.controller.system_controller import SystemController
 from cbpi.controller.satellite_controller import SatelliteController
 
@@ -107,6 +109,7 @@ class CraftBeerPi:
         self.kettle = KettleController(self)
         self.step : StepController = StepController(self)
         self.recipe : RecipeController = RecipeController(self)
+        self.upload : UploadController = UploadController(self)
         self.notification : NotificationController = NotificationController(self)
         self.satellite = None
         if self.static_config.get("mqtt", False) is True:

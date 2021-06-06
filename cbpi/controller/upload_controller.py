@@ -1,11 +1,7 @@
-
-# -*- coding: utf-8 -*-
 import os
 import pathlib
 import aiohttp
 from aiohttp import web
-import logging
-from unittest.mock import MagicMock, patch
 import asyncio
 from cbpi.api import *
 import xml.etree.ElementTree
@@ -15,134 +11,100 @@ from cbpi.api.dataclasses import NotificationAction, NotificationType
 from cbpi.controller.kettle_controller import KettleController
 from cbpi.api.base import CBPiBase
 from cbpi.api.config import ConfigType
-import json
 import webbrowser
 
-logger = logging.getLogger(__name__)
+import logging
+import os.path
+from os import listdir
+from os.path import isfile, join
+import json
+import shortuuid
+import yaml
+from ..api.step import StepMove, StepResult, StepState
 
-async def get_kbh_recipes():
-    try:
-        path = os.path.join(".", 'config', "upload", "kbh.db")
-        conn = sqlite3.connect(path)
-        c = conn.cursor()
-        c.execute('SELECT ID, Sudname, Status FROM Sud')
-        data = c.fetchall()
-        result = []
-        for row in data:
-            element = {'value': str(row[0]), 'label': str(row[1])}
-            result.append(element)
-        return result
-    except:
-        return []
+import re
 
-async def get_xml_recipes():
-    try:
-        path = os.path.join(".", 'config', "upload", "beer.xml")
-        e = xml.etree.ElementTree.parse(path).getroot()
-        result =[] 
-        counter = 1
-        for idx, val in enumerate(e.findall('RECIPE')):
-            element = {'value': str(counter), 'label': val.find("NAME").text}
-            result.append(element)
-            counter +=1
-        return result
-    except:
-        return []
+class UploadController:
 
-class RecipeUpload(CBPiExtension):
     def __init__(self, cbpi):
         self.cbpi = cbpi
-        self.cbpi.register(self, "/upload")
+        self.logger = logging.getLogger(__name__)
+   
+    async def get_kbh_recipes(self):
+        try:
+            path = os.path.join(".", 'config', "upload", "kbh.db")
+            conn = sqlite3.connect(path)
+            c = conn.cursor()
+            c.execute('SELECT ID, Sudname, Status FROM Sud')
+            data = c.fetchall()
+            result = []
+            for row in data:
+                element = {'value': str(row[0]), 'label': str(row[1])}
+                result.append(element)
+            return result
+        except:
+            return []
 
-    def allowed_file(self, filename, extension):
-        return '.' in filename and filename.rsplit('.', 1)[1] in set([extension])
+    async def get_xml_recipes(self):
+        try:
+            path = os.path.join(".", 'config', "upload", "beer.xml")
+            e = xml.etree.ElementTree.parse(path).getroot()
+            result =[] 
+            counter = 1
+            for idx, val in enumerate(e.findall('RECIPE')):
+                element = {'value': str(counter), 'label': val.find("NAME").text}
+                result.append(element)
+                counter +=1
+            return result
+        except:
+            return []
 
     def get_creation_path(self):
         creation_path = self.cbpi.config.get("RECIPE_CREATION_PATH", "upload")
         path = {'path': 'upload'} if creation_path == '' else {'path': creation_path}
         return path
 
+    def allowed_file(self, filename, extension):
+        return '.' in filename and filename.rsplit('.', 1)[1] in set([extension])
 
-    @request_mapping(path='/', method="POST", auth_required=False)
-    async def RecipeUpload(self, request):
-        data = await request.post()
+
+    async def FileUpload(self, data):
         fileData = data['File']
         logging.info(fileData)
+        filename = fileData.filename
+        recipe_file = fileData.file
+        content_type = fileData.content_type
 
-        if fileData.content_type == 'text/xml':
-            logging.info(fileData.content_type)
+        if content_type == 'text/xml':
             try:
-                filename = fileData.filename
-                beerxml_file = fileData.file
-                content = beerxml_file.read().decode()
-                if beerxml_file and self.allowed_file(filename, 'xml'):
+                beer_xml = recipe_file.read().decode()
+                if recipe_file and self.allowed_file(filename, 'xml'):
                     self.path = os.path.join(".", 'config', "upload", "beer.xml")
     
                     f = open(self.path, "w")
-                    f.write(content)
+                    f.write(beer_xml)
                     f.close()
-                self.cbpi.notify("Success", "XML Recipe {} has been uploaded".format(filename), NotificationType.SUCCESS)
+                    self.cbpi.notify("Success", "XML Recipe {} has been uploaded".format(filename), NotificationType.SUCCESS)
             except:
                 self.cbpi.notify("Error" "XML Recipe upload failed", NotificationType.ERROR)
                 pass
 
-        elif fileData.content_type == 'application/octet-stream':
+        elif content_type == 'application/octet-stream':
             try:
-                filename = fileData.filename
-                logger.info(filename)
-                kbh_file = fileData.file
-                content = kbh_file.read()
-                if kbh_file and self.allowed_file(filename, 'sqlite'):
+                content = recipe_file.read()
+                if recipe_file and self.allowed_file(filename, 'sqlite'):
                     self.path = os.path.join(".", 'config', "upload", "kbh.db")
 
                     f=open(self.path, "wb")
                     f.write(content)
                     f.close()
-                self.cbpi.notify("Success", "Kleiner Brauhelfer database has been uploaded", NotificationType.SUCCESS)
+                    self.cbpi.notify("Success", "Kleiner Brauhelfer database has been uploaded", NotificationType.SUCCESS)
+
             except:
                 self.cbpi.notify("Error", "Kleiner Brauhelfer database upload failed", NotificationType.ERROR)
                 pass
         else:
             self.cbpi.notify("Error", "Wrong content type. Upload failed", NotificationType.ERROR)
-
-        return web.Response(status=200)
-
-    @request_mapping(path='/kbh', method="GET", auth_required=False)
-    async def get_kbh_list(self, request):
-        kbh_list = await get_kbh_recipes()
-        return web.json_response(kbh_list)
-
-    @request_mapping(path='/kbh', method="POST", auth_required=False)
-    async def create_kbh_recipe(self, request):
-        kbh_id = await request.json()
-        await self.kbh_recipe_creation(kbh_id['id'])
-        return web.Response(status=200)
-
-    @request_mapping(path='/xml', method="GET", auth_required=False)
-    async def get_xml_list(self, request):
-        xml_list = await get_xml_recipes()
-        return web.json_response(xml_list)
-
-    @request_mapping(path='/xml', method="POST", auth_required=False)
-    async def create_xml_recipe(self, request):
-        xml_id = await request.json()
-        await self.xml_recipe_creation(xml_id['id'])
-        return web.Response(status=200)
-
-    @request_mapping(path="/getpath", auth_required=False)
-    async def http_getpath(self, request):
-        
-        """
-
-        ---
-        description: get path for recipe creation
-        tags:
-        - Upload
-        responses:
-            "200":
-                description: successful operation
-        """
-        return  web.json_response(data=self.get_creation_path())
 
     async def kbh_recipe_creation(self, Recipe_ID):
         self.kettle = None
@@ -339,8 +301,6 @@ class RecipeUpload(CBPiExtension):
         finally:
             if conn:
                 conn.close()
-                
-        return alerts
 
     async def xml_recipe_creation(self, Recipe_ID):
         self.kettle = None
@@ -575,16 +535,3 @@ class RecipeUpload(CBPiExtension):
                 return await response.text()
                 await self.push_update()
 
-
-
-def setup(cbpi):
-
-    '''
-    This method is called by the server during startup 
-    Here you need to register your plugins at the server
-    
-    :param cbpi: the cbpi core 
-    :return: 
-    '''
-
-    cbpi.plugin.register("RecipeUpload", RecipeUpload)
