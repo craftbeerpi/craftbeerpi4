@@ -302,6 +302,8 @@ class UploadController:
             if conn:
                 conn.close()
 
+        return alerts
+
     async def xml_recipe_creation(self, Recipe_ID):
         self.kettle = None
 
