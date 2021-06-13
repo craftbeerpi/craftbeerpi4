@@ -12,7 +12,6 @@ from cbpi.controller.kettle_controller import KettleController
 from cbpi.api.base import CBPiBase
 from cbpi.api.config import ConfigType
 import webbrowser
-
 import logging
 import os.path
 from os import listdir
@@ -21,8 +20,8 @@ import json
 import shortuuid
 import yaml
 from ..api.step import StepMove, StepResult, StepState
-
 import re
+import base64
 
 class UploadController:
 
@@ -59,6 +58,41 @@ class UploadController:
         except:
             return []
 
+    async def get_brewfather_recipes(self):
+        brewfather = True
+        result=[]
+        self.url="https://api.brewfather.app/v1/recipes"
+        brewfather_user_id = self.cbpi.config.get("brewfather_user_id", None)
+        if brewfather_user_id == "" or brewfather_user_id is None:
+            brewfather = False
+
+        brewfather_api_key = self.cbpi.config.get("brewfather_api_key", None)
+        if brewfather_api_key == "" or brewfather_api_key is None:
+            brewfather = False
+
+        if brewfather == True:
+            encodedData = base64.b64encode(bytes(f"{brewfather_user_id}:{brewfather_api_key}", "ISO-8859-1")).decode("ascii")
+            headers={"Authorization": "Basic %s" % encodedData}
+
+            async with aiohttp.ClientSession(headers=headers) as bf_session:
+                async with bf_session.get(self.url) as r:
+                    bf_recipe_list = await r.json()
+                await bf_session.close()
+
+            if bf_recipe_list:
+                for row in bf_recipe_list:
+                    recipe_id = row['_id']
+                    name = row['name']
+                    element = {'value': recipe_id, 'label': name}
+                    result.append(element)
+                return result
+            else:
+                return []
+
+        else:
+            return []
+
+        
     def get_creation_path(self):
         creation_path = self.cbpi.config.get("RECIPE_CREATION_PATH", "upload")
         path = {'path': 'upload'} if creation_path == '' else {'path': creation_path}
@@ -191,13 +225,20 @@ class UploadController:
                     AutoNext = "No"
                     await self.create_step(step_type, step_name, step_kettle, step_timer, step_temp, AutoMode, sensor, Notification, AutoNext)
 
+
                 c.execute('SELECT Kochdauer FROM Sud WHERE ID = ?', (Recipe_ID,))
                 row = c.fetchone()
                 step_time = str(int(row[0]))
 
+                logging.info("Boil Time: {}".format(step_time))
+
                 FirstWortFlag = self.getFirstWortKBH(Recipe_ID)
 
+                logging.info(FirstWortFlag)
+
                 BoilTimeAlerts = self.getBoilAlertsKBH(Recipe_ID)
+
+                logging.info(BoilTimeAlerts)
 
                 step_kettle = self.id
                 step_type = self.boil if self.boil != "" else "BoilStep"
@@ -215,6 +256,8 @@ class UploadController:
                 Hop4 = str(int(BoilTimeAlerts[3])) if len(BoilTimeAlerts) >= 4 else None
                 Hop5 = str(int(BoilTimeAlerts[4])) if len(BoilTimeAlerts) >= 5 else None
                 Hop6 = str(int(BoilTimeAlerts[5])) if len(BoilTimeAlerts) >= 6 else None
+
+
 
                 await self.create_step(step_type, step_name, step_kettle, step_time, step_temp, AutoMode, sensor, Notification, AutoNext, LidAlert, FirstWort, Hop1, Hop2, Hop3, Hop4, Hop5, Hop6)
  
@@ -505,6 +548,200 @@ class UploadController:
             
         return steps
 
+    async def bf_recipe_creation(self, Recipe_ID):
+        self.kettle = None
+
+        #Define MashSteps
+        self.mashin =  self.cbpi.config.get("steps_mashin", "MashStep")
+        self.mash = self.cbpi.config.get("steps_mash", "MashStep")
+        self.mashout = self.cbpi.config.get("steps_mashout", None) # Currently used only for the Braumeister
+        self.boil = self.cbpi.config.get("steps_boil", "BoilStep")
+        self.cooldown = self.cbpi.config.get("steps_cooldown", "WaitStep")
+
+        #get default boil temp from settings
+        self.BoilTemp = self.cbpi.config.get("steps_boil_temp", 98)
+
+        #get default cooldown temp alarm setting
+        self.CoolDownTemp = self.cbpi.config.get("steps_cooldown_temp", 25)
+
+        #get server port from settings and define url for api calls -> adding steps
+        self.port = str(self.cbpi.static_config.get('port',8000))
+        self.url="http://127.0.0.1:" + self.port + "/step2/"
+
+        self.TEMP_UNIT=self.cbpi.config.get("TEMP_UNIT", "C")
+
+        # get default Kettle from Settings
+        self.id = self.cbpi.config.get('MASH_TUN', None)
+        try:
+            self.kettle = self.cbpi.kettle.find_by_id(self.id)
+        except:
+            self.cbpi.notify('Recipe Upload', 'No default Kettle defined. Please specify default Kettle in settings', NotificationType.ERROR)
+        if self.id is not None or self.id != '':
+
+            brewfather = True
+            result=[]
+            self.bf_url="https://api.brewfather.app/v1/recipes/" + Recipe_ID
+            brewfather_user_id = self.cbpi.config.get("brewfather_user_id", None)
+            if brewfather_user_id == "" or brewfather_user_id is None:
+                brewfather = False
+
+            brewfather_api_key = self.cbpi.config.get("brewfather_api_key", None)
+            if brewfather_api_key == "" or brewfather_api_key is None:
+                brewfather = False
+
+            if brewfather == True:
+                encodedData = base64.b64encode(bytes(f"{brewfather_user_id}:{brewfather_api_key}", "ISO-8859-1")).decode("ascii")
+                headers={"Authorization": "Basic %s" % encodedData}
+                bf_recipe = ""
+
+                async with aiohttp.ClientSession(headers=headers) as bf_session:
+                    async with bf_session.get(self.bf_url) as r:
+                        bf_recipe = await r.json()
+                    await bf_session.close()
+
+            if bf_recipe !="":
+                RecipeName = bf_recipe['name']
+                BoilTime = bf_recipe['boilTime']
+                mash_steps=bf_recipe['mash']['steps']
+                hops=bf_recipe['hops']
+                try:
+                    miscs = bf_recipe['miscs']
+                except:
+                    miscs = None
+
+                FirstWort = "No"
+                for hop in hops:
+                    if hop['use'] == "First Wort":
+                        FirstWort="Yes"
+
+                # Create recipe in recipe Book with name of first recipe in xml file
+                self.recipeID = await self.cbpi.recipe.create(RecipeName)
+    
+                # send recipe to mash profile
+                await self.cbpi.recipe.brew(self.recipeID)
+
+                # remove empty recipe from recipe book
+                await self.cbpi.recipe.remove(self.recipeID)
+
+                # Mash Steps -> first step is different as it heats up to defined temp and stops with notification to add malt
+                # AutoMode is yes to start and stop automatic mode or each step
+                MashIn_Flag = True
+                step_kettle = self.id
+                for step in mash_steps:
+                    step_name = step['name']
+                    step_timer = str(int(step['stepTime']))
+
+                    if self.TEMP_UNIT == "C":
+                        step_temp = str(int(step['stepTemp']))
+                    else:
+                        step_temp = str(round((9.0 / 5.0 * int(step['stepTemp']) + 32)))
+
+                    sensor = self.kettle.sensor
+                    if MashIn_Flag == True and int(step_timer) == 0:
+                        step_type = self.mashin if self.mashin != "" else "MashInStep"
+                        AutoMode = "Yes" if step_type == "MashInStep" else "No"
+                        Notification = "Target temperature reached. Please add malt."
+                        MashIn_Flag = False
+                    else:
+                        step_type = self.mash if self.mash != "" else "MashStep"
+                        AutoMode = "Yes" if step_type == "MashStep" else "No"
+                        Notification = ""
+                    await self.create_step(step_type, step_name, step_kettle, step_timer, step_temp, AutoMode, sensor, Notification)
+
+                # MashOut -> Simple step that sends notification and waits for user input to move to next step (AutoNext=No)
+                if self.mashout == "NotificationStep":
+                    step_kettle = self.id
+                    step_type = self.mashout
+                    step_name = "Lautering"
+                    step_timer = ""
+                    step_temp = ""
+                    AutoMode = ""
+                    sensor = ""
+                    Notification = "Mash Process completed. Please start lautering and press next to start boil."
+                    AutoNext = "No"
+                    await self.create_step(step_type, step_name, step_kettle, step_timer, step_temp, AutoMode, sensor, Notification, AutoNext)
+
+                # Boil step including hop alarms and alarm for first wort hops -> Automode is set tu yes
+                self.BoilTimeAlerts = self.getBoilAlertsBF(hops,miscs)
+
+                step_kettle = self.id
+                step_time = str(int(BoilTime))
+                step_type = self.boil if self.boil != "" else "BoilStep"
+                step_name = "Boil Step"
+                step_temp = self.BoilTemp
+                AutoMode = "Yes" if step_type == "BoilStep" else "No"
+                sensor = self.kettle.sensor
+                Notification = ""
+                AutoNext = ""
+                LidAlert = "Yes"
+                Hop1 = str(int(self.BoilTimeAlerts[0])) if len(self.BoilTimeAlerts) >= 1 else None
+                Hop2 = str(int(self.BoilTimeAlerts[1])) if len(self.BoilTimeAlerts) >= 2 else None
+                Hop3 = str(int(self.BoilTimeAlerts[2])) if len(self.BoilTimeAlerts) >= 3 else None       
+                Hop4 = str(int(self.BoilTimeAlerts[3])) if len(self.BoilTimeAlerts) >= 4 else None
+                Hop5 = str(int(self.BoilTimeAlerts[4])) if len(self.BoilTimeAlerts) >= 5 else None 
+                Hop6 = str(int(self.BoilTimeAlerts[5])) if len(self.BoilTimeAlerts) >= 6 else None
+
+
+                await self.create_step(step_type, step_name, step_kettle, step_time, step_temp, AutoMode, sensor, Notification, AutoNext, LidAlert, FirstWort, Hop1, Hop2, Hop3, Hop4, Hop5, Hop6)
+
+
+                # Add Waitstep as Whirlpool
+                if self.cooldown != "WaiStep" and self.cooldown !="":
+                    step_type = "WaitStep"
+                    step_name = "Whirlpool"
+                    cooldown_sensor = ""
+                    step_timer = "15"
+                    step_temp = ""
+                    AutoMode = ""
+
+                    await self.create_step(step_type, step_name, step_kettle, step_timer, step_temp, AutoMode, cooldown_sensor)
+
+                # CoolDown step is sending a notification when cooldowntemp is reached
+                step_type = self.cooldown if self.cooldown != "" else "WaitStep"
+                step_name = "CoolDown"
+                cooldown_sensor = ""
+                step_timer = "15"
+                step_temp = ""
+                AutoMode = ""
+                if step_type == "CooldownStep":
+                    cooldown_sensor = self.cbpi.config.get("steps_cooldown_sensor", None)
+                    if cooldown_sensor is None or cooldown_sensor == '':
+                        cooldown_sensor = self.kettle.sensor  # fall back to kettle sensor if no other sensor is specified
+                    step_kettle = self.id
+                    step_timer = ""                
+                    step_temp = self.CoolDownTemp
+            
+                await self.create_step(step_type, step_name, step_kettle, step_timer, step_temp, AutoMode, cooldown_sensor)
+
+                self.cbpi.notify('Brewfather App Recipe created: ', RecipeName, NotificationType.INFO)
+
+
+    def getBoilAlertsBF(self, hops, miscs):
+        alerts = []
+        for hop in hops:
+            use = hop['use']
+            ## Hops which are not used in the boil step should not cause alerts
+            if use != 'Aroma' and use != 'Boil':
+                continue
+            
+            alerts.append(float(hop['time']))
+        #There might also be miscelaneous additions during boild time
+        if miscs is not None:
+            for misc in miscs:
+                use = misc['use']
+                if use != 'Aroma' and use != 'Boil':
+                    continue
+
+                alerts.append(float(misc['time']))
+            
+        ## Dedupe and order the additions by their time, to prevent multiple alerts at the same time
+        alerts = sorted(list(set(alerts)))
+        ## CBP should have these additions in reverse
+        alerts.reverse()
+        
+        return alerts
+
+
     # function to create json to be send to api to add a step to the current mash profile. Currently all properties are send to each step which does not cuase an issue
     async def create_step(self, type, name, kettle, timer, temp, AutoMode, sensor, Notification = "", AutoNext = "", LidAlert = "", FirstWort = "", Hop1 = "", Hop2 = "", Hop3 = "", Hop4 = "", Hop5 = "", Hop6=""):
         step_string = { "name": name,
@@ -535,5 +772,4 @@ class UploadController:
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.post(self.url, data=step) as response:
                 return await response.text()
-                await self.push_update()
-
+            await self.push_update()

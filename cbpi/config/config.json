@@ -27,6 +27,20 @@
         "type": "string",
         "value": ""
     },
+    "brewfather_api_key": {
+        "description": "Brewfather API Kay",
+        "name": "brewfather_api_key",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
+    "brewfather_user_id": {
+        "description": "Brewfather User ID",
+        "name": "brewfather_user_id",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
     "TEMP_UNIT": {
         "description": "Temperature Unit",
         "name": "TEMP_UNIT",

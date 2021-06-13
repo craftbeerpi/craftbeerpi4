@@ -101,6 +101,47 @@ class UploadHttpEndpoints():
         await self.controller.xml_recipe_creation(xml_id['id'])
         return web.Response(status=200)
 
+    @request_mapping(path='/bf', method="GET", auth_required=False)
+    async def get_bf_list(self, request):
+        """
+
+        ---
+        description: Get recipe list from Brewfather App
+        tags:
+        - Upload
+        responses:
+            "200":
+                description: successful operation
+        """
+
+        bf_list = await self.controller.get_brewfather_recipes()
+
+        return web.json_response(bf_list)
+
+    @request_mapping(path='/bf', method="POST", auth_required=False)
+    async def create_bf_recipe(self, request):
+        """
+
+        ---
+        description: Create recipe from Brewfather Web App with selected id
+        tags:
+        - Upload
+        parameters:
+        - name: "id"
+          in: "body"
+          description: "Recipe ID: {'id': ID}"
+          required: true
+          type: "string"
+
+        responses:
+            "200":
+                description: successful operation
+        """
+
+        bf_id = await request.json()
+        await self.controller.bf_recipe_creation(bf_id['id'])
+        return web.Response(status=200)
+
     @request_mapping(path="/getpath", auth_required=False)
     async def http_getpath(self, request):
         
