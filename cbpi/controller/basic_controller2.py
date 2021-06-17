@@ -107,14 +107,14 @@ class BasicController:
             logging.error("{} Cant start {} - {}".format(self.name, id, e))
 
     def get_types(self):
-        logging.info("{} Get Types".format(self.name))
+#        logging.info("{} Get Types".format(self.name))
         result = {}
         for key, value in self.types.items():
             result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
         return result
 
     def get_state(self):
-        logging.info("{} Get State".format(self.name))
+#        logging.info("{} Get State".format(self.name))
         return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types()}
 
     async def add(self, item):

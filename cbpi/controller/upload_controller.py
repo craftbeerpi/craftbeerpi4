@@ -312,7 +312,7 @@ class UploadController:
 
                 step_string = { "name": step_name,
                                 "props": {
-                                        "AutoMode": "Yes" if step_type == "MashInStep" else "No",
+                                        "AutoMode": "Yes" if step_type == "MashInStep" or step_type == "MashStep" else "No",
                                         "Kettle": self.id,
                                         "Sensor": self.kettle.sensor,
                                         "Temp": step_temp,
@@ -459,7 +459,7 @@ class UploadController:
 
                     step_string = { "name": step_name,
                                     "props": {
-                                        "AutoMode": "Yes" if step_type == "MashInStep" else "No",
+                                        "AutoMode": "Yes" if step_type == "MashInStep" or step_type == "MashStep" else "No",
                                         "Kettle": self.id,
                                         "Sensor": self.kettle.sensor,
                                         "Temp": step_temp,
