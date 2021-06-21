@@ -34,6 +34,7 @@ setup(name='cbpi',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
           'asyncio-mqtt',
+          'numpy==1.20.3',
           'scipy',
           'cbpi4ui',
           'RPi.GPIO; sys_platform == "linux"'
