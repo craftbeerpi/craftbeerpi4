@@ -57,6 +57,22 @@
         "type": "select",
         "value": "C"
     },
+    "AutoMode": {
+        "description": "Use AutoMode in steps",
+        "name": "AutoMode",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
     "steps_boil": {
         "description": "Boil step type",
         "name": "steps_boil",

@@ -194,7 +194,7 @@ class UploadController:
                     step_type = self.mashin if self.mashin != "" else "MashInStep"
                     step_string = { "name": "MashIn",
                                     "props": {
-                                        "AutoMode": "Yes" if step_type == "MashInStep" else "No",
+                                        "AutoMode": self.AutoMode,
                                         "Kettle": self.id,
                                         "Sensor": self.kettle.sensor,
                                         "Temp": mashin_temp,
@@ -211,7 +211,7 @@ class UploadController:
                     step_type = self.mash if self.mash != "" else "MashStep"
                     step_string = { "name": str(row[0]),
                                     "props": {
-                                        "AutoMode": "Yes" if step_type == "MashStep" else "No",
+                                        "AutoMode": self.AutoMode,
                                         "Kettle": self.id,
                                         "Sensor": self.kettle.sensor,
                                         "Temp": str(int(row[1])) if self.TEMP_UNIT == "C" else str(round(9.0 / 5.0 * int(row[1]) + 32)),
@@ -243,7 +243,7 @@ class UploadController:
                 step_type = self.boil if self.boil != "" else "BoilStep"
                 step_string = { "name": "Boil Step",
                             "props": {
-                                "AutoMode": "Yes" if step_type == "BoilStep" else "No",
+                                "AutoMode": self.AutoMode,
                                 "Kettle": self.id,
                                 "Sensor": self.kettle.sensor,
                                 "Temp": int(self.BoilTemp),
@@ -312,7 +312,7 @@ class UploadController:
 
                 step_string = { "name": step_name,
                                 "props": {
-                                        "AutoMode": "Yes" if step_type == "MashInStep" or step_type == "MashStep" else "No",
+                                        "AutoMode": self.AutoMode,
                                         "Kettle": self.id,
                                         "Sensor": self.kettle.sensor,
                                         "Temp": step_temp,
@@ -351,7 +351,7 @@ class UploadController:
 
             step_string = { "name": "Boil Step",
                             "props": {
-                                "AutoMode": "Yes" if step_type == "BoilStep" else "No",
+                                "AutoMode": self.AutoMode,
                                 "Kettle": step_kettle,
                                 "Sensor": sensor,
                                 "Temp": step_temp,
@@ -449,17 +449,15 @@ class UploadController:
                     sensor = self.kettle.sensor
                     if MashIn_Flag == True and int(step_timer) == 0:
                         step_type = self.mashin if self.mashin != "" else "MashInStep"
-                        AutoMode = "Yes" if step_type == "MashInStep" else "No"
                         Notification = "Target temperature reached. Please add malt."
                         MashIn_Flag = False
                     else:
                         step_type = self.mash if self.mash != "" else "MashStep"
-                        AutoMode = "Yes" if step_type == "MashStep" else "No"
                         Notification = ""
 
                     step_string = { "name": step_name,
                                     "props": {
-                                        "AutoMode": "Yes" if step_type == "MashInStep" or step_type == "MashStep" else "No",
+                                        "AutoMode": self.AutoMode,
                                         "Kettle": self.id,
                                         "Sensor": self.kettle.sensor,
                                         "Temp": step_temp,
@@ -500,7 +498,7 @@ class UploadController:
 
                 step_string = { "name": "Boil Step",
                             "props": {
-                                "AutoMode": "Yes" if step_type == "BoilStep" else "No",
+                                "AutoMode": self.AutoMode,
                                 "Kettle": step_kettle,
                                 "Sensor": sensor,
                                 "Temp": step_temp,
@@ -628,6 +626,7 @@ class UploadController:
         self.kettle = None
         #Define MashSteps
         self.TEMP_UNIT = self.cbpi.config.get("TEMP_UNIT", "C")
+        self.AutoMode = self.cbpi.config.get("AutoMode", "Yes")
         self.mashin =  self.cbpi.config.get("steps_mashin", "MashInStep")
         self.mash = self.cbpi.config.get("steps_mash", "MashStep") 
         self.mashout = self.cbpi.config.get("steps_mashout", None) # Currently used only for the Braumeister 
@@ -654,7 +653,8 @@ class UploadController:
                           "cooldown": str(self.cooldown),
                           "boiltemp": str(self.BoilTemp),
                           "cooldowntemp": str(self.CoolDownTemp),
-                          "temp_unit": str(self.TEMP_UNIT)
+                          "temp_unit": str(self.TEMP_UNIT),
+                          "AutoMode": str(self.AutoMode)
                         }
         return config_values
 
