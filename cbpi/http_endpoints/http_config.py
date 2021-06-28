@@ -2,7 +2,7 @@ from aiohttp import web
 from cbpi.api import *
 
 from cbpi.utils import json_dumps
-
+import logging
 
 
 class ConfigHttpEndpoints:
@@ -58,7 +58,7 @@ class ConfigHttpEndpoints:
         """
         return web.json_response(self.controller.cache, dumps=json_dumps)
 
-    @request_mapping(path="/{name}/", auth_required=False)
+    @request_mapping(path="/{name}/", method="POST", auth_required=False)
     async def http_paramter(self, request) -> web.Response:
         """
         ---
@@ -76,7 +76,7 @@ class ConfigHttpEndpoints:
                 description: successful operation
         """
         name = request.match_info['name']
-        if name not in self.cache:
-            raise CBPiException("Parameter %s not found" % name)
-
-        return web.json_response(self.cache.get(name), dumps=json_dumps)
+#        if name not in self.cache:
+#            raise CBPiException("Parameter %s not found" % name)
+        data = self.controller.get(name)
+        return web.json_response(self.controller.get(name), dumps=json_dumps)
