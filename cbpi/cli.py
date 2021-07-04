@@ -54,6 +54,11 @@ def create_config_file():
         srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
         destfile = os.path.join(".", "config", "dashboard")
         shutil.copy(srcfile, destfile)
+
+    if os.path.exists(os.path.join(".", 'config', "carftbeerpi.service")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "craftbeerpi.service")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
     print("Config Folder created")
 
 
@@ -119,6 +124,26 @@ def plugins_add(package_name):
     if package_name is None:
         print("Pleaes provide a plugin Name")
         return
+
+    if package_name == 'autostart':
+        print("Add cradtbeerpi.service to systemd")
+        try:
+            if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is False:
+                srcfile = os.path.join(".", "config", "craftbeerpi.service")
+                destfile = os.path.join("/etc/systemd/system")
+                shutil.copy(srcfile, destfile)
+                print("Copied craftbeerpi.service to /etc/systemd/system")
+                os.system('systemctl enable craftbeerpi.service')
+                print('Enabled craftbeerpi service')
+                os.system('systemctl start craftbeerpi.service')
+                print('Started craftbeerpi.service')
+            else:
+                print("craftbeerpi.service is already located in /etc/systemd/system")
+        except Exception as e:
+            print(e)
+            return
+        return
+
     try:
         with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
@@ -142,6 +167,31 @@ def plugin_remove(package_name):
     if package_name is None:
         print("Pleaes provide a plugin Name")
         return
+
+    if package_name == 'autostart':
+        print("Remove cradtbeerpi.service from systemd")
+        try:
+            status = os.popen('systemctl list-units --type=service --state=running | grep craftbeerpi.service').read()
+            if status.find("craftbeerpi.service") != -1:
+                os.system('systemctl stop craftbeerpi.service')
+                print('Stopped craftbeerpi service')
+                os.system('systemctl disable craftbeerpi.service')
+                print('Removed craftbeerpi.service as service')
+            else:
+                print('craftbeerpi.service service is not running')
+
+            if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is True:
+                os.remove(os.path.join("/etc/systemd/system","craftbeerpi.service")) 
+                print("Deleted craftbeerpi.service from /etc/systemd/system")
+            else:
+                print("craftbeerpi.service is not located in /etc/systemd/system")
+        except Exception as e:
+            print(e)
+            return
+        return
+
+
+
     try:
         with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
