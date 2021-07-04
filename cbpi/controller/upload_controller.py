@@ -58,7 +58,7 @@ class UploadController:
         except:
             return []
 
-    async def get_brewfather_recipes(self):
+    async def get_brewfather_recipes(self,offset=0):
         brewfather = True
         result=[]
         self.url="https://api.brewfather.app/v1/recipes"
@@ -73,7 +73,7 @@ class UploadController:
         if brewfather == True:
             encodedData = base64.b64encode(bytes(f"{brewfather_user_id}:{brewfather_api_key}", "ISO-8859-1")).decode("ascii")
             headers={"Authorization": "Basic %s" % encodedData}
-            parameters={"limit": 50}
+            parameters={"limit": 50, 'offset': offset}
             async with aiohttp.ClientSession(headers=headers) as bf_session:
                 async with bf_session.get(self.url, params=parameters) as r:
                     bf_recipe_list = await r.json()
