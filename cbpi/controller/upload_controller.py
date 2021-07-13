@@ -438,7 +438,13 @@ class UploadController:
                 MashIn_Flag = True
                 step_kettle = self.id
                 for step in mash_steps:
-                    step_name = step['name']
+                    try:
+                        step_name = step['name']
+                        if step_name == "":
+                            step_name = "MashStep" 
+                    except:
+                        step_name = "MashStep"
+
                     step_timer = str(int(step['stepTime']))
 
                     if self.TEMP_UNIT == "C":

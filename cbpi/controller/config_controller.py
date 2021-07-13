@@ -35,7 +35,7 @@ class ConfigController:
 
     def get(self, name, default=None):
         self.logger.debug("GET CONFIG VALUE %s (default %s)" % (name, default))
-        if name in self.cache and self.cache[name].value is not None:
+        if name in self.cache and self.cache[name].value is not None and self.cache[name].value != "":
             return self.cache[name].value
         else:
             return default
