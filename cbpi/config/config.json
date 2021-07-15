@@ -20,6 +20,22 @@
         "type": "kettle",
         "value": ""
     },
+    "AddMashInStep": {
+        "description": "Add MashIn Step automatically if not defined in recipe",
+        "name": "AddMashInStep",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
     "RECIPE_CREATION_PATH": {
         "description": "API path to creation plugin. Default: empty",
         "name": "RECIPE_CREATION_PATH",

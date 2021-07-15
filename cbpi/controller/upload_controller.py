@@ -208,6 +208,24 @@ class UploadController:
                     await self.create_step(step_string)
 
                 for row in c.execute('SELECT Name, Temp, Dauer FROM Rasten WHERE Typ <> 0 AND SudID = ?', (Recipe_ID,)):
+                    if mashin_temp is None and self.addmashin == "Yes":
+                        step_type = self.mashin if self.mashin != "" else "MashInStep"
+                        step_string = { "name": "MashIn",
+                                    "props": {
+                                        "AutoMode": self.AutoMode,
+                                        "Kettle": self.id,
+                                        "Sensor": self.kettle.sensor,
+                                        "Temp": str(int(row[1])) if self.TEMP_UNIT == "C" else str(round(9.0 / 5.0 * int(row[1]) + 32)),
+                                        "Timer": "0",
+                                        "Notification": "Target temperature reached. Please add malt."
+                                        },
+                                    "status_text": "",
+                                    "status": "I",
+                                    "type": step_type
+                                    }
+                        await self.create_step(step_string)
+
+
                     step_type = self.mash if self.mash != "" else "MashStep"
                     step_string = { "name": str(row[0]),
                                     "props": {
@@ -302,10 +320,38 @@ class UploadController:
                 step_timer = str(int(row.get("timer")))
                 step_temp = str(int(row.get("temp")))
                 sensor = self.kettle.sensor
-                if MashIn_Flag == True and row.get("timer") == 0:
-                    step_type = self.mashin if self.mashin != "" else "MashInStep"
-                    Notification = "Target temperature reached. Please add malt."
-                    MashIn_Flag = False
+                if MashIn_Flag == True:
+                    if row.get("timer") == 0:
+                        step_type = self.mashin if self.mashin != "" else "MashInStep"
+                        Notification = "Target temperature reached. Please add malt."
+                        MashIn_Flag = False
+                        if step_name is None or step_name == "":
+                            step_name = "MashIn"
+                    elif self.addmashin == "Yes":
+                        step_type = self.mashin if self.mashin != "" else "MashInStep"
+                        Notification = "Target temperature reached. Please add malt."
+                        MashIn_Flag = False
+                        step_string = { "name": "MashIn",
+                                        "props": {
+                                            "AutoMode": self.AutoMode,
+                                            "Kettle": self.id,
+                                            "Sensor": self.kettle.sensor,
+                                            "Temp": step_temp,
+                                            "Timer": 0,
+                                            "Notification": Notification
+                                            },
+                                         "status_text": "",
+                                         "status": "I",
+                                         "type": step_type
+                                        }
+                        await self.create_step(step_string)
+
+                        step_type = self.mash if self.mash != "" else "MashStep"
+                        Notification = ""
+                    else:
+                        step_type = self.mash if self.mash != "" else "MashStep"
+                        Notification = ""
+
                 else:
                     step_type = self.mash if self.mash != "" else "MashStep"
                     Notification = ""
@@ -441,9 +487,10 @@ class UploadController:
                     try:
                         step_name = step['name']
                         if step_name == "":
-                            step_name = "MashStep" 
+                            step_name = "MashStep"
                     except:
                         step_name = "MashStep"
+
 
                     step_timer = str(int(step['stepTime']))
 
@@ -453,10 +500,38 @@ class UploadController:
                         step_temp = str(round((9.0 / 5.0 * int(step['stepTemp']) + 32)))
 
                     sensor = self.kettle.sensor
-                    if MashIn_Flag == True and int(step_timer) == 0:
-                        step_type = self.mashin if self.mashin != "" else "MashInStep"
-                        Notification = "Target temperature reached. Please add malt."
-                        MashIn_Flag = False
+                    if MashIn_Flag == True: 
+
+                        if int(step_timer) == 0:
+                            step_type = self.mashin if self.mashin != "" else "MashInStep"
+                            Notification = "Target temperature reached. Please add malt."
+                            MashIn_Flag = False
+
+                        elif self.addmashin == "Yes":
+                            step_type = self.mashin if self.mashin != "" else "MashInStep"
+                            Notification = "Target temperature reached. Please add malt."
+                            MashIn_Flag = False
+                            step_string = { "name": "MashIn",
+                                        "props": {
+                                            "AutoMode": self.AutoMode,
+                                            "Kettle": self.id,
+                                            "Sensor": self.kettle.sensor,
+                                            "Temp": step_temp,
+                                            "Timer": 0,
+                                            "Notification": Notification
+                                            },
+                                         "status_text": "",
+                                         "status": "I",
+                                         "type": step_type
+                                        }
+                            await self.create_step(step_string)
+
+                            step_type = self.mash if self.mash != "" else "MashStep"
+                            Notification = ""
+                        else:
+                            step_type = self.mash if self.mash != "" else "MashStep"
+                            Notification = ""
+
                     else:
                         step_type = self.mash if self.mash != "" else "MashStep"
                         Notification = ""
@@ -645,6 +720,9 @@ class UploadController:
         self.CoolDownTemp = self.cbpi.config.get("steps_cooldown_temp", 25)
         # get default Kettle from Settings       
         self.id = self.cbpi.config.get('MASH_TUN', None)
+        # If next parameter is Yes, MashIn Ste will be added before first mash step if not included in recipe
+        self.addmashin = self.cbpi.config.get('AddMashInStep', "Yes")
+
         try:
             self.kettle = self.cbpi.kettle.find_by_id(self.id) 
         except:
