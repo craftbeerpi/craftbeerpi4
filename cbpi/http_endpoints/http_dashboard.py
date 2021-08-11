@@ -109,4 +109,16 @@ class DashBoardHttpEndpoints:
   
       
         return web.json_response(await self.cbpi.dashboard.get_custom_widgets(), dumps=json_dumps)
-      
+
+    @request_mapping(path="/numbers", method="GET", auth_required=False)
+    async def get_dashboard_numbers(self, request):
+        """
+        ---
+        description: Get Dashboard Numbers
+        tags:
+        - Dashboard
+        responses:
+            "200":
+                description: successful operation
+        """
+        return web.json_response(await self.cbpi.dashboard.get_dashboard_numbers(), dumps=json_dumps)

@@ -33,6 +33,8 @@ class ConfigUpdate(CBPiExtension):
         mashout_step = self.cbpi.config.get("steps_mashout", None)
         boil_step = self.cbpi.config.get("steps_boil", None)
         cooldown_step = self.cbpi.config.get("steps_cooldown", None)
+        max_dashboard_number = self.cbpi.config.get("max_dashboard_number", None)
+
 
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
@@ -90,7 +92,24 @@ class ConfigUpdate(CBPiExtension):
             except:
                 logger.warning('Unable to update database')
 
-        ## Check if AtuoMode for Steps is in config
+        if max_dashboard_number is None:
+            logger.info("INIT Max Dashboard Numbers for multiple dashboards")
+            try:
+                await self.cbpi.config.add("max_dashboard_number", 4, ConfigType.SELECT, "Max Number of Dashboards",
+                                                                                                [{"label": "1", "value": 1},
+                                                                                                {"label": "2", "value": 2},
+                                                                                                {"label": "3", "value": 3},
+                                                                                                {"label": "4", "value": 4},
+                                                                                                {"label": "5", "value": 5},
+                                                                                                {"label": "6", "value": 6},
+                                                                                                {"label": "7", "value": 7},
+                                                                                                {"label": "8", "value": 8},
+                                                                                                {"label": "9", "value": 9},
+                                                                                                {"label": "10", "value": 10}])
+            except:
+                logger.warning('Unable to update database')
+
+       ## Check if AtuoMode for Steps is in config
         AutoMode = self.cbpi.config.get("AutoMode", None)
         if AutoMode is None:
             logger.info("INIT AutoMode")
