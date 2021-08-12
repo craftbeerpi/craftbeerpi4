@@ -1,5 +1,5 @@
 import logging
-
+import os
 
 import aiohttp
 
@@ -18,4 +18,12 @@ class SystemController:
         pass
 
 
+    async def restart(self):
+        logging.info("RESTART")
+        os.system('systemctl reboot') 
+        pass
 
+    async def shutdown(self):
+        logging.info("SHUTDOWN")
+        os.system('systemctl poweroff') 
+        pass

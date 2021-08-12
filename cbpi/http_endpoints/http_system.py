@@ -1,7 +1,6 @@
 from aiohttp import web
 from cbpi.job.aiohttp import get_scheduler_from_app
 import logging
-import os
 from cbpi.api import request_mapping
 from cbpi.utils import json_dumps
 from cbpi import __version__
@@ -10,6 +9,7 @@ class SystemHttpEndpoints:
 
     def __init__(self,cbpi):
         self.cbpi = cbpi
+        self.controller : SystemController = cbpi.system
         self.cbpi.register(self, url_prefix="/system")
 
     @request_mapping("/", method="GET", auth_required=False)
@@ -95,10 +95,8 @@ class SystemHttpEndpoints:
             "200":
                 description: successful operation
         """
-        logging.info("RESTART")
-        os.system('systemctl reboot') 
-        pass
-        return web.Response(text="NOT IMPLEMENTED")
+        await self.controller.restart()
+        return web.Response(text="RESTART")
 
     @request_mapping("/shutdown", method="POST", name="ShutdownSerer", auth_required=False)
     async def shutdown(self, request):
@@ -111,7 +109,5 @@ class SystemHttpEndpoints:
             "200":
                 description: successful operation
         """
-        logging.info("SHUTDOWN")
-        os.system('systemctl poweroff') 
-        pass
-        return web.Response(text="NOT IMPLEMENTED")
+        await self.controller.shutdown()
+        return web.Response(text="SHUTDOWN")
