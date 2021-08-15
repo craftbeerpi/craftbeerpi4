@@ -239,6 +239,42 @@ class WaitStep(CBPiStep):
         return StepResult.DONE
 
 
+@parameters([Property.Select(label="toggle_type", options=["On", "Off"],description="Choose if Actor shuold be switched on or off in this step"),
+             Property.Actor(label="Actor",description="Actor that should be toggled during this step")])
+class ToggleStep(CBPiStep):
+    async def on_timer_done(self, timer):
+        self.summary = ""
+        await self.next()
+
+    async def on_timer_update(self, timer, seconds):
+        self.summary = Timer.format_time(seconds)
+        await self.push_update()
+
+    async def on_start(self):
+        if self.timer is None:
+            self.timer = Timer(1, on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer.start()
+        self.type=self.props.get("toggle_type","Off")
+        self.Actor=self.props.get("Actor", None)
+        if self.Actor is not None and self.type == "On":
+            await self.actor_on(self.Actor)
+        if self.Actor is not None and self.type == "Off":
+            await self.actor_off(self.Actor)
+
+
+    async def on_stop(self):
+        await self.timer.stop()
+        self.summary = ""
+        await self.push_update()
+
+    async def reset(self):
+        self.timer = Timer(1, on_update=self.on_timer_update, on_done=self.on_timer_done)
+
+    async def run(self):
+        while self.running == True:
+            await asyncio.sleep(1)
+        return StepResult.DONE
+
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True),
              Property.Actor(label="Actor")])
 class ActorStep(CBPiStep):
@@ -484,5 +520,6 @@ def setup(cbpi):
     cbpi.plugin.register("BoilStep", BoilStep)
     cbpi.plugin.register("CooldownStep", CooldownStep)
     cbpi.plugin.register("WaitStep", WaitStep)
+    cbpi.plugin.register("ToggleStep", ToggleStep)
     cbpi.plugin.register("ActorStep", ActorStep)
     cbpi.plugin.register("NotificationStep", NotificationStep)
