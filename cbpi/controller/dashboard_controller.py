@@ -56,3 +56,11 @@ class DashboardController:
     async def get_dashboard_numbers(self):
         max_dashboard_number = self.cbpi.config.get("max_dashboard_number", 4)
         return max_dashboard_number
+
+    async def get_current_dashboard(self):
+        current_dashboard_number = self.cbpi.config.get("current_dashboard_number", 1)
+        return current_dashboard_number
+
+    async def set_current_dashboard(self, dashboard_id=1):
+        await self.cbpi.config.set("current_dashboard_number", dashboard_id)
+        return {"status": "OK"}

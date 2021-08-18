@@ -34,7 +34,7 @@ class ConfigUpdate(CBPiExtension):
         boil_step = self.cbpi.config.get("steps_boil", None)
         cooldown_step = self.cbpi.config.get("steps_cooldown", None)
         max_dashboard_number = self.cbpi.config.get("max_dashboard_number", None)
-
+        current_dashboard_number = self.cbpi.config.get("current_dashboard_number", None)
 
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
@@ -106,6 +106,13 @@ class ConfigUpdate(CBPiExtension):
                                                                                                 {"label": "8", "value": 8},
                                                                                                 {"label": "9", "value": 9},
                                                                                                 {"label": "10", "value": 10}])
+            except:
+                logger.warning('Unable to update database')
+
+        if current_dashboard_number is None:
+            logger.info("INIT Current Dashboard Number")
+            try:
+                await self.cbpi.config.add("current_dashboard_number", 1, ConfigType.NUMBER, "Number of current Dashboard")
             except:
                 logger.warning('Unable to update database')
 

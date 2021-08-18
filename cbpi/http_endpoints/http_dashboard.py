@@ -122,3 +122,38 @@ class DashBoardHttpEndpoints:
                 description: successful operation
         """
         return web.json_response(await self.cbpi.dashboard.get_dashboard_numbers(), dumps=json_dumps)
+
+    @request_mapping(path="/current", method="GET", auth_required=False)
+    async def get_current_dashboard(self, request):
+        """
+        ---
+        description: Get Dashboard Numbers
+        tags:
+        - Dashboard
+        responses:
+            "200":
+                description: successful operation
+        """
+        return web.json_response(await self.cbpi.dashboard.get_current_dashboard(), dumps=json_dumps)
+
+    @request_mapping(path="/{id}/current", method="POST", auth_required=False)
+    async def set_current_dashboard(self, request):
+        """
+        ---
+        description: Set Current Dashboard Number
+        tags:
+        - Dashboard
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Dashboard ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """
+        dashboard_id = int(request.match_info['id'])
+        return web.json_response(await self.cbpi.dashboard.set_current_dashboard(dashboard_id))
+
