@@ -1,6 +1,7 @@
 from cbpi.api.dataclasses import Props, Sensor
 from aiohttp import web
 from cbpi.api import *
+import logging
 auth = False
 
 class SensorHttpEndpoints():
@@ -207,3 +208,24 @@ class SensorHttpEndpoints():
         await self.controller.call_action(actor_id, data.get("name"), data.get("parameter"))
 
         return web.Response(status=204)
+
+    @request_mapping(path="/{id}", method="GET", auth_required=False)
+    async def get_value(self, request):
+        """
+
+        ---
+        description: Get Sensor Value 
+        tags:
+        - Sensor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Sensor ID"
+          type: "string"
+          required: true
+        """
+        id = request.match_info['id']
+        sensor_value = self.controller.get_sensor_value(id)
+        logging.info(sensor_value)
+        return web.json_response(data=sensor_value)
+
