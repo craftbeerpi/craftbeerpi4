@@ -1,9 +1,13 @@
 from aiohttp import web
+from aiohttp import streamer
 from cbpi.job.aiohttp import get_scheduler_from_app
 import logging
 from cbpi.api import request_mapping
 from cbpi.utils import json_dumps
 from cbpi import __version__
+import pathlib
+import os
+import json
 
 class SystemHttpEndpoints:
 
@@ -88,7 +92,7 @@ class SystemHttpEndpoints:
     async def restart(self, request):
         """
         ---
-        description: Restart System - Not implemented
+        description: Restart System
         tags:
         - System
         responses:
@@ -102,7 +106,7 @@ class SystemHttpEndpoints:
     async def shutdown(self, request):
         """
         ---
-        description: Shutdown System - Not implemented
+        description: Shutdown System
         tags:
         - System
         responses:
@@ -111,3 +115,64 @@ class SystemHttpEndpoints:
         """
         await self.controller.shutdown()
         return web.Response(text="SHUTDOWN")
+
+    @request_mapping("/backup", method="GET", name="BackupConfig", auth_required=False)
+    async def backup(self, request):
+        """
+        ---
+        description: Zip and download Config Folder 
+        tags:
+        - System
+        responses:
+            "200":
+                description: successful operation
+                content:  # Response body
+                application/zip:  # Media type
+        """
+        await self.controller.backupConfig()
+        filename = "cbpi4_config.zip"
+        file_name = pathlib.Path(os.path.join(".", filename))
+
+        response = web.StreamResponse(
+            status=200,
+            reason='OK',
+            headers={'Content-Type': 'application/zip'},
+        )
+        await response.prepare(request)
+        with open(file_name, 'rb') as file:
+            for line in file.readlines():
+                await response.write(line)
+
+        await response.write_eof()
+        return response
+
+    @request_mapping("/restore", method="POST", name="RestoreConfig", auth_required=False)
+    async def restore(self, request):
+        """
+        ---
+        description: Restore Config
+        tags:
+        - System
+        responses:
+            "200":
+                description: successful operation
+        """
+        logging.info("Restore Config")
+        data = await request.post()
+        logging.info("Data received")
+        await self.controller.restoreConfig(data)
+        return web.Response(status=200)
+
+    @request_mapping("/systeminfo", method="GET", name="SystemInfo", auth_required=False)
+    async def systeminfo(self, request):
+        """
+        ---
+        description: System Information
+        tags:
+        - System
+        responses:
+            "200":
+                description: successful operation
+        """
+        systeminfo = await self.controller.systeminfo()
+        return web.json_response(data=systeminfo)

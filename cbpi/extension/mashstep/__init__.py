@@ -64,7 +64,7 @@ class NotificationStep(CBPiStep):
 @parameters([Property.Number(label="Temp", configurable=True),
              Property.Sensor(label="Sensor"),
              Property.Kettle(label="Kettle"),
-             Property.Text(label="Notification",configurable = True, description = "Text for notification hen Temp is reached"),
+             Property.Text(label="Notification",configurable = True, description = "Text for notification when Temp is reached"),
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Kettlelogic automatically on and off -> Yes")])
 class MashInStep(CBPiStep):
 
@@ -72,11 +72,11 @@ class MashInStep(CBPiStep):
         await self.next()
 
     async def on_timer_done(self,timer):
-        self.summary = "MashIn Temp reached. Please add Malt."
+        self.summary = ""
         await self.push_update()
         if self.AutoMode == True:
             await self.setAutoMode(False)
-        self.cbpi.notify(self.name, self.props.get("Notification","Target Temp reached. Please klick next to move on."), action=[NotificationAction("Next Step", self.NextStep)])
+        self.cbpi.notify(self.name, self.props.get("Notification","Target Temp reached. Please add malt and klick next to move on."), action=[NotificationAction("Next Step", self.NextStep)])
 
     async def on_timer_update(self,timer, seconds):
         await self.push_update()

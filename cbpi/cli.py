@@ -332,7 +332,7 @@ def remove(name):
 @click.command()
 @click.argument('name')
 def create(name):
-    '''Deactivate Plugin'''
+    '''Create New Plugin'''
     plugin_create(name)
 
 
