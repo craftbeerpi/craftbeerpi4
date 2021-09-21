@@ -165,6 +165,15 @@ class ConfigUpdate(CBPiExtension):
             except:
                 logger.warning('Unable to update config')
 
+        ## Check if  Kettle for Boil, Whirlpool and Cooldown is in config
+        BoilKettle = self.cbpi.config.get("BoilKettle", None)
+        if BoilKettle is None:
+            logger.info("INIT BoilKettle")
+            try:
+                await self.cbpi.config.add("BoilKettle", "", ConfigType.KETTLE, "Define Kettle that is used for Boil, Whirlpool and Cooldown. If not selected, MASH_TUN will be used") 
+            except:
+                logger.warning('Unable to update config')
+
 
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)

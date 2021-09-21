@@ -262,7 +262,7 @@ class UploadController:
                 step_string = { "name": "Boil Step",
                             "props": {
                                 "AutoMode": self.AutoMode,
-                                "Kettle": self.id,
+                                "Kettle": self.boilid,
                                 "Sensor": self.kettle.sensor,
                                 "Temp": int(self.BoilTemp),
                                 "Timer": BoilTime,
@@ -388,7 +388,7 @@ class UploadController:
                 
             # Boil step including hop alarms and alarm for first wort hops -> Automode is set tu yes
             Hops = self.getBoilAlerts(hops, miscs, "xml")
-            step_kettle = self.id
+            step_kettle = self.boilid
             step_type = self.boil if self.boil != "" else "BoilStep"
             step_time = str(int(boil_time))
             step_temp = self.BoilTemp
@@ -570,7 +570,7 @@ class UploadController:
                 # Boil step including hop alarms and alarm for first wort hops -> Automode is set tu yes
                 Hops = self.getBoilAlerts(hops , miscs, "bf")
 
-                step_kettle = self.id
+                step_kettle = self.boilid
                 step_time = str(int(BoilTime))
                 step_type = self.boil if self.boil != "" else "BoilStep"
                 step_temp = self.BoilTemp
@@ -669,7 +669,7 @@ class UploadController:
         if self.cooldown != "WaiStep" and self.cooldown !="":
             step_string = { "name": "Whirlpool",
                             "props": {
-                                "Kettle": self.id,
+                                "Kettle": self.boilid,
                                 "Timer": "15"
                                 },
                             "status_text": "",
@@ -692,7 +692,7 @@ class UploadController:
             step_temp = int(self.CoolDownTemp)
             step_string = { "name": "Cooldown",
                             "props": {
-                                "Kettle": self.id,
+                                "Kettle": self.boilid,
                                 "Timer": step_timer,
                                 "Temp": step_temp,
                                 "Sensor": cooldown_sensor
@@ -705,6 +705,7 @@ class UploadController:
 
     def get_config_values(self):
         self.kettle = None
+        self.boilkettle = None
         #Define MashSteps
         self.TEMP_UNIT = self.cbpi.config.get("TEMP_UNIT", "C")
         self.AutoMode = self.cbpi.config.get("AutoMode", "Yes")
@@ -720,6 +721,9 @@ class UploadController:
         self.CoolDownTemp = self.cbpi.config.get("steps_cooldown_temp", 25)
         # get default Kettle from Settings       
         self.id = self.cbpi.config.get('MASH_TUN', None)
+        self.boilid = self.cbpi.config.get('BoilKettle', None)
+        if self.boilid is None:
+            self.boilid = self.id
         # If next parameter is Yes, MashIn Ste will be added before first mash step if not included in recipe
         self.addmashin = self.cbpi.config.get('AddMashInStep', "Yes")
 
@@ -727,8 +731,15 @@ class UploadController:
             self.kettle = self.cbpi.kettle.find_by_id(self.id) 
         except:
             self.cbpi.notify('Recipe Upload', 'No default Kettle defined. Please specify default Kettle in settings', NotificationType.ERROR)
+        try:
+            self.boilkettle = self.cbpi.kettle.find_by_id(self.boilid) 
+        except:
+            pass
+
         config_values = { "kettle": self.kettle,
                           "kettle_id": str(self.id),
+                          "boilkettle": self.boilkettle,
+                          "boilkettle_id": str(self.boilid),
                           "mashin": str(self.mashin),
                           "mash": str(self.mash),
                           "mashout": str(self.mashout),
@@ -740,6 +751,7 @@ class UploadController:
                           "temp_unit": str(self.TEMP_UNIT),
                           "AutoMode": str(self.AutoMode)
                         }
+        logging.info(config_values)
         return config_values
 
     async def create_recipe(self, name):
