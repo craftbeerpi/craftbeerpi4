@@ -15,6 +15,7 @@ import shutil
 import yaml
 import click
 from subprocess import call
+import zipfile
 
 from jinja2 import Template
 
@@ -102,6 +103,11 @@ def clear_db():
         os.remove(os.path.join(".", "craftbeerpi.db"))
         print("database Cleared")
 
+def recursive_chown(path, owner, group):
+    for dirpath, dirnames, filenames in os.walk(path):
+        shutil.chown(dirpath, owner, group)
+        for filename in filenames:
+            shutil.chown(os.path.join(dirpath, filename), owner, group)
 
 def check_for_setup():
     if os.path.exists(os.path.join(".", "config", "config.yaml")) is False:
@@ -116,6 +122,39 @@ def check_for_setup():
         print("Please run 'cbpi setup' before starting the server ")
         print("***************************************************")
         return False
+    backupfile = os.path.join(".", "restored_config.zip")
+    if os.path.exists(os.path.join(backupfile)) is True:
+        print("***************************************************")
+        print("Found backup of config. Starting restore")
+        required_content=['dashboard/', 'recipes/', 'upload/', 'config.json', 'config.yaml']
+        zip=zipfile.ZipFile(backupfile)
+        zip_content_list = zip.namelist()
+        zip_content = True
+        print("Checking content of zip file")
+        for content in required_content:
+            try:
+                check = zip_content_list.index(content)
+            except:
+                zip_content = False
+
+        if zip_content == True:
+            print("Found correct content. Starting Restore process")
+            output_path = pathlib.Path(os.path.join(".", 'config'))
+            print("Removing old config folder")
+            shutil.rmtree(output_path, ignore_errors=True) 
+            print("Extracting zip file to config folder")
+            zip.extractall(output_path)
+            print("Changing owner and group of config folder recursively to pi:pi")
+            recursive_chown(output_path, "pi", "pi")
+            print("Removing backup file")
+            os.remove(backupfile)
+        else:
+            print("Wrong Content in zip file. No restore possible")
+            print("Removing zip file")
+            os.remove(backupfile)
+        print("***************************************************")
+
+        return True 
     else:
         return True
 

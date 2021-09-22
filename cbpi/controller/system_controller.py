@@ -74,13 +74,11 @@ class SystemController:
                         except:
                             zip_content = False
                     if zip_content == True:
-                        output_path = pathlib.Path(os.path.join(".", 'config'))
-                        shutil.rmtree(output_path, ignore_errors=True) 
-                        zip.extractall(output_path)
-                        self.recursive_chown(output_path, "pi", "pi")
                         self.cbpi.notify("Success", "Config backup has been uploaded", NotificationType.SUCCESS)
+                        self.cbpi.notify("Action Required!", "Please restart the server", NotificationType.WARNING)
                     else:
                         self.cbpi.notify("Error", "Wrong content type. Upload failed", NotificationType.ERROR)
+                        os.remove(self.path)
             except:
                 self.cbpi.notify("Error", "Config backup upload failed", NotificationType.ERROR)
                 pass
