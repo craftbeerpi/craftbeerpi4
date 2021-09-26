@@ -229,3 +229,39 @@ class SensorHttpEndpoints():
         logging.info(sensor_value)
         return web.json_response(data=sensor_value)
 
+    @request_mapping(path="/{id}/action", method="POST", auth_required=auth)
+    async def http_action(self, request) -> web.Response:
+        """
+
+        ---
+        description: Call Action for Sensor 
+        tags:
+        - Sensor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: Update an actor
+          required: false
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              parameter:
+                type: object
+        responses:
+            "204":
+                description: successful operation
+        """
+        sensor_id = request.match_info['id']
+        data = await request.json()
+        print(data)
+        await self.controller.call_action(sensor_id, data.get("action"), data.get("parameter"))
+
+        return web.Response(status=204)

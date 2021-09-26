@@ -73,6 +73,7 @@ class MashInStep(CBPiStep):
 
     async def on_timer_done(self,timer):
         self.summary = ""
+        self.kettle.target_temp = 0
         await self.push_update()
         if self.AutoMode == True:
             await self.setAutoMode(False)
@@ -152,6 +153,7 @@ class MashStep(CBPiStep):
 
     async def on_timer_done(self,timer):
         self.summary = ""
+        self.kettle.target_temp = 0
         if self.AutoMode == True:
             await self.setAutoMode(False)
         self.cbpi.notify(self.name, 'Step finished', NotificationType.SUCCESS)
@@ -173,6 +175,10 @@ class MashStep(CBPiStep):
 
         if self.cbpi.kettle is not None and self.timer is None:
             self.timer = Timer(int(self.props.get("Timer",0)) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        elif self.cbpi.kettle is not None and self.timer:
+            self.timer.start()
+            self.timer.is_running = True
+
         self.summary = "Waiting for Target Temp"
         await self.push_update()
 
@@ -368,6 +374,9 @@ class BoilStep(CBPiStep):
 
         if self.cbpi.kettle is not None and self.timer is None:
             self.timer = Timer(int(self.props.get("Timer", 0)) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        elif self.cbpi.kettle is not None and self.timer:
+            self.timer.start()
+            self.timer.is_running = True
 
         self.summary = "Waiting for Target Temp"
         if self.AutoMode == True:
