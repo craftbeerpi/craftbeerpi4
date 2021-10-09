@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 from cbpi import __version__
+import platform
 
 setup(name='cbpi',
       version=__version__,
@@ -37,9 +38,9 @@ setup(name='cbpi',
           'psutil==5.8.0',
           'numpy==1.20.3',
           'scipy',
-          'cbpi4ui',
-          'RPi.GPIO; sys_platform == "linux"'
-      ],
+          'cbpi4ui'] + (
+              ['RPi.GPIO'] if platform.uname()[1] == "raspberrypi" else [] ),
+
         dependency_links=[
         'https://testpypi.python.org/pypi',
         
