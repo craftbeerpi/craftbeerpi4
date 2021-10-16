@@ -1,6 +1,7 @@
 from aiohttp import web
 from cbpi.api import request_mapping
 from cbpi.utils import json_dumps
+import logging
 
 
 class PluginHttpEndpoints:
@@ -83,4 +84,5 @@ class PluginHttpEndpoints:
                 "405":
                     description: invalid HTTP Method
             """
-        return web.json_response(await self.cbpi.plugin.load_plugin_list(), dumps=json_dumps)
+        plugin_list = await self.cbpi.plugin.load_plugin_list()
+        return web.json_response(plugin_list, dumps=json_dumps)

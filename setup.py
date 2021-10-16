@@ -38,7 +38,8 @@ setup(name='cbpi',
           'psutil==5.8.0',
           'numpy==1.20.3',
           'scipy',
-          'cbpi4ui'] + (
+          'cbpi4ui',
+          'importlib_metadata'] + (
               ['RPi.GPIO'] if platform.uname()[1] == "raspberrypi" else [] ),
 
         dependency_links=[

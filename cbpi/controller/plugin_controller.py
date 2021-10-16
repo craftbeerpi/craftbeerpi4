@@ -1,8 +1,10 @@
 import logging
 import os
 from importlib import import_module
+from importlib_metadata import version, metadata
 import datetime
 import aiohttp
+import asyncio
 import yaml
 import subprocess
 import sys
@@ -166,4 +168,32 @@ class PluginController():
                 result["actions"].append(
                     {"method": method_name, "label": key, "parameters": parameters})
 
+        return result
+
+    async def load_plugin_list(self):
+        result = []
+        try:
+            with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
+                data = yaml.load(f, Loader=yaml.FullLoader)
+
+                for p in data["plugins"]:
+                    try:
+                        p_metadata= metadata(p)
+                        p_name = p_metadata['name']
+                        p_version = p_metadata['Version']
+                        p_summary = p_metadata['Summary']
+                        p_homepage= p_metadata['Home-page']
+                        p_author = p_metadata['Author']
+                        p_author_email = p_metadata['Author-email']
+                        p_license = p_metadata['License']
+                        p_description = p_metadata['Description']
+                        plugin_data = {'Name': p_name,'Version': p_version,'Summary': p_summary,'Homepage':p_homepage,'Author':p_author,'Email': p_author_email,'License': p_license,'Description': p_description}
+                        result.append(plugin_data)
+                    except:
+                        pass
+#                    print("- ({})\t{}".format(p_version,p))
+        except Exception as e:
+            print(e)
+            return []
+            pass
         return result
