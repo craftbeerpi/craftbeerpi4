@@ -23,6 +23,7 @@ from ..api.step import StepMove, StepResult, StepState
 import re
 import base64
 
+
 class UploadController:
 
     def __init__(self, cbpi):
@@ -110,7 +111,7 @@ class UploadController:
 
         if content_type == 'text/xml':
             try:
-                beer_xml = recipe_file.read().decode()
+                beer_xml = recipe_file.read().decode('utf-8','replace')
                 if recipe_file and self.allowed_file(filename, 'xml'):
                     self.path = os.path.join(".", 'config', "upload", "beer.xml")
     
@@ -118,8 +119,8 @@ class UploadController:
                     f.write(beer_xml)
                     f.close()
                     self.cbpi.notify("Success", "XML Recipe {} has been uploaded".format(filename), NotificationType.SUCCESS)
-            except:
-                self.cbpi.notify("Error" "XML Recipe upload failed", NotificationType.ERROR)
+            except Exception as e:
+                self.cbpi.notify("Error" "XML Recipe upload failed: {}".format(e), NotificationType.ERROR)
                 pass
 
         elif content_type == 'application/octet-stream':
