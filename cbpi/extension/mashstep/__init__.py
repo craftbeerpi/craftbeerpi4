@@ -175,9 +175,12 @@ class MashStep(CBPiStep):
 
         if self.cbpi.kettle is not None and self.timer is None:
             self.timer = Timer(int(self.props.get("Timer",0)) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
-#        elif self.cbpi.kettle is not None and self.timer:
-#            self.timer.start()
-#            self.timer.is_running = True
+        elif self.cbpi.kettle is not None:
+            try:
+                if self.timer.is_running == True:
+                    self.timer.start()
+            except:
+                pass
 
         self.summary = "Waiting for Target Temp"
         await self.push_update()
@@ -245,7 +248,7 @@ class WaitStep(CBPiStep):
         return StepResult.DONE
 
 
-@parameters([Property.Select(label="toggle_type", options=["On", "Off"],description="Choose if Actor shuold be switched on or off in this step"),
+@parameters([Property.Select(label="toggle_type", options=["On", "Off"],description="Choose if Actor should be switched on or off in this step"),
              Property.Actor(label="Actor",description="Actor that should be toggled during this step")])
 class ToggleStep(CBPiStep):
     async def on_timer_done(self, timer):
@@ -374,9 +377,13 @@ class BoilStep(CBPiStep):
 
         if self.cbpi.kettle is not None and self.timer is None:
             self.timer = Timer(int(self.props.get("Timer", 0)) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
-#        elif self.cbpi.kettle is not None and self.timer:
-#            self.timer.start()
-#            self.timer.is_running = True
+
+        elif self.cbpi.kettle is not None:
+            try:
+                if self.timer.is_running == True:
+                    self.timer.start()
+            except:
+                pass
 
         self.summary = "Waiting for Target Temp"
         if self.AutoMode == True:

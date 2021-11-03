@@ -465,8 +465,12 @@ class UploadController:
                     async with bf_session.get(self.bf_url) as r:
                         bf_recipe = await r.json()
                     await bf_session.close()
-
+            
             if bf_recipe !="":
+                try:
+                    StrikeTemp=bf_recipe['data']['strikeTemp']
+                except:
+                    StrikeTemp = None 
                 RecipeName = bf_recipe['name']
                 BoilTime = bf_recipe['boilTime']
                 mash_steps=bf_recipe['mash']['steps']
@@ -509,6 +513,7 @@ class UploadController:
                             MashIn_Flag = False
 
                         elif self.addmashin == "Yes":
+                            mashin_temp = str(round(StrikeTemp)) if StrikeTemp is not None else step_temp
                             step_type = self.mashin if self.mashin != "" else "MashInStep"
                             Notification = "Target temperature reached. Please add malt."
                             MashIn_Flag = False
@@ -517,7 +522,7 @@ class UploadController:
                                             "AutoMode": self.AutoMode,
                                             "Kettle": self.id,
                                             "Sensor": self.kettle.sensor,
-                                            "Temp": step_temp,
+                                            "Temp": mashin_temp,
                                             "Timer": 0,
                                             "Notification": Notification
                                             },
