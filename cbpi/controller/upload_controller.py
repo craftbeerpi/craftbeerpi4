@@ -470,7 +470,11 @@ class UploadController:
                 try:
                     StrikeTemp=bf_recipe['data']['strikeTemp']
                 except:
-                    StrikeTemp = None 
+                    StrikeTemp = None
+                # BF is sending all Temeprature values in °C. If system is running in F, values need to be converted
+                if StrikeTemp is not None and self.TEMP_UNIT != "C":
+                    StrikeTemp = round((9.0 / 5.0 *  float(StrikeTemp)+ 32))
+
                 RecipeName = bf_recipe['name']
                 BoilTime = bf_recipe['boilTime']
                 mash_steps=bf_recipe['mash']['steps']
