@@ -166,7 +166,7 @@ def plugins_add(package_name):
         return
 
     if package_name == 'autostart':
-        print("Add cradtbeerpi.service to systemd")
+        print("Add craftbeerpi.service to systemd")
         try:
             if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is False:
                 srcfile = os.path.join(".", "config", "craftbeerpi.service")
@@ -209,7 +209,7 @@ def plugin_remove(package_name):
         return
 
     if package_name == 'autostart':
-        print("Remove cradtbeerpi.service from systemd")
+        print("Remove craftbeerpi.service from systemd")
         try:
             status = os.popen('systemctl list-units --type=service --state=running | grep craftbeerpi.service').read()
             if status.find("craftbeerpi.service") != -1:
