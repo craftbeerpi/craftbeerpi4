@@ -52,7 +52,7 @@ class GPIOActor(CBPiActor):
         GPIO.output(self.gpio, self.get_GPIO_state(0))
         self.state = False
 
-    async def on(self, power=0):
+    async def on(self, power = None):
         logger.info("ACTOR %s ON - GPIO %s " %  (self.id, self.gpio))
         GPIO.output(self.gpio, self.get_GPIO_state(1))  
         self.state = True
@@ -70,35 +70,46 @@ class GPIOActor(CBPiActor):
             await asyncio.sleep(1)
             
 
-@parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Number("Frequency", configurable=True)])
+@parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Number(label="Frequency", configurable=True)])
 class GPIOPWMActor(CBPiActor):
 
     # Custom property which can be configured by the user
-    @action("test", parameters={})
-    async def power(self, **kwargs):        
-        self.p.ChangeDutyCycle(1)
+    @action("Set Power", parameters=[Property.Number(label="Power", configurable=True,description="Power Setting [0-100]")])
+    async def setpower(self,Power = 100 ,**kwargs):
+        logging.info(Power)
+        self.power=int(Power)
+        if self.power < 0:
+            self.power = 0
+        if self.power > 100:
+            self.power = 100            
+        if self.p and self.state == True:
+            self.p.ChangeDutyCycle(self.power)
 
-    async def start(self):
-        await super().start()
-        self.gpio = self.props.get("GPIO")
-        self.frequency = self.props.get("Frequency")
-        GPIO.setup(self.gpio, GPIO.OUT)
-        GPIO.output(self.gpio, 0)
+    async def on_start(self):
+        self.gpio = self.props.get("GPIO", None)
+        self.frequency = self.props.get("Frequency", 0.5)
+        if self.gpio is not None:
+            GPIO.setup(self.gpio, GPIO.OUT)
+            GPIO.output(self.gpio, 0)
         self.state = False
+        self.power = 100
+        self.p = None
         pass
 
-    async def on(self, power=0):
-        logger.info("PWM ACTOR %s ON - GPIO %s " %  (self.id, self.gpio))
+    async def on(self, power = None):
+        
+        logger.info("PWM ACTOR %s ON - GPIO %s - Frequency %s - Power %s" %  (self.id, self.gpio,self.frequency,self.power))
         try:
-            self.p = GPIO.PWM(int(self.gpio), float(self.frequency))
-            self.p.start(1)
+            if self.p is None:
+                self.p = GPIO.PWM(int(self.gpio), float(self.frequency))
+            self.p.start(self.power)
+            self.state = True
         except:
             pass
-        self.state = True
 
     async def off(self):
         logger.info("PWM ACTOR %s OFF - GPIO %s " % (self.id, self.gpio))
-        self.p.stop()
+        self.p.ChangeDutyCycle(0)
         self.state = False
 
     def get_state(self):
@@ -106,7 +117,6 @@ class GPIOPWMActor(CBPiActor):
     
     async def run(self):
         while self.running == True:
-            
             await asyncio.sleep(1)
 
 def setup(cbpi):
