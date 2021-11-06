@@ -17,7 +17,7 @@ class ActorController(BasicController):
                 self.cbpi.push_update("cbpi/actor/"+id, item.to_dict(), True)
                 
         except Exception as e:
-            logging.error("Faild to switch on Actor {} {}".format(id, e))
+            logging.error("Failed to switch on Actor {} {}".format(id, e))
 
     async def off(self, id):
         try:
@@ -27,7 +27,7 @@ class ActorController(BasicController):
                 await self.push_udpate()
                 self.cbpi.push_update("cbpi/actor/"+id, item.to_dict())
         except Exception as e:
-            logging.error("Faild to switch on Actor {} {}".format(id, e), True)
+            logging.error("Failed to switch on Actor {} {}".format(id, e), True)
 
     async def toogle(self, id):
         try:
@@ -36,5 +36,13 @@ class ActorController(BasicController):
             await instance.toggle()
             self.cbpi.push_update("cbpi/actor/update", item.to_dict())
         except Exception as e:
-            logging.error("Faild to switch on Actor {} {}".format(id, e))
+            logging.error("Failed to toggle Actor {} {}".format(id, e))
+
+    async def set_power(self, id, power):
+        try:
+            item = self.find_by_id(id)
+            item.power = power
+            self.cbpi.push_update("cbpi/actor/"+id, item.to_dict())
+        except Exception as e:
+            logging.error("Failed to set power {} {}".format(id, e))
             

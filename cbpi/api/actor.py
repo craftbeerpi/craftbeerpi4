@@ -20,6 +20,7 @@ class CBPiActor(metaclass=ABCMeta):
         self.data_logger = None
         self.state = False  
         self.running = False
+        self.power = 100
 
     def init(self):
         pass

@@ -46,6 +46,7 @@ class GPIOActor(CBPiActor):
             return 0 if self.inverted == False else 1
 
     async def on_start(self):
+        self.power = 100
         self.gpio = self.props.GPIO
         self.inverted = True if self.props.get("Inverted", "No") == "Yes" else False
         GPIO.setup(self.gpio, GPIO.OUT)
@@ -81,9 +82,11 @@ class GPIOPWMActor(CBPiActor):
         if self.power < 0:
             self.power = 0
         if self.power > 100:
-            self.power = 100            
-        if self.p and self.state == True:
-            self.p.ChangeDutyCycle(self.power)
+            self.power = 100           
+        item = self.cbpi.actor.find_by_id(self.id)
+        item.power = self.power
+        self.cbpi.push_update("cbpi/actor/"+self.id, item.to_dict())
+        await self.set_power(self.power)
 
     async def on_start(self):
         self.gpio = self.props.get("GPIO", None)
@@ -111,6 +114,11 @@ class GPIOPWMActor(CBPiActor):
         logger.info("PWM ACTOR %s OFF - GPIO %s " % (self.id, self.gpio))
         self.p.ChangeDutyCycle(0)
         self.state = False
+
+    async def set_power(self, power):
+        if self.p and self.state == True:
+            self.p.ChangeDutyCycle(power)
+        pass
 
     def get_state(self):
         return self.state
