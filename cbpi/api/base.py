@@ -44,7 +44,7 @@ class CBPiBase(metaclass=ABCMeta):
             actor = self.cbpi.actor.find_by_id(id)
             return actor.get("instance").get_state()
         except:
-            logging.error("Faild to read actor state in step - actor {}".format(id))
+            logging.error("Failed to read actor state in step - actor {}".format(id))
             return None
 
     async def actor_on(self,id):
@@ -60,4 +60,8 @@ class CBPiBase(metaclass=ABCMeta):
         except Exception as e:
             pass
 
-
+    async def actor_set_power(self,id,power):
+        try:
+            await self.cbpi.actor.set_power(id,power)
+        except Exception as e:
+            pass

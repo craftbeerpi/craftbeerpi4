@@ -42,6 +42,7 @@ class ActorController(BasicController):
         try:
             item = self.find_by_id(id)
             item.power = power
+            await self.push_udpate()
             self.cbpi.push_update("cbpi/actor/"+id, item.to_dict())
         except Exception as e:
             logging.error("Failed to set power {} {}".format(id, e))

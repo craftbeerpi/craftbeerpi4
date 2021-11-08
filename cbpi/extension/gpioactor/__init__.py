@@ -85,7 +85,6 @@ class GPIOPWMActor(CBPiActor):
             self.power = 100           
         item = self.cbpi.actor.find_by_id(self.id)
         item.power = self.power
-        self.cbpi.push_update("cbpi/actor/"+self.id, item.to_dict())
         await self.set_power(self.power)
 
     async def on_start(self):
@@ -100,6 +99,8 @@ class GPIOPWMActor(CBPiActor):
         pass
 
     async def on(self, power = None):
+        if power is not None:
+            self.power = power
         
         logger.info("PWM ACTOR %s ON - GPIO %s - Frequency %s - Power %s" %  (self.id, self.gpio,self.frequency,self.power))
         try:
@@ -118,6 +119,7 @@ class GPIOPWMActor(CBPiActor):
     async def set_power(self, power):
         if self.p and self.state == True:
             self.p.ChangeDutyCycle(power)
+        await self.cbpi.actor.set_power(self.id,power)
         pass
 
     def get_state(self):

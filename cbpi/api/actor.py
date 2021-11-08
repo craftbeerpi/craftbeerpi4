@@ -88,5 +88,13 @@ class CBPiActor(metaclass=ABCMeta):
         '''
         pass
 
-    
+    async def set_power(self,power):
+        self.power=power
+        '''
+        Code to switch the actor off
+        
+        :return: None 
+        '''
+        return dict(power=self.power)
+        pass
 
