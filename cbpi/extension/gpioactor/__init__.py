@@ -83,8 +83,6 @@ class GPIOPWMActor(CBPiActor):
             self.power = 0
         if self.power > 100:
             self.power = 100           
-        item = self.cbpi.actor.find_by_id(self.id)
-        item.power = self.power
         await self.set_power(self.power)
 
     async def on_start(self):
