@@ -27,15 +27,15 @@ if (mode == None):
 @parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Select(label="Inverted", options=["Yes", "No"],description="No: Active on high; Yes: Active on low")])
 class GPIOActor(CBPiActor):
 
-    @action(key="Cusotm Action", parameters=[Property.Number("Value", configurable=True), Property.Kettle("Kettle")])
-    async def custom_action(self, **kwargs):
-        print("ACTION", kwargs)
-        
-    
-    @action(key="Cusotm Action2", parameters=[Property.Number("Value", configurable=True)])
-    async def custom_action2(self, **kwargs):
-        print("ACTION2")
-        
+    # Custom property which can be configured by the user
+    @action("Set Power", parameters=[Property.Number(label="Power", configurable=True,description="Power Setting [0-100]")])
+    async def setpower(self,Power = 100 ,**kwargs):
+        self.power=int(Power)
+        if self.power < 0:
+            self.power = 0
+        if self.power > 100:
+            self.power = 100           
+        await self.set_power(self.power)      
 
     def get_GPIO_state(self, state):
         # ON
@@ -46,6 +46,7 @@ class GPIOActor(CBPiActor):
             return 0 if self.inverted == False else 1
 
     async def on_start(self):
+        self.sampleTime = 5
         self.power = 100
         self.gpio = self.props.GPIO
         self.inverted = True if self.props.get("Inverted", "No") == "Yes" else False
@@ -54,6 +55,9 @@ class GPIOActor(CBPiActor):
         self.state = False
 
     async def on(self, power = None):
+        if power is not None:
+            self.power = power
+
         logger.info("ACTOR %s ON - GPIO %s " %  (self.id, self.gpio))
         GPIO.output(self.gpio, self.get_GPIO_state(1))  
         self.state = True
@@ -68,7 +72,24 @@ class GPIOActor(CBPiActor):
     
     async def run(self):
         while self.running == True:
-            await asyncio.sleep(1)
+            if self.state == True:
+                heating_time=self.sampleTime * (self.power / 100)
+                wait_time=self.sampleTime - heating_time
+                if heating_time > 0:
+                    #logging.info("Heating Time: {}".format(heating_time))
+                    GPIO.output(self.gpio, self.get_GPIO_state(1))
+                    await asyncio.sleep(heating_time)
+                if wait_time > 0:
+                    #logging.info("Wait Time: {}".format(wait_time))
+                    GPIO.output(self.gpio, self.get_GPIO_state(0))
+                    await asyncio.sleep(wait_time)
+            else:
+                await asyncio.sleep(1)
+
+    async def set_power(self, power):
+        self.power = power
+        await self.cbpi.actor.set_power(self.id,power)
+        pass
             
 
 @parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Number(label="Frequency", configurable=True)])
