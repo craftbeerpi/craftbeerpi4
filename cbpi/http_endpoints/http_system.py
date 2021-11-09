@@ -176,3 +176,20 @@ class SystemHttpEndpoints:
         """
         systeminfo = await self.controller.systeminfo()
         return web.json_response(data=systeminfo)
+
+    @request_mapping("/uploadsvg", method="POST", name="UploadSVG", auth_required=False)
+    async def uploadSVG(self, request):
+        """
+        ---
+        description: Upload SVG file to widgets folder 
+        tags:
+        - System
+        responses:
+            "200":
+                description: successful operation
+        """
+        logging.info("Upload SVG file")
+        data = await request.post()
+        logging.info("Data received")
+        await self.controller.uploadSVG(data)
+        return web.Response(status=200)

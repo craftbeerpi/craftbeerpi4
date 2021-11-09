@@ -85,6 +85,30 @@ class SystemController:
         else:
             self.cbpi.notify("Error", "Wrong content type. Upload failed", NotificationType.ERROR)
 
+    async def uploadSVG(self, data):
+        fileData = data['File']
+        filename = fileData.filename
+        svg_file = fileData.file
+        content_type = fileData.content_type
+
+        logging.info(content_type)
+
+        if content_type == 'image/svg+xml':
+            try:
+                content = svg_file.read().decode('utf-8','replace')
+                if svg_file and self.allowed_file(filename, 'svg'):
+                    self.path = os.path.join(".","config","dashboard","widgets", filename)
+                    logging.info(self.path)
+
+                    f=open(self.path, "w")
+                    f.write(content)
+                    f.close()
+            except:
+                self.cbpi.notify("Error", "SVG upload failed", NotificationType.ERROR)
+                pass
+        else:
+            self.cbpi.notify("Error", "Wrong content type. Upload failed", NotificationType.ERROR)
+
     async def systeminfo(self):
         logging.info("SYSTEMINFO")
         system = "" 
@@ -140,6 +164,23 @@ class SystemController:
                                     if addr.address:
                                         eth0IP = addr.address
                         if nic == "wlan0":
+                            for addr in addrs:
+                                if str(addr.family) == "AddressFamily.AF_INET": 
+                                    if addr.address:
+                                        wlan0IP = addr.address
+                except:
+                    pass
+
+            if system == "Windows":
+                try:
+                    ethernet = psutil.net_if_addrs()
+                    for nic, addrs in ethernet.items():
+                        if nic == "Ethernet":
+                            for addr in addrs:
+                                if str(addr.family) == "AddressFamily.AF_INET": 
+                                    if addr.address:
+                                        eth0IP = addr.address
+                        if nic == "WLAN":
                             for addr in addrs:
                                 if str(addr.family) == "AddressFamily.AF_INET": 
                                     if addr.address:
