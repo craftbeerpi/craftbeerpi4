@@ -91,7 +91,8 @@ class CraftBeerPi:
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
         middlewares = [web.normalize_path_middleware(), session_middleware(EncryptedCookieStorage(urandom(32))),
                        auth.auth_middleware(policy), error_middleware]
-        self.app = web.Application(middlewares=middlewares)
+        # max upload size increased to 5 Mb. Default is 1 Mb -> config and svg upload
+        self.app = web.Application(middlewares=middlewares, client_max_size=5*1024*1024)
         self.app["cbpi"] = self
 
         self._setup_shutdownhook()
