@@ -103,6 +103,7 @@ class SystemController:
                     f=open(self.path, "w")
                     f.write(content)
                     f.close()
+                    self.cbpi.notify("Success", "SVG file ({}) has been uploaded.".format(filename), NotificationType.SUCCESS)
             except:
                 self.cbpi.notify("Error", "SVG upload failed", NotificationType.ERROR)
                 pass

@@ -8,13 +8,15 @@ class ActorController(BasicController):
         super(ActorController, self).__init__(cbpi, Actor,"actor.json")
         self.update_key = "actorupdate"
 
-    async def on(self, id):
+    async def on(self, id, power=100):
         try:
             item = self.find_by_id(id)
             if item.instance.state is False:
-                await item.instance.on()
+                await item.instance.on(power)
                 await self.push_udpate()
                 self.cbpi.push_update("cbpi/actor/"+id, item.to_dict(), True)
+            else:
+                await self.set_power(id, power)
                 
         except Exception as e:
             logging.error("Failed to switch on Actor {} {}".format(id, e))
@@ -41,6 +43,7 @@ class ActorController(BasicController):
     async def set_power(self, id, power):
         try:
             item = self.find_by_id(id)
+            item.instance.power = power
             item.power = power
             await self.push_udpate()
             self.cbpi.push_update("cbpi/actor/"+id, item.to_dict())
