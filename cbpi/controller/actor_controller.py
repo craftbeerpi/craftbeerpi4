@@ -8,7 +8,7 @@ class ActorController(BasicController):
         super(ActorController, self).__init__(cbpi, Actor,"actor.json")
         self.update_key = "actorupdate"
 
-    async def on(self, id, power=100):
+    async def on(self, id, power=None):
         try:
             item = self.find_by_id(id)
             if item.instance.state is False:
@@ -43,10 +43,15 @@ class ActorController(BasicController):
     async def set_power(self, id, power):
         try:
             item = self.find_by_id(id)
-            item.instance.power = power
-            item.power = power
+            await item.instance.set_power(power)
+        except Exception as e:
+            logging.error("Failed to set power {} {}".format(id, e))
+
+    async def actor_update(self, id, power):
+        try:
+            item = self.find_by_id(id)
+            item.power = round(power)
             await self.push_udpate()
             self.cbpi.push_update("cbpi/actor/"+id, item.to_dict())
         except Exception as e:
-            logging.error("Failed to set power {} {}".format(id, e))
-            
+            logging.error("Failed to update Actor {} {}".format(id, e))

@@ -24,7 +24,9 @@ mode = GPIO.getmode()
 if (mode == None):
     GPIO.setmode(GPIO.BCM)
 
-@parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), Property.Select(label="Inverted", options=["Yes", "No"],description="No: Active on high; Yes: Active on low")])
+@parameters([Property.Select(label="GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]), 
+             Property.Select(label="Inverted", options=["Yes", "No"],description="No: Active on high; Yes: Active on low"),
+             Property.Select(label="SamplingTime", options=[2,5],description="Time in seconds for power base interval (Default:5)")])
 class GPIOActor(CBPiActor):
 
     # Custom property which can be configured by the user
@@ -46,10 +48,10 @@ class GPIOActor(CBPiActor):
             return 0 if self.inverted == False else 1
 
     async def on_start(self):
-        self.sampleTime = 5
         self.power = 100
         self.gpio = self.props.GPIO
         self.inverted = True if self.props.get("Inverted", "No") == "Yes" else False
+        self.sampleTime = int(self.props.get("SamplingTime", 5)) 
         GPIO.setup(self.gpio, GPIO.OUT)
         GPIO.output(self.gpio, self.get_GPIO_state(0))
         self.state = False
@@ -89,7 +91,7 @@ class GPIOActor(CBPiActor):
 
     async def set_power(self, power):
         self.power = power
-        await self.cbpi.actor.set_power(self.id,power)
+        await self.cbpi.actor.actor_update(self.id,power)
         pass
             
 
@@ -128,7 +130,7 @@ class GPIOPWMActor(CBPiActor):
                 self.p = GPIO.PWM(int(self.gpio), float(self.frequency))
             self.p.start(self.power)
             self.state = True
-            await self.cbpi.actor.set_power(self.id,self.power)
+            await self.cbpi.actor.actor_update(self.id,self.power)
         except:
             pass
 
@@ -140,7 +142,7 @@ class GPIOPWMActor(CBPiActor):
     async def set_power(self, power):
         if self.p and self.state == True:
             self.p.ChangeDutyCycle(power)
-        await self.cbpi.actor.set_power(self.id,power)
+        await self.cbpi.actor.actor_update(self.id,power)
         pass
 
     def get_state(self):
