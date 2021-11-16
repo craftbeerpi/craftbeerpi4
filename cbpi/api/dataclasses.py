@@ -55,13 +55,14 @@ class Actor:
     name: str = None
     props: Props = Props()
     state: bool = False
+    power: int = 100
     type: str = None
     instance: str = None
 
     def __str__(self):
-        return "name={} props={}, state={}, type={}".format(self.name, self.props, self.state, self.type)
+        return "name={} props={}, state={}, type={}, power={}".format(self.name, self.props, self.state, self.type, self.power)
     def to_dict(self):
-        return dict(id=self.id, name=self.name, type=self.type, props=self.props.to_dict(), state2="HELLO WORLD", state=self.instance.get_state())
+        return dict(id=self.id, name=self.name, type=self.type, props=self.props.to_dict(), state2="HELLO WORLD", state=self.instance.get_state(), power=self.power)
 
 
 @dataclass
