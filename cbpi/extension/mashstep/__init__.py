@@ -119,7 +119,7 @@ class MashInStep(CBPiStep):
             if (self.kettle.instance is None or self.kettle.instance.state == False) and (auto_state is True):
                 await self.cbpi.kettle.toggle(self.kettle.id)
             elif (self.kettle.instance.state == True) and (auto_state is False):
-                await self.kettle.instance.stop()
+                await self.cbpi.kettle.stop(self.kettle.id)
             await self.push_update()
 
         except Exception as e:
@@ -211,7 +211,7 @@ class MashStep(CBPiStep):
             if (self.kettle.instance is None or self.kettle.instance.state == False) and (auto_state is True):
                 await self.cbpi.kettle.toggle(self.kettle.id)
             elif (self.kettle.instance.state == True) and (auto_state is False):
-                await self.kettle.instance.stop()
+                await self.cbpi.kettle.stop(self.kettle.id)
             await self.push_update()
 
         except Exception as e:
@@ -436,7 +436,7 @@ class BoilStep(CBPiStep):
             if (self.kettle.instance is None or self.kettle.instance.state == False) and (auto_state is True):
                 await self.cbpi.kettle.toggle(self.kettle.id)
             elif (self.kettle.instance.state == True) and (auto_state is False):
-                await self.kettle.instance.stop()
+                await self.cbpi.kettle.stop(self.kettle.id)
             await self.push_update()
 
         except Exception as e:

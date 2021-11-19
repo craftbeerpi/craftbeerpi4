@@ -23,7 +23,7 @@ class KettleController(BasicController):
                 await item.instance.stop()
             await self.push_udpate()
         except Exception as e:
-            logging.error("Faild to switch on KettleLogic {} {}".format(id, e))
+            logging.error("Failed to switch on KettleLogic {} {}".format(id, e))
 
     async def set_target_temp(self, id, target_temp):
         try:
@@ -31,5 +31,13 @@ class KettleController(BasicController):
             item.target_temp = target_temp
             await self.save()
         except Exception as e:
-            logging.error("Faild to set Target Temp {} {}".format(id, e))
+            logging.error("Failed to set Target Temp {} {}".format(id, e))
 
+    async def stop(self, id):
+        try:
+            logging.info("Stop Kettele {}".format(id))
+            item = self.find_by_id(id)
+            await item.instance.stop()
+            await self.push_udpate()
+        except Exception as e:
+            logging.error("Failed to switch off KettleLogic {} {}".format(id, e))
