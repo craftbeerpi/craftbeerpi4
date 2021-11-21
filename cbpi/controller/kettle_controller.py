@@ -35,10 +35,10 @@ class KettleController(BasicController):
 
     async def stop(self, id):
         try:
-            logging.info("Stop Kettele {}".format(id))
+            logging.info("Stop Kettle {}".format(id))
             item = self.find_by_id(id)
-			if item.instance:
-				await item.instance.stop()
+            if item.instance:
+                await item.instance.stop()
             await self.push_udpate()
         except Exception as e:
             logging.error("Failed to switch off KettleLogic {} {}".format(id, e))
