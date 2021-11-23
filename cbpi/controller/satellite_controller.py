@@ -81,11 +81,9 @@ class SatelliteController:
                         await self.client.subscribe(topic)
                         async for message in messages:
                             await method(message.payload.decode())
-            except asyncio.CancelledError as e:
+            except asyncio.CancelledError:
                 # Cancel
-                self.logger.warning(
-                    "Sub CancelledError Exception: {}".format(e))
-                return
+                self.logger.warning("Sub Cancelled")
             except MqttError as e:
                 self.logger.error("Sub MQTT Exception: {}".format(e))
             except Exception as e:

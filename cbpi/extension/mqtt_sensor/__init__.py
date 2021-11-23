@@ -58,5 +58,5 @@ def setup(cbpi):
     :param cbpi: the cbpi core
     :return:
     '''
-    if cbpi.static_config.get("mqtt", False) is True:
+    if str(cbpi.static_config.get("mqtt", False)).lower() == "true":
         cbpi.plugin.register("MQTTSensor", MQTTSensor)
