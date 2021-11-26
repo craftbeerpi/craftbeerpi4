@@ -10,7 +10,7 @@ class MQTTActor(CBPiActor):
     # Custom property which can be configured by the user
     @action("Set Power", parameters=[Property.Number(label="Power", configurable=True,description="Power Setting [0-100]")])
     async def setpower(self,Power = 100 ,**kwargs):
-        self.power=int(Power)
+        self.power=round(Power)
         if self.power < 0:
             self.power = 0
         if self.power > 100:
@@ -29,7 +29,7 @@ class MQTTActor(CBPiActor):
             if power != self.power:
                 power = min(100, power)
                 power = max(0, power)
-                self.power = int(power)
+                self.power = round(power)
         await self.cbpi.satellite.publish(self.topic, json.dumps(
             {"state": "on", "power": self.power}), True)
         self.state = True
@@ -49,7 +49,7 @@ class MQTTActor(CBPiActor):
         return self.state
 
     async def set_power(self, power):
-        self.power = power
+        self.power = round(power)
         if self.state == True:
             await self.on(power)
         else:
