@@ -6,6 +6,7 @@ on:
       - main
       - master
       - development
+  pull_request:
 
 env:
   image-name: ghcr.io/${{ github.repository_owner }}/craftbeerpi4
@@ -49,18 +50,22 @@ jobs:
         id: prep
         run: |
 
+          PUBLISH_IMAGE=false
+          TAGS="${{ env.image-name }}:dev"
+
           if [[ $GITHUB_REF_NAME == master ]] || [[ $GITHUB_REF_NAME == main ]]; then
             # when building master/main use :latest tag and the version number
             # from the cbpi/__init__.py file
             VERSION=$(grep -o -E "(([0-9]{1,2}[.]?){3}[0-9]+)" cbpi/__init__.py)
             TAGS="${{ env.image-name }}:latest,${{ env.image-name }}:v${VERSION}"
-          else
-            # otherwise just use :dev tag
-            TAGS="${{ env.image-name }}:dev"
+            PUBLISH_IMAGE=true
+          elif [[ $GITHUB_REF_NAME == development ]]; then
+            PUBLISH_IMAGE=true
           fi
 
           # Set output parameters.
           echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=publish_image::${PUBLISH_IMAGE}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
@@ -85,7 +90,7 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: true
+          push: ${{ steps.prep.outputs.publish_image }}
           tags: ${{ steps.prep.outputs.tags }}
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
