@@ -11,6 +11,34 @@ env:
   image-name: ghcr.io/${{ github.repository_owner }}/craftbeerpi4
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Builds the source distribution package for CraftBeerPi
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Clean
+        run: python setup.py clean --all
+
+#      - name: Run tests
+#        run: python -m unittest tests
+
+      - name: Build source distribution package for CraftBeerPi
+        run: python setup.py sdist
+
+      - name: Upload CraftBeerPi package to be used in next step
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: craftbeerpi4
+          path: dist/cbpi-*.tar.gz
+          if-no-files-found: error
+
   docker:
     runs-on: ubuntu-latest
     steps:
