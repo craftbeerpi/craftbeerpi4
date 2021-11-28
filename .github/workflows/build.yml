@@ -1,0 +1,66 @@
+name: 'Build Docker Image'
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - development
+
+env:
+  image-name: ghcr.io/${{ github.repository_owner }}/craftbeerpi4
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare docker image and tag names
+        id: prep
+        run: |
+
+          if [[ $GITHUB_REF_NAME == master ]] || [[ $GITHUB_REF_NAME == main ]]; then
+            # when building master/main use :latest tag and the version number
+            # from the cbpi/__init__.py file
+            VERSION=$(grep -o -E "(([0-9]{1,2}[.]?){3}[0-9]+)" cbpi/__init__.py)
+            TAGS="${{ env.image-name }}:latest,${{ env.image-name }}:v${VERSION}"
+          else
+            # otherwise just use :dev tag
+            TAGS="${{ env.image-name }}:dev"
+          fi
+
+          # Set output parameters.
+          echo ::set-output name=tags::${TAGS}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@master
+        with:
+          platforms: all
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.prep.outputs.tags }}
+          labels: |
+            org.opencontainers.image.title=${{ github.event.repository.name }}
+            org.opencontainers.image.description=${{ github.event.repository.description }}
+            org.opencontainers.image.url=${{ github.event.repository.html_url }}
+            org.opencontainers.image.revision=${{ github.sha }}
