@@ -3,7 +3,7 @@ RUN apk --no-cache add curl && mkdir /downloads
 # Download installation files
 RUN curl https://github.com/avollkopf/craftbeerpi4-ui/archive/main.zip -L -o ./downloads/cbpi-ui.zip
 
-FROM python:3.7-slim
+FROM python:3.7
 
 # Install dependencies
 RUN     apt-get update \
