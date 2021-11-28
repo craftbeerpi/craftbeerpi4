@@ -1,4 +1,4 @@
-name: 'Build Docker Image'
+name: 'Build CraftBeerPi4'
 
 on:
   push:
@@ -14,7 +14,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Builds the source distribution package for CraftBeerPi
+    name: Builds the source distribution package
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
@@ -42,6 +42,7 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
+    name: Builds the docker image(s)
     steps:
       - name: Checkout
         uses: actions/checkout@v2
