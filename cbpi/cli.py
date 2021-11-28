@@ -255,11 +255,15 @@ def plugins_list():
             data = yaml.load(f, Loader=yaml.FullLoader)
 
             for p in data["plugins"]:
-                p_metadata= metadata(p)
-                p_Homepage= p_metadata['Home-page']
-                p_version = p_metadata['Version']
-                p_Author = p_metadata['Author']
-                print("- ({})\t{}".format(p_version,p))
+                try:
+                    p_metadata= metadata(p)
+                    p_Homepage= p_metadata['Home-page']
+                    p_version = p_metadata['Version']
+                    p_Author = p_metadata['Author']
+                    print("- ({})\t{}".format(p_version,p))
+                except Exception as e:
+                    print (e)
+                    pass
     except Exception as e:
         print(e)
         pass

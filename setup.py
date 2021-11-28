@@ -37,10 +37,9 @@ setup(name='cbpi',
           'asyncio-mqtt',
           'psutil==5.8.0',
           'numpy==1.20.3',
-          'scipy',
           'cbpi4ui',
           'importlib_metadata'] + (
-              ['RPi.GPIO'] if platform.uname()[1] == "raspberrypi" else [] ),
+              ['RPi.GPIO==0.7.1a4'] if platform.uname()[1] == "raspberrypi" else [] ),
 
         dependency_links=[
         'https://testpypi.python.org/pypi',

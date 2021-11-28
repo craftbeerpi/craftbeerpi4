@@ -15,7 +15,6 @@ from typing import KeysView
 from cbpi.api.config import ConfigType
 from cbpi.api.base import CBPiBase
 import numpy as np
-#import scipy.optimize
 import warnings
 
 

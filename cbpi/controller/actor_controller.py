@@ -11,6 +11,8 @@ class ActorController(BasicController):
     async def on(self, id, power=None):
         try:
             item = self.find_by_id(id)
+            if item.power:
+                power = item.power
             if item.instance.state is False:
                 await item.instance.on(power)
                 await self.push_udpate()

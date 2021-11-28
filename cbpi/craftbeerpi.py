@@ -113,7 +113,7 @@ class CraftBeerPi:
         self.upload : UploadController = UploadController(self)
         self.notification : NotificationController = NotificationController(self)
         self.satellite = None
-        if self.static_config.get("mqtt", False) is True:
+        if str(self.static_config.get("mqtt", False)).lower() == "true":
             self.satellite: SatelliteController = SatelliteController(self)
         
         self.dashboard = DashboardController(self)

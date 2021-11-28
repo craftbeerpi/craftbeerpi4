@@ -2,23 +2,37 @@
 import asyncio
 
 from cbpi.api import parameters, Property, CBPiSensor
+from cbpi.api import *
+import logging
+import json
 
-
-@parameters([Property.Text(label="Topic", configurable=True)])
+@parameters([Property.Text(label="Topic", configurable=True, description="MQTT Topic"),
+             Property.Text(label="PayloadDictionary", configurable=True, default_value="",
+                           description="Where to find msg in payload, leave blank for raw payload")])
 class MQTTSensor(CBPiSensor):
-
-    async def on_message(self, message):
-        try:
-            self.value = float(message)
-            self.log_data(self.value)
-            self.push_update(self.value)
-        except Exception as e:
-            print(e)
 
     def __init__(self, cbpi, id, props):
         super(MQTTSensor, self).__init__(cbpi, id, props)
-        self.mqtt_task = self.cbpi.satellite.subcribe(self.props.Topic, self.on_message)
+        self.Topic = self.props.get("Topic", None)
+        self.payload_text = self.props.get("PayloadDictionary", None)
+        if self.payload_text != None:
+            self.payload_text = self.payload_text.split('.')
+        self.mqtt_task = self.cbpi.satellite.subcribe(self.Topic, self.on_message)
         self.value: int = 0
+
+    async def on_message(self, message):
+        val = json.loads(message)
+        try:
+            if self.payload_text is not None:
+                for key in self.payload_text:
+                    val = val.get(key, None)
+
+            if isinstance(val, (int, float, str)):
+                self.value = float(val)
+                self.log_data(self.value)
+                self.push_update(self.value)
+        except Exception as e:
+            logging.info("MQTT Sensor Error {}".format(e))
 
     async def run(self):
         while self.running:
@@ -44,5 +58,5 @@ def setup(cbpi):
     :param cbpi: the cbpi core
     :return:
     '''
-    if cbpi.static_config.get("mqtt", False) is True:
+    if str(cbpi.static_config.get("mqtt", False)).lower() == "true":
         cbpi.plugin.register("MQTTSensor", MQTTSensor)

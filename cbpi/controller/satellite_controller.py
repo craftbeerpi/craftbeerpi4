@@ -21,7 +21,8 @@ class SatelliteController:
         self.client = None
         self.topic_filters = [
             ("cbpi/actor/+/on", self._actor_on),
-            ("cbpi/actor/+/off", self._actor_off)
+            ("cbpi/actor/+/off", self._actor_off),
+            ("cbpi/actor/+/power", self._actor_power),
         ]
         self.tasks = set()
 
@@ -33,7 +34,7 @@ class SatelliteController:
             try:
                 await self.client.publish(topic, message, qos=1, retain=retain)
             except:
-                self.logger.warning("Faild to push data via mqtt")
+                self.logger.warning("Failed to push data via mqtt")
 
     async def _actor_on(self, messages):
         async for message in messages:
@@ -41,7 +42,7 @@ class SatelliteController:
                 topic_key = message.topic.split("/")
                 await self.cbpi.actor.on(topic_key[2])
             except:
-                self.logger.warning("Faild to process actor on via mqtt")
+                self.logger.warning("Failed to process actor on via mqtt")
 
     async def _actor_off(self, messages):
         async for message in messages:
@@ -49,7 +50,24 @@ class SatelliteController:
                 topic_key = message.topic.split("/")
                 await self.cbpi.actor.off(topic_key[2])
             except:
-                self.logger.warning("Faild to process actor off via mqtt")
+                self.logger.warning("Failed to process actor off via mqtt")
+
+    async def _actor_power(self, messages):
+        async for message in messages:
+            try:
+                topic_key = message.topic.split("/")
+                try:
+                    power=int(message.payload.decode())
+                    if power > 100: 
+                        power = 100
+                    if power < 0:
+                        power = 0
+                    await self.cbpi.actor.set_power(topic_key[2],power)
+                    await self.cbpi.actor.actor_update(topic_key[2],power)
+                except:
+                    self.logger.warning("Failed to set actor power via mqtt. No valid power in message")
+            except:
+                self.logger.warning("Failed to set actor power via mqtt")
 
     def subcribe(self, topic, method):
         task = asyncio.create_task(self._subcribe(topic, method))
@@ -63,11 +81,9 @@ class SatelliteController:
                         await self.client.subscribe(topic)
                         async for message in messages:
                             await method(message.payload.decode())
-            except asyncio.CancelledError as e:
+            except asyncio.CancelledError:
                 # Cancel
-                self.logger.warning(
-                    "Sub CancelledError Exception: {}".format(e))
-                return
+                self.logger.warning("Sub Cancelled")
             except MqttError as e:
                 self.logger.error("Sub MQTT Exception: {}".format(e))
             except Exception as e:
