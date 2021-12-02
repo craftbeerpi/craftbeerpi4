@@ -48,7 +48,7 @@ class GPIOActor(CBPiActor):
             return 0 if self.inverted == False else 1
 
     async def on_start(self):
-        self.power = 100
+        self.power = None
         self.gpio = self.props.GPIO
         self.inverted = True if self.props.get("Inverted", "No") == "Yes" else False
         self.sampleTime = int(self.props.get("SamplingTime", 5)) 
@@ -59,6 +59,8 @@ class GPIOActor(CBPiActor):
     async def on(self, power = None):
         if power is not None:
             self.power = power
+        else: 
+            self.power = 100
         await self.set_power(self.power)
 
         logger.info("ACTOR %s ON - GPIO %s " %  (self.id, self.gpio))
@@ -116,13 +118,18 @@ class GPIOPWMActor(CBPiActor):
             GPIO.setup(self.gpio, GPIO.OUT)
             GPIO.output(self.gpio, 0)
         self.state = False
-        self.power = 100
+        self.power = None
         self.p = None
         pass
 
     async def on(self, power = None):
+        logging.info("PWM Actor Power: {}".format(power))
         if power is not None:
             self.power = power
+        else:
+            self.power = 100
+
+        logging.info("PWM Final Power: {}".format(self.power))    
         
         logger.info("PWM ACTOR %s ON - GPIO %s - Frequency %s - Power %s" %  (self.id, self.gpio,self.frequency,self.power))
         try:

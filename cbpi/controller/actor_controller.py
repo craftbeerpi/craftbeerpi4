@@ -9,10 +9,15 @@ class ActorController(BasicController):
         self.update_key = "actorupdate"
 
     async def on(self, id, power=None):
+        logging.info("Controller_power: {}".format(power))
         try:
             item = self.find_by_id(id)
-            if item.power:
-                power = item.power
+            if power is None:
+                logging.info("Power is none")
+                if item.power:
+                    power = item.power
+                else:
+                    power = 100
             if item.instance.state is False:
                 await item.instance.on(power)
                 await self.push_udpate()
