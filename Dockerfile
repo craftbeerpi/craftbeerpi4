@@ -32,6 +32,10 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
+# Install craftbeerpi requirements for better caching
+COPY --chown=craftbeerpi ./requirements.txt /cbpi-src/
+RUN pip3 install --no-cache-dir -r /cbpi-src/requirements.txt
+
 # Install craftbeerpi from source
 COPY --chown=craftbeerpi . /cbpi-src
 RUN pip3 install --no-cache-dir /cbpi-src
