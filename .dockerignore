@@ -1,0 +1,50 @@
+# Docker
+docker-compose.yml
+.docker
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+**/__pycache__
+**/*.py[cod]
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Virtual environment
+.env/
+.venv/
+venv/
+venv3/
+
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+.idea
+
+**/*.swp

@@ -91,6 +91,7 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
+          target: deploy
           push: ${{ steps.prep.outputs.publish_image }}
           tags: ${{ steps.prep.outputs.tags }}
           labels: |
