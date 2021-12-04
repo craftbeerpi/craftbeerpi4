@@ -3,7 +3,7 @@ RUN apk --no-cache add curl && mkdir /downloads
 # Download installation files
 RUN curl https://github.com/avollkopf/craftbeerpi4-ui/archive/main.zip -L -o ./downloads/cbpi-ui.zip
 
-FROM python:3.9
+FROM python:3.7 as base
 
 # Install dependencies
 RUN     apt-get update \
@@ -36,6 +36,7 @@ RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 COPY --chown=craftbeerpi ./requirements.txt /cbpi-src/
 RUN pip3 install --no-cache-dir -r /cbpi-src/requirements.txt
 
+FROM base as deploy
 # Install craftbeerpi from source
 COPY --chown=craftbeerpi . /cbpi-src
 RUN pip3 install --no-cache-dir /cbpi-src
