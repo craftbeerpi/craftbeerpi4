@@ -101,6 +101,8 @@ jobs:
           target: deploy
           push: ${{ steps.prep.outputs.publish_image }}
           tags: ${{ steps.prep.outputs.tags }}
+          cache-from: type=registry,ref=${{ steps.prep.outputs.build_cache_image_name }}
+          cache-to: type=inline
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
