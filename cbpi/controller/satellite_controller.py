@@ -33,24 +33,24 @@ class SatelliteController:
         if self.client is not None and self.client._connected:
             try:
                 await self.client.publish(topic, message, qos=1, retain=retain)
-            except:
-                self.logger.warning("Failed to push data via mqtt")
+            except Exception as e:
+                self.logger.warning("Failed to push data via mqtt: {}".format(e))
 
     async def _actor_on(self, messages):
         async for message in messages:
             try:
                 topic_key = message.topic.split("/")
                 await self.cbpi.actor.on(topic_key[2])
-            except:
-                self.logger.warning("Failed to process actor on via mqtt")
+            except Exception as e:
+                self.logger.warning("Failed to process actor on via mqtt: {}".format(e))
 
     async def _actor_off(self, messages):
         async for message in messages:
             try:
                 topic_key = message.topic.split("/")
                 await self.cbpi.actor.off(topic_key[2])
-            except:
-                self.logger.warning("Failed to process actor off via mqtt")
+            except Exception as e:
+                self.logger.warning("Failed to process actor off via mqtt: {}".format(e))
 
     async def _actor_power(self, messages):
         async for message in messages:
