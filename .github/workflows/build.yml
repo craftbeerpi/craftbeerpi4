@@ -54,11 +54,17 @@ jobs:
           PUBLISH_IMAGE=false
           TAGS="${{ env.image-name }}:dev"
 
+          # Define the image that will be used as a cached image
+          # to speed up the build process
+          BUILD_CACHE_IMAGE_NAME=${TAGS}
+
           if [[ $GITHUB_REF_NAME == master ]] || [[ $GITHUB_REF_NAME == main ]]; then
             # when building master/main use :latest tag and the version number
             # from the cbpi/__init__.py file
             VERSION=$(grep -o -E "(([0-9]{1,2}[.]?){3}[0-9]+)" cbpi/__init__.py)
-            TAGS="${{ env.image-name }}:latest,${{ env.image-name }}:v${VERSION}"
+            LATEST_IMAGE=${{ env.image-name }}:latest
+            BUILD_CACHE_IMAGE_NAME=${LATEST_IMAGE}
+            TAGS="${LATEST_IMAGE},${{ env.image-name }}:v${VERSION}"
             PUBLISH_IMAGE=true
           elif [[ $GITHUB_REF_NAME == development ]]; then
             PUBLISH_IMAGE=true
@@ -67,6 +73,7 @@ jobs:
           # Set output parameters.
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=publish_image::${PUBLISH_IMAGE}
+          echo ::set-output name=build_cache_image_name::${BUILD_CACHE_IMAGE_NAME}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
@@ -91,8 +98,11 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
+          target: deploy
           push: ${{ steps.prep.outputs.publish_image }}
           tags: ${{ steps.prep.outputs.tags }}
+          cache-from: type=registry,ref=${{ steps.prep.outputs.build_cache_image_name }}
+          cache-to: type=inline
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
