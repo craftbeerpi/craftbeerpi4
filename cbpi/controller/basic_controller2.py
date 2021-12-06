@@ -102,7 +102,7 @@ class BasicController:
             
             logging.info("{} started {}".format(self.name, id))
             
-            await self.push_udpate()
+#            await self.push_udpate()
         except Exception as e:
             logging.error("{} Cant start {} - {}".format(self.name, id, e))
 
