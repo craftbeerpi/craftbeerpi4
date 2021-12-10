@@ -36,6 +36,11 @@ RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 COPY --chown=craftbeerpi ./requirements.txt /cbpi-src/
 RUN pip3 install --no-cache-dir -r /cbpi-src/requirements.txt
 
+# Install RPi.GPIO separately because it's excluded in setup.py for non-raspberrys.
+# This can enable GPIO support for the image when used on a raspberry pi and the
+# /dev/gpiomem device.
+RUN pip3 install --no-cache-dir RPi.GPIO==0.7.1a4
+
 FROM base as deploy
 # Install craftbeerpi from source
 COPY --chown=craftbeerpi . /cbpi-src
