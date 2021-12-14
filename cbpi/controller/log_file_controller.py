@@ -6,6 +6,13 @@ from logging.handlers import RotatingFileHandler
 from time import strftime, localtime
 import pandas as pd
 import zipfile
+import base64
+import urllib3
+from cbpi.api import *
+from cbpi.api.config import ConfigType
+from cbpi.api.base import CBPiBase
+import asyncio
+
 
 class LogController:
 
@@ -16,27 +23,61 @@ class LogController:
         '''
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
-
+        self.configuration = False
         self.datalogger = {}
 
+#        self.cbpi.config.get does not seem to work here...
+#        self.influxdbaddr="192.168.163.105"
+#        self.influxdbport="8086"
+#        self.influxdbname="cbpi4"
+#        self.influxdburl='http://' + self.influxdbaddr + ':' + str(self.influxdbport) + '/write?db=' + self.influxdbname
+#        self.influxdbuser=""
+#        self.influxdbpwd=""
+#        self.base64string = base64.b64encode(('%s:%s' % (self.influxdbuser,self.influxdbpwd)).encode())
+
     def log_data(self, name: str, value: str) -> None:
+        self.logfiles = self.cbpi.config.get("CSVLOGFILES", "Yes")
+        self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
+        if self.logfiles == "Yes":
+            if name not in self.datalogger:
+                max_bytes = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 1048576)
+                backup_count = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3)
+    
+                data_logger = logging.getLogger('cbpi.sensor.%s' % name)
+                data_logger.propagate = False
+                data_logger.setLevel(logging.DEBUG)
+                handler = RotatingFileHandler('./logs/sensor_%s.log' % name, maxBytes=max_bytes, backupCount=backup_count)
+                data_logger.addHandler(handler)
+                self.datalogger[name] = data_logger
 
-        if name not in self.datalogger:
-            max_bytes = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 1048576)
-            backup_count = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3)
+            formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
+            self.datalogger[name].info("%s,%s" % (formatted_time, value))
 
-            data_logger = logging.getLogger('cbpi.sensor.%s' % name)
-            data_logger.propagate = False
-            data_logger.setLevel(logging.DEBUG)
-            handler = RotatingFileHandler('./logs/sensor_%s.log' % name, maxBytes=max_bytes, backupCount=backup_count)
-            data_logger.addHandler(handler)
-            self.datalogger[name] = data_logger
+        if self.influxdb == "Yes":
+            self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
+            self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
+            self.influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
+            self.influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
+            self.influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
+            self.influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
+            self.base64string = base64.b64encode(('%s:%s' % (self.influxdbuser,self.influxdbpwd)).encode())
+            self.influxdburl='http://' + self.influxdbaddr + ':' + str(self.influxdbport) + '/write?db=' + self.influxdbname
 
-        formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-        self.datalogger[name].info("%s,%s" % (formatted_time, value))
+
+            try:
+                sensor=self.cbpi.sensor.find_by_id(name)
+                sensorname=sensor.name.replace(" ", "_")
+                out="measurement,source=" + sensorname + "___" + name + " value="+str(value)
+                header = {'User-Agent': name, 'Content-Type': 'application/x-www-form-urlencoded','Authorization': 'Basic %s' % self.base64string.decode('utf-8')}
+                http = urllib3.PoolManager()
+                req = http.request('POST',self.influxdburl, body=out, headers = header)
+            except Exception as e:
+                logging.error("InfluxDB write Error: {}".format(e))
+
+
 
     async def get_data(self, names, sample_rate='60s'):
-
+        logging.info("Start Log for {}".format(names))
         '''
         :param names: name as string or list of names as string
         :param sample_rate: rate for resampling the data
@@ -70,11 +111,11 @@ class LogController:
 
             # concat all logs
             df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', name], header=None) for f in all_filenames])
-
+            logging.info("Read all files for {}".format(names))
             # resample if rate provided
             if sample_rate is not None:
                 df = df[name].resample(sample_rate).max()
-
+            logging.info("Sampled now for {}".format(names))
             df = df.dropna()
             if result is None:
                 result = df
@@ -88,7 +129,7 @@ class LogController:
                 data[name] = result[name].interpolate(limit_direction='both', limit=10).tolist()
         else:
             data[name] = result.interpolate().tolist()
-
+        logging.info("Send Log for {}".format(names))
         return data
 
     async def get_data2(self, ids) -> dict:

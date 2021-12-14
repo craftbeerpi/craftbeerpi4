@@ -9,7 +9,7 @@ class ActorController(BasicController):
         self.update_key = "actorupdate"
 
     async def on(self, id, power=None):
-        logging.info("Controller_power: {}".format(power))
+#        logging.info("Controller_power: {}".format(power))
         try:
             item = self.find_by_id(id)
             if power is None:

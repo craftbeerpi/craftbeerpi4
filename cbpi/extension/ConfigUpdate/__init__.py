@@ -35,6 +35,15 @@ class ConfigUpdate(CBPiExtension):
         cooldown_step = self.cbpi.config.get("steps_cooldown", None)
         max_dashboard_number = self.cbpi.config.get("max_dashboard_number", None)
         current_dashboard_number = self.cbpi.config.get("current_dashboard_number", None)
+        logfiles = self.cbpi.config.get("CSVLOGFILES", None)
+        influxdb = self.cbpi.config.get("INFLUXDB", None)
+        influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
+        influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
+        influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
+        influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
+        influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
+
+
 
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
@@ -174,6 +183,65 @@ class ConfigUpdate(CBPiExtension):
             except:
                 logger.warning('Unable to update config')
 
+       ## Check if CSV logfiles is on config 
+        if logfiles is None:
+            logger.info("INIT CSV logfiles")
+            try:
+                await self.cbpi.config.add("CSVLOGFILES", "Yes", ConfigType.SELECT, "Write sensor data to csv logfiles", 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+            except:
+                logger.warning('Unable to update config')
+
+       ## Check if CSV logfiles is on config 
+        if influxdb is None:
+            logger.info("INIT Influxdb")
+            try:
+                await self.cbpi.config.add("INFLUXDB", "No", ConfigType.SELECT, "Write sensor data to influxdb", 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+            except:
+                logger.warning('Unable to update config')
+
+        ## Check if influxdbaddr is in config
+        if influxdbaddr is None:
+            logger.info("INIT Influxdbaddr")
+            try:
+                await self.cbpi.config.add("INFLUXDBADDR", "localhost", ConfigType.STRING, "IP Address of your influxdb server")
+            except:
+                logger.warning('Unable to update config')
+
+        ## Check if influxdbport is in config
+        if influxdbport is None:
+            logger.info("INIT Influxdbport")
+            try:
+                await self.cbpi.config.add("INFLUXDBPORT", "8086", ConfigType.STRING, "Port of your influxdb server")
+            except:
+                logger.warning('Unable to update config')
+
+        ## Check if influxdbname is in config
+        if influxdbname is None:
+            logger.info("INIT Influxdbname")
+            try:
+                await self.cbpi.config.add("INFLUXDBNAME", "cbpi4", ConfigType.STRING, "Name of your influxdb database name")
+            except:
+                logger.warning('Unable to update config')
+
+        ## Check if influxdber is in config
+        if influxdbuser is None:
+            logger.info("INIT Influxdbuser")
+            try:
+                await self.cbpi.config.add("INFLUXDBUSER", " ", ConfigType.STRING, "User name for your influxdb database (only if required)")
+            except:
+                logger.warning('Unable to update config')
+
+        ## Check if influxdber is in config
+        if influxdbpwd is None:
+            logger.info("INIT Influxdbpwd")
+            try:
+                await self.cbpi.config.add("INFLUXDBPWD", " ", ConfigType.STRING, "Password for your influxdb database (only if required)")
+            except:
+                logger.warning('Unable to update config')
 
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)
