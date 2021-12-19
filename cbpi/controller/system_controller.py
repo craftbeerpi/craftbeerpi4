@@ -40,6 +40,24 @@ class SystemController:
         dir_name = pathlib.Path(os.path.join(".", 'config'))
         shutil.make_archive(output_filename, 'zip', dir_name)
 
+    async def downloadlog(self, logtime):
+        filename = "cbpi4.log"
+        fullname = pathlib.Path(os.path.join(".",filename))
+        output_filename="cbpi4_log.zip"
+        if logtime == "b":
+            os.system('journalctl -b -u craftbeerpi.service > {}'.format(fullname))
+        else:
+            os.system('journalctl --since \"{} hours ago\" -u craftbeerpi.service > {}'.format(logtime, fullname))
+
+        zipObj=zipfile.ZipFile(output_filename , 'w', zipfile.ZIP_DEFLATED)
+        zipObj.write(fullname)
+        zipObj.close()
+        os.remove(fullname)
+
+
+
+
+
     def allowed_file(self, filename, extension):
         return '.' in filename and filename.rsplit('.', 1)[1] in set([extension])
 

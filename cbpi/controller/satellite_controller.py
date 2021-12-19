@@ -109,7 +109,7 @@ class SatelliteController:
                 async with AsyncExitStack() as stack:
                     self.tasks = set()
                     stack.push_async_callback(cancel_tasks, self.tasks)
-                    self.client = Client(self.host, port=self.port, username=self.username, password=self.password, will=Will(topic="cbpi/diconnect", payload="CBPi Server Disconnected"))
+                    self.client = Client(self.host, port=self.port, username=self.username, password=self.password, will=Will(topic="cbpi/disconnect", payload="CBPi Server Disconnected"))
 
                     await stack.enter_async_context(self.client)
 
