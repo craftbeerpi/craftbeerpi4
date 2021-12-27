@@ -7,7 +7,7 @@ from cbpi.api import *
 import xml.etree.ElementTree
 import sqlite3
 from voluptuous.schema_builder import message
-from cbpi.api.dataclasses import NotificationAction, NotificationType
+from cbpi.api.dataclasses import NotificationAction, NotificationType, Actor, Sensor, Kettle
 from cbpi.controller.kettle_controller import KettleController
 from cbpi.api.base import CBPiBase
 from cbpi.api.config import ConfigType
