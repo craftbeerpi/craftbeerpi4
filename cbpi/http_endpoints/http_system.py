@@ -146,6 +146,40 @@ class SystemHttpEndpoints:
         await response.write_eof()
         return response
 
+
+    @request_mapping("/log/{logtime}/", method="GET", name="BackupConfig", auth_required=False)
+    async def downloadlog(self, request):
+        """
+        ---
+        description: Zip and download craftbeerpi.service log 
+        tags:
+        - System
+        responses:
+            "200":
+                description: successful operation
+                content:  # Response body
+                application/zip:  # Media type
+        """
+        logtime = request.match_info['logtime']
+        await self.controller.downloadlog(logtime)
+        filename = "cbpi4_log.zip"
+        file_name = pathlib.Path(os.path.join(".", filename))
+
+        response = web.StreamResponse(
+            status=200,
+            reason='OK',
+            headers={'Content-Type': 'application/zip'},
+        )
+        await response.prepare(request)
+        with open(file_name, 'rb') as file:
+            for line in file.readlines():
+                await response.write(line)
+
+        await response.write_eof()
+        os.remove(file_name)
+        return response
+
+
     @request_mapping("/restore", method="POST", name="RestoreConfig", auth_required=False)
     async def restore(self, request):
         """

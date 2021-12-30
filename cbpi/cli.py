@@ -61,6 +61,12 @@ def create_config_file():
         srcfile = os.path.join(os.path.dirname(__file__), "config", "craftbeerpi.service")
         destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
+
+    if os.path.exists(os.path.join(".", 'config', "chromium.desktop")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "chromium.desktop")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
     print("Config Folder created")
 
 
@@ -184,6 +190,21 @@ def plugins_add(package_name):
             return
         return
 
+    if package_name == 'chromium':
+        print("Add chromium.desktop to /etc/xdg/autostart/")
+        try:
+            if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is False:
+                srcfile = os.path.join(".", "config", "chromium.desktop")
+                destfile = os.path.join("/etc/xdg/autostart/")
+                shutil.copy(srcfile, destfile)
+                print("Copied chromium.desktop to /etc/xdg/autostart/")
+            else:
+                print("chromium.desktop is already located in /etc/xdg/autostart/")
+        except Exception as e:
+            print(e)
+            return
+        return
+
     try:
         with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
@@ -230,6 +251,18 @@ def plugin_remove(package_name):
             return
         return
 
+    if package_name == 'chromium':
+        print("Remove chromium.desktop from /etc/xdg/autostart/")
+        try:
+            if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is True:
+                os.remove(os.path.join("/etc/xdg/autostart/","chromium.desktop"))
+                print("Deleted chromium.desktop from /etc/xdg/autostart/")
+            else:
+                print("chromium.desktop is not located in /etc/xdg/autostart/")
+        except Exception as e:
+            print(e)
+            return
+        return
 
 
     try:
@@ -366,14 +399,14 @@ def plugins():
 @click.command()
 @click.argument('name')
 def add(name):
-    '''Activate Plugin'''
+    '''Activate Plugin, autostart or chromium '''
     plugins_add(name)
 
 
 @click.command()
 @click.argument('name')
 def remove(name):
-    '''Deactivate Plugin'''
+    '''Deactivate Plugin, autostart or chromium'''
     plugin_remove(name)
 
 
