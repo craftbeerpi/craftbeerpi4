@@ -126,3 +126,4 @@ class Property(object):
             self.label = label
             self.configurable = True
             self.description = description
+

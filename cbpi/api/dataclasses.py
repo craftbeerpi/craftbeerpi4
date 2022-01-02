@@ -137,7 +137,9 @@ class Fermenter:
 
 
     def __str__(self):
-        return "id={} name={} sensor={} heater={} cooler={} brewname={} props={} temp={} type={} steps={}".format(self.id, self.name, self.sensor, self.heater, self.cooler, self.brewname, self.props, self.target_temp, self.type, self.steps)
+        return "name={} props={} temp={}".format(self.name, self.props, self.target_temp)
+
+#        return "id={} name={} sensor={} heater={} cooler={} brewname={} props={} temp={} type={} steps={}".format(self.id, self.name, self.sensor, self.heater, self.cooler, self.brewname, self.props, self.target_temp, self.type, self.steps)
     def to_dict(self):
 
         if self.instance is not None:

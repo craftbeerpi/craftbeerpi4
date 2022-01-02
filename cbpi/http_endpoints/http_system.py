@@ -28,10 +28,10 @@ class SystemHttpEndpoints:
                 description: successful operation
         """
         try:
-            fermenter=self.cbpi.fermenter.get_state()
-            logging.info(fermenter)
+            sensor=self.cbpi.sensor.get_state()
+            logging.info(sensor)
         except:
-            logging.info("!!!!!!!!!!!!!!!!!!!!!!!!!Error get fermenter state!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            logging.info("!!!!!!!!!!!!!!!!!!!!!!!!!Error get sensor state!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
         return web.json_response(data=dict(
             actor=self.cbpi.actor.get_state(),

@@ -2,7 +2,7 @@
 import logging
 import os.path
 import json
-from cbpi.api.dataclasses import Actor, Props
+from cbpi.api.dataclasses import Fermenter, Actor, Props
 import sys, os
 import shortuuid
 import asyncio
