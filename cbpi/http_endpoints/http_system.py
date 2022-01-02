@@ -27,6 +27,12 @@ class SystemHttpEndpoints:
             "200":
                 description: successful operation
         """
+        try:
+            fermenter=self.cbpi.fermenter.get_state()
+            logging.info(fermenter)
+        except:
+            logging.info("!!!!!!!!!!!!!!!!!!!!!!!!!Error get fermenter state!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
         return web.json_response(data=dict(
             actor=self.cbpi.actor.get_state(),
             fermenter=self.cbpi.fermenter.get_state(),

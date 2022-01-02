@@ -88,7 +88,7 @@ class FermentationController:
         self.logger = logging.getLogger(__name__)
         self.path = os.path.join(".", 'config', "fermenter_data.json")
         self._loop = asyncio.get_event_loop() 
-        self.data = {}
+        self.data = []
         self.types = {}
         self.cbpi.app.on_cleanup.append(self.shutdown)
 
@@ -125,16 +125,14 @@ class FermentationController:
                     self.logger.error(e)
 
     async def load(self):
-        if os.path.exists(self.path) is False:
-            with open(self.path, "w") as file:
-                json.dump(dict(basic={}, steps=[]), file, indent=4, sort_keys=True)
+#        if os.path.exists(self.path) is False:
+#            with open(self.path, "w") as file:
+#                json.dump(dict(basic={}, steps=[]), file, indent=4, sort_keys=True)
         with open(self.path) as json_file:
-            d = json.load(json_file)
-            self.data = list(map(lambda item: self._create(item), d))
+            data = json.load(json_file)
 
-        #for item in self.data:
-        #    logging.info("{} Starting ".format(item.name))
-        #    await self.start(item.id)
+            for i in data["data"]:
+                self.data.append(self._create(i))
                  
     def _create_step(self, fermenter, item):
         id = item.get("id")
@@ -159,22 +157,25 @@ class FermentationController:
             asyncio.create_task(self.start(step_instance.step.fermenter.id))
 
     def _create(self, data):
-        id = data.get("id")
-        name = data.get("name")
-        sensor = data.get("sensor")
-        heater = data.get("heater")
-        cooler = data.get("cooler")
-        logictype = data.get("type")
-        temp = data.get("target_temp")
-        brewname = data.get("brewname")
-        props = Props(data.get("props", {}))
-        fermenter = Fermenter(id, name, sensor, heater, cooler, brewname, props, temp, logictype)
-        fermenter.steps = list(map(lambda item: self._create_step(fermenter, item), data.get("steps", [])))
-        self.push_update()
-        #self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-        #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
-        
-        return fermenter
+        try:
+            id = data.get("id")
+            name = data.get("name")
+            sensor = data.get("sensor")
+            heater = data.get("heater")
+            cooler = data.get("cooler")
+            logictype = data.get("type")
+            temp = data.get("target_temp")
+            brewname = data.get("brewname")
+            props = Props(data.get("props", {}))
+            fermenter = Fermenter(id, name, sensor, heater, cooler, brewname, props, temp, logictype)
+            fermenter.steps = list(map(lambda item: self._create_step(fermenter, item), data.get("steps", [])))
+            self.push_update()
+            #self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
+            #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
+            return fermenter
+        except:
+            return
+
         
     def _find_by_id(self, id):
         return next((item for item in self.data if item.id == id), None)
@@ -191,6 +192,9 @@ class FermentationController:
 
     def get_state(self):
 #        logging.info("{} Get State".format(self.name))
+        if self.data == []:
+            logging.info(self.data)
+
         return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types()}
 
     async def get(self, id: str ):

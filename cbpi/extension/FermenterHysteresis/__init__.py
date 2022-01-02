@@ -18,26 +18,28 @@ class FermenterAutostart(CBPiExtension):
         self._task = asyncio.create_task(self.run())
         self.controller : FermentationController = cbpi.fermenter
 
-
     async def run(self):
         logging.info("Starting Fermenter Autorun")
         #get all kettles
-        self.fermenter = self.controller.get_state()
-        for id in self.fermenter['data']:
-            try:
-                self.autostart=(id['props']['AutoStart'])
-                if self.autostart == "Yes":
-                    fermenter_id=(id['id'])
-                    logging.info("Enabling Autostart for Fermenter {}".format(fermenter_id))
-                    self.fermenter=self.cbpi.fermenter._find_by_id(fermenter_id)
-                    try:
-                        if (self.fermenter.instance is None or self.fermenter.instance.state == False):
-                            await self.cbpi.fermenter.toggle(self.fermenter.id)
-                            logging.info("Successfully switched on Ferenterlogic for Fermenter {}".format(self.fermenter.id))
-                    except Exception as e:
-                        logging.error("Failed to switch on FermenterLogic {} {}".format(self.fermenter.id, e))
-            except:
-                pass
+        try:
+            self.fermenter = self.controller.get_state()
+            for id in self.fermenter['data']:
+                try:
+                    self.autostart=(id['props']['AutoStart'])
+                    if self.autostart == "Yes":
+                        fermenter_id=(id['id'])
+                        logging.info("Enabling Autostart for Fermenter {}".format(fermenter_id))
+                        self.fermenter=self.cbpi.fermenter._find_by_id(fermenter_id)
+                        try:
+                            if (self.fermenter.instance is None or self.fermenter.instance.state == False):
+                                await self.cbpi.fermenter.toggle(self.fermenter.id)
+                                logging.info("Successfully switched on Ferenterlogic for Fermenter {}".format(self.fermenter.id))
+                        except Exception as e:
+                            logging.error("Failed to switch on FermenterLogic {} {}".format(self.fermenter.id, e))
+                except:
+                    pass
+        except:
+            pass
 
 
 @parameters([Property.Number(label="HeaterOffsetOn", configurable=True, description="Offset as decimal number when the heater is switched on. Should be greater then 'HeaterOffsetOff'. For example a value of 2 switches on the heater if the current temperature is 2 degrees below the target temperature"),
