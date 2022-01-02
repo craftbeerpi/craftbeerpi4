@@ -29,6 +29,7 @@ class SystemHttpEndpoints:
         """
         return web.json_response(data=dict(
             actor=self.cbpi.actor.get_state(),
+            fermenter=self.cbpi.fermenter.get_state(),
             sensor=self.cbpi.sensor.get_state(),
             kettle=self.cbpi.kettle.get_state(),
             step=self.cbpi.step.get_state(),

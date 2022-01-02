@@ -8,5 +8,6 @@ class ConfigType(Enum):
     ACTOR = "actor"
     SENSOR = "sensor"
     STEP = "step"
+    FERMENTER = "fermenter"
 
 
