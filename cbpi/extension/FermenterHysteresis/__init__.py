@@ -60,16 +60,12 @@ class FermenterHysteresis(CBPiFermenterLogic):
             self.fermenter = self.get_fermenter(self.id)
             self.heater = self.fermenter.heater
             self.cooler = self.fermenter.cooler
-
-            target_temp = self.get_fermenter_target_temp(self.id)
-            if target_temp == 0:
-                await self.set_fermenter_target_temp(self.id,int(self.props.get("TargetTemp", 0)))
- 
+            
 
             while self.running == True:
                 
-                sensor_value = self.get_sensor_value(self.fermenter.sensor).get("value")
-                target_temp = self.get_fermenter_target_temp(self.id)
+                sensor_value = float(self.get_sensor_value(self.fermenter.sensor).get("value"))
+                target_temp = float(self.get_fermenter_target_temp(self.id))
 
                 if sensor_value + self.heater_offset_min <= target_temp:
                     if self.heater:

@@ -253,8 +253,9 @@ class FermentationController:
         #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
 
     def save(self):
+        data = dict(data=list(map(lambda item: item.to_dict(), self.data))) 
         with open(self.path, "w") as file:
-            json.dump(list(map(lambda item: item.to_dict(), self.data)), file, indent=4, sort_keys=True)
+            json.dump(data, file, indent=4, sort_keys=True)
 
     async def create_step(self, id, step: Step):
         try:
