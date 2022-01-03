@@ -319,7 +319,7 @@ class ActorStep(CBPiStep):
              Property.Number(label="Temp", description="Boil temperature", configurable=True),
              Property.Sensor(label="Sensor"),
              Property.Kettle(label="Kettle"),
-             Property.Select(label="LidAlert",options=["Yes","No"], description="Trigger Alert to remove id if temp is close to boil"),
+             Property.Select(label="LidAlert",options=["Yes","No"], description="Trigger Alert to remove lid if temp is close to boil"),
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Kettlelogic automatically on and off -> Yes"),
              Property.Select("First_Wort", options=["Yes","No"], description="First Wort Hop alert if set to Yes"),
              Property.Number("Hop_1", configurable = True, description="First Hop alert (minutes before finish)"),
