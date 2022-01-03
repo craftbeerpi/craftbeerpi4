@@ -256,8 +256,8 @@ class StepController:
             self.cbpi.ws.send(dict(topic="mash_profile_update", data=self.get_state()))
         else:
             self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda item: item.to_dict(), self.profile))))
-        
-        self.cbpi.push_update(topic="cbpi/stepupdate", data=list(map(lambda item: item.to_dict(), self.profile)))
+        for item in self.profile:
+            self.cbpi.push_update(topic="cbpi/stepupdate/{}".format(item.id), data=(item.to_dict()))
 
     async def start_step(self,step):
         try:

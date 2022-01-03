@@ -46,7 +46,8 @@ class FermenterAutostart(CBPiExtension):
              Property.Number(label="HeaterOffsetOff", configurable=True, description="Offset as decimal number when the heater is switched off. Should be smaller then 'HeaterOffsetOn'. For example a value of 1 switches off the heater if the current temperature is 1 degree below the target temperature"),
              Property.Number(label="CoolerOffsetOn", configurable=True, description="Offset as decimal number when the cooler is switched on. Should be greater then 'CoolerOffsetOff'. For example a value of 2 switches on the cooler if the current temperature is 2 degrees below the target temperature"),
              Property.Number(label="CoolerOffsetOff", configurable=True, description="Offset as decimal number when the cooler is switched off. Should be smaller then 'CoolerOffsetOn'. For example a value of 1 switches off the cooler if the current temperature is 1 degree below the target temperature"),
-             Property.Select(label="AutoStart", options=["Yes","No"],description="Autostart Fermenter on cbpi start")])
+             Property.Select(label="AutoStart", options=["Yes","No"],description="Autostart Fermenter on cbpi start"),
+             Property.Sensor(label="sensor2",description="Optional Sensor for LCDisplay(e.g. iSpindle)")])
 
 class FermenterHysteresis(CBPiFermenterLogic):
     
@@ -60,27 +61,38 @@ class FermenterHysteresis(CBPiFermenterLogic):
             self.fermenter = self.get_fermenter(self.id)
             self.heater = self.fermenter.heater
             self.cooler = self.fermenter.cooler
-            
+
+            heater = self.cbpi.actor.find_by_id(self.heater)
+            cooler = self.cbpi.actor.find_by_id(self.cooler)
 
             while self.running == True:
                 
                 sensor_value = float(self.get_sensor_value(self.fermenter.sensor).get("value"))
                 target_temp = float(self.get_fermenter_target_temp(self.id))
 
+                try:
+                    heater_state = heater.instance.state
+                except:
+                    heater_state= False
+                try:
+                    cooler_state = cooler.instance.state
+                except:
+                    cooler_state= False
+
                 if sensor_value + self.heater_offset_min <= target_temp:
-                    if self.heater:
+                    if self.heater and (heater_state == False):
                         await self.actor_on(self.heater)
                     
                 if sensor_value + self.heater_offset_max >= target_temp:
-                    if self.heater:
+                    if self.heater and (heater_state == True):
                         await self.actor_off(self.heater)
 
                 if sensor_value >=  self.cooler_offset_min + target_temp:
-                    if self.cooler:
+                    if self.cooler and (cooler_state == False):
                         await self.actor_on(self.cooler)
                     
                 if sensor_value <= self.cooler_offset_max + target_temp:
-                    if self.cooler:
+                    if self.cooler and (cooler_state == True):
                         await self.actor_off(self.cooler)
 
                 await asyncio.sleep(1)
