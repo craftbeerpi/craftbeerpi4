@@ -31,7 +31,7 @@ class PluginController():
             try:
                 logger.info("Trying to load plugin %s" % filename)
                 data = load_config(os.path.join(
-                    this_directory, "../extension/%s/config.yaml" % filename))                
+                    this_directory, "../extension/%s/config.yaml" % filename))            
                 if (data.get("active") is True and data.get("version") == 4):
                     self.modules[filename] = import_module(
                         "cbpi.extension.%s" % (filename))
@@ -82,6 +82,9 @@ class PluginController():
 
         if issubclass(clazz, CBPiStep):
             self.cbpi.step.types[name] = self._parse_step_props(clazz, name)
+
+        if issubclass(clazz, CBPiFermentationStep):
+            self.cbpi.fermenter.steptypes[name] = self._parse_step_props(clazz, name)
 
         if issubclass(clazz, CBPiExtension):
             self.c = clazz(self.cbpi)

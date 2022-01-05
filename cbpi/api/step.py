@@ -4,7 +4,7 @@ from abc import abstractmethod
 
 from cbpi.api.base import CBPiBase
 
-__all__ = ["StepResult", "StepState", "StepMove", "CBPiStep"]
+__all__ = ["StepResult", "StepState", "StepMove", "CBPiStep", "CBPiFermentationStep"]
 
 from enum import Enum
 

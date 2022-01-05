@@ -27,12 +27,6 @@ class SystemHttpEndpoints:
             "200":
                 description: successful operation
         """
-        try:
-            sensor=self.cbpi.sensor.get_state()
-            logging.info(sensor)
-        except:
-            logging.info("!!!!!!!!!!!!!!!!!!!!!!!!!Error get sensor state!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
         return web.json_response(data=dict(
             actor=self.cbpi.actor.get_state(),
             fermenter=self.cbpi.fermenter.get_state(),

@@ -11,7 +11,7 @@ from cbpi.api.dataclasses import  Fermenter, FermenterStep, Props, Step
 from cbpi.controller.basic_controller2 import BasicController
 from tabulate import tabulate
 import sys, os
-from ..api.step import CBPiStep, StepMove, StepResult, StepState
+from ..api.step import CBPiStep, StepMove, StepResult, StepState, CBPiFermentationStep
 
 
 
@@ -90,6 +90,7 @@ class FermentationController:
         self._loop = asyncio.get_event_loop() 
         self.data = []
         self.types = {}
+        self.steptypes = {}
         self.cbpi.app.on_cleanup.append(self.shutdown)
 
     async def init(self):
@@ -171,8 +172,6 @@ class FermentationController:
             fermenter = Fermenter(id, name, sensor, heater, cooler, brewname, props, temp, logictype)
             fermenter.steps = list(map(lambda item: self._create_step(fermenter, item), data.get("steps", [])))
             self.push_update()
-            #self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-            #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
             return fermenter
         except:
             return
@@ -185,18 +184,22 @@ class FermentationController:
         return list(map(lambda x: x.to_dict(), self.data))
     
     def get_types(self):
-#        logging.info("{} Get Types".format(self.name))
         result = {}
         for key, value in self.types.items():
             result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
         return result
 
+    def get_steptypes(self):
+        result = {}
+        for key, value in self.steptypes.items():
+            result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
+        return result
+
     def get_state(self):
-#        logging.info("{} Get State".format(self.name))
         if self.data == []:
             logging.info(self.data)
 
-        return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types()}
+        return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types(), "steptypes":self.get_steptypes()}
 
     async def get(self, id: str ):
         return self._find_by_id(id)
@@ -206,8 +209,6 @@ class FermentationController:
         self.data.append(data)
         self.save()
         self.push_update()
-        #self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-        #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
         return data
 
     async def update(self, item: Fermenter ):
@@ -228,8 +229,6 @@ class FermentationController:
         self.data = list(map(lambda old: _update(old, item) if old.id == item.id else old, self.data))
         self.save()
         self.push_update()
-        #self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-        #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
         return item
 
     async def set_target_temp(self, id: str, target_temp):
@@ -240,8 +239,6 @@ class FermentationController:
                 item.target_temp = target_temp
                 self.save()
                 self.push_update()
-                #self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-                #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
         except Exception as e:
             logging.error("Failed to set Target Temp {} {}".format(id, e))
 
@@ -250,8 +247,6 @@ class FermentationController:
         self.data = list(filter(lambda item: item.id != id, self.data))
         self.save()
         self.push_update()
-        #self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-        #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
 
     def save(self):
         data = dict(data=list(map(lambda item: item.to_dict(), self.data))) 
@@ -332,7 +327,6 @@ class FermentationController:
             
             logging.info("{} started {}".format(item.name, id))
             
-#            await self.push_udpate()
         except Exception as e:
             logging.error("{} Cant start {} - {}".format(item.name, id, e))
 
@@ -340,16 +334,13 @@ class FermentationController:
         
         try:
             item = self._find_by_id(id)
-            #logging.info(item)
             
             if item.instance is None or item.instance.state == False: 
                 await self.start_logic(id)
             else:
                 await item.instance.stop()
             self.push_update()
-            #self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-            #self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
-
+            
         except Exception as e:
             logging.error("Failed to switch on FermenterLogic {} {}".format(id, e))
 
