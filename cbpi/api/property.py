@@ -109,3 +109,21 @@ class Property(object):
             self.label = label
             self.configurable = True
             self.description = description
+
+    class Fermenter(PropertyType):
+        '''
+        The user select a fermenter which is available in the system. The value of this variable will be the fermenter id
+        '''
+
+        def __init__(self, label, description=""):
+            '''
+            
+            :param label: 
+            :param description: 
+            '''
+
+            PropertyType.__init__(self)
+            self.label = label
+            self.configurable = True
+            self.description = description
+

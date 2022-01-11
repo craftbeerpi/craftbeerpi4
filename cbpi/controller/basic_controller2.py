@@ -2,7 +2,7 @@
 import logging
 import os.path
 import json
-from cbpi.api.dataclasses import Actor, Props
+from cbpi.api.dataclasses import Fermenter, Actor, Props
 import sys, os
 import shortuuid
 import asyncio
@@ -55,7 +55,9 @@ class BasicController:
         
     async def push_udpate(self):
         self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-        self.cbpi.push_update("cbpi/{}/update".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
+        self.cbpi.push_update("cbpi/{}".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
+        #for item in self.data:
+        #    self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
 
     def find_by_id(self, id):
         return next((item for item in self.data if item.id == id), None)

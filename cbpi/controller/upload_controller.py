@@ -264,7 +264,7 @@ class UploadController:
                             "props": {
                                 "AutoMode": self.AutoMode,
                                 "Kettle": self.boilid,
-                                "Sensor": self.kettle.sensor,
+                                "Sensor": self.boilkettle.sensor,
                                 "Temp": int(self.BoilTemp),
                                 "Timer": BoilTime,
                                 "First_Wort": FirstWort,
@@ -393,7 +393,7 @@ class UploadController:
             step_type = self.boil if self.boil != "" else "BoilStep"
             step_time = str(int(boil_time))
             step_temp = self.BoilTemp
-            sensor = self.kettle.sensor
+            sensor = self.boilkettle.sensor
             LidAlert = "Yes"
 
             step_string = { "name": "Boil Step",
@@ -584,7 +584,7 @@ class UploadController:
                 step_time = str(int(BoilTime))
                 step_type = self.boil if self.boil != "" else "BoilStep"
                 step_temp = self.BoilTemp
-                sensor = self.kettle.sensor
+                sensor = self.boilkettle.sensor
                 LidAlert = "Yes"
 
                 step_string = { "name": "Boil Step",
@@ -697,7 +697,7 @@ class UploadController:
         if step_type == "CooldownStep":
             cooldown_sensor = self.cbpi.config.get("steps_cooldown_sensor", None)
             if cooldown_sensor is None or cooldown_sensor == '':
-                cooldown_sensor = self.kettle.sensor  # fall back to kettle sensor if no other sensor is specified
+                cooldown_sensor = self.boilkettle.sensor  # fall back to boilkettle sensor if no other sensor is specified
             step_timer = ""                
             step_temp = int(self.CoolDownTemp)
             step_string = { "name": "Cooldown",
@@ -744,7 +744,7 @@ class UploadController:
         try:
             self.boilkettle = self.cbpi.kettle.find_by_id(self.boilid) 
         except:
-            pass
+            self.boilkettle = self.kettle
 
         config_values = { "kettle": self.kettle,
                           "kettle_id": str(self.id),

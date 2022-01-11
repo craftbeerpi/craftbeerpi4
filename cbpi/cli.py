@@ -42,6 +42,11 @@ def create_config_file():
         destfile = os.path.join(".", 'config')
         shutil.copy(srcfile, destfile)
 
+    if os.path.exists(os.path.join(".", 'config', "fermenter_data.json")) is False:
+        srcfile = os.path.join(os.path.dirname(__file__), "config", "fermenter_data.json")
+        destfile = os.path.join(".", 'config')
+        shutil.copy(srcfile, destfile)
+
     if os.path.exists(os.path.join(".", 'config', "step_data.json")) is False:
         srcfile = os.path.join(os.path.dirname(__file__), "config", "step_data.json")
         destfile = os.path.join(".", 'config')

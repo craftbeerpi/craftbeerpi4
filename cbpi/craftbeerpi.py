@@ -26,6 +26,7 @@ from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
 from cbpi.controller.recipe_controller import RecipeController
 from cbpi.controller.upload_controller import UploadController
+from cbpi.controller.fermentation_controller import FermentationController
 
 from cbpi.controller.system_controller import SystemController
 from cbpi.controller.satellite_controller import SatelliteController
@@ -49,6 +50,7 @@ from cbpi.http_endpoints.http_system import SystemHttpEndpoints
 from cbpi.http_endpoints.http_log import LogHttpEndpoints
 from cbpi.http_endpoints.http_notification import NotificationHttpEndpoints
 from cbpi.http_endpoints.http_upload import UploadHttpEndpoints
+from cbpi.http_endpoints.http_fermentation import FermentationHttpEndpoints
 
 import shortuuid
 logger = logging.getLogger(__name__)
@@ -115,8 +117,9 @@ class CraftBeerPi:
         self.satellite = None
         if str(self.static_config.get("mqtt", False)).lower() == "true":
             self.satellite: SatelliteController = SatelliteController(self)
-        
         self.dashboard = DashboardController(self)
+        self.fermenter : FermentationController = FermentationController(self)
+
         self.http_step = StepHttpEndpoints(self)
         self.http_recipe = RecipeHttpEndpoints(self)
         self.http_sensor = SensorHttpEndpoints(self)
@@ -129,7 +132,7 @@ class CraftBeerPi:
         self.http_log = LogHttpEndpoints(self)
         self.http_notification = NotificationHttpEndpoints(self)
         self.http_upload = UploadHttpEndpoints(self)
-
+        self.http_fermenter = FermentationHttpEndpoints(self)
 
         self.login = Login(self)
 
@@ -279,7 +282,7 @@ class CraftBeerPi:
         await self.kettle.init()
         await self.call_initializer(self.app)
         await self.dashboard.init()
-
+        await self.fermenter.init()
         
         self._swagger_setup()
 

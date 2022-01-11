@@ -31,8 +31,7 @@ class PluginController():
             try:
                 logger.info("Trying to load plugin %s" % filename)
                 data = load_config(os.path.join(
-                    this_directory, "../extension/%s/config.yaml" % filename))
-
+                    this_directory, "../extension/%s/config.yaml" % filename))            
                 if (data.get("active") is True and data.get("version") == 4):
                     self.modules[filename] = import_module(
                         "cbpi.extension.%s" % (filename))
@@ -75,11 +74,17 @@ class PluginController():
         if issubclass(clazz, CBPiKettleLogic):
             self.cbpi.kettle.types[name] = self._parse_step_props(clazz, name)
 
+        if issubclass(clazz, CBPiFermenterLogic):
+            self.cbpi.fermenter.types[name] = self._parse_step_props(clazz, name)
+
         if issubclass(clazz, CBPiSensor):
             self.cbpi.sensor.types[name] = self._parse_step_props(clazz, name)
 
         if issubclass(clazz, CBPiStep):
             self.cbpi.step.types[name] = self._parse_step_props(clazz, name)
+
+        if issubclass(clazz, CBPiFermentationStep):
+            self.cbpi.fermenter.steptypes[name] = self._parse_step_props(clazz, name)
 
         if issubclass(clazz, CBPiExtension):
             self.c = clazz(self.cbpi)
@@ -100,6 +105,8 @@ class PluginController():
             return {"label": p.label, "type": "sensor", "configurable": p.configurable, "description": p.description}
         elif isinstance(p, Property.Kettle):
             return {"label": p.label, "type": "kettle", "configurable": p.configurable, "description": p.description}
+        elif isinstance(p, Property.Fermenter):
+            return {"label": p.label, "type": "fermenter", "configurable": p.configurable, "description": p.description}
 
     def _parse_step_props(self, cls, name):
 
@@ -159,6 +166,11 @@ class PluginController():
                 t = tmpObj.__getattribute__(m)
                 result["properties"].append(
                     {"name": m, "label": t.label, "type": "kettle", "configurable": t.configurable,
+                     "description": t.description})
+            elif isinstance(tmpObj.__getattribute__(m), Property.Fermenter):
+                t = tmpObj.__getattribute__(m)
+                result["properties"].append(
+                    {"name": m, "label": t.label, "type": "fermenter", "configurable": t.configurable,
                      "description": t.description})
 
         for method_name, method in cls.__dict__.items():

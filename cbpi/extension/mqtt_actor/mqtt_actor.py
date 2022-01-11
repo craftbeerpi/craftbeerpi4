@@ -9,7 +9,7 @@ class MQTTActor(CBPiActor):
     # Custom property which can be configured by the user
     @action("Set Power", parameters=[Property.Number(label="Power", configurable=True, description="Power Setting [0-100]")])
     async def setpower(self,Power = 100 ,**kwargs):
-        self.power=round(Power)
+        self.power=int(Power)
         if self.power < 0:
             self.power = 0
         if self.power > 100:
