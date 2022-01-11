@@ -111,8 +111,10 @@ class FermentationController:
 
     def push_update(self):
         self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-        for item in self.data:
-            self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
+        self.cbpi.push_update("cbpi/{}".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
+
+        #for item in self.data:
+        #    self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
         pass
 
     async def shutdown(self, app=None):    
