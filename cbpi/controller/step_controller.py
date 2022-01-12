@@ -117,7 +117,7 @@ class StepController:
         step = self.find_by_status(StepState.STOP)
         if step is not None:
             logging.info("Resume step")
-            self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Resume", message="Calling resume step"))
+            self.cbpi.push_update(topic="cbpi/stepnotification", data=dict(type="info", title="Resume", message="Calling resume step"))
             await self.start_step(step)
             await self.save()
             return 
@@ -125,13 +125,13 @@ class StepController:
         step = self.find_by_status(StepState.INITIAL)
         if step is not None:
             logging.info("Start Step")
-            self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Start", message="Calling start step"))
+            self.cbpi.push_update(topic="cbpi/stepnotification", data=dict(type="info", title="Start", message="Calling start step"))
             self.push_udpate(complete=True)
             await self.start_step(step)
             await self.save()
             return 
         self.cbpi.notify("Brewing Complete", "Now the yeast will take over",action=[NotificationAction("OK")])
-        self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Brewing completed", message="Now the yeast will take over"))
+        self.cbpi.push_update(topic="cbpi/stepnotification", data=dict(type="info", title="Brewing completed", message="Now the yeast will take over"))
         logging.info("BREWING COMPLETE")
     
     async def previous(self):
@@ -172,7 +172,7 @@ class StepController:
             logging.info("CALLING STOP STEP")
             try:
                 await step.instance.stop()
-                self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Pause", message="Calling paue step"))
+                self.cbpi.push_update(topic="cbpi/stepnotification", data=dict(type="info", title="Pause", message="Calling paue step"))
                 step.status = StepState.STOP
                 
                 await self.save()
@@ -189,7 +189,7 @@ class StepController:
             item.status = StepState.INITIAL
             try:
                 await item.instance.reset()
-                self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Stop", message="Calling stop step"))
+                self.cbpi.push_update(topic="cbpi/stepnotification", data=dict(type="info", title="Stop", message="Calling stop step"))
             except:
                 logging.warning("No Step Instance - Id: %s", item.id)
         await self.save()
