@@ -226,6 +226,6 @@ def setup(cbpi):
     :return: 
     '''
 
-    cbpi.plugin.register("NotificationStep", NotificationStep)
-    cbpi.plugin.register("TargetTempStep", TargetTempStep)
+    cbpi.plugin.register("FermenterNotificationStep", FermenterNotificationStep)
+    cbpi.plugin.register("FermenterTargetTempStep", FermenterTargetTempStep)
     cbpi.plugin.register("FermentationStep", FermentationStep)

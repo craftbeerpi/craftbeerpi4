@@ -72,7 +72,7 @@ class StepController:
                 self._loop.create_task(self.start_step(active_step))
 
     async def add(self, item: Step):
-        logging.info("Add step")
+        logging.debug("Add step")
         item.id = shortuuid.uuid()
         item.status = StepState.INITIAL
         try:
