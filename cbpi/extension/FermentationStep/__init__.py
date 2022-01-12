@@ -21,7 +21,7 @@ import warnings
 
 @parameters([Property.Text(label="Notification",configurable = True, description = "Text for notification"),
              Property.Select(label="AutoNext",options=["Yes","No"], description="Automatically move to next step (Yes) or pause after Notification (No)")])
-class NotificationStep(CBPiFermentationStep):
+class FermenterNotificationStep(CBPiFermentationStep):
 
     async def NextStep(self, **kwargs):
         await self.next()
@@ -65,7 +65,7 @@ class NotificationStep(CBPiFermentationStep):
              Property.Kettle(label="Kettle"),
              Property.Text(label="Notification",configurable = True, description = "Text for notification when Temp is reached"),
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Kettlelogic automatically on and off -> Yes")])
-class TargetTempStep(CBPiFermentationStep):
+class FermenterTargetTempStep(CBPiFermentationStep):
 
     async def NextStep(self, **kwargs):
         await self.next()

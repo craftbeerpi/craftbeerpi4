@@ -72,7 +72,7 @@ class StepController:
                 self._loop.create_task(self.start_step(active_step))
 
     async def add(self, item: Step):
-        logging.debug("Add step")
+        logging.info("Add step")
         item.id = shortuuid.uuid()
         item.status = StepState.INITIAL
         try:
@@ -265,9 +265,11 @@ class StepController:
                 self.cbpi.push_update(topic="cbpi/stepupdate/{}".format(item.id), data=(item.to_dict()))
         else:
             self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda item: item.to_dict(), self.profile))))
+
             step = self.find_by_status(StepState.ACTIVE)
             if step != None:
                 self.cbpi.push_update(topic="cbpi/stepupdate/{}".format(step.id), data=(step.to_dict()))
+
 
     async def start_step(self,step):
         try:
