@@ -72,7 +72,7 @@ class StepController:
                 self._loop.create_task(self.start_step(active_step))
 
     async def add(self, item: Step):
-        logging.info("Add step")
+        logging.debug("Add step")
         item.id = shortuuid.uuid()
         item.status = StepState.INITIAL
         try:
@@ -117,6 +117,7 @@ class StepController:
         step = self.find_by_status(StepState.STOP)
         if step is not None:
             logging.info("Resume step")
+            self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Resume", message="Calling resume step"))
             await self.start_step(step)
             await self.save()
             return 
@@ -124,10 +125,13 @@ class StepController:
         step = self.find_by_status(StepState.INITIAL)
         if step is not None:
             logging.info("Start Step")
+            self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Start", message="Calling start step"))
+            self.push_udpate(complete=True)
             await self.start_step(step)
             await self.save()
             return 
         self.cbpi.notify("Brewing Complete", "Now the yeast will take over",action=[NotificationAction("OK")])
+        self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Brewing completed", message="Now the yeast will take over"))
         logging.info("BREWING COMPLETE")
     
     async def previous(self):
@@ -168,7 +172,9 @@ class StepController:
             logging.info("CALLING STOP STEP")
             try:
                 await step.instance.stop()
+                self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Pause", message="Calling paue step"))
                 step.status = StepState.STOP
+                
                 await self.save()
             except Exception as e:
                 logging.error("Failed to stop step - Id: %s" % step.id)
@@ -183,6 +189,7 @@ class StepController:
             item.status = StepState.INITIAL
             try:
                 await item.instance.reset()
+                self.cbpi.push_update(topic="cbpi/notification", data=dict(type="info", title="Stop", message="Calling stop step"))
             except:
                 logging.warning("No Step Instance - Id: %s", item.id)
         await self.save()
@@ -254,12 +261,15 @@ class StepController:
     def push_udpate(self, complete=False):
         if complete is True:
             self.cbpi.ws.send(dict(topic="mash_profile_update", data=self.get_state()))
+            for item in self.profile:
+                self.cbpi.push_update(topic="cbpi/stepupdate/{}".format(item.id), data=(item.to_dict()))
         else:
             self.cbpi.ws.send(dict(topic="step_update", data=list(map(lambda item: item.to_dict(), self.profile))))
 
-        self.cbpi.push_update(topic="cbpi/stepupdate", data=list(map(lambda item: item.to_dict(), self.profile)))
-        #for item in self.profile:
-        #    self.cbpi.push_update(topic="cbpi/stepupdate/{}".format(item.id), data=(item.to_dict()))
+            step = self.find_by_status(StepState.ACTIVE)
+            if step != None:
+                self.cbpi.push_update(topic="cbpi/stepupdate/{}".format(step.id), data=(step.to_dict()))
+
 
     async def start_step(self,step):
         try:
@@ -317,4 +327,3 @@ class StepController:
         with open(path, "w") as file:
             yaml.dump(data, file)
         self.push_udpate()
-

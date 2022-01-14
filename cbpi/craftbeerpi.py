@@ -55,7 +55,6 @@ from cbpi.http_endpoints.http_fermentation import FermentationHttpEndpoints
 import shortuuid
 logger = logging.getLogger(__name__)
 
-
 @web.middleware
 async def error_middleware(request, handler):
     try:
