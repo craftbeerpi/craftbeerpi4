@@ -152,12 +152,14 @@ def check_for_setup():
         if zip_content == True:
             print("Found correct content. Starting Restore process")
             output_path = pathlib.Path(os.path.join(".", 'config'))
+            owner = output_path.owner()
+            group = output_path.group()
             print("Removing old config folder")
             shutil.rmtree(output_path, ignore_errors=True) 
             print("Extracting zip file to config folder")
             zip.extractall(output_path)
-            print("Changing owner and group of config folder recursively to pi:pi")
-            recursive_chown(output_path, "pi", "pi")
+            print("Changing owner and group of config folder recursively to {}:{}".format(owner,group))
+            recursive_chown(output_path, owner, group)
             print("Removing backup file")
             os.remove(backupfile)
         else:
