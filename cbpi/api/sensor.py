@@ -32,10 +32,11 @@ class CBPiSensor(CBPiBase, metaclass=ABCMeta):
     def get_unit(self):
         pass
 
-    def push_update(self, value):
+    def push_update(self, value, mqtt = True):
         try:
             self.cbpi.ws.send(dict(topic="sensorstate", id=self.id, value=value))
-            self.cbpi.push_update("cbpi/sensordata/{}".format(self.id), dict(id=self.id, value=value), retain=True)
+            if mqtt:
+                self.cbpi.push_update("cbpi/sensordata/{}".format(self.id), dict(id=self.id, value=value), retain=True)
 #            self.cbpi.push_update("cbpi/sensor/{}/udpate".format(self.id), dict(id=self.id, value=value), retain=True)
         except:
             logging.error("Faild to push sensor update")
