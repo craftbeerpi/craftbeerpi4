@@ -59,6 +59,16 @@ class UploadController:
         except:
             return []
 
+    async def get_json_recipes(self):
+        try:
+            path = os.path.join(".", 'config', "upload", "mmum.json")
+            e = json.load(open(path))
+            result =[] 
+            result.append({'value': str(1), 'label': e['Name']})
+            return result
+        except:
+            return []
+
     async def get_brewfather_recipes(self,offset=0):
         brewfather = True
         result=[]
@@ -121,6 +131,20 @@ class UploadController:
                     self.cbpi.notify("Success", "XML Recipe {} has been uploaded".format(filename), NotificationType.SUCCESS)
             except Exception as e:
                 self.cbpi.notify("Error" "XML Recipe upload failed: {}".format(e), NotificationType.ERROR)
+                pass
+
+        elif content_type == 'application/json':
+            try:
+                mmum_json = recipe_file.read().decode('utf-8','replace')
+                if recipe_file and self.allowed_file(filename, 'json'):
+                    self.path = os.path.join(".", 'config', "upload", "mmum.json")
+    
+                    f = open(self.path, "w")
+                    f.write(mmum_json)
+                    f.close()
+                    self.cbpi.notify("Success", "JSON Recipe {} has been uploaded".format(filename), NotificationType.SUCCESS)
+            except Exception as e:
+                self.cbpi.notify("Error" "JSON Recipe upload failed: {}".format(e), NotificationType.ERROR)
                 pass
 
         elif content_type == 'application/octet-stream':
@@ -293,6 +317,217 @@ class UploadController:
         else:
             self.cbpi.notify('Recipe Upload', 'No default Kettle defined. Please specify default Kettle in settings', NotificationType.ERROR)
 
+    def findMax(self, string):
+        self.path = os.path.join(".", 'config', "upload", "mmum.json")
+        e = json.load(open(self.path))
+        for idx in range(1,20):
+            search_string = string.replace("%%",str(idx))
+            i = idx
+            if search_string not in e:
+                break
+        return i
+
+    def getJsonMashin(self, id):
+        self.path = os.path.join(".", 'config', "upload", "mmum.json")
+        e = json.load(open(self.path))
+        return float(e['Infusion_Einmaischtemperatur'])
+
+    async def json_recipe_creation(self, Recipe_ID):
+        config = self.get_config_values()
+
+        if self.kettle is not None:
+            # load mmum-json file located in upload folder
+            self.path = os.path.join(".", 'config', "upload", "mmum.json")
+            if os.path.exists(self.path) is False:
+                self.cbpi.notify("File Not Found", "Please upload a MMuM-JSON File", NotificationType.ERROR)
+
+            e = json.load(open(self.path))
+            name = e['Name']
+            boil_time = float(e['Kochzeit_Wuerze'])
+            
+            await self.create_recipe(name)
+            
+            
+            hops = []
+            for idx in range(1,self.findMax("Hopfen_%%_Kochzeit")):
+                hops_name = "%sg %s %s%% alpha" % (e["Hopfen_{}_Menge".format(idx)],e["Hopfen_{}_Sorte".format(idx)],e["Hopfen_{}_alpha".format(idx)])
+                if e["Hopfen_{}_Kochzeit".format(idx)].isnumeric():
+                    if boil_time is not e["Hopfen_{}_Kochzeit".format(idx)].isnumeric():
+                        alert = float(e["Hopfen_{}_Kochzeit".format(idx)])
+                elif e["Hopfen_{}_Kochzeit".format(idx)] == "Whirlpool":
+                    alert = float(1)
+                else:
+                    self.api.notify(headline="No Number at Hoptime", message="Please change json-File at Hopfen_{}_Kochzeit".format(idx), type="danger")
+                    alert = float(1)
+                hops.append({"name":hops_name,"time":alert})
+                
+            
+            firstHops=[]
+            for idx in range(1,self.findMax("Hopfen_VWH_%%_Sorte")):
+                firstHops_name = "%sg %s %s%% alpha" % (e["Hopfen_VWH_{}_Menge".format(idx)],e["Hopfen_VWH_{}_Sorte".format(idx)],e["Hopfen_VWH_{}_alpha".format(idx)])
+            
+                firstHops.append({"name":firstHops_name})
+            
+            
+            FirstWort= self.getFirstWort(firstHops, "json")
+            
+            miscs = []
+            for idx in range(1,self.findMax("WeitereZutat_Wuerze_%%_Kochzeit")):
+                miscs_name = "%s%s %s" % (e["WeitereZutat_Wuerze_{}_Menge".format(idx)],e["WeitereZutat_Wuerze_{}_Einheit".format(idx)],e["WeitereZutat_Wuerze_{}_Name".format(idx)])
+                if e["WeitereZutat_Wuerze_{}_Kochzeit".format(idx)].isnumeric():
+                    alert = float(e["WeitereZutat_Wuerze_{}_Kochzeit".format(idx)])
+                elif e["WeitereZutat_Wuerze_{}_Kochzeit".format(idx)] == "Whirlpool":
+                    alert = float(1)
+                else:
+                    self.api.notify(headline="No Number at Hoptime", message="Please change json-File at WeitereZutat_Wuerze_{}_Kochzeit".format(idx), type="danger")
+                    alert = float(1)
+                miscs.append({"name":miscs_name,"time":alert})
+                
+                
+            # Mash Steps -> first step is different as it heats up to defined temp and stops with notification to add malt
+            # AutoMode is yes to start and stop automatic mode or each step
+            MashIn_Flag = True
+            step_kettle = self.id
+            logging.info(step_kettle)  ###################################################
+            for row in self.getSteps(Recipe_ID, "json"):
+                step_name = str(row.get("name"))
+                step_timer = str(int(row.get("timer")))
+                step_temp = str(int(row.get("temp")))
+                sensor = self.kettle.sensor
+                if MashIn_Flag == True:
+                    if row.get("timer") == 0:
+                        step_type = self.mashin if self.mashin != "" else "MashInStep"
+                        Notification = "Target temperature reached. Please add malt."
+                        MashIn_Flag = False
+                        if step_name is None or step_name == "":
+                            step_name = "MashIn"
+                    elif self.addmashin == "Yes":
+                        step_type = self.mashin if self.mashin != "" else "MashInStep"
+                        Notification = "Target temperature reached. Please add malt."
+                        MashIn_Flag = False
+                        step_string = { "name": "MashIn",
+                                        "props": {
+                                            "AutoMode": self.AutoMode,
+                                            "Kettle": self.id,
+                                            "Sensor": self.kettle.sensor,
+                                            "Temp": self.getJsonMashin(Recipe_ID),
+                                            "Timer": 0,
+                                            "Notification": Notification
+                                            },
+                                         "status_text": "",
+                                         "status": "I",
+                                         "type": step_type
+                                        }
+                        await self.create_step(step_string)
+                        logging.info(step_kettle)  ###################################################
+
+                        step_type = self.mash if self.mash != "" else "MashStep"
+                        Notification = ""
+                    else:
+                        step_type = self.mash if self.mash != "" else "MashStep"
+                        Notification = ""
+
+                else:
+                    step_type = self.mash if self.mash != "" else "MashStep"
+                    Notification = ""
+
+                step_string = { "name": step_name,
+                                "props": {
+                                        "AutoMode": self.AutoMode,
+                                        "Kettle": self.id,
+                                        "Sensor": self.kettle.sensor,
+                                        "Temp": step_temp,
+                                        "Timer": step_timer,
+                                        "Notification": Notification
+                                        },
+                                "status_text": "",
+                                "status": "I",
+                                "type": step_type
+                                }
+
+                await self.create_step(step_string)
+
+            # MashOut -> Simple step that sends notification and waits for user input to move to next step (AutoNext=No)
+            if self.mashout == "NotificationStep":
+                step_string = { "name": "Lautering",
+                                "props": {
+                                        "AutoNext": "No",
+                                        "Kettle": self.id,
+                                        "Notification": "Mash Process completed. Please start lautering and press next to start boil."
+                                        },
+                                    "status_text": "",
+                                    "status": "I",
+                                    "type": self.mashout
+                                    }
+                await self.create_step(step_string)
+                
+            # Measure Original Gravity -> Simple step that sends notification
+            step_string = { "name": "Measure Original Gravity",
+                            "props": {
+                                    "AutoNext": "No",
+                                    "Kettle": self.id,
+                                    "Notification": "What is the original gravity of the beer wort?"
+                                    },
+                                "status_text": "",
+                                "status": "I",
+                                "type": "NotificationStep"
+                                }
+            await self.create_step(step_string)
+                
+            # Boil step including hop alarms and alarm for first wort hops -> Automode is set tu yes
+            Hops = self.getBoilAlerts(hops, miscs, "json")
+            step_kettle = self.boilid
+            step_type = self.boil if self.boil != "" else "BoilStep"
+            step_time = str(int(boil_time))
+            step_temp = self.BoilTemp
+            sensor = self.boilkettle.sensor
+            LidAlert = "Yes"
+            
+            logging.info(step_temp)  ###################################################
+
+            step_string = { "name": "Boil Step",
+                            "props": {
+                                "AutoMode": self.AutoMode,
+                                "Kettle": step_kettle,
+                                "Sensor": sensor,
+                                "Temp": step_temp,
+                                "Timer": step_time,
+                                "First_Wort": FirstWort,
+                                "LidAlert": LidAlert,
+                                "Hop_1": Hops[0],
+                                "Hop_2": Hops[1],
+                                "Hop_3": Hops[2],
+                                "Hop_4": Hops[3],
+                                "Hop_5": Hops[4],
+                                "Hop_6": Hops[5]
+                                },
+                            "status_text": "",
+                            "status": "I",
+                            "type": step_type 
+                        }
+
+            await self.create_step(step_string)
+            
+            # Measure Original Gravity -> Simple step that sends notification
+            step_string = { "name": "Measure Original Gravity",
+                            "props": {
+                                    "AutoNext": "No",
+                                    "Kettle": self.id,
+                                    "Notification": "What is the original gravity of the beer wort?"
+                                    },
+                                "status_text": "",
+                                "status": "I",
+                                "type": "NotificationStep"
+                                }
+            await self.create_step(step_string)
+
+            await self.create_Whirlpool_Cooldown()
+
+            self.cbpi.notify('MMuM-JSON Recipe created ', name, NotificationType.INFO)
+        else:
+            self.cbpi.notify('Recipe Upload', 'No default Kettle defined. Please specify default Kettle in settings', NotificationType.ERROR)
+
+
     async def xml_recipe_creation(self, Recipe_ID):
         config = self.get_config_values()
 
@@ -316,7 +551,7 @@ class UploadController:
             # AutoMode is yes to start and stop automatic mode or each step
             MashIn_Flag = True
             step_kettle = self.id
-            for row in self.getSteps(Recipe_ID):
+            for row in self.getSteps(Recipe_ID, "xml"):
                 step_name = str(row.get("name"))
                 step_timer = str(int(row.get("timer")))
                 step_temp = str(int(row.get("temp")))
@@ -428,16 +663,27 @@ class UploadController:
 
    # XML functions to retrieve xml repice parameters (if multiple recipes are stored in one xml file, id could be used)
 
-    def getSteps(self, id):
-        e = xml.etree.ElementTree.parse(self.path).getroot()
+    def getSteps(self, id, recipe_type):
         steps = []
-        for e in e.findall('./RECIPE[%s]/MASH/MASH_STEPS/MASH_STEP' % (str(id))):
-            if self.cbpi.config.get("TEMP_UNIT", "C") == "C":
-                temp = float(e.find("STEP_TEMP").text)
-            else:
-                temp = round(9.0 / 5.0 * float(e.find("STEP_TEMP").text) + 32, 2)
-            steps.append({"name": e.find("NAME").text, "temp": temp, "timer": float(e.find("STEP_TIME").text)})
-            
+        if recipe_type == "xml":
+            e = xml.etree.ElementTree.parse(self.path).getroot()
+            for e in e.findall('./RECIPE[%s]/MASH/MASH_STEPS/MASH_STEP' % (str(id))):
+                if self.cbpi.config.get("TEMP_UNIT", "C") == "C":
+                    temp = float(e.find("STEP_TEMP").text)
+                else:
+                    temp = round(9.0 / 5.0 * float(e.find("STEP_TEMP").text) + 32, 2)
+                steps.append({"name": e.find("NAME").text, "temp": temp, "timer": float(e.find("STEP_TIME").text)})
+        elif recipe_type == "json":
+            self.path = os.path.join(".", 'config', "upload", "mmum.json")
+            e = json.load(open(self.path))
+            for idx in range(1,self.findMax("Infusion_Rastzeit%%")):
+                if self.cbpi.config.get("TEMP_UNIT", "C") == "C":
+                    temp = float(e["Infusion_Rasttemperatur{}".format(idx)])
+                else:
+                    temp = round(9.0 / 5.0 * float(e["Infusion_Rasttemperatur{}".format(idx)]) + 32, 2)
+
+                steps.append({"name": "Rast {}".format(idx), "temp": temp, "timer": float(e["Infusion_Rastzeit{}".format(idx)])})
+
         return steps
 
     async def bf_recipe_creation(self, Recipe_ID):
@@ -632,6 +878,9 @@ class UploadController:
                 alerts.append(float(hop['time']))
             elif recipe_type == "kbh":
                 alerts.append(float(hop[0]))
+            elif  recipe_type == "json":
+                alerts.append(float(hop['time']))
+                
         ## There might also be miscelaneous additions during boild time
         if miscs is not None:
             for misc in miscs:
@@ -644,6 +893,8 @@ class UploadController:
                     alerts.append(float(misc['time']))
                 elif recipe_type == "kbh":
                     alerts.append(float(misc[0]))
+                elif  recipe_type == "json":
+                    alerts.append(float(misc['time']))
         ## Dedupe and order the additions by their time, to prevent multiple alerts at the same time
         alerts = sorted(list(set(alerts)))
         ## CBP should have these additions in reverse
@@ -672,6 +923,9 @@ class UploadController:
             for hop in hops:
                 if hop['use'] == "First Wort":
                     alert="Yes"
+        elif recipe_type == "json":
+            for hop in hops:
+                alert="Yes"
         return alert
 
     async def create_Whirlpool_Cooldown(self):
