@@ -32,7 +32,11 @@ class CBPiWebSocket:
         self.logger.debug("broadcast to ws clients. Data: %s" % data)
         for ws in self._clients:
             async def send_data(ws, data):
-                await ws.send_json(data=data, dumps=json_dumps)
+                try:
+                    await ws.send_json(data=data, dumps=json_dumps)
+                except Exception as e:
+                    self.logger.error("Error with client %s: %s" % (ws, str(e)))
+
             self.cbpi.app.loop.create_task(send_data(ws, data))
 
     async def websocket_handler(self, request):
