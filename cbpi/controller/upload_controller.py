@@ -446,8 +446,23 @@ class UploadController:
                                 }
 
                 await self.create_step(step_string)
+            # MashOut -> mashStep to reach mashout-temp for 1 min
+            step_string = { "name": "MashOut",
+                            "props": {
+                                    "AutoMode": self.AutoMode,
+                                    "Kettle": self.id,
+                                    "Sensor": self.kettle.sensor,
+                                    "Temp": e["Abmaischtemperatur"],
+                                    "Timer": 1,
+                                    "Notification": ""
+                                    },
+                            "status_text": "",
+                            "status": "I",
+                            "type": "MashStep"
+                            }
 
-            # MashOut -> Simple step that sends notification and waits for user input to move to next step (AutoNext=No)
+            await self.create_step(step_string)
+            # Lautering -> Simple step that sends notification and waits for user input to move to next step (AutoNext=No)
             if self.mashout == "NotificationStep":
                 step_string = { "name": "Lautering",
                                 "props": {
