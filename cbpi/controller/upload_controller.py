@@ -388,11 +388,13 @@ class UploadController:
             # AutoMode is yes to start and stop automatic mode or each step
             MashIn_Flag = True
             step_kettle = self.id
+            last_step_temp = 0
             logging.info(step_kettle)  ###################################################
             for row in self.getSteps(Recipe_ID, "json"):
                 step_name = str(row.get("name"))
                 step_timer = str(int(row.get("timer")))
                 step_temp = str(int(row.get("temp")))
+                last_step_temp = step_temp
                 sensor = self.kettle.sensor
                 if MashIn_Flag == True:
                     if row.get("timer") == 0:
@@ -446,8 +448,24 @@ class UploadController:
                                 }
 
                 await self.create_step(step_string)
+            # MashOut -> mashStep to reach mashout-temp for 1 min
+            if last_step_temp != e["Abmaischtemperatur"]:
+                step_string = { "name": "MashOut",
+                                "props": {
+                                        "AutoMode": self.AutoMode,
+                                        "Kettle": self.id,
+                                        "Sensor": self.kettle.sensor,
+                                        "Temp": e["Abmaischtemperatur"],
+                                        "Timer": 1,
+                                        "Notification": ""
+                                        },
+                                "status_text": "",
+                                "status": "I",
+                                "type": "MashStep"
+                                }
 
-            # MashOut -> Simple step that sends notification and waits for user input to move to next step (AutoNext=No)
+                await self.create_step(step_string)
+            # Lautering -> Simple step that sends notification and waits for user input to move to next step (AutoNext=No)
             if self.mashout == "NotificationStep":
                 step_string = { "name": "Lautering",
                                 "props": {
