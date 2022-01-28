@@ -199,7 +199,8 @@ class FermentationController:
 
     def get_state(self):
         if self.data == []:
-            logging.info(self.data)
+            #logging.info(self.data)
+            pass
 
         return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types(), "steptypes":self.get_steptypes()}
 
