@@ -977,7 +977,8 @@ class UploadController:
                                 "Kettle": self.boilid,
                                 "Timer": step_timer,
                                 "Temp": step_temp,
-                                "Sensor": cooldown_sensor
+                                "Sensor": cooldown_sensor,
+                                "Actor": self.CoolDownActor
                                 },
                             "status_text": "",
                             "status": "I",
@@ -1001,6 +1002,7 @@ class UploadController:
         self.BoilTemp = self.cbpi.config.get("steps_boil_temp", 98)
         #get default cooldown temp alarm setting
         self.CoolDownTemp = self.cbpi.config.get("steps_cooldown_temp", 25)
+        self.CoolDownActor = self.cbpi.config.get("steps_cooldown_actor", None)
         # get default Kettle from Settings       
         self.id = self.cbpi.config.get('MASH_TUN', None)
         self.boilid = self.cbpi.config.get('BoilKettle', None)
@@ -1030,6 +1032,7 @@ class UploadController:
                           "cooldown": str(self.cooldown),
                           "boiltemp": str(self.BoilTemp),
                           "cooldowntemp": str(self.CoolDownTemp),
+                          "cooldownactor": self.CoolDownActor,
                           "temp_unit": str(self.TEMP_UNIT),
                           "AutoMode": str(self.AutoMode)
                         }
