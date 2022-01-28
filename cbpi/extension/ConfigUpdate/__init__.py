@@ -28,6 +28,7 @@ class ConfigUpdate(CBPiExtension):
         default_cool_temp = 20 if TEMP_UNIT == "C" else 68
         boil_temp = self.cbpi.config.get("steps_boil_temp", None)
         cooldown_sensor = self.cbpi.config.get("steps_cooldown_sensor", None)
+        cooldown_actor = self.cbpi.config.get("steps_cooldown_actor", None)
         cooldown_temp = self.cbpi.config.get("steps_cooldown_temp", None)
         mashin_step = self.cbpi.config.get("steps_mashin", None)
         mash_step = self.cbpi.config.get("steps_mash", None)
@@ -57,6 +58,13 @@ class ConfigUpdate(CBPiExtension):
             logger.info("INIT Cooldown Sensor Setting")
             try:
                 await self.cbpi.config.add("steps_cooldown_sensor", "", ConfigType.SENSOR, "Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)")
+            except:
+                logger.warning('Unable to update database')
+
+        if cooldown_actor is None:
+            logger.info("INIT Cooldown Actor Setting")
+            try:
+                await self.cbpi.config.add("steps_cooldown_actor", "", ConfigType.ACTOR, "Actor to trigger cooldown water on and off (default: None)")
             except:
                 logger.warning('Unable to update database')
 

@@ -101,6 +101,47 @@ class UploadHttpEndpoints():
         await self.controller.xml_recipe_creation(xml_id['id'])
         return web.Response(status=200)
 
+    @request_mapping(path='/json', method="GET", auth_required=False)
+    async def get_json_list(self, request):
+        """
+
+        ---
+        description: Get recipe list from json file
+        tags:
+        - Upload
+        responses:
+            "200":
+                description: successful operation
+        """
+
+        json_list = await self.controller.get_json_recipes()
+
+        return web.json_response(json_list)
+
+    @request_mapping(path='/json', method="POST", auth_required=False)
+    async def create_json_recipe(self, request):
+        """
+
+        ---
+        description: Create recipe from json file with selected id
+        tags:
+        - Upload
+        parameters:
+        - name: "id"
+          in: "body"
+          description: "Recipe ID: {'id': ID}"
+          required: true
+          type: "string"
+
+        responses:
+            "200":
+                description: successful operation
+        """
+
+        json_id = await request.json()
+        await self.controller.json_recipe_creation(json_id['id'])
+        return web.Response(status=200)
+
     @request_mapping(path='/bf/{offset}/', method="POST", auth_required=False)
     async def get_bf_list(self, request):
         """
