@@ -44,6 +44,7 @@ class ConfigUpdate(CBPiExtension):
         influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
         influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
         influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
+        mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
 
 
 
@@ -251,6 +252,19 @@ class ConfigUpdate(CBPiExtension):
                 await self.cbpi.config.add("INFLUXDBPWD", " ", ConfigType.STRING, "Password for your influxdb database (only if required)")
             except:
                 logger.warning('Unable to update config')
+
+        if mqttupdate is None:
+            logger.info("INIT MQTT update frequency for Kettles and Fermenters")
+            try:
+                await self.cbpi.config.add("MQTTUpdate", 60, ConfigType.SELECT, "Forced MQTT Update frequency in s for Kettle and Fermenter (no changes in payload required). Restart required after change",
+                                                                                                [{"label": "30", "value": 30},
+                                                                                                {"label": "60", "value": 60},
+                                                                                                {"label": "120", "value": 120},
+                                                                                                {"label": "300", "value": 300},
+                                                                                                {"label": "Never", "value": 0}])
+            except:
+                logger.warning('Unable to update database')
+
 
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)
