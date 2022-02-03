@@ -63,7 +63,7 @@ class SatelliteController:
                     if power < 0:
                         power = 0
                     await self.cbpi.actor.set_power(topic_key[2],power)
-                    await self.cbpi.actor.actor_update(topic_key[2],power)
+                    #await self.cbpi.actor.actor_update(topic_key[2],power)
                 except:
                     self.logger.warning("Failed to set actor power via mqtt. No valid power in message")
             except:
