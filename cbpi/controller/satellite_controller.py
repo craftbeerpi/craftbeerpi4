@@ -1,5 +1,4 @@
 
-
 import asyncio
 import json
 from re import M
@@ -8,11 +7,14 @@ from contextlib import AsyncExitStack, asynccontextmanager
 from cbpi import __version__
 import logging
 
-
 class SatelliteController:
 
     def __init__(self, cbpi):
         self.cbpi = cbpi
+        self.kettlecontroller = cbpi.kettle
+        self.fermentercontroller = cbpi.fermenter
+        self.sensorcontroller = cbpi.sensor
+        self.actorcontroller = cbpi.actor
         self.logger = logging.getLogger(__name__)
         self.host = cbpi.static_config.get("mqtt_host", "localhost")
         self.port = cbpi.static_config.get("mqtt_port", 1883)
@@ -23,6 +25,11 @@ class SatelliteController:
             ("cbpi/actor/+/on", self._actor_on),
             ("cbpi/actor/+/off", self._actor_off),
             ("cbpi/actor/+/power", self._actor_power),
+            ("cbpi/updateactor", self._actorupdate),
+            ("cbpi/updatekettle", self._kettleupdate),
+            ("cbpi/updatesensor", self._sensorupdate),
+            ("cbpi/updatefermenter", self._fermenterupdate),
+        
         ]
         self.tasks = set()
 
@@ -68,6 +75,42 @@ class SatelliteController:
                     self.logger.warning("Failed to set actor power via mqtt. No valid power in message")
             except:
                 self.logger.warning("Failed to set actor power via mqtt")
+
+    async def _kettleupdate(self, messages):
+        async for message in messages:
+            try:
+                self.kettle=self.kettlecontroller.get_state()
+                for item in self.kettle['data']:
+                    self.cbpi.push_update("cbpi/{}/{}".format("kettleupdate",item['id']), item)
+            except Exception as e:
+                self.logger.warning("Failed to send kettleupdate via mqtt: {}".format(e))
+
+    async def _fermenterupdate(self, messages):
+        async for message in messages:
+            try:
+                self.fermenter=self.fermentercontroller.get_state()
+                for item in self.fermenter['data']:
+                    self.cbpi.push_update("cbpi/{}/{}".format("fermenterupdate",item['id']), item)
+            except Exception as e:
+                self.logger.warning("Failed to send fermenterupdate via mqtt: {}".format(e))
+
+    async def _actorupdate(self, messages):
+        async for message in messages:
+            try:
+                self.actor=self.actorcontroller.get_state()
+                for item in self.actor['data']:
+                    self.cbpi.push_update("cbpi/{}/{}".format("actorupdate",item['id']), item)
+            except Exception as e:
+                self.logger.warning("Failed to send actorupdate via mqtt: {}".format(e))
+
+    async def _sensorupdate(self, messages):
+        async for message in messages:
+            try:
+                self.sensor=self.sensorcontroller.get_state()
+                for item in self.sensor['data']:
+                    self.cbpi.push_update("cbpi/{}/{}".format("sensorupdate",item['id']), item)
+            except Exception as e:
+                self.logger.warning("Failed to send sensorupdate via mqtt: {}".format(e))
 
     def subcribe(self, topic, method):
         task = asyncio.create_task(self._subcribe(topic, method))
