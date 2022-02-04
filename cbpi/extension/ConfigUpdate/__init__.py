@@ -256,7 +256,7 @@ class ConfigUpdate(CBPiExtension):
         if mqttupdate is None:
             logger.info("INIT MQTT update frequency for Kettles and Fermenters")
             try:
-                await self.cbpi.config.add("MQTTUpdate", 60, ConfigType.SELECT, "Forced MQTT Update frequency in s for Kettle and Fermenter (no changes in payload required). Restart required after change",
+                await self.cbpi.config.add("MQTTUpdate", 0, ConfigType.SELECT, "Forced MQTT Update frequency in s for Kettle and Fermenter (no changes in payload required). Restart required after change",
                                                                                                 [{"label": "30", "value": 30},
                                                                                                 {"label": "60", "value": 60},
                                                                                                 {"label": "120", "value": 120},
