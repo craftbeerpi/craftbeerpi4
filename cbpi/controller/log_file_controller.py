@@ -69,28 +69,7 @@ class LogController:
                     itemname=sensor.name.replace(" ", "_")
                     for char in chars:
                         itemname = itemname.replace(char,chars[char])
-                    out="sensor,source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
-                else:
-                    actor=self.cbpi.actor.find_by_id(name)
-                    if actor is not None:
-                        itemname=actor.name.replace(" ", "_")
-                        for char in chars:
-                            itemname = itemname.replace(char,chars[char])
-                        out="actor,source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
-                    else:
-                        kettle=self.cbpi.kettle.find_by_id(name)
-                        if kettle is not None:
-                            itemname=kettle.name.replace(" ", "_")
-                            for char in chars:
-                                itemname = itemname.replace(char,chars[char])
-                            out="kettle,source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
-                        else:
-                            fermenter=self.cbpi.fermenter._find_by_id(name)
-                            if fermenter is not None:
-                                itemname=fermenter.name.replace(" ", "_")
-                                for char in chars:
-                                    itemname = itemname.replace(char,chars[char])
-                                out="fermenter,source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
+                    out="measurement,source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
             except Exception as e:
                 logging.error("InfluxDB ID Error: {}".format(e))
 
@@ -101,7 +80,7 @@ class LogController:
                     http = urllib3.PoolManager()
                     req = http.request('POST',self.influxdburl, body=out, headers = header)
                 except Exception as e:
-                    logging.error("InfluxDB write Error: {}".format(e))
+                    logging.error("InfluxDB cloud write Error: {}".format(e))
 
             else:
                 self.influxdb = self.cbpi.config.get("INFLUXDB", "No")

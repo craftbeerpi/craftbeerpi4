@@ -30,7 +30,6 @@ class KettleController(BasicController):
             item = self.find_by_id(id)
             item.target_temp = target_temp
             await self.save()
-            self.cbpi.log.log_data(item.id, target_temp)
         except Exception as e:
             logging.error("Failed to set Target Temp {} {}".format(id, e))
 

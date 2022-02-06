@@ -240,7 +240,6 @@ class FermentationController:
             if item:
                 item.target_temp = target_temp
                 self.save()
-                self.cbpi.log.log_data(item.id, target_temp)
                 self.push_update()
         except Exception as e:
             logging.error("Failed to set Target Temp {} {}".format(id, e))

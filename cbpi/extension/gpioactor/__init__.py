@@ -63,13 +63,11 @@ class GPIOActor(CBPiActor):
             self.power = 100
         await self.set_power(self.power)
 
-        self.log_data(self.power)
         logger.info("ACTOR %s ON - GPIO %s " %  (self.id, self.gpio))
         GPIO.output(self.gpio, self.get_GPIO_state(1))  
         self.state = True
 
     async def off(self):
-        self.log_data(0)
         logger.info("ACTOR %s OFF - GPIO %s " % (self.id, self.gpio))
         GPIO.output(self.gpio, self.get_GPIO_state(0))
         self.state = False
@@ -95,8 +93,6 @@ class GPIOActor(CBPiActor):
 
     async def set_power(self, power):
         self.power = power
-        if self.state == True:
-            self.log_data(self.power)
         await self.cbpi.actor.actor_update(self.id,power)
         pass
             
@@ -135,7 +131,6 @@ class GPIOPWMActor(CBPiActor):
 
         logging.info("PWM Final Power: {}".format(self.power))    
         
-        self.log_data(self.power)
         logger.info("PWM ACTOR %s ON - GPIO %s - Frequency %s - Power %s" %  (self.id, self.gpio,self.frequency,self.power))
         try:
             if self.p is None:
@@ -147,14 +142,12 @@ class GPIOPWMActor(CBPiActor):
             pass
 
     async def off(self):
-        self.log_data(0)
         logger.info("PWM ACTOR %s OFF - GPIO %s " % (self.id, self.gpio))
         self.p.ChangeDutyCycle(0)
         self.state = False
 
     async def set_power(self, power):
         if self.p and self.state == True:
-            self.log_data(self.power)
             self.p.ChangeDutyCycle(power)
         await self.cbpi.actor.actor_update(self.id,power)
         pass
