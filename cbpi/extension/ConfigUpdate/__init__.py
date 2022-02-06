@@ -44,6 +44,7 @@ class ConfigUpdate(CBPiExtension):
         influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
         influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
         influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
+        influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", None)
         mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
 
 
@@ -203,7 +204,7 @@ class ConfigUpdate(CBPiExtension):
             except:
                 logger.warning('Unable to update config')
 
-       ## Check if CSV logfiles is on config 
+       ## Check if influxdb is on config 
         if influxdb is None:
             logger.info("INIT Influxdb")
             try:
@@ -217,7 +218,7 @@ class ConfigUpdate(CBPiExtension):
         if influxdbaddr is None:
             logger.info("INIT Influxdbaddr")
             try:
-                await self.cbpi.config.add("INFLUXDBADDR", "localhost", ConfigType.STRING, "IP Address of your influxdb server")
+                await self.cbpi.config.add("INFLUXDBADDR", "localhost", ConfigType.STRING, "IP Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)")
             except:
                 logger.warning('Unable to update config')
 
@@ -233,23 +234,33 @@ class ConfigUpdate(CBPiExtension):
         if influxdbname is None:
             logger.info("INIT Influxdbname")
             try:
-                await self.cbpi.config.add("INFLUXDBNAME", "cbpi4", ConfigType.STRING, "Name of your influxdb database name")
+                await self.cbpi.config.add("INFLUXDBNAME", "cbpi4", ConfigType.STRING, "Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)")
             except:
                 logger.warning('Unable to update config')
 
-        ## Check if influxdber is in config
+        ## Check if influxduser is in config
         if influxdbuser is None:
             logger.info("INIT Influxdbuser")
             try:
-                await self.cbpi.config.add("INFLUXDBUSER", " ", ConfigType.STRING, "User name for your influxdb database (only if required)")
+                await self.cbpi.config.add("INFLUXDBUSER", " ", ConfigType.STRING, "User name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)")
             except:
                 logger.warning('Unable to update config')
 
-        ## Check if influxdber is in config
+        ## Check if influxdpwd is in config
         if influxdbpwd is None:
             logger.info("INIT Influxdbpwd")
             try:
-                await self.cbpi.config.add("INFLUXDBPWD", " ", ConfigType.STRING, "Password for your influxdb database (only if required)")
+                await self.cbpi.config.add("INFLUXDBPWD", " ", ConfigType.STRING, "Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)")
+            except:
+                logger.warning('Unable to update config')
+
+       ## Check if influxdb cloud is on config 
+        if influxdbcloud is None:
+            logger.info("INIT influxdbcloud")
+            try:
+                await self.cbpi.config.add("INFLUXDBCLOUD", "No", ConfigType.SELECT, "Write sensor data to influxdb cloud (INFLUXDB must set to Yes)", 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
 
