@@ -109,6 +109,7 @@ class CraftBeerPi:
         self.log = LogController(self)
         self.system = SystemController(self)
         self.kettle = KettleController(self)
+        self.fermenter : FermentationController = FermentationController(self)
         self.step : StepController = StepController(self)
         self.recipe : RecipeController = RecipeController(self)
         self.upload : UploadController = UploadController(self)
@@ -117,7 +118,6 @@ class CraftBeerPi:
         if str(self.static_config.get("mqtt", False)).lower() == "true":
             self.satellite: SatelliteController = SatelliteController(self)
         self.dashboard = DashboardController(self)
-        self.fermenter : FermentationController = FermentationController(self)
 
         self.http_step = StepHttpEndpoints(self)
         self.http_recipe = RecipeHttpEndpoints(self)

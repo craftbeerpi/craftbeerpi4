@@ -51,10 +51,10 @@ class CBPiBase(metaclass=ABCMeta):
     def get_actor_state(self,id):
         try:
             actor = self.cbpi.actor.find_by_id(id)
-            return actor.get("instance").get_state()
+            return actor.instance.state
         except:
             logging.error("Failed to read actor state in step - actor {}".format(id))
-            return None
+            return False 
 
     async def actor_on(self,id,power=100):
         

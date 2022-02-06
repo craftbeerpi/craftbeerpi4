@@ -28,6 +28,7 @@ class ConfigUpdate(CBPiExtension):
         default_cool_temp = 20 if TEMP_UNIT == "C" else 68
         boil_temp = self.cbpi.config.get("steps_boil_temp", None)
         cooldown_sensor = self.cbpi.config.get("steps_cooldown_sensor", None)
+        cooldown_actor = self.cbpi.config.get("steps_cooldown_actor", None)
         cooldown_temp = self.cbpi.config.get("steps_cooldown_temp", None)
         mashin_step = self.cbpi.config.get("steps_mashin", None)
         mash_step = self.cbpi.config.get("steps_mash", None)
@@ -44,6 +45,7 @@ class ConfigUpdate(CBPiExtension):
         influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
         influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
         influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", None)
+        mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
 
 
 
@@ -58,6 +60,13 @@ class ConfigUpdate(CBPiExtension):
             logger.info("INIT Cooldown Sensor Setting")
             try:
                 await self.cbpi.config.add("steps_cooldown_sensor", "", ConfigType.SENSOR, "Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)")
+            except:
+                logger.warning('Unable to update database')
+
+        if cooldown_actor is None:
+            logger.info("INIT Cooldown Actor Setting")
+            try:
+                await self.cbpi.config.add("steps_cooldown_actor", "", ConfigType.ACTOR, "Actor to trigger cooldown water on and off (default: None)")
             except:
                 logger.warning('Unable to update database')
 
@@ -254,6 +263,19 @@ class ConfigUpdate(CBPiExtension):
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
+
+        if mqttupdate is None:
+            logger.info("INIT MQTT update frequency for Kettles and Fermenters")
+            try:
+                await self.cbpi.config.add("MQTTUpdate", 0, ConfigType.SELECT, "Forced MQTT Update frequency in s for Kettle and Fermenter (no changes in payload required). Restart required after change",
+                                                                                                [{"label": "30", "value": 30},
+                                                                                                {"label": "60", "value": 60},
+                                                                                                {"label": "120", "value": 120},
+                                                                                                {"label": "300", "value": 300},
+                                                                                                {"label": "Never", "value": 0}])
+            except:
+                logger.warning('Unable to update database')
+
 
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)
