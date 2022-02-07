@@ -285,6 +285,12 @@ class CraftBeerPi:
         
         self._swagger_setup()
 
+        level = logging.INFO
+        logger = logging.getLogger()
+        logger.setLevel(level)
+        for handler in logger.handlers:
+            handler.setLevel(level)
+
         return self.app
 
     def start(self):

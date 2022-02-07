@@ -26,15 +26,6 @@ class LogController:
         self.configuration = False
         self.datalogger = {}
 
-#        self.cbpi.config.get does not seem to work here...
-#        self.influxdbaddr="192.168.163.105"
-#        self.influxdbport="8086"
-#        self.influxdbname="cbpi4"
-#        self.influxdburl='http://' + self.influxdbaddr + ':' + str(self.influxdbport) + '/write?db=' + self.influxdbname
-#        self.influxdbuser=""
-#        self.influxdbpwd=""
-#        self.base64string = base64.b64encode(('%s:%s' % (self.influxdbuser,self.influxdbpwd)).encode())
-
     def log_data(self, name: str, value: str) -> None:
         self.logfiles = self.cbpi.config.get("CSVLOGFILES", "Yes")
         self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
@@ -52,7 +43,6 @@ class LogController:
 
             formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
             self.datalogger[name].info("%s,%s" % (formatted_time, value))
-
         if self.influxdb == "Yes":
             self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
             self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
@@ -83,10 +73,8 @@ class LogController:
                     logging.error("InfluxDB cloud write Error: {}".format(e))
 
             else:
-                self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
                 self.base64string = base64.b64encode(('%s:%s' % (self.influxdbuser,self.influxdbpwd)).encode())
                 self.influxdburl='http://' + self.influxdbaddr + ':' + str(self.influxdbport) + '/write?db=' + self.influxdbname
-
                 try:
                     header = {'User-Agent': name, 'Content-Type': 'application/x-www-form-urlencoded','Authorization': 'Basic %s' % self.base64string.decode('utf-8')}
                     http = urllib3.PoolManager()
