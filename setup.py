@@ -36,7 +36,7 @@ setup(name='cbpi',
           'tabulate==0.8.7',
           'asyncio-mqtt',
           'psutil==5.8.0',
-          'numpy==1.22.0',
+          'numpy==1.21.5',
           'cbpi4ui',
           'importlib_metadata'] + (
               ['RPi.GPIO==0.7.1a4'] if platform.uname()[1] == "raspberrypi" else [] ),
