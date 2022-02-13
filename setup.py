@@ -2,6 +2,18 @@ from setuptools import setup, find_packages
 from cbpi import __version__
 import platform
 
+# read the contents of your README file
+from os import popen
+
+localsystem = platform.system()
+raspberrypi=False
+if localsystem == "Linux":
+    command="cat /proc/cpuinfo | grep Raspberry"
+    model=popen(command).read()
+    if len(model) != 0:
+        raspberrypi=True
+
+
 setup(name='cbpi',
       version=__version__,
       description='CraftBeerPi',
@@ -30,16 +42,17 @@ setup(name='cbpi',
           "requests==2.25.1",
           "voluptuous==0.12.1",
           "pyfiglet==0.8.post1",
-          'pandas==1.1.5',
           'click==7.1.2',
           'shortuuid==1.0.1',
           'tabulate==0.8.7',
           'asyncio-mqtt',
           'psutil==5.8.0',
-          'numpy==1.20.3',
           'cbpi4ui',
           'importlib_metadata'] + (
-              ['RPi.GPIO==0.7.1a4'] if platform.uname()[1] == "raspberrypi" else [] ),
+              ['RPi.GPIO==0.7.1a4'] if raspberrypi else [] ) +
+              (['numpy==1.22.0'] if (int(platform.python_version_tuple()[1]) >= 9) and (int(platform.python_version_tuple()[0]) == 3) else ['numpy==1.20.3'] ) +
+                (['pandas==1.4.0'] if (int(platform.python_version_tuple()[1]) >= 9) and (int(platform.python_version_tuple()[0]) == 3) else ['pandas==1.1.5'] ),
+
 
         dependency_links=[
         'https://testpypi.python.org/pypi',
