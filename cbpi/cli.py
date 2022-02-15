@@ -218,20 +218,31 @@ def plugins_add(package_name):
             return
         return
 
+    installation = True
     try:
-        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
-            data = yaml.load(f, Loader=yaml.FullLoader)
-            if package_name in data["plugins"]:
-                print("")
-                print("Plugin {} already active".format(package_name))
-                print("")
-                return
-            data["plugins"].append(package_name)
-        with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
-            yaml.dump(data, outfile, default_flow_style=False)
-        print("")
-        print("Plugin {} activated".format(package_name))
-        print("")
+        try:
+            p_metadata= metadata(package_name)
+            p_name=p_metadata['Name']
+            if p_name != package_name:
+                print("Error. Package name {} does not exist. Did you mean {}".format(package_name,p_name))
+                installation = False
+        except Exception as e:
+            print("Error. Package {} cannot be found in installed packages".format(package_name))
+            installation = False
+        if installation:
+            with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
+                data = yaml.load(f, Loader=yaml.FullLoader)
+                if package_name in data["plugins"]:
+                    print("")
+                    print("Plugin {} already active".format(package_name))
+                    print("")
+                    return
+                data["plugins"].append(package_name)
+            with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
+                yaml.dump(data, outfile, default_flow_style=False)
+            print("")
+            print("Plugin {} activated".format(package_name))
+            print("")
     except Exception as e:
         print(e)
         pass

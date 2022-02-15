@@ -3,7 +3,7 @@ RUN apk --no-cache add curl && mkdir /downloads
 # Download installation files
 RUN curl https://github.com/avollkopf/craftbeerpi4-ui/archive/main.zip -L -o ./downloads/cbpi-ui.zip
 
-FROM python:3.7 as base
+FROM python:3.9 as base
 
 # Install dependencies
 RUN     apt-get update \
@@ -39,7 +39,7 @@ RUN pip3 install --no-cache-dir -r /cbpi-src/requirements.txt
 # Install RPi.GPIO separately because it's excluded in setup.py for non-raspberrys.
 # This can enable GPIO support for the image when used on a raspberry pi and the
 # /dev/gpiomem device.
-RUN pip3 install --no-cache-dir RPi.GPIO==0.7.1a4
+RUN pip3 install --no-cache-dir RPi.GPIO==0.7.1
 
 FROM base as deploy
 # Install craftbeerpi from source
