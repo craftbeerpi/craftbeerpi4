@@ -1,6 +1,12 @@
-ARG VARIANT=3-bullseye
-FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
+FROM mcr.microsoft.com/vscode/devcontainers/python:3.9-bullseye
 
+RUN     apt-get update \
+    &&  apt-get upgrade -y
+RUN apt-get install --no-install-recommends -y \
+    libatlas-base-dev \
+    libffi-dev \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Install craftbeerpi requirements for better caching

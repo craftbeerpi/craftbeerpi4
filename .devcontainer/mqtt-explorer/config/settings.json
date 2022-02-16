@@ -1,0 +1,31 @@
+{
+  "ConnectionManager_connections": {
+    "mqtt.eclipse.org": {
+      "configVersion": 1,
+      "certValidation": true,
+      "clientId": "mqtt-explorer-8eb042b9",
+      "id": "mqtt.eclipse.org",
+      "name": "CraftBeerPi MQTT Explorer",
+      "encryption": false,
+      "subscriptions": [
+        {
+          "topic": "#",
+          "qos": 0
+        },
+        {
+          "topic": "$SYS/#",
+          "qos": 0
+        }
+      ],
+      "type": "mqtt",
+      "host": "mqtt",
+      "port": 1883,
+      "protocol": "mqtt",
+      "changeSet": {
+        "password": "mqtt-explorer"
+      },
+      "username": "mqtt-explorer",
+      "password": "mqtt-explorer"
+    }
+  }
+}

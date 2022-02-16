@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.177.0/containers/docker-existing-docker-compose
 // If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
 {
-	"name": "CraftBeerPi4 Development Container",
+	"name": "CraftBeerPi4",
 
 	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
 	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
@@ -32,7 +32,10 @@
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [80],
+	"forwardPorts": [
+		"craftbeerpi4-development:8000",
+		"mqtt-explorer:4000"
+	],
 
 	// Uncomment the next line if you want start specific services in your Docker Compose config.
 	// "runServices": [],
