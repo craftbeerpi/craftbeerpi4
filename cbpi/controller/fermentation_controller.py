@@ -180,7 +180,7 @@ class FermentationController:
 
         
     def _find_by_id(self, id):
-        return next((item for item in self.data if item.id == id), None)
+         return next((item for item in self.data if item.id == id), None)
 
     async def get_all(self):
         return list(map(lambda x: x.to_dict(), self.data))
@@ -269,10 +269,11 @@ class FermentationController:
         except Exception as e:
             self.logger.error(e)
 
-    async def update_step(self, id, step):
+    async def update_step(self, id, step: FermenterStep):
         item = self._find_by_id(id)
-        item = list(map(lambda old: item if old.id == step.id else old, item.steps))
+        item.steps = list(map(lambda old: step if old.id == step.id else old, item.steps))
         self.save()
+        
     
     async def delete_step(self, id, stepid):
         item = self._find_by_id(id)
