@@ -114,13 +114,6 @@ def copy_splash():
     shutil.copy(srcfile, destfile)
     print("Splash Srceen created")
 
-
-def clear_db():
-    import os.path
-    if os.path.exists(os.path.join(".", "craftbeerpi.db")) is True:
-        os.remove(os.path.join(".", "craftbeerpi.db"))
-        print("database cleared")
-
 def recursive_chown(path, owner, group):
     for dirpath, dirnames, filenames in os.walk(path):
         shutil.chown(dirpath, owner, group)

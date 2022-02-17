@@ -30,16 +30,6 @@ class ConfigTestCase(AioHTTPTestCase):
         assert self.cbpi.config.get("CBPI_TEST_2", 1) == value
 
     @unittest_run_loop
-    async def test_add(self):
-        value = str(time.time())
-        key = "CBPI_TEST_3"
-        async with aiosqlite.connect("./craftbeerpi.db") as db:
-            await db.execute("DELETE FROM config WHERE name = ? ", (key,))
-            await db.commit()
-
-        await self.cbpi.config.add(key, value, type=ConfigType.STRING, description="test")
-
-    @unittest_run_loop
     async def test_http_set(self):
         value = str(time.time())
         key = "CBPI_TEST_3"
