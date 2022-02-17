@@ -201,8 +201,32 @@ class FermentationController:
         if self.data == []:
             #logging.info(self.data)
             pass
-
+        
         return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types(), "steptypes":self.get_steptypes()}
+
+    def get_step_state(self, fermenterid=None):
+        if self.data == []:
+            #logging.info(self.data)
+            pass
+        fermentersteps=[]
+        steplist=list(map(lambda x: x.to_dict(), self.data))
+        for fermenter in steplist:
+            if fermenterid == fermenter.get("id"):
+                fermentersteps={"id": fermenter.get("id"), "steps": fermenter.get("steps")}
+        logging.info(fermentersteps)
+        return fermentersteps
+
+    def get_fermenter_steps(self):
+        if self.data == []:
+            #logging.info(self.data)
+            pass
+        fermentersteps=[]
+        steplist=list(map(lambda x: x.to_dict(), self.data))
+        for fermenter in steplist:
+            fermenterstep={"id": fermenter.get("id"), "steps": fermenter.get("steps")}
+            fermentersteps.append(fermenterstep)
+        logging.info(fermentersteps)
+        return fermentersteps
 
     async def get(self, id: str ):
         return self._find_by_id(id)

@@ -82,6 +82,7 @@ def create_home_folder_structure():
     pathlib.Path(os.path.join(".", 'config/dashboard')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config/recipes')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(".", 'config/fermenterrecipes')).mkdir(parents=True, exist_ok=True)
     pathlib.Path(os.path.join(".", 'config/upload')).mkdir(parents=True, exist_ok=True) 
     print("Folder created")
 
@@ -135,6 +136,12 @@ def check_for_setup():
         print("Please run 'cbpi setup' before starting the server ")
         print("***************************************************")
         return False
+#    if os.path.exists(os.path.join(".", "config", "fermenterrecipes")) is False:
+#        print("***************************************************")
+#        print("CraftBeerPi fermenterrecipes folder not found: %s" % os.path.join(".", "config/fermenterrecipes"))
+#        print("Please run 'cbpi setup' before starting the server ")
+#        print("***************************************************")
+#        return False
     backupfile = os.path.join(".", "restored_config.zip")
     if os.path.exists(os.path.join(backupfile)) is True:
         print("***************************************************")
@@ -223,9 +230,9 @@ def plugins_add(package_name):
         try:
             p_metadata= metadata(package_name)
             p_name=p_metadata['Name']
-            if p_name != package_name:
-                print("Error. Package name {} does not exist. Did you mean {}".format(package_name,p_name))
-                installation = False
+            #if p_name != package_name:
+            #    print("Error. Package name {} does not exist. Did you mean {}".format(package_name,p_name))
+            #    installation = False
         except Exception as e:
             print("Error. Package {} cannot be found in installed packages".format(package_name))
             installation = False
@@ -369,7 +376,7 @@ def plugin_create(name):
     print("")
     print("")
     print(
-        "Plugin {} created! See https://craftbeerpi.gitbook.io/craftbeerpi4/development how to run your plugin ".format(
+        "Plugin {} created! See https://openbrewing.gitbook.io/craftbeerpi4_support/readme/development how to run your plugin ".format(
             name))
     print("")
     print("Happy Development! Cheers")

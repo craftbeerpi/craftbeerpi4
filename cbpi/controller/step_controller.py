@@ -198,7 +198,8 @@ class StepController:
     def get_types(self):
         result = {}
         for key, value in self.types.items():
-            result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
+            if "ferment" not in str(value.get("class")).lower():
+                result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
         return result
 
     def get_state(self):

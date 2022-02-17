@@ -34,6 +34,7 @@ class SystemHttpEndpoints:
             sensor=self.cbpi.sensor.get_state(),
             kettle=self.cbpi.kettle.get_state(),
             step=self.cbpi.step.get_state(),
+            fermentersteps=self.cbpi.fermenter.get_fermenter_steps(),
             config=self.cbpi.config.get_state(),
             version=__version__)
             , dumps=json_dumps)

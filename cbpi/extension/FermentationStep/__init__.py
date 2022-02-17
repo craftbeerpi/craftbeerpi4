@@ -62,9 +62,9 @@ class FermenterNotificationStep(CBPiFermentationStep):
 
 @parameters([Property.Number(label="Temp", configurable=True),
              Property.Sensor(label="Sensor"),
-             Property.Kettle(label="Kettle"),
+             Property.Fermenter(label="Fermenter"),
              Property.Text(label="Notification",configurable = True, description = "Text for notification when Temp is reached"),
-             Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Kettlelogic automatically on and off -> Yes")])
+             Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Fermenterlogic automatically on and off -> Yes")])
 class FermenterTargetTempStep(CBPiFermentationStep):
 
     async def NextStep(self, **kwargs):
@@ -72,7 +72,7 @@ class FermenterTargetTempStep(CBPiFermentationStep):
 
     async def on_timer_done(self,timer):
         self.summary = ""
-        self.kettle.target_temp = 0
+        self.fermenter.target_temp = 0
         await self.push_update()
         if self.AutoMode == True:
             await self.setAutoMode(False)
@@ -83,13 +83,13 @@ class FermenterTargetTempStep(CBPiFermentationStep):
 
     async def on_start(self):
         self.AutoMode = True if self.props.get("AutoMode","No") == "Yes" else False
-        self.kettle=self.get_kettle(self.props.get("Kettle", None))
-        if self.kettle is not None:
-            self.kettle.target_temp = int(self.props.get("Temp", 0))
+        self.fermenter=self.get_fermenter(self.props.get("Fermenter", None))
+        if self.fermenter is not None:
+            self.fermenter.target_temp = int(self.props.get("Temp", 0))
         if self.AutoMode == True:
             await self.setAutoMode(True)
         self.summary = "Waiting for Target Temp"
-        if self.cbpi.kettle is not None and self.timer is None:
+        if self.cbpi.fermenter is not None and self.timer is None:
             self.timer = Timer(1 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
         await self.push_update()
 
@@ -115,22 +115,22 @@ class FermenterTargetTempStep(CBPiFermentationStep):
 
     async def setAutoMode(self, auto_state):
         try:
-            if (self.kettle.instance is None or self.kettle.instance.state == False) and (auto_state is True):
-                await self.cbpi.kettle.toggle(self.kettle.id)
-            elif (self.kettle.instance.state == True) and (auto_state is False):
-                await self.cbpi.kettle.stop(self.kettle.id)
+            if (self.fermenter.instance is None or self.fermenter.instance.state == False) and (auto_state is True):
+                await self.cbpi.fermenter.toggle(self.fermenter.id)
+            elif (self.fermenter.instance.state == True) and (auto_state is False):
+                await self.cbpi.fermenter.stop(self.fermenter.id)
             await self.push_update()
 
         except Exception as e:
-            logging.error("Failed to switch on KettleLogic {} {}".format(self.kettle.id, e))
+            logging.error("Failed to switch on FermenterLogic {} {}".format(self.fermenter.id, e))
 
 
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True), 
              Property.Number(label="Temp", configurable=True),
              Property.Sensor(label="Sensor"),
-             Property.Kettle(label="Kettle"),
-             Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Kettlelogic automatically on and off -> Yes")])
-class FermentationStep(CBPiFermentationStep):
+             Property.Fermenter(label="Fermenter"),
+             Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Fermenterlogic automatically on and off -> Yes")])
+class FermenterStep(CBPiFermentationStep):
 
     @action("Start Timer", [])
     async def start_timer(self):
@@ -152,7 +152,7 @@ class FermentationStep(CBPiFermentationStep):
 
     async def on_timer_done(self,timer):
         self.summary = ""
-        self.kettle.target_temp = 0
+        self.fermenter.target_temp = 0
         if self.AutoMode == True:
             await self.setAutoMode(False)
         self.cbpi.notify(self.name, 'Step finished', NotificationType.SUCCESS)
@@ -165,16 +165,16 @@ class FermentationStep(CBPiFermentationStep):
 
     async def on_start(self):
         self.AutoMode = True if self.props.get("AutoMode", "No") == "Yes" else False
-        self.kettle=self.get_kettle(self.props.Kettle)
-        if self.kettle is not None:
-            self.kettle.target_temp = int(self.props.get("Temp", 0))
+        self.fermenter=self.get_fermenter(self.props.Fermenter)
+        if self.fermenter is not None:
+            self.fermenter.target_temp = int(self.props.get("Temp", 0))
         if self.AutoMode == True:
             await self.setAutoMode(True)
         await self.push_update()
 
-        if self.cbpi.kettle is not None and self.timer is None:
+        if self.cbpi.fermenter is not None and self.timer is None:
             self.timer = Timer(int(self.props.get("Timer",0)) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
-        elif self.cbpi.kettle is not None:
+        elif self.cbpi.fermenter is not None:
             try:
                 if self.timer.is_running == True:
                     self.timer.start()
@@ -207,14 +207,14 @@ class FermentationStep(CBPiFermentationStep):
 
     async def setAutoMode(self, auto_state):
         try:
-            if (self.kettle.instance is None or self.kettle.instance.state == False) and (auto_state is True):
-                await self.cbpi.kettle.toggle(self.kettle.id)
-            elif (self.kettle.instance.state == True) and (auto_state is False):
-                await self.cbpi.kettle.stop(self.kettle.id)
+            if (self.fermenter.instance is None or self.fermenter.instance.state == False) and (auto_state is True):
+                await self.cbpi.fermenter.toggle(self.fermenter.id)
+            elif (self.fermenter.instance.state == True) and (auto_state is False):
+                await self.cbpi.fermenter.stop(self.fermenter.id)
             await self.push_update()
 
         except Exception as e:
-            logging.error("Failed to switch on KettleLogic {} {}".format(self.kettle.id, e))
+            logging.error("Failed to switch on FermenterLogic {} {}".format(self.fermenter.id, e))
 
 
 def setup(cbpi):
@@ -228,4 +228,4 @@ def setup(cbpi):
 
     cbpi.plugin.register("FermenterNotificationStep", FermenterNotificationStep)
     cbpi.plugin.register("FermenterTargetTempStep", FermenterTargetTempStep)
-    cbpi.plugin.register("FermentationStep", FermentationStep)
+    cbpi.plugin.register("FermenterStep", FermenterStep)

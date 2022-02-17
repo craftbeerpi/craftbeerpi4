@@ -415,3 +415,27 @@ class FermentationHttpEndpoints():
         data = await request.json()
         await self.controller.move_step(data["fermenterid"],data["stepid"], data["direction"])
         return web.Response(status=204)
+
+    @request_mapping(path="/{id}/getsteps", method="GET", auth_required=False)
+    async def http_get_steps(self, request):
+
+        """
+        ---
+        description: Get Fermentersteps for Fermenter
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """      
+
+        fermenterid= request.match_info['id']
+        response_data = self.controller.get_step_state(fermenterid)
+        return web.json_response(data=response_data)
