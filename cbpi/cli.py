@@ -223,9 +223,9 @@ def plugins_add(package_name):
         try:
             p_metadata= metadata(package_name)
             p_name=p_metadata['Name']
-            if p_name != package_name:
-                print("Error. Package name {} does not exist. Did you mean {}".format(package_name,p_name))
-                installation = False
+            #if p_name != package_name:
+            #    print("Error. Package name {} does not exist. Did you mean {}".format(package_name,p_name))
+            #    installation = False
         except Exception as e:
             print("Error. Package {} cannot be found in installed packages".format(package_name))
             installation = False
