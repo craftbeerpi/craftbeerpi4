@@ -439,3 +439,27 @@ class FermentationHttpEndpoints():
         fermenterid= request.match_info['id']
         response_data = self.controller.get_step_state(fermenterid)
         return web.json_response(data=response_data)
+
+    @request_mapping(path="/{id}/clearsteps", method="POST", auth_required=False)
+    async def http_clear_steps(self, request):
+
+        """
+        ---
+        description: Clear all steps for Fermenter with fermenterid
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """      
+
+        fermenterid= request.match_info['id']
+        await self.controller.clearsteps(fermenterid)
+        return web.Response(status=200)

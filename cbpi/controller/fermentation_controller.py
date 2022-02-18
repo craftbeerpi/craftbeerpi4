@@ -74,7 +74,7 @@ class FermentStep:
             self.logger.error(e)
     
     async def on_start(self):
-        self.props.hello = "WOOHOo"
+        #self.props.hello = "WOOHOo"
         pass
 
     async def on_stop(self):
@@ -109,13 +109,17 @@ class FermentationController:
             destfile = os.path.join(".", 'config', "fermenter_data.json")
             json.dump(data,open(destfile,'w'),indent=4, sort_keys=True)
 
-    def push_update(self):
-        self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
-        #self.cbpi.push_update("cbpi/{}".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
+    def push_update(self, key="fermenterupdate", fermentersteps=None):
 
-        for item in self.data:
-            self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
-        pass
+        if key == self.update_key:
+            self.cbpi.ws.send(dict(topic=key, data=list(map(lambda item: item.to_dict(), self.data))))
+            #self.cbpi.push_update("cbpi/{}".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
+
+            for item in self.data:
+                self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
+            pass
+        else:
+            self.cbpi.ws.send(dict(topic=key, data=fermentersteps))
 
     async def shutdown(self, app=None):    
         self.save()
@@ -141,6 +145,7 @@ class FermentationController:
     def _create_step(self, fermenter, item):
         id = item.get("id")
         name = item.get("name")
+        props = Props(item.get("props"))
         status = StepState(item.get("status", "I"))
         type = item.get("type")
 
@@ -149,7 +154,7 @@ class FermentationController:
             inst = type_cfg.get("class")()
             print(inst)
 
-        step = FermenterStep(id=id, name=name, type=type, status=status, instance=None, fermenter=fermenter)
+        step = FermenterStep(id=id, name=name, fermenter=fermenter, props=props, type=type, status=status, instance=None)
         step.instance = FermentStep( self.cbpi, step, self._done)
         return step
 
@@ -213,7 +218,6 @@ class FermentationController:
         for fermenter in steplist:
             if fermenterid == fermenter.get("id"):
                 fermentersteps={"id": fermenter.get("id"), "steps": fermenter.get("steps")}
-        logging.info(fermentersteps)
         return fermentersteps
 
     def get_fermenter_steps(self):
@@ -225,7 +229,6 @@ class FermentationController:
         for fermenter in steplist:
             fermenterstep={"id": fermenter.get("id"), "steps": fermenter.get("steps")}
             fermentersteps.append(fermenterstep)
-        logging.info(fermentersteps)
         return fermentersteps
 
     async def get(self, id: str ):
@@ -289,6 +292,8 @@ class FermentationController:
 
             item.steps.append(step)
             self.save()
+            fermentersteps=self.get_fermenter_steps()
+            self.push_update("fermenterstepupdate", fermentersteps)
             return step
         except Exception as e:
             self.logger.error(e)
@@ -297,13 +302,27 @@ class FermentationController:
         item = self._find_by_id(id)
         item.steps = list(map(lambda old: step if old.id == step.id else old, item.steps))
         self.save()
+        fermentersteps=self.get_fermenter_steps()
+        self.push_update("fermenterstepupdate", fermentersteps)
         
     
     async def delete_step(self, id, stepid):
         item = self._find_by_id(id)
+        # might require later check if step is active
         item.steps = list(filter(lambda item: item.id != stepid, item.steps))
         self.save()
+        fermentersteps=self.get_fermenter_steps()
+        self.push_update("fermenterstepupdate", fermentersteps)
     
+    async def clearsteps(self, id):
+        item = self._find_by_id(id)
+        # might require later check if step is active
+        item.steps = []
+        self.save()
+        fermentersteps=self.get_fermenter_steps()
+        self.push_update("fermenterstepupdate", fermentersteps)
+
+
     def _find_by_status(self, data, status):
         return next((item for item in data if item.status == status), None)
 
@@ -412,6 +431,7 @@ class FermentationController:
 
             fermenter.steps[index], fermenter.steps[index+direction] = fermenter.steps[index+direction], fermenter.steps[index]
             self.save()
+            self.push_update()
         
         except Exception as e:
             self.logger.error(e)
