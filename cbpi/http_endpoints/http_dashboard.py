@@ -12,7 +12,7 @@ class DashBoardHttpEndpoints:
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.controller = cbpi.dashboard
-        self.cbpi.register(self, "/dashboard", os.path.join(".","config", "dashboard", "widgets"))
+        self.cbpi.register(self, "/dashboard", os.path.join(cbpi.config_folder.get_file_path("dashboard"), "widgets"))
 
 
     @request_mapping(path="/{id:\d+}/content", auth_required=False)

@@ -23,7 +23,7 @@ class BasicController:
         self.data = []
         self.autostart = True
         #self._loop = asyncio.get_event_loop() 
-        self.path = os.path.join(".", 'config', file)
+        self.path = self.cbpi.config_folder.get_file_path(file)
         self.cbpi.app.on_cleanup.append(self.shutdown)
         
     async def init(self):

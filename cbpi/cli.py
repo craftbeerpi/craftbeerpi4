@@ -1,93 +1,27 @@
-import argparse
-import datetime
 import logging
-import subprocess
-import sys
-import re
 import requests
 import yaml
+from cbpi.configFolder import ConfigFolder
 from cbpi.utils.utils import load_config
 from zipfile import ZipFile
 from cbpi.craftbeerpi import CraftBeerPi
 import os
-import platform
 import pathlib
 import pkgutil
 import shutil
 import yaml
 import click
 from subprocess import call
-import zipfile
 from colorama import Fore, Back, Style
-from importlib import import_module
 import importlib
-from jinja2 import Template
-from importlib_metadata import metadata, version
+from importlib_metadata import metadata
 from tabulate import tabulate
 from PyInquirer import prompt, print_json
 
-def create_config_file():
-    if os.path.exists(os.path.join(".", 'config', "config.yaml")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "config.yaml")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-        
-    if os.path.exists(os.path.join(".", 'config', "actor.json")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "actor.json")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-
-    if os.path.exists(os.path.join(".", 'config', "sensor.json")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "sensor.json")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-
-    if os.path.exists(os.path.join(".", 'config', "kettle.json")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "kettle.json")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-
-    if os.path.exists(os.path.join(".", 'config', "fermenter_data.json")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "fermenter_data.json")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-
-    if os.path.exists(os.path.join(".", 'config', "step_data.json")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "step_data.json")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-
-    if os.path.exists(os.path.join(".", 'config', "config.json")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "config.json")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-
-    if os.path.exists(os.path.join(".", 'config', "dashboard", "cbpi_dashboard_1.json")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
-        destfile = os.path.join(".", "config", "dashboard")
-        shutil.copy(srcfile, destfile)
-
-    if os.path.exists(os.path.join(".", 'config', "carftbeerpi.service")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "craftbeerpi.service")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-
-    if os.path.exists(os.path.join(".", 'config', "chromium.desktop")) is False:
-        srcfile = os.path.join(os.path.dirname(__file__), "config", "chromium.desktop")
-        destfile = os.path.join(".", 'config')
-        shutil.copy(srcfile, destfile)
-
-    print("Config Folder created")
-
-
-def create_home_folder_structure():
+def create_home_folder_structure(configFolder):
     pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/dashboard')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/dashboard/widgets')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/recipes')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/fermenterrecipes')).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(os.path.join(".", 'config/upload')).mkdir(parents=True, exist_ok=True) 
+    
+    configFolder.create_folders()
     print("Folder created")
 
 
@@ -108,79 +42,6 @@ def list_one_wire():
     except Exception as e:
         print(e)
 
-def copy_splash():
-    srcfile = os.path.join(".", "config", "splash.png")
-    destfile = os.path.join(".", 'config')
-    shutil.copy(srcfile, destfile)
-    print("Splash Srceen created")
-
-def recursive_chown(path, owner, group):
-    for dirpath, dirnames, filenames in os.walk(path):
-        shutil.chown(dirpath, owner, group)
-        for filename in filenames:
-            shutil.chown(os.path.join(dirpath, filename), owner, group)
-
-def check_for_setup():
-    if os.path.exists(os.path.join(".", "config", "config.yaml")) is False:
-        print("***************************************************")
-        print("CraftBeerPi Config File not found: %s" % os.path.join(".", "config", "config.yaml"))
-        print("Please run 'cbpi setup' before starting the server ")
-        print("***************************************************")
-        return False
-    if os.path.exists(os.path.join(".", "config", "upload")) is False:
-        print("***************************************************")
-        print("CraftBeerPi upload folder not found: %s" % os.path.join(".", "config/upload"))
-        print("Please run 'cbpi setup' before starting the server ")
-        print("***************************************************")
-        return False
-#    if os.path.exists(os.path.join(".", "config", "fermenterrecipes")) is False:
-#        print("***************************************************")
-#        print("CraftBeerPi fermenterrecipes folder not found: %s" % os.path.join(".", "config/fermenterrecipes"))
-#        print("Please run 'cbpi setup' before starting the server ")
-#        print("***************************************************")
-#        return False
-    backupfile = os.path.join(".", "restored_config.zip")
-    if os.path.exists(os.path.join(backupfile)) is True:
-        print("***************************************************")
-        print("Found backup of config. Starting restore")
-        required_content=['dashboard/', 'recipes/', 'upload/', 'config.json', 'config.yaml']
-        zip=zipfile.ZipFile(backupfile)
-        zip_content_list = zip.namelist()
-        zip_content = True
-        print("Checking content of zip file")
-        for content in required_content:
-            try:
-                check = zip_content_list.index(content)
-            except:
-                zip_content = False
-
-        if zip_content == True:
-            print("Found correct content. Starting Restore process")
-            output_path = pathlib.Path(os.path.join(".", 'config'))
-            system = platform.system()
-            print(system)
-            if system != "Windows":
-                owner = output_path.owner()
-                group = output_path.group()
-            print("Removing old config folder")
-            shutil.rmtree(output_path, ignore_errors=True) 
-            print("Extracting zip file to config folder")
-            zip.extractall(output_path)
-            zip.close()
-            if system != "Windows":
-                print(f"Changing owner and group of config folder recursively to {owner}:{group}")
-                recursive_chown(output_path, owner, group)
-            print("Removing backup file")
-            os.remove(backupfile)
-        else:
-            print("Wrong Content in zip file. No restore possible")
-            print("Removing zip file")
-            os.remove(backupfile)
-        print("***************************************************")
-
-        return True 
-    else:
-        return True
 
 def plugins_list():
     result = []
@@ -202,11 +63,9 @@ def plugins_list():
         except Exception as e:
             print(e)
     print(Fore.LIGHTGREEN_EX, tabulate(result, headers="keys"), Style.RESET_ALL)
-    
 
 
 def plugin_create():
- 
     print("Plugin Creation")
     print("")
 
@@ -264,7 +123,6 @@ def plugin_create():
     with open(os.path.join(".", name, name, "config.yaml"), "w") as fh:
         fh.write(outputText)
 
-        
     print("")
     print("")
     print("Plugin {}{}{} created! ".format(Fore.LIGHTGREEN_EX, name, Style.RESET_ALL) )
@@ -274,28 +132,31 @@ def plugin_create():
     print("Happy developing! Cheers")
     print("")
     print("")
-    
 
 
 @click.group()
-def main():
+@click.pass_context
+@click.option('--config-folder-path', '-c', default="./config", type=click.Path(), help="Specify where the config folder is located. Defaults to './config'.")
+def main(context, config_folder_path):
     print("---------------------")
     print("Welcome to CBPi")
     print("---------------------")
     level = logging.INFO
     logging.basicConfig(level=level, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    context.obj = ConfigFolder(config_folder_path)
     pass
 
 
-@click.command()
-def setup():
+@main.command()
+@click.pass_context
+def setup(context):
     '''Create Config folder'''
     print("Setting up CraftBeerPi")
-    create_home_folder_structure()
-    create_config_file()
+    create_home_folder_structure(context.obj)
+    context.obj.create_config_file()
 
 
-@click.command()
+@main.command()
 @click.option('--list', is_flag=True, help="List all 1Wire Devices")
 @click.option('--setup', is_flag=True, help="Setup 1Wire on Raspberry Pi")
 def onewire(list, setup):
@@ -306,24 +167,23 @@ def onewire(list, setup):
         list_one_wire()
 
 
-
-@click.command()
-def start():
+@main.command()
+@click.pass_context
+def start(context):
     '''Lets go brewing'''
-    if check_for_setup() is False:
+    if context.obj.check_for_setup() is False:
         return
     print("Starting up CraftBeerPi ...")
-    cbpi = CraftBeerPi()
+    cbpi = CraftBeerPi(context.obj)
     cbpi.start()
 
 
-@click.command()
-def plugins():
+@main.command()
+@click.pass_context
+def plugins(context):
     '''List active plugins'''
     plugins_list()
     return
-
-
 
 
 @click.command()
@@ -331,9 +191,11 @@ def create():
     '''Create New Plugin'''
     plugin_create()
 
-@click.command()
+
+@main.command()
 @click.argument('name')
-def autostart(name):
+@click.pass_context
+def autostart(context, name):
     '''(on|off|status) Enable or disable autostart'''
     if(name == "status"):
         if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is True:
@@ -344,7 +206,7 @@ def autostart(name):
         print("Add craftbeerpi.service to systemd")
         try:
             if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is False:
-                srcfile = os.path.join(".", "config", "craftbeerpi.service")
+                srcfile = context.obj.get_file_path("craftbeerpi.service")
                 destfile = os.path.join("/etc/systemd/system")
                 shutil.copy(srcfile, destfile)
                 print("Copied craftbeerpi.service to /etc/systemd/system")
@@ -379,13 +241,12 @@ def autostart(name):
             print(e)
             return
         return
-    
-    
 
 
-@click.command()
+@main.command()
 @click.argument('name')
-def chromium(name):
+@click.pass_context
+def chromium(context, name):
     '''(on|off|status) Enable or disable Kiosk mode'''
     if(name == "status"):
         if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is True:
@@ -396,7 +257,7 @@ def chromium(name):
         print("Add chromium.desktop to /etc/xdg/autostart/")
         try:
             if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is False:
-                srcfile = os.path.join(".", "config", "chromium.desktop")
+                srcfile = context.obj.get_file_path("chromium.desktop")
                 destfile = os.path.join("/etc/xdg/autostart/")
                 shutil.copy(srcfile, destfile)
                 print("Copied chromium.desktop to /etc/xdg/autostart/")
@@ -418,11 +279,3 @@ def chromium(name):
             print(e)
             return
         return
-
-main.add_command(setup)
-main.add_command(start)
-main.add_command(autostart)
-main.add_command(chromium)
-main.add_command(plugins)
-main.add_command(onewire)
-main.add_command(create)
