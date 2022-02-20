@@ -103,6 +103,11 @@ class ConfigFolder:
 
         print("Config Folder created")
 
+    def create_home_folder_structure(configFolder):
+        pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
+        
+        configFolder.create_folders()
+        print("Folder created")
 
     def create_folders(self):
         pathlib.Path(self._rawPath).mkdir(parents=True, exist_ok=True)

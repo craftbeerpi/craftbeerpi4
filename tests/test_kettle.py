@@ -1,52 +1,16 @@
-import asyncio
-from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from cbpi.craftbeerpi import CraftBeerPi
+from aiohttp.test_utils import unittest_run_loop
+from tests.cbpi_config_fixture import CraftBeerPiTestCase
 
 
-class KettleTestCase(AioHTTPTestCase):
-
-
-    async def get_application(self):
-        self.cbpi = CraftBeerPi()
-        await self.cbpi.init_serivces()
-        return self.cbpi.app
+class KettleTestCase(CraftBeerPiTestCase):
 
     @unittest_run_loop
     async def test_get(self):
 
         resp = await self.client.request("GET", "/kettle")
         assert resp.status == 200
-        print(await resp.json())
-
-    @unittest_run_loop
-    async def test_heater(self):
-        resp = await self.client.get("/kettle/1/heater/on")
-        assert resp.status == 204
-
-        resp = await self.client.get("/kettle/1/heater/off")
-        assert resp.status == 204
-
-    @unittest_run_loop
-    async def test_agitator(self):
-        resp = await self.client.get("/kettle/1/agitator/on")
-        assert resp.status == 204
-
-        resp = await self.client.get("/kettle/1/agitator/off")
-        assert resp.status == 204
-
-    @unittest_run_loop
-    async def test_temp(self):
-        resp = await self.client.get("/kettle/1/temp")
-        assert resp.status == 204
-
-        resp = await self.client.get("/kettle/1/targettemp")
-        assert resp.status == 200
-
-    @unittest_run_loop
-    async def test_automatic(self):
-        resp = await self.client.post("/kettle/1/automatic")
-        assert resp.status == 204
-
+        kettle = resp.json()
+        assert kettle != None
 
     @unittest_run_loop
     async def test_crud(self):
@@ -69,21 +33,21 @@ class KettleTestCase(AioHTTPTestCase):
 
         m = await resp.json()
 
-        sensor_id = m["id"]
+        kettle_id = m["id"]
         print("KETTLE", m["id"], m)
-        # Get sensor
-        resp = await self.client.get(path="/kettle/%s" % sensor_id)
+ 
+        # Update Kettle
+        resp = await self.client.put(path="/kettle/%s" % kettle_id, json=m)
         assert resp.status == 200
 
-        m2 = await resp.json()
-        sensor_id = m2["id"]
-
-        # Update Sensor
-        resp = await self.client.put(path="/kettle/%s" % sensor_id, json=m)
-        assert resp.status == 200
+        # Set Kettle target temp
+        resp = await self.client.post(path="/kettle/%s/target_temp" % kettle_id, json={"temp":75})
+        assert resp.status == 204
 
         # # Delete Sensor
-        resp = await self.client.delete(path="/kettle/%s" % sensor_id)
+        resp = await self.client.delete(path="/kettle/%s" % kettle_id)
         assert resp.status == 204
+
+
 
 

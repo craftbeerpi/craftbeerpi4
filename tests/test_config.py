@@ -1,44 +1,31 @@
 import time
 
-import aiosqlite
-from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from cbpi.api.config import ConfigType
+from aiohttp.test_utils import unittest_run_loop
+from tests.cbpi_config_fixture import CraftBeerPiTestCase
 
-from cbpi.craftbeerpi import CraftBeerPi
-
-
-class ConfigTestCase(AioHTTPTestCase):
-
-
-    async def get_application(self):
-        self.cbpi = CraftBeerPi()
-        await self.cbpi.init_serivces()
-        return self.cbpi.app
-
+class ConfigTestCase(CraftBeerPiTestCase):
 
     @unittest_run_loop
     async def test_get(self):
 
-        assert self.cbpi.config.get("CBPI_TEST_1", 1) == "22"
+        assert self.cbpi.config.get("steps_boil_temp", 1) == "99"
 
     @unittest_run_loop
     async def test_set_get(self):
-        value = str(time.time())
+        value = 35
 
-        await self.cbpi.config.set("CBPI_TEST_2", value)
-
-        assert self.cbpi.config.get("CBPI_TEST_2", 1) == value
+        await self.cbpi.config.set("steps_cooldown_temp", value)
+        assert self.cbpi.config.get("steps_cooldown_temp", 1) == value
 
     @unittest_run_loop
     async def test_http_set(self):
-        value = str(time.time())
-        key = "CBPI_TEST_3"
-        await self.cbpi.config.set(key, value)
-        assert self.cbpi.config.get(key, 1) == value
+        value = "Some New Brewery Name"
+        key = "BREWERY_NAME"
 
-        resp = await self.client.request("PUT", "/config/%s/" % key, json={'value': '1'})
+        resp = await self.client.request("PUT", "/config/%s/" % key, json={'value': value})
         assert resp.status == 204
-        assert self.cbpi.config.get(key, -1) == "1"
+
+        assert self.cbpi.config.get(key, -1) == value
 
     @unittest_run_loop
     async def test_http_get(self):
@@ -47,5 +34,5 @@ class ConfigTestCase(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_get_default(self):
-        value = self.cbpi.config.get("HELLO_WORLD", None)
-        assert value == None
+        value = self.cbpi.config.get("HELLO_WORLD", "DefaultValue")
+        assert value == "DefaultValue"
