@@ -313,8 +313,8 @@ class FermentationHttpEndpoints():
 
         data = await request.json()
         fermenterid= request.match_info['id']
-        step = FermenterStep(name=data.get("name"), props=Props(data.get("props", {})), type=data.get("type"))
-        response_data = await self.controller.create_step(fermenterid,step)
+        newstep = {"name": data.get("name"), "props": data.get("props", {}), "type": data.get("type")}
+        response_data = await self.controller.create_step(fermenterid,newstep)
         return web.json_response(data=response_data.to_dict())
 
     @request_mapping(path="/{fermenterid}/{stepid}", method="PUT", auth_required=False)
@@ -352,8 +352,9 @@ class FermentationHttpEndpoints():
         data = await request.json()
         stepid = request.match_info['stepid']
         fermenterid = request.match_info['fermenterid']
-        step = FermenterStep(stepid, data.get("name"), None, Props(data.get("props", {})), data.get("type"))
-        await self.controller.update_step(fermenterid,step)
+        updatedstep = {"id": stepid, "name": data.get("name"), "props": data.get("props", {}), "type": data.get("type")}
+        #step = FermenterStep(stepid, data.get("name"), None, Props(data.get("props", {})), data.get("type"))
+        await self.controller.update_step(fermenterid,updatedstep)
         return web.Response(status=200)
 
     @request_mapping(path="/{fermenterid}/{stepid}", method="DELETE", auth_required=False)
@@ -462,4 +463,124 @@ class FermentationHttpEndpoints():
 
         fermenterid= request.match_info['id']
         await self.controller.clearsteps(fermenterid)
+        return web.Response(status=200)
+
+    @request_mapping(path="/{id}/startstep", method="POST", auth_required=False)
+    async def http_start_steps(self, request):
+
+        """
+        ---
+        description: Start steps for Fermenter with fermenterid
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """      
+
+        fermenterid= request.match_info['id']
+        await self.controller.start(fermenterid)
+        return web.Response(status=200)
+
+    @request_mapping(path="/{id}/stopstep", method="POST", auth_required=False)
+    async def http_stop_steps(self, request):
+
+        """
+        ---
+        description: Stop steps for Fermenter with fermenterid
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """      
+
+        fermenterid= request.match_info['id']
+        await self.controller.stop(fermenterid)
+        return web.Response(status=200)
+
+    @request_mapping(path="/{id}/nextstep", method="POST", auth_required=False)
+    async def http_next_step(self, request):
+
+        """
+        ---
+        description: Stop steps for Fermenter with fermenterid
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """      
+
+        fermenterid= request.match_info['id']
+        await self.controller.next(fermenterid)
+        return web.Response(status=200)
+
+    @request_mapping(path="/{id}/nextstep", method="POST", auth_required=False)
+    async def http_next_step(self, request):
+
+        """
+        ---
+        description: Triggers next step for Fermenter with fermenterid
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """      
+
+        fermenterid= request.match_info['id']
+        await self.controller.next(fermenterid)
+        return web.Response(status=200)
+
+    @request_mapping(path="/{id}/reset", method="POST", auth_required=False)
+    async def http_reset(self, request):
+
+        """
+        ---
+        description: Resets step status for Fermenter with fermenterid
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+        """      
+
+        fermenterid= request.match_info['id']
+        await self.controller.reset(fermenterid)
         return web.Response(status=200)

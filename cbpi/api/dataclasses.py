@@ -162,6 +162,7 @@ class FermenterStep:
     type: str = None
     status: StepState = StepState.INITIAL
     instance: str = None
+    step: dict = None 
 
     def __str__(self):
         return "name={} props={}, type={}, instance={}".format(self.name, self.props, self.type, self.instance)

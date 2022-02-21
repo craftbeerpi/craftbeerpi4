@@ -46,8 +46,8 @@ class StepController:
         except Exception as e:
             logging.warning("Failed to create step instance %s - %s"  % (id, e))
             instance = None
- 
-        return Step(id, name, type=type, status=status, instance=instance, props=props )
+        step=Step(id, name, type=type, status=status, instance=instance, props=props )
+        return step
 
 
     def load(self, startActive=False):

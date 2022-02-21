@@ -1,3 +1,4 @@
+from abc import abstractmethod
 import asyncio
 import cbpi
 import copy
@@ -34,14 +35,19 @@ class FermentStep:
             except Exception as e:
                 self.logger.error(e)
 
+    @abstractmethod
     async def run(self):
-        while True:
+        while self.running:
+            logging.info(self.step)
             await asyncio.sleep(1)
+        pass
 
     async def _run(self):
         try:
-            await self.on_start()
-            await self.run()
+            await self.step.instance.on_start()
+            await self.step.instance.run()
+            #await self.on_start()
+            #await self.run()
             self.cancel_reason = StepResult.DONE
         except asyncio.CancelledError as e:
             pass
@@ -109,18 +115,6 @@ class FermentationController:
             destfile = os.path.join(".", 'config', "fermenter_data.json")
             json.dump(data,open(destfile,'w'),indent=4, sort_keys=True)
 
-    def push_update(self, key="fermenterupdate", fermentersteps=None):
-
-        if key == self.update_key:
-            self.cbpi.ws.send(dict(topic=key, data=list(map(lambda item: item.to_dict(), self.data))))
-            #self.cbpi.push_update("cbpi/{}".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
-
-            for item in self.data:
-                self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
-            pass
-        else:
-            self.cbpi.ws.send(dict(topic=key, data=fermentersteps))
-
     async def shutdown(self, app=None):    
         self.save()
         for fermenter in self.data:
@@ -149,21 +143,27 @@ class FermentationController:
         status = StepState(item.get("status", "I"))
         type = item.get("type")
 
-        type_cfg = self.types.get(type)
-        if type_cfg is not None:
-            inst = type_cfg.get("class")()
-            print(inst)
+        try:
+            type_cfg = self.steptypes.get(type)
+            clazz = type_cfg.get("class")
+            instance = clazz(self.cbpi, fermenter, item, props, self._done)
+        except Exception as e:
+            logging.warning("Failed to create step instance %s - %s"  % (id, e))
+            instance = None
 
-        step = FermenterStep(id=id, name=name, fermenter=fermenter, props=props, type=type, status=status, instance=None)
-        step.instance = FermentStep( self.cbpi, step, self._done)
+        step = FermenterStep(id=id, name=name, fermenter=fermenter, props=props, type=type, status=status, instance=instance)
+        #logging.info(step)
+        #logging.info(step.status)
         return step
 
-    def _done(self, step_instance, result):
-        
-        step_instance.step.status = StepState.DONE
+    def _done(self, step_instance, result, fermenter):
+        step_instance.step["status"] = "D"
         self.save()
+        logging.info(step_instance)
+        logging.info(step_instance.step)
+        logging.info(fermenter)
         if result == StepResult.NEXT:
-            asyncio.create_task(self.start(step_instance.step.fermenter.id))
+            asyncio.create_task(self.start(fermenter))
 
     def _create(self, data):
         try:
@@ -283,44 +283,80 @@ class FermentationController:
         with open(self.path, "w") as file:
             json.dump(data, file, indent=4, sort_keys=True)
 
-    async def create_step(self, id, step: Step):
+    async def create_step(self, id, item):
         try:
-            step.id = shortuuid.uuid()
-            item = self._find_by_id(id)
+            stepid = shortuuid.uuid()
+            props = item.get("props")
+            status = StepState("I")
+            type = item.get("type")
+            name = item.get("name")
+            props = Props(item.get("props"))
+            fermenter = self._find_by_id(id)
 
-            step.instance = FermentStep( self.cbpi, step, self._done)
+            try:
+                type_cfg = self.steptypes.get(type)
+                clazz = type_cfg.get("class")
+                instance = clazz(self.cbpi, fermenter, item, props, self._done)
+            except Exception as e:
+                logging.warning("Failed to create step instance %s - %s"  % (id, e))
+                instance = None
+            step = FermenterStep(id=stepid, name=name, fermenter=fermenter, props=props, type=type, status=status, instance=instance)
 
-            item.steps.append(step)
+
+
+            fermenter.steps.append(step)
             self.save()
-            fermentersteps=self.get_fermenter_steps()
-            self.push_update("fermenterstepupdate", fermentersteps)
+            self.push_update("fermenterstepupdate")
             return step
         except Exception as e:
             self.logger.error(e)
 
-    async def update_step(self, id, step: FermenterStep):
-        item = self._find_by_id(id)
-        item.steps = list(map(lambda old: step if old.id == step.id else old, item.steps))
+    async def update_step(self, id, item):
+        fermenter = self._find_by_id(id)
+        stepid = item.get("id")
+        props = item.get("props")
+        status = StepState("I")
+        type = item.get("type")
+        #logging.info(type)
+        name = item.get("name")
+        props = Props(item.get("props"))
+
+        logging.info("update step")
+        try:
+            type_cfg = self.steptypes.get(type)
+            #logging.info(type_cfg)
+            clazz = type_cfg.get("class")
+            #logging.info(clazz)
+            instance = clazz(self.cbpi, fermenter, item, props, self._done)
+        except Exception as e:
+            logging.warning("Failed to create step instance %s - %s "  % (item.id, e))
+            instance = None
+        step = FermenterStep(id=stepid, name=name, fermenter=fermenter, props=props, type=type, status=status, instance=instance)
+        #logging.info(step)
+        #logging.info(fermenter.steps)
+        try:
+            fermenter.steps = list(map(lambda old: step if old.id == step.id else old, fermenter.steps))
+        except Exception as e:
+            logging.info(e)
+        #logging.info(fermenter.steps)
         self.save()
-        fermentersteps=self.get_fermenter_steps()
-        self.push_update("fermenterstepupdate", fermentersteps)
-        
-    
+        #logging.info("SAVEUPDATE")
+
+        self.push_update("fermenterstepupdate")
+
     async def delete_step(self, id, stepid):
         item = self._find_by_id(id)
         # might require later check if step is active
         item.steps = list(filter(lambda item: item.id != stepid, item.steps))
         self.save()
-        fermentersteps=self.get_fermenter_steps()
-        self.push_update("fermenterstepupdate", fermentersteps)
+        self.push_update("fermenterstepupdate")
     
     async def clearsteps(self, id):
         item = self._find_by_id(id)
         # might require later check if step is active
         item.steps = []
         self.save()
-        fermentersteps=self.get_fermenter_steps()
-        self.push_update("fermenterstepupdate", fermentersteps)
+        self.push_update("fermenterstepupdate")
 
 
     def _find_by_status(self, data, status):
@@ -330,17 +366,34 @@ class FermentationController:
         return next((item for item in data if item.id == id), None)
 
     async def start(self, id):
-        self.logger.info("Start")
+        self.logger.info("Start {}".format(id))
         try:
             item = self._find_by_id(id)
-            step = self._find_by_status(item.steps, StepState.INITIAL)
 
+            step = self._find_by_status(item.steps, StepState.ACTIVE)
+            if step is not None:
+                logging.error("Steps already running")
+                return
+
+            step = self._find_by_status(item.steps, StepState.STOP)
+            if step is not None:
+                await step.instance.start()
+                logging.info("Restarting step {}".format(step.name))
+                step.status = StepState.ACTIVE
+                self.save()
+                self.push_update("fermenterstepupdate")
+                return                     
+
+            step = self._find_by_status(item.steps, StepState.INITIAL)
+            logging.info(step)
             if step is None:
                 self.logger.info("No futher step to start")
             else:
                 await step.instance.start()
+                logging.info("Starting step {}".format(step.name))
                 step.status = StepState.ACTIVE
                 self.save()
+                self.push_update("fermenterstepupdate")
 
         except Exception as e:
             self.logger.error(e)
@@ -349,9 +402,19 @@ class FermentationController:
         try:
             item = self._find_by_id(id)
             step = self._find_by_status(item.steps, StepState.ACTIVE)
-            await step.instance.stop()
-            step.status = StepState.STOP
-            self.save()
+            logging.info(step)
+            logging.info(step.status)
+            if step != None:
+                logging.info("CALLING STOP STEP")
+                try:
+                    await step.instance.stop()
+                    step.status = StepState.STOP
+                    self.save()
+                except Exception as e:
+                    logging.error("Failed to stop fermenterstep - Id: %s" % step.id)
+
+                self.push_update("fermenterstepupdate")
+
         except Exception as e:
             self.logger.error(e)
 
@@ -396,8 +459,27 @@ class FermentationController:
         self.logger.info("Next {} ".format(id))
         try:
             item = self._find_by_id(id)
+            logging.info(item)
             step = self._find_by_status(item.steps, StepState.ACTIVE)
-            await step.instance.next()
+            logging.info(step)
+            if step is not None:
+                if step.instance is not None:
+                    step.status = StepState.DONE
+                    await step.instance.next()
+        
+            step = self._find_by_status(item.steps, StepState.STOP)
+            logging.info(step)
+            if step is not None:
+                if step.instance is not None:
+                    logging.info(step)
+                    step.status = StepState.DONE
+                    logging.info(step)
+                    self.save()
+                    await self.start(id)
+            else:
+                logging.info("No Step is running")
+
+            self.push_update("fermenterstepupdate")
         
         except Exception as e:
             self.logger.error(e)
@@ -415,6 +497,8 @@ class FermentationController:
                 except Exception as e:
                     self.logger.error(e)
             self.save()
+            self.push_update("fermenterstepupdate")
+            
         except Exception as e:
             self.logger.error(e)
 
@@ -435,4 +519,18 @@ class FermentationController:
         
         except Exception as e:
             self.logger.error(e)
+
+    def push_update(self, key="fermenterupdate"):
+
+        if key == self.update_key:
+            self.cbpi.ws.send(dict(topic=key, data=list(map(lambda item: item.to_dict(), self.data))))
+            #self.cbpi.push_update("cbpi/{}".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
+
+            for item in self.data:
+                self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
+            pass
+        else:
+            #logging.info("FERMENTERSTEPUPDATE {}".format(key))
+            fermentersteps=self.get_fermenter_steps()
+            self.cbpi.ws.send(dict(topic=key, data=fermentersteps))
         
