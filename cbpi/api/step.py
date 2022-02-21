@@ -161,11 +161,14 @@ class CBPiFermentationStep(CBPiBase):
         self.task = asyncio.create_task(self._run())
         self.task.add_done_callback(self._done)
 
-    async def next(self):
-        self.running = False
-        self.cancel_reason = StepResult.NEXT
-        self.task.cancel()
-        await self.task
+    async def next(self, fermenter=None):
+        if fermenter is None:
+            self.running = False
+            self.cancel_reason = StepResult.NEXT
+            self.task.cancel()
+            await self.task
+        else:
+            await self.cbpi.fermenter.next(fermenter)
 
     async def stop(self):
         try:

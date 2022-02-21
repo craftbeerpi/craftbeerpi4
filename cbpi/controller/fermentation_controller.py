@@ -515,7 +515,7 @@ class FermentationController:
 
             fermenter.steps[index], fermenter.steps[index+direction] = fermenter.steps[index+direction], fermenter.steps[index]
             self.save()
-            self.push_update()
+            self.push_update("fermenterstepupdate")
         
         except Exception as e:
             self.logger.error(e)
