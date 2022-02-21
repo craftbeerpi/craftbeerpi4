@@ -125,9 +125,9 @@ class FermenterTargetTempStep(CBPiFermentationStep):
     async def setAutoMode(self, auto_state):
         try:
             if (self.fermenter.instance is None or self.fermenter.instance.state == False) and (auto_state is True):
-                await self.fermenter.instance.toggle(self.fermenter.id)
+                await self.cbpi.fermenter.toggle(self.fermenter.id)
             elif (self.fermenter.instance.state == True) and (auto_state is False):
-                await self.fermenter.instance.stop(self.fermenter.id)
+                await self.fermenter.instance.stop()
             await self.push_update()
 
         except Exception as e:
@@ -228,9 +228,9 @@ class FermenterStep(CBPiFermentationStep):
     async def setAutoMode(self, auto_state):
         try:
             if (self.fermenter.instance is None or self.fermenter.instance.state == False) and (auto_state is True):
-                await self.fermenter.instance.toggle(self.fermenter.id)
+                await self.cbpi.fermenter.toggle(self.fermenter.id)
             elif (self.fermenter.instance.state == True) and (auto_state is False):
-                await self.fermenter.instance.stop(self.fermenter.id)
+                await self.fermenter.instance.stop()
             await self.push_update()
 
         except Exception as e:

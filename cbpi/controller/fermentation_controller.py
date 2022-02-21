@@ -412,7 +412,7 @@ class FermentationController:
                     self.save()
                 except Exception as e:
                     logging.error("Failed to stop fermenterstep - Id: %s" % step.id)
-
+                self.push_update()
                 self.push_update("fermenterstepupdate")
 
         except Exception as e:
