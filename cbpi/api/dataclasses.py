@@ -161,6 +161,8 @@ class FermenterStep:
     props: Props = Props()
     type: str = None
     status: StepState = StepState.INITIAL
+    #Add end data as unixtime to setp when active
+    #step_end: float = 0
     instance: str = None
     step: dict = None 
 

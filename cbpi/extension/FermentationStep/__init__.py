@@ -141,7 +141,9 @@ class FermenterTargetTempStep(CBPiFermentationStep):
             logging.error("Failed to switch on FermenterLogic {} {}".format(self.fermenter.id, e))
 
 
-@parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True), 
+@parameters([Property.Number(label="TimerD", description="Timer Days", configurable=True),
+             Property.Number(label="TimerH", description="Timer Hours", configurable=True),
+             Property.Number(label="TimerM", description="Timer Minutes", configurable=True), 
              Property.Number(label="Temp", configurable=True),
              Property.Sensor(label="Sensor"),
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Fermenterlogic automatically on and off -> Yes")])
@@ -180,7 +182,11 @@ class FermenterStep(CBPiFermentationStep):
         await self.push_update()
 
     async def on_start(self):
-        logging.info(self.fermenter)
+        timeD=int(self.props.get("TimerD", 0))
+        timeH=int(self.props.get("TimerH", 0))
+        timeM=int(self.props.get("TimerM", 0))
+        self.fermentationtime=(timeM+(60*timeH)+(1440*timeD)) *60
+
         self.AutoMode = True if self.props.get("AutoMode", "No") == "Yes" else False
         self.starttemp= self.get_sensor_value(self.props.get("Sensor", None)).get("value")    
         if self.fermenter is not None:
@@ -190,7 +196,7 @@ class FermenterStep(CBPiFermentationStep):
         await self.push_update()
 
         if self.fermenter is not None and self.timer is None:
-            self.timer = Timer(int(self.props.get("Timer",0)) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
+            self.timer = Timer(self.fermentationtime ,on_update=self.on_timer_update, on_done=self.on_timer_done)
         elif self.fermenter is not None:
             try:
                 if self.timer.is_running == True:
@@ -209,7 +215,7 @@ class FermenterStep(CBPiFermentationStep):
         await self.push_update()
 
     async def reset(self):
-        self.timer = Timer(int(self.props.get("Timer",0)) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer = Timer(self.fermentationtime ,on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):
         if self.fermenter.target_temp >= self.starttemp:
@@ -246,7 +252,10 @@ class FermenterStep(CBPiFermentationStep):
         except Exception as e:
             logging.error("Failed to switch on FermenterLogic {} {}".format(self.fermenter.id, e))
 
-@parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True)])
+@parameters([Property.Number(label="TimerD", description="Timer Days", configurable=True),
+             Property.Number(label="TimerH", description="Timer Hours", configurable=True),
+             Property.Number(label="TimerM", description="Timer Minutes", configurable=True)
+            ])
 class FermenterWaitStep(CBPiFermentationStep):
 
     async def on_timer_done(self, timer):
@@ -259,8 +268,13 @@ class FermenterWaitStep(CBPiFermentationStep):
         await self.push_update()
 
     async def on_start(self):
+        timeD=int(self.props.get("TimerD", 0))
+        timeH=int(self.props.get("TimerH", 0))
+        timeM=int(self.props.get("TimerM", 0))
+        self.fermentationtime=(timeM+(60*timeH)+(1440*timeD)) *60
+
         if self.timer is None:
-            self.timer = Timer(int(self.props.Timer) * 60, on_update=self.on_timer_update, on_done=self.on_timer_done)
+            self.timer = Timer(self.fermentationtime, on_update=self.on_timer_update, on_done=self.on_timer_done)
         self.timer.start()
 
     async def on_stop(self):
@@ -269,7 +283,7 @@ class FermenterWaitStep(CBPiFermentationStep):
         await self.push_update()
 
     async def reset(self):
-        self.timer = Timer(int(self.props.Timer) * 60, on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer = Timer(self.fermentationtime, on_update=self.on_timer_update, on_done=self.on_timer_done)
 
     async def run(self):   
         while self.running == True:
