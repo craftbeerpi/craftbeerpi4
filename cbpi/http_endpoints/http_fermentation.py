@@ -584,3 +584,40 @@ class FermentationHttpEndpoints():
         fermenterid= request.match_info['id']
         await self.controller.reset(fermenterid)
         return web.Response(status=200)
+
+    @request_mapping(path="/action/{id}", method="POST", auth_required=False)
+    async def http_call_action(self, request):
+        """
+        ---
+        description: Call action
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "FermenterStep id"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: call action for fermenter Step
+          required: false
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+              parameter:
+                type: "array"
+                items:
+                    type: string
+        responses:
+            "204":
+                description: successful operation
+        """
+        data = await request.json()
+
+        id = request.match_info['id']
+        await self.controller.call_action(id,data.get("action"), data.get("parameter",[]))
+        return web.Response(status=204)

@@ -152,16 +152,11 @@ class FermentationController:
             instance = None
 
         step = FermenterStep(id=id, name=name, fermenter=fermenter, props=props, type=type, status=status, instance=instance)
-        #logging.info(step)
-        #logging.info(step.status)
         return step
 
     def _done(self, step_instance, result, fermenter):
         step_instance.step["status"] = "D"
         self.save()
-        logging.info(step_instance)
-        logging.info(step_instance.step)
-        logging.info(fermenter)
         if result == StepResult.NEXT:
             asyncio.create_task(self.start(fermenter))
 
@@ -211,7 +206,6 @@ class FermentationController:
 
     def get_step_state(self, fermenterid=None):
         if self.data == []:
-            #logging.info(self.data)
             pass
         fermentersteps=[]
         steplist=list(map(lambda x: x.to_dict(), self.data))
@@ -230,6 +224,15 @@ class FermentationController:
             fermenterstep={"id": fermenter.get("id"), "steps": fermenter.get("steps")}
             fermentersteps.append(fermenterstep)
         return fermentersteps
+
+    async def find_step_by_id(self, id):
+        actionstep = None
+        for item in self.data:
+            step = self._find_step_by_id(item.steps, id)
+            if step is not None:
+                actionstep=step
+        return actionstep
+
 
     async def get(self, id: str ):
         return self._find_by_id(id)
@@ -534,3 +537,11 @@ class FermentationController:
             fermentersteps=self.get_fermenter_steps()
             self.cbpi.ws.send(dict(topic=key, data=fermentersteps))
         
+    async def call_action(self, id, action, parameter) -> None:
+        logging.info("FermenterStep Controller - call Action {} {}".format(id, action))
+        try:
+            item = await self.find_step_by_id(id)
+            logging.info(item)
+            await item.instance.__getattribute__(action)(**parameter)
+        except Exception as e:
+            logging.error("FermenterStep Controller - Failed to call action on {} {} {}".format(id, action, e))
