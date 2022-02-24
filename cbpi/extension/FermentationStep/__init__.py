@@ -226,7 +226,7 @@ class FermenterStep(CBPiFermentationStep):
                 if sensor_value >= self.fermenter.target_temp and self.timer.is_running is not True:
                     self.timer.start()
                     self.timer.is_running = True
-                    estimated_completion_time = datetime.fromtimestamp(time.time()+ (int(self.props.get("Timer",0)))*60)
+                    estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
                     self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%H:%M")), NotificationType.INFO)
         elif self.fermenter.target_temp <= self.starttemp:
             logging.info("cooldown")
@@ -236,7 +236,7 @@ class FermenterStep(CBPiFermentationStep):
                 if sensor_value <= self.fermenter.target_temp and self.timer.is_running is not True:
                     self.timer.start()
                     self.timer.is_running = True
-                    estimated_completion_time = datetime.fromtimestamp(time.time()+ (int(self.props.get("Timer",0)))*60)
+                    estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
                     self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%H:%M")), NotificationType.INFO)
 
         return StepResult.DONE
