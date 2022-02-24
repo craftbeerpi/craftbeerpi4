@@ -25,6 +25,7 @@ from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
 from cbpi.controller.recipe_controller import RecipeController
+from cbpi.controller.fermenter_recipe_controller import FermenterRecipeController
 from cbpi.controller.upload_controller import UploadController
 from cbpi.controller.fermentation_controller import FermentationController
 
@@ -45,6 +46,7 @@ from cbpi.http_endpoints.http_kettle import KettleHttpEndpoints
 from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
 from cbpi.http_endpoints.http_recipe import RecipeHttpEndpoints
+from cbpi.http_endpoints.http_fermenterrecipe import FermenterRecipeHttpEndpoints
 from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
 from cbpi.http_endpoints.http_system import SystemHttpEndpoints
 from cbpi.http_endpoints.http_log import LogHttpEndpoints
@@ -112,6 +114,7 @@ class CraftBeerPi:
         self.fermenter : FermentationController = FermentationController(self)
         self.step : StepController = StepController(self)
         self.recipe : RecipeController = RecipeController(self)
+        self.fermenterrecipe : FermenterRecipeController = FermenterRecipeController(self)
         self.upload : UploadController = UploadController(self)
         self.notification : NotificationController = NotificationController(self)
         self.satellite = None
@@ -121,6 +124,7 @@ class CraftBeerPi:
 
         self.http_step = StepHttpEndpoints(self)
         self.http_recipe = RecipeHttpEndpoints(self)
+        self.http_fermenterrecipe = FermenterRecipeHttpEndpoints(self)
         self.http_sensor = SensorHttpEndpoints(self)
         self.http_config = ConfigHttpEndpoints(self)
         self.http_actor = ActorHttpEndpoints(self)

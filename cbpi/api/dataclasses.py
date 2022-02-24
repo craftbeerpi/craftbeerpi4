@@ -129,6 +129,7 @@ class Fermenter:
     heater: Actor = None
     cooler: Actor = None
     brewname: str = None
+    description : str = None
     props: Props = Props()
     target_temp: int = 0
     type: str = None
@@ -150,7 +151,7 @@ class Fermenter:
             state = False
 
         steps = list(map(lambda item: item.to_dict(), self.steps))
-        return dict(id=self.id, name=self.name, state=state, sensor=self.sensor, heater=self.heater, cooler=self.cooler, brewname=self.brewname, props=self.props.to_dict() if self.props is not None else None, target_temp=self.target_temp, type=self.type, steps=steps)
+        return dict(id=self.id, name=self.name, state=state, sensor=self.sensor, heater=self.heater, cooler=self.cooler, brewname=self.brewname, description=self.description, props=self.props.to_dict() if self.props is not None else None, target_temp=self.target_temp, type=self.type, steps=steps)
 
 
 @dataclass

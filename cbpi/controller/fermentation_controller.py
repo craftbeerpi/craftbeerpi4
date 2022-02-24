@@ -3,8 +3,10 @@ import asyncio
 import cbpi
 import copy
 import json
+import yaml
 import logging
 import os.path
+import pathlib
 from os import listdir
 from os.path import isfile, join
 import shortuuid
@@ -114,10 +116,22 @@ class FermentationController:
                     }
             destfile = os.path.join(".", 'config', "fermenter_data.json")
             json.dump(data,open(destfile,'w'),indent=4, sort_keys=True)
+        
+        pathlib.Path(os.path.join(".", 'config/fermenterrecipes')).mkdir(parents=True, exist_ok=True)
 
-    async def shutdown(self, app=None):    
+    async def shutdown(self, app=None, fermenterid=None):    
         self.save()
-        for fermenter in self.data:
+        if (fermenterid == None):
+            for fermenter in self.data:
+                self.logger.info("Shutdown {}".format(fermenter.name))
+                for step in fermenter.steps:
+                    try:
+                        self.logger.info("Stop {}".format(step.name))
+                        await step.instance.stop()
+                    except Exception as e:
+                        self.logger.error(e)
+        else:
+            fermenter = self._find_by_id(fermenterid)
             self.logger.info("Shutdown {}".format(fermenter.name))
             for step in fermenter.steps:
                 try:
@@ -125,6 +139,7 @@ class FermentationController:
                     await step.instance.stop()
                 except Exception as e:
                     self.logger.error(e)
+
 
     async def load(self):
 #        if os.path.exists(self.path) is False:
@@ -170,8 +185,9 @@ class FermentationController:
             logictype = data.get("type")
             temp = data.get("target_temp")
             brewname = data.get("brewname")
+            description = data.get("description")
             props = Props(data.get("props", {}))
-            fermenter = Fermenter(id, name, sensor, heater, cooler, brewname, props, temp, logictype)
+            fermenter = Fermenter(id, name, sensor, heater, cooler, brewname, description, props, temp, logictype)
             fermenter.steps = list(map(lambda item: self._create_step(fermenter, item), data.get("steps", [])))
             self.push_update()
             return fermenter
@@ -246,8 +262,6 @@ class FermentationController:
 
     async def update(self, item: Fermenter ):
 
-        logging.info(item)
-
         def _update(old_item: Fermenter, item: Fermenter):
             old_item.name = item.name
             old_item.sensor = item.sensor
@@ -255,6 +269,7 @@ class FermentationController:
             old_item.cooler = item.cooler
             old_item.type = item.type
             old_item.brewname = item.brewname
+            old_item.description = item.description
             old_item.props = item.props
             old_item.target_temp = item.target_temp
             return old_item
@@ -545,3 +560,43 @@ class FermentationController:
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
             logging.error("FermenterStep Controller - Failed to call action on {} {} {}".format(id, action, e))
+
+    # todo: Sensors may need to be removed when saving the recipe -> need to be replaced when assinging later to Fermenter with 'fermenter.sensor'
+    async def savetobook(self, fermenterid):
+        name = shortuuid.uuid()
+        path = os.path.join(".", 'config', "fermenterrecipes", "{}.yaml".format(name))
+        fermenter=self._find_by_id(fermenterid)
+        try:
+            brewname = fermenter.brewname
+            description = fermenter.description
+            # todo add escription at later point of time, once description has been added to fermenter dataclass
+        except:
+            brewname = ""
+            description = ""
+        self.basic_data={"name": brewname, "description": description}
+
+        try:
+            fermentersteps = fermenter.steps
+        except:
+            fermentersteps = []
+        data = dict(basic=self.basic_data, steps=list(map(lambda item: item.to_dict(), fermentersteps)))
+        with open(path, "w") as file:
+            yaml.dump(data, file)
+
+    async def load_recipe(self, data, fermenterid):
+        try:
+            await self.shutdown(None, fermenterid)
+        except: 
+            pass
+        fermenter = self._find_by_id(fermenterid)
+        def add_runtime_data(item):
+            item["status"] = "I"
+            item["id"] = shortuuid.uuid()
+            item["props"]["Sensor"] = fermenter.sensor
+        list(map(lambda item: add_runtime_data(item), data.get("steps")))
+        fermenter.description = data['basic']['desc']
+        fermenter.brewname = data['basic']['name']
+        fermenter.steps=[]
+        await self.update(fermenter)
+        for item in data.get("steps"):
+            await self.create_step(fermenterid, item)  

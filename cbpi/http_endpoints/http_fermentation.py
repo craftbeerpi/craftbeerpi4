@@ -77,7 +77,7 @@ class FermentationHttpEndpoints():
                 description: successful operation
         """
         data = await request.json()
-        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), cooler=data.get("cooler"), brewname=data.get("brewname"), target_temp=data.get("target_temp"), props=Props(data.get("props", {})), type=data.get("type"))
+        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), cooler=data.get("cooler"), brewname=data.get("brewname"), description=data.get("description"), target_temp=data.get("target_temp"), props=Props(data.get("props", {})), type=data.get("type"))
         response_data = await self.controller.create(fermenter)
         return web.json_response(data=response_data.to_dict())
         
@@ -115,7 +115,7 @@ class FermentationHttpEndpoints():
         """
         id = request.match_info['id']
         data = await request.json()
-        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), cooler=data.get("cooler"), brewname=data.get("brewname"), target_temp=data.get("target_temp"), props=Props(data.get("props", {})), type=data.get("type"))
+        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), cooler=data.get("cooler"), brewname=data.get("brewname"), description=data.get("description"), target_temp=data.get("target_temp"), props=Props(data.get("props", {})), type=data.get("type"))
         return web.json_response(data=(await self.controller.update(fermenter)).to_dict())
     
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
@@ -518,30 +518,6 @@ class FermentationHttpEndpoints():
 
         """
         ---
-        description: Stop steps for Fermenter with fermenterid
-        tags:
-        - Fermenter
-        parameters:
-        - name: "id"
-          in: "path"
-          description: "Fermenter ID"
-          required: true
-          type: "integer"
-          format: "int64"
-        responses:
-            "200":
-                description: successful operation
-        """      
-
-        fermenterid= request.match_info['id']
-        await self.controller.next(fermenterid)
-        return web.Response(status=200)
-
-    @request_mapping(path="/{id}/nextstep", method="POST", auth_required=False)
-    async def http_next_step(self, request):
-
-        """
-        ---
         description: Triggers next step for Fermenter with fermenterid
         tags:
         - Fermenter
@@ -620,4 +596,21 @@ class FermentationHttpEndpoints():
 
         id = request.match_info['id']
         await self.controller.call_action(id,data.get("action"), data.get("parameter",[]))
+        return web.Response(status=204)
+
+    @request_mapping(path="/savetobook/{id}", method="POST", auth_required=False)
+    async def http_savetobook(self, request):
+        
+        """
+
+        ---
+        description: Save Active FermenterRecipe to Fermenter Recipe Book
+        tags:
+        - Fermenter
+        responses:
+            "204":
+                description: successful operation
+        """
+        fermenterid = request.match_info['id']
+        await self.controller.savetobook(fermenterid)
         return web.Response(status=204)
