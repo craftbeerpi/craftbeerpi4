@@ -155,6 +155,8 @@ class FermenterStep(CBPiFermentationStep):
             self.cbpi.notify(self.name, 'Timer started', NotificationType.INFO)
             self.timer.start()
             self.timer.is_running = True
+            estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
+            self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%d.%m, %H:%M")), NotificationType.INFO)
         else:
             self.cbpi.notify(self.name, 'Timer is already running', NotificationType.WARNING)
 
@@ -227,7 +229,7 @@ class FermenterStep(CBPiFermentationStep):
                     self.timer.start()
                     self.timer.is_running = True
                     estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
-                    self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%H:%M")), NotificationType.INFO)
+                    self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%d.%m, %H:%M")), NotificationType.INFO)
         elif self.fermenter.target_temp <= self.starttemp:
             logging.info("cooldown")
             while self.running == True:
@@ -237,7 +239,7 @@ class FermenterStep(CBPiFermentationStep):
                     self.timer.start()
                     self.timer.is_running = True
                     estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
-                    self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%H:%M")), NotificationType.INFO)
+                    self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%d.%m, %H:%M")), NotificationType.INFO)
 
         return StepResult.DONE
 
