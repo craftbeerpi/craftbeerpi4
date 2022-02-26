@@ -1,2 +1,0 @@
-cbpi
-tests
