@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 try:
     import RPi.GPIO as GPIO
 except Exception:
-    logger.error("Failed to load RPi.GPIO. Using Mock")
+    logger.warning("Failed to load RPi.GPIO. Using Mock")
     MockRPi = MagicMock()
     modules = {
         "RPi": MockRPi,

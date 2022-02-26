@@ -156,6 +156,8 @@ class FermentationController:
         name = item.get("name")
         props = Props(item.get("props"))
         status = StepState(item.get("status", "I"))
+        if status == StepState.ACTIVE:
+            status = StepState("S")
         type = item.get("type")
 
         try:
