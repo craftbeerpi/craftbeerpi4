@@ -10,6 +10,7 @@ venv
 cbpi/extension/ui
 node_modules
 .DS_STORE
+.DS_Store
 .vscode
 .venv*
 .DS_Store 
