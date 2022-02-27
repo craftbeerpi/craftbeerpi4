@@ -47,6 +47,8 @@ setup(name='cbpi',
           'tabulate==0.8.7',
           'asyncio-mqtt',
           'psutil==5.8.0',
+          'colorama==0.4.4',
+          'PyInquirer==1.0.3',
           'cbpi4ui',
           'importlib_metadata'] + (
               ['RPi.GPIO==0.7.1'] if raspberrypi else [] ) +

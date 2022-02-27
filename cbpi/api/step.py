@@ -136,6 +136,7 @@ class CBPiFermentationStep(CBPiBase):
         self.timer = None
         self._done_callback = on_done
         self.props = props
+        self.endtime = int(step.get("endtime"))
         self.cancel_reason: StepResult = None
         self.summary = ""
         self.task = None
@@ -187,8 +188,11 @@ class CBPiFermentationStep(CBPiBase):
     async def on_props_update(self, props):
         self.props = {**self.props, **props}
 
+    async def update_endtime(self):
+        await self.cbpi.fermenter.update_endtime(self.fermenter.id, self.id, self.endtime)
+    
     async def save_props(self):
-        await self.cbpi.step.save()
+         self.cbpi.fermenter.save()
 
     async def push_update(self):
         self.cbpi.fermenter.push_update(self.update_key)

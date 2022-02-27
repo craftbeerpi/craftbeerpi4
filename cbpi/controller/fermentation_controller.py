@@ -156,8 +156,11 @@ class FermentationController:
         name = item.get("name")
         props = Props(item.get("props"))
         status = StepState(item.get("status", "I"))
+        endtime = int(item.get("endtime", 0))
         if status == StepState.ACTIVE:
             status = StepState("S")
+        if status != StepState.STOP:
+            endtime = 0
         type = item.get("type")
 
         try:
@@ -168,10 +171,11 @@ class FermentationController:
             logging.warning("Failed to create step instance %s - %s"  % (id, e))
             instance = None
 
-        step = FermenterStep(id=id, name=name, fermenter=fermenter, props=props, type=type, status=status, instance=instance)
+        step = FermenterStep(id=id, name=name, fermenter=fermenter, props=props, type=type, status=status, endtime=endtime, instance=instance)
         return step
 
     def _done(self, step_instance, result, fermenter):
+        logging.info(result)
         step_instance.step["status"] = "D"
         self.save()
         if result == StepResult.NEXT:
@@ -299,7 +303,7 @@ class FermentationController:
         self.push_update()
 
     def save(self):
-        data = dict(data=list(map(lambda item: item.to_dict(), self.data))) 
+        data = dict(data=list(map(lambda item: item.to_dict(), self.data)))         
         with open(self.path, "w") as file:
             json.dump(data, file, indent=4, sort_keys=True)
 
@@ -385,6 +389,17 @@ class FermentationController:
     def _find_step_by_id(self, data, id):
         return next((item for item in data if item.id == id), None)
 
+    async def update_endtime(self, id, stepid, endtime):
+        try:
+            item = self._find_by_id(id)
+            step = self._find_step_by_id(item.steps, stepid)
+            step.endtime = int(endtime)
+            self.save()
+            self.push_update("fermenterstepupdate")          
+        except Exception as e:
+            self.logger.error(e)
+
+
     async def start(self, id):
         self.logger.info("Start {}".format(id))
         try:
@@ -397,9 +412,12 @@ class FermentationController:
 
             step = self._find_by_status(item.steps, StepState.STOP)
             if step is not None:
+                endtime = step.endtime
                 await step.instance.start()
                 logging.info("Restarting step {}".format(step.name))
-                step.status = StepState.ACTIVE
+                if endtime != 0:
+                    logging.info("Need to change timer")
+                step.status = StepState.ACTIVE             
                 self.save()
                 self.push_update("fermenterstepupdate")
                 return                     
@@ -422,8 +440,8 @@ class FermentationController:
         try:
             item = self._find_by_id(id)
             step = self._find_by_status(item.steps, StepState.ACTIVE)
-            logging.info(step)
-            logging.info(step.status)
+            #logging.info(step)
+            #logging.info(step.status)
             if step != None:
                 logging.info("CALLING STOP STEP")
                 try:
@@ -514,6 +532,7 @@ class FermentationController:
                 try:
                     await step.instance.stop()
                     step.status = StepState.INITIAL
+                    step.endtime = 0
                 except Exception as e:
                     self.logger.error(e)
             self.save()

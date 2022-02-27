@@ -162,8 +162,7 @@ class FermenterStep:
     props: Props = Props()
     type: str = None
     status: StepState = StepState.INITIAL
-    #Add end data as unixtime to setp when active
-    #step_end: float = 0
+    endtime: int = 0 # endtime if step is active and timer is running 
     instance: str = None
     step: dict = None 
 
@@ -171,7 +170,7 @@ class FermenterStep:
         return "name={} props={}, type={}, instance={}".format(self.name, self.props, self.type, self.instance)
     def to_dict(self):
         msg = self.instance.summary if self.instance is not None else ""
-        return dict(id=self.id, name=self.name, state_text=msg, type=self.type, status=self.status.value, props=self.props.to_dict())
+        return dict(id=self.id, name=self.name, state_text=msg, type=self.type, status=self.status.value, endtime = self.endtime, props=self.props.to_dict())
 
 
 
