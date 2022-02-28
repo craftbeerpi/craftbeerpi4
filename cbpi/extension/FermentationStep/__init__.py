@@ -75,7 +75,7 @@ class FermenterTargetTempStep(CBPiFermentationStep):
 
     async def on_timer_done(self,timer):
         self.summary = ""
-        self.fermenter.target_temp = 0
+        #self.fermenter.target_temp = 0
         await self.push_update()
         if self.AutoMode == True:
             await self.setAutoMode(False)
@@ -173,7 +173,7 @@ class FermenterStep(CBPiFermentationStep):
 
     async def on_timer_done(self,timer):
         self.summary = ""
-        self.fermenter.target_temp = 0
+        #self.fermenter.target_temp = 0
         if self.AutoMode == True:
             await self.setAutoMode(False)
         #self.endtime = 0

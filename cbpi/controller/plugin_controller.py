@@ -208,7 +208,7 @@ class PluginController():
                     result.append({row: meta[row]
                                   for row in list(metadata(key))})
                 except Exception as e:
-                    logger.error("FAILED to load plugin {} ".fromat(key))
+                    logger.error("FAILED to load plugin {} ".format(key))
                     logger.error(e)
 
         except Exception as e:

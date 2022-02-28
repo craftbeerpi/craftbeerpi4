@@ -339,7 +339,7 @@ def create():
 @click.command()
 @click.argument('name')
 def autostart(name):
-    '''Enable or disable autostart'''
+    '''(on|off|status) Enable or disable autostart'''
     if(name == "status"):
         if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is True:
             print("CraftBeerPi Autostart is {}ON{}".format(Fore.LIGHTGREEN_EX,Style.RESET_ALL))
@@ -391,7 +391,7 @@ def autostart(name):
 @click.command()
 @click.argument('name')
 def chromium(name):
-    '''Enable or disable autostart'''
+    '''(on|off|status) Enable or disable Kiosk mode'''
     if(name == "status"):
         if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is True:
             print("CraftBeerPi Chromium Desktop is {}ON{}".format(Fore.LIGHTGREEN_EX,Style.RESET_ALL))
