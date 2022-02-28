@@ -33,7 +33,7 @@ class FermenterAutostart(CBPiExtension):
                         try:
                             if (self.fermenter.instance is None or self.fermenter.instance.state == False):
                                 await self.cbpi.fermenter.start(self.fermenter.id)
-                                logging.info("Successfully switched on Ferenterlogic for Fermenter {}".format(self.fermenter.id))
+                                logging.info("Successfully switched on Fermenterlogic for Fermenter {}".format(self.fermenter.id))
                         except Exception as e:
                             logging.error("Failed to switch on FermenterLogic {} {}".format(self.fermenter.id, e))
                 except:
