@@ -229,6 +229,12 @@ class FermenterStep(CBPiFermentationStep):
         await self.push_update()
 
     async def reset(self):
+        await self.timer.stop()
+        timeD=int(self.props.get("TimerD", 0))
+        timeH=int(self.props.get("TimerH", 0))
+        timeM=int(self.props.get("TimerM", 0))
+        self.fermentationtime=(timeM+(60*timeH)+(1440*timeD)) *60
+
         self.timer = Timer(self.fermentationtime ,on_update=self.on_timer_update, on_done=self.on_timer_done)
         self.endtime = 0
         await self.update_endtime()

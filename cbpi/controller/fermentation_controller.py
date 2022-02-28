@@ -427,6 +427,7 @@ class FermentationController:
             if step is None:
                 self.logger.info("No futher step to start")
             else:
+                step.instance.endtime = 0 
                 await step.instance.start()
                 logging.info("Starting step {}".format(step.name))
                 step.status = StepState.ACTIVE
@@ -530,9 +531,9 @@ class FermentationController:
             for step in item.steps:
                 self.logger.info("Stopping Step {} {}".format(step.name, step.id))
                 try:
-                    await step.instance.stop()
+                    await step.instance.reset()
+                    await step.instance.stop()                  
                     step.status = StepState.INITIAL
-                    step.endtime = 0
                 except Exception as e:
                     self.logger.error(e)
             self.save()
