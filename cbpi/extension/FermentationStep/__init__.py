@@ -75,7 +75,6 @@ class FermenterTargetTempStep(CBPiFermentationStep):
 
     async def on_timer_done(self,timer):
         self.summary = ""
-        self.fermenter.target_temp = 0
         await self.push_update()
         if self.AutoMode == True:
             await self.setAutoMode(False)
@@ -160,23 +159,23 @@ class FermenterStep(CBPiFermentationStep):
         else:
             self.cbpi.notify(self.name, 'Timer is already running', NotificationType.WARNING)
 
-    @action("Add 5 Minutes to Timer", [])
-    async def add_timer(self):
-        if self.timer.is_running == True:
-            self.cbpi.notify(self.name, '5 Minutes added', NotificationType.INFO)
-            await self.timer.add(300)       
-        else:
-            self.cbpi.notify(self.name, 'Timer must be running to add time', NotificationType.WARNING)
+  #  @action("Add 1 Day to Timer", [])
+  #  async def add_timer(self):
+  #      if self.timer.is_running == True:
+  #          self.cbpi.notify(self.name, '5 Minutes added', NotificationType.INFO)
+  #          await self.timer.add(300)       
+  #      else:
+  #          self.cbpi.notify(self.name, 'Timer must be running to add time', NotificationType.WARNING)
 
 
     async def on_timer_done(self,timer):
         self.summary = ""
-        self.fermenter.target_temp = 0
         if self.AutoMode == True:
             await self.setAutoMode(False)
         self.cbpi.notify(self.name, 'Step finished', NotificationType.SUCCESS)
-        await self.next(self.fermenter.id)
-        return StepResult.DONE
+        if self.shutdown != True:
+            await self.next(self.fermenter.id)
+            return StepResult.DONE
         
 
     async def on_timer_update(self,timer, seconds):
@@ -184,6 +183,7 @@ class FermenterStep(CBPiFermentationStep):
         await self.push_update()
 
     async def on_start(self):
+        self.shutdown = False
         timeD=int(self.props.get("TimerD", 0))
         timeH=int(self.props.get("TimerH", 0))
         timeM=int(self.props.get("TimerM", 0))
@@ -218,6 +218,7 @@ class FermenterStep(CBPiFermentationStep):
 
     async def reset(self):
         self.timer = Timer(self.fermentationtime ,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.timer.is_running == False
 
     async def run(self):
         if self.fermenter.target_temp >= self.starttemp:
@@ -304,4 +305,4 @@ def setup(cbpi):
     cbpi.plugin.register("FermenterNotificationStep", FermenterNotificationStep)
     cbpi.plugin.register("FermenterTargetTempStep", FermenterTargetTempStep)
     cbpi.plugin.register("FermenterStep", FermenterStep)
-    cbpi.plugin.register("FermenterWaitStep", FermenterWaitStep)
+   #cbpi.plugin.register("FermenterWaitStep", FermenterWaitStep)

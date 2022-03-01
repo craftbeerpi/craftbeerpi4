@@ -127,6 +127,10 @@ class FermentationController:
                 for step in fermenter.steps:
                     try:
                         self.logger.info("Stop {}".format(step.name))
+                        try:
+                            step.instance.shutdown = True
+                        except:
+                            pass
                         await step.instance.stop()
                     except Exception as e:
                         self.logger.error(e)
@@ -136,6 +140,10 @@ class FermentationController:
             for step in fermenter.steps:
                 try:
                     self.logger.info("Stop {}".format(step.name))
+                    try:
+                        step.instance.shutdown = True
+                    except:
+                        pass
                     await step.instance.stop()
                 except Exception as e:
                     self.logger.error(e)
@@ -156,6 +164,8 @@ class FermentationController:
         name = item.get("name")
         props = Props(item.get("props"))
         status = StepState(item.get("status", "I"))
+        if status == StepState.ACTIVE:
+            status = StepState("S")
         type = item.get("type")
 
         try:
@@ -399,6 +409,7 @@ class FermentationController:
                 logging.info("Restarting step {}".format(step.name))
                 step.status = StepState.ACTIVE
                 self.save()
+                self.push_update()
                 self.push_update("fermenterstepupdate")
                 return                     
 
@@ -411,6 +422,7 @@ class FermentationController:
                 logging.info("Starting step {}".format(step.name))
                 step.status = StepState.ACTIVE
                 self.save()
+                self.push_update()
                 self.push_update("fermenterstepupdate")
 
         except Exception as e:
@@ -496,7 +508,7 @@ class FermentationController:
                     await self.start(id)
             else:
                 logging.info("No Step is running")
-
+            self.push_update()
             self.push_update("fermenterstepupdate")
         
         except Exception as e:
@@ -511,10 +523,12 @@ class FermentationController:
                 self.logger.info("Stopping Step {} {}".format(step.name, step.id))
                 try:
                     await step.instance.stop()
+                    await step.instance.reset()
                     step.status = StepState.INITIAL
                 except Exception as e:
                     self.logger.error(e)
             self.save()
+            self.push_update()
             self.push_update("fermenterstepupdate")
             
         except Exception as e:
@@ -533,6 +547,7 @@ class FermentationController:
 
             fermenter.steps[index], fermenter.steps[index+direction] = fermenter.steps[index+direction], fermenter.steps[index]
             self.save()
+            self.push_update()
             self.push_update("fermenterstepupdate")
         
         except Exception as e:
