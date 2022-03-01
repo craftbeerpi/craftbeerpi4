@@ -20,7 +20,7 @@ class StepController:
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
         self.path = os.path.join(".", 'config', "step_data.json")
-        self._loop = asyncio.get_event_loop() 
+        
         self.basic_data = {}
         self.step = None
         self.types = {}
@@ -69,7 +69,7 @@ class StepController:
         if startActive is True:
             active_step = self.find_by_status("A")
             if active_step is not None:     
-                self._loop.create_task(self.start_step(active_step))
+                asyncio.get_event_loop().create_task(self.start_step(active_step))
 
     async def add(self, item: Step):
         logging.debug("Add step")
