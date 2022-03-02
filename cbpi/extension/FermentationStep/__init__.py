@@ -154,6 +154,8 @@ class FermenterStep(CBPiFermentationStep):
             self.cbpi.notify(self.name, 'Timer started', NotificationType.INFO)
             self.timer.start()
             self.timer.is_running = True
+            self.endtime = time.time() + self.fermentationtime
+            await self.update_endtime()
             estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
             self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%d.%m, %H:%M")), NotificationType.INFO)
         else:
@@ -184,10 +186,13 @@ class FermenterStep(CBPiFermentationStep):
 
     async def on_start(self):
         self.shutdown = False
-        timeD=int(self.props.get("TimerD", 0))
-        timeH=int(self.props.get("TimerH", 0))
-        timeM=int(self.props.get("TimerM", 0))
-        self.fermentationtime=(timeM+(60*timeH)+(1440*timeD)) *60
+        if self.endtime == 0:  
+            timeD=int(self.props.get("TimerD", 0))
+            timeH=int(self.props.get("TimerH", 0))
+            timeM=int(self.props.get("TimerM", 0))
+            self.fermentationtime=(timeM+(60*timeH)+(1440*timeD)) *60
+        else:
+            self.fermentationtime = self.endtime - time.time()
 
         self.AutoMode = True if self.props.get("AutoMode", "No") == "Yes" else False
         self.starttemp= self.get_sensor_value(self.props.get("Sensor", None)).get("value")    
@@ -203,8 +208,15 @@ class FermenterStep(CBPiFermentationStep):
             try:
                 if self.timer.is_running == True:
                     self.timer.start()
+                    self.endtime = time.time() + self.fermentationtime
+                    await self.update_endtime()
             except:
                 pass
+
+        if self.endtime != 0 and self.timer is not None and self.timer.is_running == False:
+            self.timer.start()
+            self.timer.is_running = True
+
 
         self.summary = "Waiting for Target Temp"
         await self.push_update()
@@ -217,7 +229,13 @@ class FermenterStep(CBPiFermentationStep):
         await self.push_update()
 
     async def reset(self):
+        #await self.timer.stop()
+        timeD=int(self.props.get("TimerD", 0))
+        timeH=int(self.props.get("TimerH", 0))
+        timeM=int(self.props.get("TimerM", 0))
+        self.fermentationtime=(timeM+(60*timeH)+(1440*timeD)) *60
         self.timer = Timer(self.fermentationtime ,on_update=self.on_timer_update, on_done=self.on_timer_done)
+        self.endtime = 0
         self.timer.is_running == False
 
     async def run(self):
@@ -229,6 +247,8 @@ class FermenterStep(CBPiFermentationStep):
                 if sensor_value >= self.fermenter.target_temp and self.timer.is_running is not True:
                     self.timer.start()
                     self.timer.is_running = True
+                    self.endtime = time.time() + self.fermentationtime
+                    await self.update_endtime()
                     estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
                     self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%d.%m, %H:%M")), NotificationType.INFO)
         elif self.fermenter.target_temp <= self.starttemp:
@@ -239,6 +259,8 @@ class FermenterStep(CBPiFermentationStep):
                 if sensor_value <= self.fermenter.target_temp and self.timer.is_running is not True:
                     self.timer.start()
                     self.timer.is_running = True
+                    self.endtime = time.time() + self.fermentationtime
+                    await self.update_endtime()
                     estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
                     self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%d.%m, %H:%M")), NotificationType.INFO)
 
