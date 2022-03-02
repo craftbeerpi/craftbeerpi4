@@ -204,6 +204,7 @@ class FermenterStep(CBPiFermentationStep):
 
         if self.fermenter is not None and self.timer is None:
             self.timer = Timer(self.fermentationtime ,on_update=self.on_timer_update, on_done=self.on_timer_done)
+            self.timer.is_running = False
         elif self.fermenter is not None:
             try:
                 if self.timer.is_running == True:
