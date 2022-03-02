@@ -217,6 +217,8 @@ class FermenterStep(CBPiFermentationStep):
         if self.endtime != 0 and self.timer is not None and self.timer.is_running == False:
             self.timer.start()
             self.timer.is_running = True
+            estimated_completion_time = datetime.fromtimestamp(time.time()+ self.fermentationtime)
+            self.cbpi.notify(self.name, 'Timer restarted. Estimated completion: {}'.format(estimated_completion_time.strftime("%d.%m, %H:%M")), NotificationType.INFO)
 
 
         self.summary = "Waiting for Target Temp"

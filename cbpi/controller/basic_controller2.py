@@ -22,7 +22,7 @@ class BasicController:
         self.logger = logging.getLogger(__name__)
         self.data = []
         self.autostart = True
-        self._loop = asyncio.get_event_loop() 
+        #self._loop = asyncio.get_event_loop() 
         self.path = os.path.join(".", 'config', file)
         self.cbpi.app.on_cleanup.append(self.shutdown)
         
@@ -100,7 +100,8 @@ class BasicController:
             
             await item.instance.start()
             item.instance.running = True
-            item.instance.task = self._loop.create_task(item.instance._run())
+            item.instance.task = asyncio.get_event_loop().create_task(item.instance._run())
+            #item.instance.task = self._loop.create_task(item.instance._run())
             
             logging.info("{} started {}".format(self.name, id))
             
