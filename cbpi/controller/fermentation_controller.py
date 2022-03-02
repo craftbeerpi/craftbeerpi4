@@ -625,6 +625,7 @@ class FermentationController:
         fermenter = self._find_by_id(fermenterid)
         def add_runtime_data(item):
             item["status"] = "I"
+            item["endtime"] = 0
             item["id"] = shortuuid.uuid()
             item["props"]["Sensor"] = fermenter.sensor
         list(map(lambda item: add_runtime_data(item), data.get("steps")))
