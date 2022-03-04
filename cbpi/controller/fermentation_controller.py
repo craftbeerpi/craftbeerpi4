@@ -585,6 +585,11 @@ class FermentationController:
             #logging.info("FERMENTERSTEPUPDATE {}".format(key))
             fermentersteps=self.get_fermenter_steps()
             self.cbpi.ws.send(dict(topic=key, data=fermentersteps))
+
+            #not yet required and too much mqtt traffic for all steps
+            #for fermenter in fermentersteps:
+            #    for step in fermenter['steps']:
+            #        self.cbpi.push_update("cbpi/{}/{}/{}".format(key,fermenter['id'],step['id']), step)
         
     async def call_action(self, id, action, parameter) -> None:
         logging.info("FermenterStep Controller - call Action {} {}".format(id, action))
