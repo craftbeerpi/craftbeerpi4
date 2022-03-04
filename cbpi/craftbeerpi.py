@@ -1,7 +1,10 @@
 
 import asyncio
 import sys
-from asyncio import set_event_loop_policy, WindowsSelectorEventLoopPolicy
+try:
+    from asyncio import set_event_loop_policy, WindowsSelectorEventLoopPolicy
+except ImportError:
+    pass
 import json
 from voluptuous.schema_builder import message
 from cbpi.api.dataclasses import NotificationType
