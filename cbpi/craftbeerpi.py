@@ -1,5 +1,7 @@
 
 import asyncio
+import sys
+from asyncio import set_event_loop_policy, WindowsSelectorEventLoopPolicy
 import json
 from voluptuous.schema_builder import message
 from cbpi.api.dataclasses import NotificationType
@@ -82,6 +84,11 @@ async def error_middleware(request, handler):
 class CraftBeerPi:
 
     def __init__(self):
+
+        operationsystem= sys.platform
+        if operationsystem.startswith('win'):
+            set_event_loop_policy(WindowsSelectorEventLoopPolicy())
+
         self.path = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])  # The path to the package dir
         
         self.version = __version__
