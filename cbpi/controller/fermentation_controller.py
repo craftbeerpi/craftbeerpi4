@@ -540,7 +540,7 @@ class FermentationController:
         with open(path, "w") as file:
             yaml.dump(data, file)
 
-    async def load_recipe(self, data, fermenterid):
+    async def load_recipe(self, data, fermenterid, name):
         try:
             await self.shutdown(None, fermenterid)
         except: 
@@ -553,7 +553,10 @@ class FermentationController:
             item["props"]["Sensor"] = fermenter.sensor
         list(map(lambda item: add_runtime_data(item), data.get("steps")))
         fermenter.description = data['basic']['desc']
-        fermenter.brewname = data['basic']['name']
+        if name is not None:
+            fermenter.brewname = name
+        else:
+            fermenter.brewname = data['basic']['name']
         fermenter.steps=[]
         await self.update(fermenter)
         for item in data.get("steps"):
