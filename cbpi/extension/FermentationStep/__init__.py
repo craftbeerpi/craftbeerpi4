@@ -113,7 +113,7 @@ class FermenterTargetTempStep(CBPiFermentationStep):
             logging.info("warmup")
             while self.running == True:
                 sensor_value = self.get_sensor_value(self.props.get("Sensor", None)).get("value")
-                if sensor_value >= self.fermenter.target_temp and self.timer.is_running is not True:
+                if sensor_value < 900 and sensor_value >= self.fermenter.target_temp and self.timer.is_running is not True:
                     self.timer.start()
                     self.timer.is_running = True
                 await asyncio.sleep(1)
@@ -121,7 +121,7 @@ class FermenterTargetTempStep(CBPiFermentationStep):
             logging.info("Cooldown")
             while self.running == True:
                 sensor_value = self.get_sensor_value(self.props.get("Sensor", None)).get("value")
-                if sensor_value <= self.fermenter.target_temp and self.timer.is_running is not True:
+                if sensor_value < 900 and sensor_value <= self.fermenter.target_temp and self.timer.is_running is not True:
                     self.timer.start()
                     self.timer.is_running = True
                 await asyncio.sleep(1)

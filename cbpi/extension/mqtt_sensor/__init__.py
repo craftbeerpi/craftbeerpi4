@@ -18,7 +18,7 @@ class MQTTSensor(CBPiSensor):
         if self.payload_text != None:
             self.payload_text = self.payload_text.split('.')
         self.mqtt_task = self.cbpi.satellite.subcribe(self.Topic, self.on_message)
-        self.value: int = 0
+        self.value: int = 999
 
     async def on_message(self, message):
         val = json.loads(message)
