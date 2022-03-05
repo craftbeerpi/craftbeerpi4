@@ -15,79 +15,7 @@ from cbpi.controller.basic_controller2 import BasicController
 from tabulate import tabulate
 import sys, os
 from ..api.step import CBPiStep, StepMove, StepResult, StepState, CBPiFermentationStep
-
-
-
-class FermentStep:
-
-    def __init__(self, cbpi, step, on_done) -> None:
-        self.cbpi = cbpi
-        self.logger = logging.getLogger(__name__)
-        self.step = step
-        self.props = step.props
-        self._done_callback = on_done
-        self.task = None
-        self.summary = ""
-
-    def _done(self, task):
-        if self._done_callback is not None:
-            try:
-                result = task.result()
-                self._done_callback(self, result)
-            except Exception as e:
-                self.logger.error(e)
-
-    @abstractmethod
-    async def run(self):
-        while self.running:
-            logging.info(self.step)
-            await asyncio.sleep(1)
-        pass
-
-    async def _run(self):
-        try:
-            await self.step.instance.on_start()
-            await self.step.instance.run()
-            #await self.on_start()
-            #await self.run()
-            self.cancel_reason = StepResult.DONE
-        except asyncio.CancelledError as e:
-            pass
-        finally:
-            await self.on_stop()
-
-        return self.cancel_reason
-
-    async def start(self):
-        self.logger.info("Start {}".format(self.step.name))
-        self.running = True
-        self.task = asyncio.create_task(self._run())
-        self.task.add_done_callback(self._done)
-
-    async def next(self):
-        self.running = False
-        self.cancel_reason = StepResult.NEXT
-        self.task.cancel()
-        await self.task
-
-    async def stop(self):
-        try:
-            self.running = False
-            if self.task is not None and self.task.done() is False:
-                self.logger.info("Stopping Task")
-                self.cancel_reason = StepResult.STOP
-                self.task.cancel()
-                await self.task
-        except Exception as e:
-            self.logger.error(e)
-    
-    async def on_start(self):
-        #self.props.hello = "WOOHOo"
-        pass
-
-    async def on_stop(self):
-        pass
-            
+          
 class FermentationController:
 
     def __init__(self, cbpi):
@@ -95,7 +23,6 @@ class FermentationController:
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
         self.path = os.path.join(".", 'config', "fermenter_data.json")
-        #self._loop = asyncio.get_event_loop() 
         self.data = []
         self.types = {}
         self.steptypes = {}
@@ -150,9 +77,6 @@ class FermentationController:
 
 
     async def load(self):
-#        if os.path.exists(self.path) is False:
-#            with open(self.path, "w") as file:
-#                json.dump(dict(basic={}, steps=[]), file, indent=4, sort_keys=True)
         with open(self.path) as json_file:
             data = json.load(json_file)
 
@@ -230,7 +154,6 @@ class FermentationController:
 
     def get_state(self):
         if self.data == []:
-            #logging.info(self.data)
             pass
         
         return {"data": list(map(lambda x: x.to_dict(), self.data)), "types":self.get_types(), "steptypes":self.get_steptypes()}
@@ -247,7 +170,6 @@ class FermentationController:
 
     def get_fermenter_steps(self):
         if self.data == []:
-            #logging.info(self.data)
             pass
         fermentersteps=[]
         steplist=list(map(lambda x: x.to_dict(), self.data))
@@ -366,15 +288,13 @@ class FermentationController:
             logging.warning("Failed to create step instance %s - %s "  % (item.id, e))
             instance = None
         step = FermenterStep(id=stepid, name=name, fermenter=fermenter, props=props, type=type, status=status, endtime=endtime, instance=instance)
-        #logging.info(step)
-        #logging.info(fermenter.steps)
+
         try:
             fermenter.steps = list(map(lambda old: step if old.id == step.id else old, fermenter.steps))
         except Exception as e:
             logging.info(e)
-        #logging.info(fermenter.steps)
+
         self.save()
-        #logging.info("SAVEUPDATE")
 
         self.push_update("fermenterstepupdate")
 
@@ -481,7 +401,7 @@ class FermentationController:
             await item.instance.start()
             item.instance.running = True
             item.instance.task = asyncio.get_event_loop().create_task(item.instance._run())
-            #item.instance.task = self._loop.create_task(item.instance._run())
+
             
             logging.info("{} started {}".format(item.name, id))
             
@@ -576,20 +496,19 @@ class FermentationController:
 
         if key == self.update_key:
             self.cbpi.ws.send(dict(topic=key, data=list(map(lambda item: item.to_dict(), self.data))))
-            #self.cbpi.push_update("cbpi/{}".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
-
+            
             for item in self.data:
                 self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
             pass
         else:
-            #logging.info("FERMENTERSTEPUPDATE {}".format(key))
             fermentersteps=self.get_fermenter_steps()
             self.cbpi.ws.send(dict(topic=key, data=fermentersteps))
 
-            #not yet required and too much mqtt traffic for all steps
-            #for fermenter in fermentersteps:
-            #    for step in fermenter['steps']:
-            #        self.cbpi.push_update("cbpi/{}/{}/{}".format(key,fermenter['id'],step['id']), step)
+            # send mqtt update for active femrentersteps
+            for fermenter in fermentersteps:
+                for step in fermenter['steps']:
+                    if step['status'] == 'A':
+                        self.cbpi.push_update("cbpi/{}/{}/{}".format(key,fermenter['id'],step['id']), step)
         
     async def call_action(self, id, action, parameter) -> None:
         logging.info("FermenterStep Controller - call Action {} {}".format(id, action))
@@ -599,8 +518,7 @@ class FermentationController:
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
             logging.error("FermenterStep Controller - Failed to call action on {} {} {}".format(id, action, e))
-
-    # todo: Sensors may need to be removed when saving the recipe -> need to be replaced when assinging later to Fermenter with 'fermenter.sensor'
+    
     async def savetobook(self, fermenterid):
         name = shortuuid.uuid()
         path = os.path.join(".", 'config', "fermenterrecipes", "{}.yaml".format(name))
@@ -608,7 +526,7 @@ class FermentationController:
         try:
             brewname = fermenter.brewname
             description = fermenter.description
-            # todo add escription at later point of time, once description has been added to fermenter dataclass
+            
         except:
             brewname = ""
             description = ""

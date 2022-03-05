@@ -50,11 +50,10 @@ setup(name='cbpi',
           'colorama==0.4.4',
           'psutil==5.9.0',
           'cbpi4ui',
-          'importlib_metadata'] + (
-              ['RPi.GPIO==0.7.1'] if raspberrypi else [] ) +
-              (['numpy==1.22.2'] if (int(platform.python_version_tuple()[1]) >= 9) and (int(platform.python_version_tuple()[0]) == 3) else ['numpy==1.20.3'] ) +
-                (['pandas==1.4.1'] if (int(platform.python_version_tuple()[1]) >= 9) and (int(platform.python_version_tuple()[0]) == 3) else ['pandas==1.1.5'] ),
-
+          'importlib_metadata',
+          'numpy==1.22.2',
+          'pandas==1.4.1'] + (
+          ['RPi.GPIO==0.7.1'] if raspberrypi else [] ),
 
         dependency_links=[
         'https://testpypi.python.org/pypi',
