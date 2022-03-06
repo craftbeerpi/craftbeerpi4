@@ -88,7 +88,6 @@ class CraftBeerPi:
 
         self.static_config = load_config(os.path.join(".", 'config', "config.yaml"))
         
-        self.database_file = os.path.join(".", 'config', "craftbeerpi.db")
         logger.info("Init CraftBeerPI")
 
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)

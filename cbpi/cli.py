@@ -175,7 +175,7 @@ def check_for_setup():
             zip.extractall(output_path)
             zip.close()
             if system != "Windows":
-                print("Changing owner and group of config folder recursively to {}:{}".format(owner,group))
+                print(f"Changing owner and group of config folder recursively to {owner}:{group}")
                 recursive_chown(output_path, owner, group)
             print("Removing backup file")
             os.remove(backupfile)
