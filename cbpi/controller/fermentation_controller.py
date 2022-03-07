@@ -238,16 +238,16 @@ class FermentationController:
         with open(self.path, "w") as file:
             json.dump(data, file, indent=4, sort_keys=True)
 
-    async def create_step(self, id, item):
+    def create_step(self, id, item):
         try:
             stepid = shortuuid.uuid()
-            props = item.get("props")
+            item['id'] = stepid
             status = StepState("I")
             type = item.get("type")
             name = item.get("name")
+            endtime = item.get("endtime", 0)            
             props = Props(item.get("props"))
             fermenter = self._find_by_id(id)
-
             try:
                 type_cfg = self.steptypes.get(type)
                 clazz = type_cfg.get("class")
@@ -255,13 +255,8 @@ class FermentationController:
             except Exception as e:
                 logging.warning("Failed to create step instance %s - %s"  % (id, e))
                 instance = None
-            step = FermenterStep(id=stepid, name=name, fermenter=fermenter, props=props, type=type, status=status, instance=instance)
+            step = FermenterStep(id=stepid, name=name, fermenter=fermenter, props=props, type=type, status=status, endtime=endtime, instance=instance)
 
-
-
-            fermenter.steps.append(step)
-            self.save()
-            self.push_update("fermenterstepupdate")
             return step
         except Exception as e:
             self.logger.error(e)
@@ -546,18 +541,32 @@ class FermentationController:
         except: 
             pass
         fermenter = self._find_by_id(fermenterid)
+
         def add_runtime_data(item):
             item["status"] = "I"
             item["endtime"] = 0
             item["id"] = shortuuid.uuid()
             item["props"]["Sensor"] = fermenter.sensor
+
         list(map(lambda item: add_runtime_data(item), data.get("steps")))
         fermenter.description = data['basic']['desc']
         if name is not None:
             fermenter.brewname = name
         else:
             fermenter.brewname = data['basic']['name']
-        fermenter.steps=[]
         await self.update(fermenter)
+        fermenter.steps=[]
         for item in data.get("steps"):
-            await self.create_step(fermenterid, item)  
+            fermenter.steps.append(self.create_step(fermenterid, item))
+        
+        self.save()
+        self.push_update("fermenterstepupdate")
+        
+    async def add_step(self, fermenterid, newstep):
+        fermenter = self._find_by_id(fermenterid)
+        step = self.create_step(fermenterid, newstep)
+        fermenter.steps.append(step)
+        self.save()
+        self.push_update("fermenterstepupdate")
+        return step
+        

@@ -117,15 +117,6 @@ class CBPiStep(CBPiBase):
     def __str__(self):
         return "name={} props={}, type={}".format(self.name, self.props, self.__class__.__name__)
 
-#class CBPiFermentationStep(CBPiStep):
-
-#    def __init__(self, cbpi, fermenter, step, props, on_done) -> None:
-#        self.fermenter = fermenter
-#        id = step.get("id")
-#        name=step.get("name")
-#        self.step=step
-#        super().__init__(cbpi, id, name, props, on_done)
-
 class CBPiFermentationStep(CBPiBase):
 
     def __init__(self, cbpi, fermenter, step, props, on_done) -> None:
