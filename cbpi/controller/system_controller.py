@@ -178,6 +178,8 @@ class SystemController:
         mempercent = 0
         eth0IP = "N/A"
         wlan0IP = "N/A"
+        eth0speed = "N/A"
+        wlan0speed = "N/A"       
 
         TEMP_UNIT=self.cbpi.config.get("TEMP_UNIT", "C")
         FAHRENHEIT = False if TEMP_UNIT == "C" else True
@@ -225,12 +227,23 @@ class SystemController:
                                 if str(addr.family) == "AddressFamily.AF_INET": 
                                     if addr.address:
                                         wlan0IP = addr.address
+                    info = psutil.net_if_stats()
+                    try:
+                        for nic in info:
+                            if nic == 'eth0':
+                                if info[nic].speed:
+                                    eth0speed = info[nic].speed
+                            if nic == 'wlan0':
+                                if info[nic].speed:
+                                    wlan0speed = info[nic].speed
+                    except Exception as e:
+                        logging.info(e)
                 except:
                     pass
 
             if system == "Windows":
                 try:
-                    ethernet = psutil.net_if_addrs()
+                    ethernet = psutil.net_if_addrs()               
                     for nic, addrs in ethernet.items():
                         if nic == "Ethernet":
                             for addr in addrs:
@@ -242,6 +255,17 @@ class SystemController:
                                 if str(addr.family) == "AddressFamily.AF_INET": 
                                     if addr.address:
                                         wlan0IP = addr.address
+                    info = psutil.net_if_stats()
+                    try:
+                        for nic in info:
+                            if nic == 'Ethernet':
+                                if info[nic].speed:
+                                    eth0speed = info[nic].speed
+                            if nic == 'WLAN':
+                                if info[nic].speed:
+                                    wlan0speed = info[nic].speed
+                    except Exception as e:
+                        logging.info(e)
                 except:
                     pass
 
@@ -258,7 +282,9 @@ class SystemController:
                          'temp': temp,
                          'temp_unit': TEMP_UNIT,
                          'eth0': eth0IP,
-                         'wlan0': wlan0IP}
+                         'wlan0': wlan0IP,
+                         'eth0speed': eth0speed,
+                         'wlan0speed': wlan0speed}
         return systeminfo
 
 

@@ -92,7 +92,7 @@ class FermenterTargetTempStep(CBPiFermentationStep):
         self.shutdown = False
         self.AutoMode = True if self.props.get("AutoMode","No") == "Yes" else False
         if self.fermenter is not None:
-            self.fermenter.target_temp = int(self.props.get("Temp", 0))
+            self.fermenter.target_temp = float(self.props.get("Temp", 0))
         if self.AutoMode == True:
             await self.setAutoMode(True)
         self.summary = "Waiting for Target Temp"
@@ -204,7 +204,7 @@ class FermenterStep(CBPiFermentationStep):
 
         self.AutoMode = True if self.props.get("AutoMode", "No") == "Yes" else False
         if self.fermenter is not None:
-            self.fermenter.target_temp = int(self.props.get("Temp", 0))
+            self.fermenter.target_temp = float(self.props.get("Temp", 0))
         if self.AutoMode == True:
             await self.setAutoMode(True)
         await self.push_update()

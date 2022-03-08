@@ -131,7 +131,7 @@ class Fermenter:
     brewname: str = None
     description : str = None
     props: Props = Props()
-    target_temp: int = 0
+    target_temp: float = 0 
     type: str = None
     steps: List[Step]= field(default_factory=list)
     instance: str = None
