@@ -231,11 +231,17 @@ class SystemController:
                     try:
                         for nic in info:
                             if nic == 'eth0':
-                                if info[nic].speed:
-                                    eth0speed = info[nic].speed
+                                if info[nic].isup == True:
+                                    if info[nic].speed:
+                                        eth0speed = info[nic].speed
+                                else:
+                                    eth0speed = "down"
                             if nic == 'wlan0':
-                                if info[nic].speed:
-                                    wlan0speed = info[nic].speed
+                                if info[nic].isup == True:                                
+                                    if info[nic].speed:
+                                        wlan0speed = info[nic].speed
+                                else:
+                                    wlan0speed = "down"
                     except Exception as e:
                         logging.info(e)
                 except:
@@ -259,11 +265,17 @@ class SystemController:
                     try:
                         for nic in info:
                             if nic == 'Ethernet':
-                                if info[nic].speed:
-                                    eth0speed = info[nic].speed
+                                if info[nic].isup == True:
+                                    if info[nic].speed:
+                                        eth0speed = info[nic].speed
+                                else:
+                                    eth0speed = "down"
                             if nic == 'WLAN':
-                                if info[nic].speed:
-                                    wlan0speed = info[nic].speed
+                                if info[nic].isup == True:
+                                    if info[nic].speed:
+                                        wlan0speed = info[nic].speed
+                                else:
+                                    wlan0speed = "down"                    
                     except Exception as e:
                         logging.info(e)
                 except:
