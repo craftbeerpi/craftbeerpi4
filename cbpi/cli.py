@@ -12,15 +12,19 @@ from cbpi.craftbeerpi import CraftBeerPi
 import os
 import platform
 import pathlib
+import pkgutil
 import shutil
 import yaml
 import click
 from subprocess import call
 import zipfile
-from importlib_metadata import version, metadata
-
+from colorama import Fore, Back, Style
+from importlib import import_module
+import importlib
 from jinja2 import Template
-
+from importlib_metadata import metadata, version
+from tabulate import tabulate
+from PyInquirer import prompt, print_json
 
 def create_config_file():
     if os.path.exists(os.path.join(".", 'config', "config.yaml")) is False:
@@ -115,7 +119,7 @@ def clear_db():
     import os.path
     if os.path.exists(os.path.join(".", "craftbeerpi.db")) is True:
         os.remove(os.path.join(".", "craftbeerpi.db"))
-        print("database Cleared")
+        print("database cleared")
 
 def recursive_chown(path, owner, group):
     for dirpath, dirnames, filenames in os.walk(path):
@@ -185,156 +189,47 @@ def check_for_setup():
     else:
         return True
 
-
-def plugins_add(package_name):
-    if package_name is None:
-        print("Pleaes provide a plugin Name")
-        return
-
-    if package_name == 'autostart':
-        print("Add craftbeerpi.service to systemd")
-        try:
-            if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is False:
-                srcfile = os.path.join(".", "config", "craftbeerpi.service")
-                destfile = os.path.join("/etc/systemd/system")
-                shutil.copy(srcfile, destfile)
-                print("Copied craftbeerpi.service to /etc/systemd/system")
-                os.system('systemctl enable craftbeerpi.service')
-                print('Enabled craftbeerpi service')
-                os.system('systemctl start craftbeerpi.service')
-                print('Started craftbeerpi.service')
-            else:
-                print("craftbeerpi.service is already located in /etc/systemd/system")
-        except Exception as e:
-            print(e)
-            return
-        return
-
-    if package_name == 'chromium':
-        print("Add chromium.desktop to /etc/xdg/autostart/")
-        try:
-            if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is False:
-                srcfile = os.path.join(".", "config", "chromium.desktop")
-                destfile = os.path.join("/etc/xdg/autostart/")
-                shutil.copy(srcfile, destfile)
-                print("Copied chromium.desktop to /etc/xdg/autostart/")
-            else:
-                print("chromium.desktop is already located in /etc/xdg/autostart/")
-        except Exception as e:
-            print(e)
-            return
-        return
-
-    installation = True
-    try:
-        try:
-            p_metadata= metadata(package_name)
-            p_name=p_metadata['Name']
-            #if p_name != package_name:
-            #    print("Error. Package name {} does not exist. Did you mean {}".format(package_name,p_name))
-            #    installation = False
-        except Exception as e:
-            print("Error. Package {} cannot be found in installed packages".format(package_name))
-            installation = False
-        if installation:
-            with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
-                data = yaml.load(f, Loader=yaml.FullLoader)
-                if package_name in data["plugins"]:
-                    print("")
-                    print("Plugin {} already active".format(package_name))
-                    print("")
-                    return
-                data["plugins"].append(package_name)
-            with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
-                yaml.dump(data, outfile, default_flow_style=False)
-            print("")
-            print("Plugin {} activated".format(package_name))
-            print("")
-    except Exception as e:
-        print(e)
-        pass
-
-
-def plugin_remove(package_name):
-    if package_name is None:
-        print("Pleaes provide a plugin Name")
-        return
-
-    if package_name == 'autostart':
-        print("Remove craftbeerpi.service from systemd")
-        try:
-            status = os.popen('systemctl list-units --type=service --state=running | grep craftbeerpi.service').read()
-            if status.find("craftbeerpi.service") != -1:
-                os.system('systemctl stop craftbeerpi.service')
-                print('Stopped craftbeerpi service')
-                os.system('systemctl disable craftbeerpi.service')
-                print('Removed craftbeerpi.service as service')
-            else:
-                print('craftbeerpi.service service is not running')
-
-            if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is True:
-                os.remove(os.path.join("/etc/systemd/system","craftbeerpi.service")) 
-                print("Deleted craftbeerpi.service from /etc/systemd/system")
-            else:
-                print("craftbeerpi.service is not located in /etc/systemd/system")
-        except Exception as e:
-            print(e)
-            return
-        return
-
-    if package_name == 'chromium':
-        print("Remove chromium.desktop from /etc/xdg/autostart/")
-        try:
-            if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is True:
-                os.remove(os.path.join("/etc/xdg/autostart/","chromium.desktop"))
-                print("Deleted chromium.desktop from /etc/xdg/autostart/")
-            else:
-                print("chromium.desktop is not located in /etc/xdg/autostart/")
-        except Exception as e:
-            print(e)
-            return
-        return
-
-
-    try:
-        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
-            data = yaml.load(f, Loader=yaml.FullLoader)
-
-            data["plugins"] = list(filter(lambda k: package_name not in k, data["plugins"]))
-            with open(os.path.join(".", 'config', "config.yaml"), 'w') as outfile:
-                yaml.dump(data, outfile, default_flow_style=False)
-        print("")
-        print("Plugin {} deactivated".format(package_name))
-        print("")
-    except Exception as e:
-        print(e)
-        pass
-
-
 def plugins_list():
-    print("--------------------------------------")
-    print("List of active plugins")
-    try:
-        with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
-            data = yaml.load(f, Loader=yaml.FullLoader)
+    result = []
+    print("")
+    print(Fore.LIGHTYELLOW_EX,"List of active plugins", Style.RESET_ALL)
+    print("")
+    discovered_plugins = {
+        name: importlib.import_module(name)
+        for finder, name, ispkg
+        in pkgutil.iter_modules()
+        if name.startswith('cbpi') and len(name) > 4
+    }
+    for key, module in discovered_plugins.items():
+        try:
+            meta = metadata(key)
+            result.append(dict(Name=meta["Name"], Version=meta["Version"], Author=meta["Author"], Homepage=meta["Home-page"], Summary=meta["Summary"]))
+                        
+        except Exception as e:
+            print(e)
+    print(Fore.LIGHTGREEN_EX, tabulate(result, headers="keys"), Style.RESET_ALL)
+    
 
-            for p in data["plugins"]:
-                try:
-                    p_metadata= metadata(p)
-                    p_Homepage= p_metadata['Home-page']
-                    p_version = p_metadata['Version']
-                    p_Author = p_metadata['Author']
-                    print("- ({})\t{}".format(p_version,p))
-                except Exception as e:
-                    print (e)
-                    pass
-    except Exception as e:
-        print(e)
-        pass
-    print("--------------------------------------")
 
+def plugin_create():
 
-def plugin_create(name):
+    
+    
+
+    print("Plugin Creation")
+    print("")
+
+    questions = [
+        {
+            'type': 'input',
+            'name': 'name',
+            'message': 'Plugin Name:',
+        }
+    ]
+
+    answers = prompt(questions)
+
+    name = "cbpi4_" + answers["name"]
     if os.path.exists(os.path.join(".", name)) is True:
         print("Cant create Plugin. Folder {} already exists ".format(name))
         return
@@ -373,19 +268,25 @@ def plugin_create(name):
 
     with open(os.path.join(".", name, name, "config.yaml"), "w") as fh:
         fh.write(outputText)
+
+        
     print("")
     print("")
-    print(
-        "Plugin {} created! See https://openbrewing.gitbook.io/craftbeerpi4_support/readme/development how to run your plugin ".format(
-            name))
+    print("Plugin {}{}{} created! ".format(Fore.LIGHTGREEN_EX, name, Style.RESET_ALL) )
     print("")
-    print("Happy Development! Cheers")
+    print("Developer Documentation: https://openbrewing.gitbook.io/craftbeerpi4_support/readme/development")
+    print("")
+    print("Happy developing! Cheers")
     print("")
     print("")
+    
 
 
 @click.group()
 def main():
+    print("---------------------")
+    print("Welcome to CBPi")
+    print("---------------------")
     level = logging.INFO
     logging.basicConfig(level=level, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
     pass
@@ -413,9 +314,10 @@ def onewire(list, setup):
 
 @click.command()
 def start():
+    '''Lets go brewing'''
     if check_for_setup() is False:
         return
-    print("START")
+    print("Starting up CraftBeerPi ...")
     cbpi = CraftBeerPi()
     cbpi.start()
 
@@ -427,31 +329,105 @@ def plugins():
     return
 
 
-@click.command()
-@click.argument('name')
-def add(name):
-    '''Activate Plugin, autostart or chromium '''
-    plugins_add(name)
 
 
 @click.command()
-@click.argument('name')
-def remove(name):
-    '''Deactivate Plugin, autostart or chromium'''
-    plugin_remove(name)
-
-
-@click.command()
-@click.argument('name')
-def create(name):
+def create():
     '''Create New Plugin'''
-    plugin_create(name)
+    plugin_create()
 
+@click.command()
+@click.argument('name')
+def autostart(name):
+    '''(on|off|status) Enable or disable autostart'''
+    if(name == "status"):
+        if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is True:
+            print("CraftBeerPi Autostart is {}ON{}".format(Fore.LIGHTGREEN_EX,Style.RESET_ALL))
+        else:
+            print("CraftBeerPi Autostart is {}OFF{}".format(Fore.RED,Style.RESET_ALL))
+    elif(name == "on"):
+        print("Add craftbeerpi.service to systemd")
+        try:
+            if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is False:
+                srcfile = os.path.join(".", "config", "craftbeerpi.service")
+                destfile = os.path.join("/etc/systemd/system")
+                shutil.copy(srcfile, destfile)
+                print("Copied craftbeerpi.service to /etc/systemd/system")
+                os.system('systemctl enable craftbeerpi.service')
+                print('Enabled craftbeerpi service')
+                os.system('systemctl start craftbeerpi.service')
+                print('Started craftbeerpi.service')
+            else:
+                print("craftbeerpi.service is already located in /etc/systemd/system")
+        except Exception as e:
+            print(e)
+            return
+        return
+    elif(name == "off"): 
+        print("Remove craftbeerpi.service from systemd")
+        try:
+            status = os.popen('systemctl list-units --type=service --state=running | grep craftbeerpi.service').read()
+            if status.find("craftbeerpi.service") != -1:
+                os.system('systemctl stop craftbeerpi.service')
+                print('Stopped craftbeerpi service')
+                os.system('systemctl disable craftbeerpi.service')
+                print('Removed craftbeerpi.service as service')
+            else:
+                print('craftbeerpi.service service is not running')
+
+            if os.path.exists(os.path.join("/etc/systemd/system","craftbeerpi.service")) is True:
+                os.remove(os.path.join("/etc/systemd/system","craftbeerpi.service")) 
+                print("Deleted craftbeerpi.service from /etc/systemd/system")
+            else:
+                print("craftbeerpi.service is not located in /etc/systemd/system")
+        except Exception as e:
+            print(e)
+            return
+        return
+    
+    
+
+
+@click.command()
+@click.argument('name')
+def chromium(name):
+    '''(on|off|status) Enable or disable Kiosk mode'''
+    if(name == "status"):
+        if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is True:
+            print("CraftBeerPi Chromium Desktop is {}ON{}".format(Fore.LIGHTGREEN_EX,Style.RESET_ALL))
+        else:
+            print("CraftBeerPi Chromium Desktop is {}OFF{}".format(Fore.RED,Style.RESET_ALL))
+    elif(name == "on"):
+        print("Add chromium.desktop to /etc/xdg/autostart/")
+        try:
+            if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is False:
+                srcfile = os.path.join(".", "config", "chromium.desktop")
+                destfile = os.path.join("/etc/xdg/autostart/")
+                shutil.copy(srcfile, destfile)
+                print("Copied chromium.desktop to /etc/xdg/autostart/")
+            else:
+                print("chromium.desktop is already located in /etc/xdg/autostart/")
+        except Exception as e:
+            print(e)
+            return
+        return
+    elif(name == "off"): 
+        print("Remove chromium.desktop from /etc/xdg/autostart/")
+        try:
+            if os.path.exists(os.path.join("/etc/xdg/autostart/","chromium.desktop")) is True:
+                os.remove(os.path.join("/etc/xdg/autostart/","chromium.desktop"))
+                print("Deleted chromium.desktop from /etc/xdg/autostart/")
+            else:
+                print("chromium.desktop is not located in /etc/xdg/autostart/")
+        except Exception as e:
+            print(e)
+            return
+        return
 
 main.add_command(setup)
 main.add_command(start)
+main.add_command(autostart)
+main.add_command(chromium)
 main.add_command(plugins)
 main.add_command(onewire)
-main.add_command(add)
-main.add_command(remove)
 main.add_command(create)

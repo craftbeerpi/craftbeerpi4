@@ -117,7 +117,7 @@ class FermenterRecipeHttpEndpoints():
         await self.controller.remove(name)
         return web.Response(status=204)
 
-    @request_mapping(path="/{name}/{fermenterid}/brew", method="POST", auth_required=False)
+    @request_mapping(path="/{recipeid}/{fermenterid}/{name}/brew", method="POST", auth_required=False)
     async def http_brew(self, request):
 
         """
@@ -137,9 +137,10 @@ class FermenterRecipeHttpEndpoints():
             "200":
                 description: successful operation
         """
+        recipeid = request.match_info['recipeid']
         name = request.match_info['name']
         fermenterid = request.match_info['fermenterid']
-        await self.controller.brew(name,fermenterid)
+        await self.controller.brew(recipeid,fermenterid,name)
         return web.Response(status=204)
     
     @request_mapping(path="/{id}/clone", method="POST", auth_required=False)

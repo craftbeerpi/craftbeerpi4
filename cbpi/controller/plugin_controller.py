@@ -1,18 +1,16 @@
+
+import importlib
 import logging
 import os
+import pkgutil
+
 from importlib import import_module
-from importlib_metadata import version, metadata
-import datetime
-import aiohttp
-import asyncio
-import yaml
-import subprocess
-import sys
+
 from cbpi.api import *
 from cbpi.utils.utils import load_config
+from importlib_metadata import metadata, version
 
 logger = logging.getLogger(__name__)
-
 
 class PluginController():
     modules = {}
@@ -23,7 +21,8 @@ class PluginController():
 
     def load_plugins(self):
 
-        this_directory = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])
+        this_directory = os.sep.join(
+            os.path.abspath(__file__).split(os.sep)[:-1])
         for filename in os.listdir(os.path.join(this_directory, "../extension")):
             if os.path.isdir(
                     os.path.join(this_directory, "../extension/") + filename) is False or filename == "__pycache__":
@@ -31,7 +30,7 @@ class PluginController():
             try:
                 logger.info("Trying to load plugin %s" % filename)
                 data = load_config(os.path.join(
-                    this_directory, "../extension/%s/config.yaml" % filename))            
+                    this_directory, "../extension/%s/config.yaml" % filename))
                 if (data.get("active") is True and data.get("version") == 4):
                     self.modules[filename] = import_module(
                         "cbpi.extension.%s" % (filename))
@@ -42,21 +41,27 @@ class PluginController():
                         "Plugin %s is not supporting version 4" % filename)
 
             except Exception as e:
-                
+
                 logger.error(e)
 
     def load_plugins_from_evn(self):
 
-        for p in self.cbpi.static_config.get("plugins", []):
+        discovered_plugins = {
+            name: importlib.import_module(name)
+            for finder, name, ispkg
+            in pkgutil.iter_modules()
+            if name.startswith('cbpi') and len(name) > 4
+        }
 
+        for key, value in discovered_plugins.items():
+            from importlib.metadata import version
             try:
-                logger.info("Try to load plugin:  %s " % p)
-                self.modules[p] = import_module(p)
-                self.modules[p].setup(self.cbpi)
-
-                logger.info("Plugin %s loaded successfully" % p)
+                logger.info("Try to load plugin:  {} == {} ".format(
+                    key, version(key)))
+                value.setup(self.cbpi)
+                logger.info("Plugin {} loaded successfully".format(key))
             except Exception as e:
-                logger.error("FAILED to load plugin %s " % p)
+                logger.error("FAILED to load plugin {} ".format(key))
                 logger.error(e)
 
     def register(self, name, clazz) -> None:
@@ -75,7 +80,8 @@ class PluginController():
             self.cbpi.kettle.types[name] = self._parse_step_props(clazz, name)
 
         if issubclass(clazz, CBPiFermenterLogic):
-            self.cbpi.fermenter.types[name] = self._parse_step_props(clazz, name)
+            self.cbpi.fermenter.types[name] = self._parse_step_props(
+                clazz, name)
 
         if issubclass(clazz, CBPiSensor):
             self.cbpi.sensor.types[name] = self._parse_step_props(clazz, name)
@@ -84,7 +90,8 @@ class PluginController():
             self.cbpi.step.types[name] = self._parse_step_props(clazz, name)
 
         if issubclass(clazz, CBPiFermentationStep):
-            self.cbpi.fermenter.steptypes[name] = self._parse_step_props(clazz, name)
+            self.cbpi.fermenter.steptypes[name] = self._parse_step_props(
+                clazz, name)
 
         if issubclass(clazz, CBPiExtension):
             self.c = clazz(self.cbpi)
@@ -123,7 +130,8 @@ class PluginController():
                 parameters = []
                 for p in method.__getattribute__("parameters"):
                     parameters.append(self._parse_property_object(p))
-                result["actions"].append({"method": method_name, "label": key, "parameters": parameters})
+                result["actions"].append(
+                    {"method": method_name, "label": key, "parameters": parameters})
 
         return result
 
@@ -185,27 +193,25 @@ class PluginController():
     async def load_plugin_list(self):
         result = []
         try:
-            with open(os.path.join(".", 'config', "config.yaml"), 'rt') as f:
-                data = yaml.load(f, Loader=yaml.FullLoader)
+            discovered_plugins = {
+                name: importlib.import_module(name)
+                for finder, name, ispkg
+                in pkgutil.iter_modules()
+                if name.startswith('cbpi') and len(name) > 4
+            }
+            for key, module in discovered_plugins.items():
+                from importlib.metadata import version
+                try:
+                    from importlib.metadata import (distribution, metadata,
+                                                    version)
+                    meta = metadata(key)
+                    result.append({row: meta[row]
+                                  for row in list(metadata(key))})
+                except Exception as e:
+                    logger.error("FAILED to load plugin {} ".fromat(key))
+                    logger.error(e)
 
-                for p in data["plugins"]:
-                    try:
-                        p_metadata= metadata(p)
-                        p_name = p_metadata['name']
-                        p_version = p_metadata['Version']
-                        p_summary = p_metadata['Summary']
-                        p_homepage= p_metadata['Home-page']
-                        p_author = p_metadata['Author']
-                        p_author_email = p_metadata['Author-email']
-                        p_license = p_metadata['License']
-                        p_description = p_metadata['Description']
-                        plugin_data = {'Name': p_name,'Version': p_version,'Summary': p_summary,'Homepage':p_homepage,'Author':p_author,'Email': p_author_email,'License': p_license,'Description': p_description}
-                        result.append(plugin_data)
-                    except:
-                        pass
-#                    print("- ({})\t{}".format(p_version,p))
         except Exception as e:
-            print(e)
+            logger.error(e)
             return []
-            pass
         return result

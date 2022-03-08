@@ -69,13 +69,13 @@ class FermenterRecipeController:
         os.remove(path)
         
 
-    async def brew(self, name, fermenterid):
+    async def brew(self, recipeid, fermenterid, name):
 
-        recipe_path = os.path.join(".", 'config', "fermenterrecipes", "%s.yaml" % name)
+        recipe_path = os.path.join(".", 'config', "fermenterrecipes", "%s.yaml" % recipeid)
         logging.info(recipe_path)
         with open(recipe_path) as file:
             data = yaml.load(file, Loader=yaml.FullLoader)
-            await self.cbpi.fermenter.load_recipe(data, fermenterid)
+            await self.cbpi.fermenter.load_recipe(data, fermenterid, name)
 
     async def clone(self, id, new_name):
         recipe_path = os.path.join(".", 'config', "fermenterrecipes", "%s.yaml" % id)
