@@ -22,6 +22,8 @@ class MQTTActor(CBPiActor):
     async def on_start(self):
          self.topic = self.props.get("Topic", None)
          self.power = 100
+         await self.off()
+         self.state = False
 
     async def on(self, power=None):
         if power is not None:

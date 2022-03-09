@@ -237,9 +237,11 @@ class SystemController:
                                 else:
                                     eth0speed = "down"
                             if nic == 'wlan0':
-                                if info[nic].isup == True:                                
-                                    if info[nic].speed:
-                                        wlan0speed = info[nic].speed
+                                if info[nic].isup == True: 
+                                    ratestring = os.popen('iwlist wlan0 rate | grep Rate').read()
+                                    start = ratestring.find("=") + 1
+                                    end = ratestring.find(" Mb/s")
+                                    wlan0speed = ratestring[start:end]
                                 else:
                                     wlan0speed = "down"
                     except Exception as e:
