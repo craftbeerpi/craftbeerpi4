@@ -313,8 +313,8 @@ class FermentationHttpEndpoints():
 
         data = await request.json()
         fermenterid= request.match_info['id']
-        newstep = {"name": data.get("name"), "props": data.get("props", {}), "type": data.get("type")}
-        response_data = await self.controller.create_step(fermenterid,newstep)
+        newstep = {"name": data.get("name"), "props": data.get("props", {}), "endtime": 0, "type": data.get("type")}
+        response_data = await self.controller.add_step(fermenterid,newstep)
         return web.json_response(data=response_data.to_dict())
 
     @request_mapping(path="/{fermenterid}/{stepid}", method="PUT", auth_required=False)
@@ -352,7 +352,7 @@ class FermentationHttpEndpoints():
         data = await request.json()
         stepid = request.match_info['stepid']
         fermenterid = request.match_info['fermenterid']
-        updatedstep = {"id": stepid, "name": data.get("name"), "props": data.get("props", {}), "type": data.get("type")}
+        updatedstep = {"id": stepid, "name": data.get("name"), "endtime": 0, "props": data.get("props", {}), "type": data.get("type")}
         #step = FermenterStep(stepid, data.get("name"), None, Props(data.get("props", {})), data.get("type"))
         await self.controller.update_step(fermenterid,updatedstep)
         return web.Response(status=200)

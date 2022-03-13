@@ -131,7 +131,7 @@ class Fermenter:
     brewname: str = None
     description : str = None
     props: Props = Props()
-    target_temp: int = 0
+    target_temp: float = 0 
     type: str = None
     steps: List[Step]= field(default_factory=list)
     instance: str = None
@@ -162,7 +162,7 @@ class FermenterStep:
     props: Props = Props()
     type: str = None
     status: StepState = StepState.INITIAL
-    endtime: int = 0 # endtime if step is active and timer is running 
+    endtime: int = 0 # endtime if step is active and timer is running
     instance: str = None
     step: dict = None 
 
@@ -170,7 +170,7 @@ class FermenterStep:
         return "name={} props={}, type={}, instance={}".format(self.name, self.props, self.type, self.instance)
     def to_dict(self):
         msg = self.instance.summary if self.instance is not None else ""
-        return dict(id=self.id, name=self.name, state_text=msg, type=self.type, status=self.status.value, endtime = self.endtime, props=self.props.to_dict())
+        return dict(id=self.id, name=self.name, state_text=msg, type=self.type, status=self.status.value, endtime=self.endtime, props=self.props.to_dict())
 
 
 

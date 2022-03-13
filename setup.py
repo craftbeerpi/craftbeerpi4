@@ -27,34 +27,33 @@ setup(name='cbpi',
       '': ['*.txt', '*.rst', '*.yaml'],
       'cbpi': ['*','*.txt', '*.rst', '*.yaml']},
 
-      python_requires='>=3',
+      python_requires='>=3.9',
 
       install_requires=[
-          "aiohttp==3.7.4",
+          "aiohttp==3.8.1",
           "aiohttp-auth==0.1.1",
           "aiohttp-route-decorator==0.1.4",
           "aiohttp-security==0.4.0",
-          "aiohttp-session==2.9.0",
-          "aiohttp-swagger==1.0.15",
-          "aiojobs==0.3.0",
-          "aiosqlite==0.16.0",
-          "cryptography==3.3.2",
-          "requests==2.25.1",
-          "voluptuous==0.12.1",
+          "aiohttp-session==2.11.0",
+          "aiohttp-swagger==1.0.16",
+          "aiojobs==1.0.0 ",
+          "aiosqlite==0.17.0",
+          "cryptography==36.0.1",
+          "requests==2.27.1",
+          "voluptuous==0.12.2",
           "pyfiglet==0.8.post1",
-          'click==7.1.2',
-          'shortuuid==1.0.1',
-          'tabulate==0.8.7',
+          'click==8.0.4',
+          'shortuuid==1.0.8',
+          'tabulate==0.8.9',
           'asyncio-mqtt',
-          'psutil==5.8.0',
-          'colorama==0.4.4',
           'PyInquirer==1.0.3',
+          'colorama==0.4.4',
+          'psutil==5.9.0',
           'cbpi4ui',
-          'importlib_metadata'] + (
-              ['RPi.GPIO==0.7.1'] if raspberrypi else [] ) +
-              (['numpy==1.22.0'] if (int(platform.python_version_tuple()[1]) >= 9) and (int(platform.python_version_tuple()[0]) == 3) else ['numpy==1.20.3'] ) +
-                (['pandas==1.4.0'] if (int(platform.python_version_tuple()[1]) >= 9) and (int(platform.python_version_tuple()[0]) == 3) else ['pandas==1.1.5'] ),
-
+          'importlib_metadata',
+          'numpy==1.22.2',
+          'pandas==1.4.1'] + (
+          ['RPi.GPIO==0.7.1'] if raspberrypi else [] ),
 
         dependency_links=[
         'https://testpypi.python.org/pypi',

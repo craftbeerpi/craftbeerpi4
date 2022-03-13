@@ -117,15 +117,6 @@ class CBPiStep(CBPiBase):
     def __str__(self):
         return "name={} props={}, type={}".format(self.name, self.props, self.__class__.__name__)
 
-#class CBPiFermentationStep(CBPiStep):
-
-#    def __init__(self, cbpi, fermenter, step, props, on_done) -> None:
-#        self.fermenter = fermenter
-#        id = step.get("id")
-#        name=step.get("name")
-#        self.step=step
-#        super().__init__(cbpi, id, name, props, on_done)
-
 class CBPiFermentationStep(CBPiBase):
 
     def __init__(self, cbpi, fermenter, step, props, on_done) -> None:
@@ -190,9 +181,9 @@ class CBPiFermentationStep(CBPiBase):
 
     async def update_endtime(self):
         await self.cbpi.fermenter.update_endtime(self.fermenter.id, self.id, self.endtime)
-    
+
     async def save_props(self):
-         self.cbpi.fermenter.save()
+        self.cbpi.fermenter.save()
 
     async def push_update(self):
         self.cbpi.fermenter.push_update(self.update_key)
