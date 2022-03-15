@@ -562,11 +562,17 @@ class FermentationController:
             item["props"]["Sensor"] = fermenter.sensor
 
         list(map(lambda item: add_runtime_data(item), data.get("steps")))
-        fermenter.description = data['basic']['desc']
+        try:
+            fermenter.description = data['basic'].get("desc")
+        except:
+            fermenter.description = "No Description"
         if name is not None:
             fermenter.brewname = name
         else:
-            fermenter.brewname = data['basic']['name']
+            try:
+                fermenter.brewname = data['basic'].get("name")
+            except:
+                fermenter.brewname = "Fermentation"
         await self.update(fermenter)
         fermenter.steps=[]
         for item in data.get("steps"):
