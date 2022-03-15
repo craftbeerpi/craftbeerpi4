@@ -263,6 +263,10 @@ def plugin_create():
         fh.write(outputText)
 
     TEMPLATE_FILE = os.path.join("/", name, "config.yaml")
+    operatingsystem = str(platform.system()).lower()
+    if operatingsystem.startswith("win"):
+        TEMPLATE_FILE=str(TEMPLATE_FILE).replace('\\','/')
+    
     template = templateEnv.get_template(TEMPLATE_FILE)
     outputText = template.render(name=name)
 
