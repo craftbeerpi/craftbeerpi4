@@ -50,7 +50,7 @@ class DashboardController:
 
     async def get_custom_widgets(self):
         path = os.path.join(".", 'config', "dashboard", "widgets")
-        onlyfiles = [os.path.splitext(f)[0] for f in listdir(path) if isfile(join(path, f)) and f.endswith(".svg")]
+        onlyfiles = [os.path.splitext(f)[0] for f in sorted(listdir(path)) if isfile(join(path, f)) and f.endswith(".svg")]
         return onlyfiles
 
     async def get_dashboard_numbers(self):

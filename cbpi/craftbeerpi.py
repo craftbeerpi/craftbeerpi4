@@ -1,5 +1,10 @@
 
 import asyncio
+import sys
+try:
+    from asyncio import set_event_loop_policy, WindowsSelectorEventLoopPolicy
+except ImportError:
+    pass
 import json
 from voluptuous.schema_builder import message
 from cbpi.api.dataclasses import NotificationType
@@ -25,6 +30,7 @@ from cbpi.controller.plugin_controller import PluginController
 from cbpi.controller.sensor_controller import SensorController
 from cbpi.controller.step_controller import StepController
 from cbpi.controller.recipe_controller import RecipeController
+from cbpi.controller.fermenter_recipe_controller import FermenterRecipeController
 from cbpi.controller.upload_controller import UploadController
 from cbpi.controller.fermentation_controller import FermentationController
 
@@ -45,6 +51,7 @@ from cbpi.http_endpoints.http_kettle import KettleHttpEndpoints
 from cbpi.http_endpoints.http_sensor import SensorHttpEndpoints
 from cbpi.http_endpoints.http_step import StepHttpEndpoints
 from cbpi.http_endpoints.http_recipe import RecipeHttpEndpoints
+from cbpi.http_endpoints.http_fermenterrecipe import FermenterRecipeHttpEndpoints
 from cbpi.http_endpoints.http_plugin import PluginHttpEndpoints
 from cbpi.http_endpoints.http_system import SystemHttpEndpoints
 from cbpi.http_endpoints.http_log import LogHttpEndpoints
@@ -80,13 +87,17 @@ async def error_middleware(request, handler):
 class CraftBeerPi:
 
     def __init__(self):
+
+        operationsystem= sys.platform
+        if operationsystem.startswith('win'):
+            set_event_loop_policy(WindowsSelectorEventLoopPolicy())
+
         self.path = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])  # The path to the package dir
         
         self.version = __version__
 
         self.static_config = load_config(os.path.join(".", 'config', "config.yaml"))
         
-        self.database_file = os.path.join(".", 'config', "craftbeerpi.db")
         logger.info("Init CraftBeerPI")
 
         policy = auth.SessionTktAuthentication(urandom(32), 60, include_ip=True)
@@ -112,6 +123,7 @@ class CraftBeerPi:
         self.fermenter : FermentationController = FermentationController(self)
         self.step : StepController = StepController(self)
         self.recipe : RecipeController = RecipeController(self)
+        self.fermenterrecipe : FermenterRecipeController = FermenterRecipeController(self)
         self.upload : UploadController = UploadController(self)
         self.notification : NotificationController = NotificationController(self)
         self.satellite = None
@@ -121,6 +133,7 @@ class CraftBeerPi:
 
         self.http_step = StepHttpEndpoints(self)
         self.http_recipe = RecipeHttpEndpoints(self)
+        self.http_fermenterrecipe = FermenterRecipeHttpEndpoints(self)
         self.http_sensor = SensorHttpEndpoints(self)
         self.http_config = ConfigHttpEndpoints(self)
         self.http_actor = ActorHttpEndpoints(self)
@@ -247,7 +260,7 @@ class CraftBeerPi:
         f = Figlet(font='big')
         logger.info("\n%s" % f.renderText("CraftBeerPi %s " % self.version))
         logger.info("www.CraftBeerPi.com")
-        logger.info("(c) 2021 Manuel Fritsch")
+        logger.info("(c) 2021/2022 Manuel Fritsch / Alexander Vollkopf")
 
     def _setup_http_index(self):
         async def http_index(request):

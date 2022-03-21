@@ -64,8 +64,14 @@ class Timer(object):
 
     @classmethod
     def format_time(cls, time):
-            pattern = '{0:02d}:{1:02d}:{2:02d}'
+            pattern_h = '{0:02d}:{1:02d}:{2:02d}'
+            pattern_d = '{0:02d}D {1:02d}:{2:02d}:{3:02d}'
             seconds = time % 60
             minutes = math.floor(time / 60) % 60
-            hours = math.floor(time / 3600) 
-            return pattern.format(hours, minutes, seconds)
+            hours = math.floor(time / 3600) % 24
+            days = math.floor(time / 86400)
+            if days != 0:
+                remaining_time = pattern_d.format(days, hours, minutes, seconds)
+            else:
+                remaining_time = pattern_h.format(hours, minutes, seconds)
+            return remaining_time

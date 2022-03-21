@@ -1,3 +1,4 @@
+import re
 from aiohttp import web
 from aiohttp import streamer
 from cbpi.job.aiohttp import get_scheduler_from_app
@@ -7,7 +8,7 @@ from cbpi.utils import json_dumps
 from cbpi import __version__
 import pathlib
 import os
-import json
+from cbpi.controller.system_controller import SystemController
 
 class SystemHttpEndpoints:
 
@@ -33,6 +34,7 @@ class SystemHttpEndpoints:
             sensor=self.cbpi.sensor.get_state(),
             kettle=self.cbpi.kettle.get_state(),
             step=self.cbpi.step.get_state(),
+            fermentersteps=self.cbpi.fermenter.get_fermenter_steps(),
             config=self.cbpi.config.get_state(),
             version=__version__)
             , dumps=json_dumps)

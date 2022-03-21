@@ -129,8 +129,9 @@ class Fermenter:
     heater: Actor = None
     cooler: Actor = None
     brewname: str = None
+    description : str = None
     props: Props = Props()
-    target_temp: int = 0
+    target_temp: float = 0 
     type: str = None
     steps: List[Step]= field(default_factory=list)
     instance: str = None
@@ -150,7 +151,7 @@ class Fermenter:
             state = False
 
         steps = list(map(lambda item: item.to_dict(), self.steps))
-        return dict(id=self.id, name=self.name, state=state, sensor=self.sensor, heater=self.heater, cooler=self.cooler, brewname=self.brewname, props=self.props.to_dict() if self.props is not None else None, target_temp=self.target_temp, type=self.type, steps=steps)
+        return dict(id=self.id, name=self.name, state=state, sensor=self.sensor, heater=self.heater, cooler=self.cooler, brewname=self.brewname, description=self.description, props=self.props.to_dict() if self.props is not None else None, target_temp=self.target_temp, type=self.type, steps=steps)
 
 
 @dataclass
@@ -161,13 +162,15 @@ class FermenterStep:
     props: Props = Props()
     type: str = None
     status: StepState = StepState.INITIAL
+    endtime: int = 0 # endtime if step is active and timer is running
     instance: str = None
+    step: dict = None 
 
     def __str__(self):
         return "name={} props={}, type={}, instance={}".format(self.name, self.props, self.type, self.instance)
     def to_dict(self):
         msg = self.instance.summary if self.instance is not None else ""
-        return dict(id=self.id, name=self.name, state_text=msg, type=self.type, status=self.status.value, props=self.props.to_dict())
+        return dict(id=self.id, name=self.name, state_text=msg, type=self.type, status=self.status.value, endtime=self.endtime, props=self.props.to_dict())
 
 
 

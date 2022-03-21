@@ -20,7 +20,7 @@ class StepController:
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
         self.path = os.path.join(".", 'config', "step_data.json")
-        self._loop = asyncio.get_event_loop() 
+        #self._loop = asyncio.get_event_loop() 
         self.basic_data = {}
         self.step = None
         self.types = {}
@@ -46,8 +46,8 @@ class StepController:
         except Exception as e:
             logging.warning("Failed to create step instance %s - %s"  % (id, e))
             instance = None
- 
-        return Step(id, name, type=type, status=status, instance=instance, props=props )
+        step=Step(id, name, type=type, status=status, instance=instance, props=props )
+        return step
 
 
     def load(self, startActive=False):
@@ -68,8 +68,9 @@ class StepController:
         self.profile = list(map(lambda item: self.create(item), self.profile))
         if startActive is True:
             active_step = self.find_by_status("A")
-            if active_step is not None:     
-                self._loop.create_task(self.start_step(active_step))
+            if active_step is not None:
+                asyncio.get_event_loop().create_task(self.start_step(active_step))
+                #self._loop.create_task(self.start_step(active_step))
 
     async def add(self, item: Step):
         logging.debug("Add step")
@@ -198,6 +199,7 @@ class StepController:
     def get_types(self):
         result = {}
         for key, value in self.types.items():
+            #if "ferment" not in str(value.get("class")).lower():
             result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
         return result
 
