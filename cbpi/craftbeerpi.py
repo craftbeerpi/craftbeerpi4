@@ -12,7 +12,7 @@ from cbpi.controller.notification_controller import NotificationController
 import logging
 from os import urandom
 import os
-from cbpi import __version__
+from cbpi import __version__, __codename__
 from aiohttp import web
 from aiohttp_auth import auth
 from aiohttp_session import session_middleware
@@ -95,7 +95,8 @@ class CraftBeerPi:
         self.path = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-1])  # The path to the package dir
         
         self.version = __version__
-
+        self.codename = __codename__
+        
         self.static_config = load_config(os.path.join(".", 'config', "config.yaml"))
         
         logger.info("Init CraftBeerPI")
