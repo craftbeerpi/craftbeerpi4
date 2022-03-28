@@ -54,10 +54,7 @@ class FermentationController:
                 for step in fermenter.steps:
                     try:
                         self.logger.info("Stop {}".format(step.name))
-                        try:
-                            step.instance.shutdown = True
-                        except:
-                            pass
+                        step.instance.shutdown = True
                         await step.instance.stop()
                     except Exception as e:
                         self.logger.error(e)
@@ -67,10 +64,7 @@ class FermentationController:
             for step in fermenter.steps:
                 try:
                     self.logger.info("Stop {}".format(step.name))
-                    try:
-                        step.instance.shutdown = True
-                    except:
-                        pass
+                    step.instance.shutdown = True
                     await step.instance.stop()
                 except Exception as e:
                     self.logger.error(e)
