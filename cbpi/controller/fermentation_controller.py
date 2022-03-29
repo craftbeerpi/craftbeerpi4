@@ -299,6 +299,8 @@ class FermentationController:
         item = self._find_by_id(id)
         # might require later check if step is active
         item.steps = []
+        item.brewname = ""
+        self.push_update()
         self.save()
         self.push_update("fermenterstepupdate")
 
