@@ -201,6 +201,7 @@ def plugins_list():
         if name.startswith('cbpi') and len(name) > 4
     }
     for key, module in discovered_plugins.items():
+
         try:
             meta = metadata(key)
             result.append(dict(Name=meta["Name"], Version=meta["Version"], Author=meta["Author"], Homepage=meta["Home-page"], Summary=meta["Summary"]))
@@ -212,10 +213,7 @@ def plugins_list():
 
 
 def plugin_create():
-
-    
-    
-
+ 
     print("Plugin Creation")
     print("")
 
