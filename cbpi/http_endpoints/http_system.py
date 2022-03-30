@@ -5,7 +5,7 @@ from cbpi.job.aiohttp import get_scheduler_from_app
 import logging
 from cbpi.api import request_mapping
 from cbpi.utils import json_dumps
-from cbpi import __version__
+from cbpi import __version__, __codename__
 import pathlib
 import os
 from cbpi.controller.system_controller import SystemController
@@ -36,7 +36,8 @@ class SystemHttpEndpoints:
             step=self.cbpi.step.get_state(),
             fermentersteps=self.cbpi.fermenter.get_fermenter_steps(),
             config=self.cbpi.config.get_state(),
-            version=__version__)
+            version=__version__,
+            codename=__codename__)
             , dumps=json_dumps)
 
     @request_mapping(path="/logs", auth_required=False)

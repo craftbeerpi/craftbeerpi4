@@ -54,10 +54,7 @@ class FermentationController:
                 for step in fermenter.steps:
                     try:
                         self.logger.info("Stop {}".format(step.name))
-                        try:
-                            step.instance.shutdown = True
-                        except:
-                            pass
+                        step.instance.shutdown = True
                         await step.instance.stop()
                     except Exception as e:
                         self.logger.error(e)
@@ -67,10 +64,7 @@ class FermentationController:
             for step in fermenter.steps:
                 try:
                     self.logger.info("Stop {}".format(step.name))
-                    try:
-                        step.instance.shutdown = True
-                    except:
-                        pass
+                    step.instance.shutdown = True
                     await step.instance.stop()
                 except Exception as e:
                     self.logger.error(e)
@@ -305,6 +299,8 @@ class FermentationController:
         item = self._find_by_id(id)
         # might require later check if step is active
         item.steps = []
+        item.brewname = ""
+        self.push_update()
         self.save()
         self.push_update("fermenterstepupdate")
 
