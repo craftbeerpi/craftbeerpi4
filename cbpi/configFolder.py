@@ -1,4 +1,6 @@
 import os
+from os import listdir
+from os.path import isfile, join
 import pathlib
 import platform
 import shutil
@@ -26,8 +28,9 @@ class ConfigFolder:
         return os.path.join(self._rawPath, 'fermenterrecipes', "{}.yaml".format(recipe_id))
 
     def get_all_fermenter_recipes(self):
-        fermenter_recipes_folder = os.path.join(self._rawPath, 'fermenterrecipes', '*.yaml')
-        return glob.glob(fermenter_recipes_folder)
+        fermenter_recipes_folder = os.path.join(self._rawPath, 'fermenterrecipes')
+        fermenter_recipe_ids = [os.path.splitext(f)[0] for f in listdir(fermenter_recipes_folder) if isfile(join(fermenter_recipes_folder, f)) and f.endswith(".yaml")]
+        return fermenter_recipe_ids
 
     def check_for_setup(self):
         if self.config_file_exists("config.yaml") is False:

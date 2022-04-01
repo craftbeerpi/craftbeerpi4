@@ -43,14 +43,15 @@ class FermenterRecipeController:
         
         
     async def get_recipes(self):
-        fermenter_recipes = self.cbpi.config_folder.get_all_fermenter_recipes()
+        fermenter_recipe_ids = self.cbpi.config_folder.get_all_fermenter_recipes()
 
         result = []
-        for filename in fermenter_recipes:
-            with open(filename) as file:
+        for recipe_id in fermenter_recipe_ids:
+
+            with open(self.cbpi.config_folder.get_fermenter_recipe_by_id(recipe_id)) as file:
                 data = yaml.load(file, Loader=yaml.FullLoader)
                 dataset = data["basic"]
-                dataset["file"] = filename
+                dataset["file"] = recipe_id
                 result.append(dataset)
                 logging.info(result)
         return result
