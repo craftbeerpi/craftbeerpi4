@@ -29,56 +29,51 @@ class FermenterRecipeController:
 
     async def create(self, name):
         id = shortuuid.uuid()
-        path = os.path.join(".", 'config', "fermenterrecipes", "{}.yaml".format(id))
+        path = self.cbpi.config_folder.get_fermenter_recipe_by_id(id)
         data = dict(basic=dict(name=name), steps=[])
         with open(path, "w") as file:
             yaml.dump(data, file)
         return id
 
     async def save(self, name, data):
-        path = os.path.join(".", 'config', "fermenterrecipes", "{}.yaml".format(name))
+        path = self.cbpi.config_folder.get_fermenter_recipe_by_id(name)
         logging.info(data)
         with open(path, "w") as file:
             yaml.dump(data, file, indent=4, sort_keys=True)
         
         
     async def get_recipes(self):
-        path = os.path.join(".", 'config', "fermenterrecipes")
-        onlyfiles = [os.path.splitext(f)[0] for f in listdir(path) if isfile(join(path, f)) and f.endswith(".yaml")]
+        fermenter_recipes = self.cbpi.config_folder.get_all_fermenter_recipes()
 
         result = []
-        for filename in onlyfiles:
-            recipe_path = os.path.join(".", 'config', "fermenterrecipes", "%s.yaml" % filename)
-            with open(recipe_path) as file:
+        for filename in fermenter_recipes:
+            with open(filename) as file:
                 data = yaml.load(file, Loader=yaml.FullLoader)
                 dataset = data["basic"]
                 dataset["file"] = filename
                 result.append(dataset)
                 logging.info(result)
         return result
-    
+
     async def get_by_name(self, name):
-        
-        recipe_path = os.path.join(".", 'config', "fermenterrecipes", "%s.yaml" % name)
+        recipe_path = self.cbpi.config_folder.get_fermenter_recipe_by_id(name)
         with open(recipe_path) as file:
             return  yaml.load(file, Loader=yaml.FullLoader)
 
-           
     async def remove(self, name):
-        path = os.path.join(".", 'config', "fermenterrecipes", "{}.yaml".format(name))
+        path = self.cbpi.config_folder.get_fermenter_recipe_by_id(name)
         os.remove(path)
-        
 
     async def brew(self, recipeid, fermenterid, name):
+        recipe_path = self.cbpi.config_folder.get_fermenter_recipe_by_id(recipeid)
 
-        recipe_path = os.path.join(".", 'config', "fermenterrecipes", "%s.yaml" % recipeid)
         logging.info(recipe_path)
         with open(recipe_path) as file:
             data = yaml.load(file, Loader=yaml.FullLoader)
             await self.cbpi.fermenter.load_recipe(data, fermenterid, name)
 
     async def clone(self, id, new_name):
-        recipe_path = os.path.join(".", 'config', "fermenterrecipes", "%s.yaml" % id)
+        recipe_path = self.cbpi.config_folder.get_fermenter_recipe_by_id(id)
         with open(recipe_path) as file:
             data = yaml.load(file, Loader=yaml.FullLoader)
             data["basic"]["name"] = new_name

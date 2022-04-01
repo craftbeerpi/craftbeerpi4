@@ -3,6 +3,7 @@ import pathlib
 import platform
 import shutil
 import zipfile
+import glob
 
 
 class ConfigFolder:
@@ -20,6 +21,13 @@ class ConfigFolder:
 
     def get_recipe_file_by_id(self, recipe_id):
         return os.path.join(self._rawPath, 'recipes', "{}.yaml".format(recipe_id))
+
+    def get_fermenter_recipe_by_id(self, recipe_id):
+        return os.path.join(self._rawPath, 'fermenterrecipes', "{}.yaml".format(recipe_id))
+
+    def get_all_fermenter_recipes(self):
+        fermenter_recipes_folder = os.path.join(self._rawPath, 'fermenterrecipes', '*.yaml')
+        return glob.glob(fermenter_recipes_folder)
 
     def check_for_setup(self):
         if self.config_file_exists("config.yaml") is False:
