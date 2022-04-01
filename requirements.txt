@@ -22,3 +22,5 @@ psutil==5.9.0
 zipp>=0.5
 PyInquirer==1.0.3
 colorama==0.4.4
+pytest-aiohttp
+coverage==6.3.1

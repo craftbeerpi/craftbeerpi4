@@ -21,7 +21,19 @@ in the documentation, that can be found here: [gitbook.io](https://openbrewing.g
 Plugins extend the base functionality of CraftBeerPi 4.
 You can find a list of available plugins [here](https://openbrewing.gitbook.io/craftbeerpi4_support/master/plugin-installation#plugin-list).
 
-## 🧑‍🤝‍🧑 Contributers
+## 🧑‍🤝‍🧑 Contribute
+You want to help develop CraftBeerPi4? To get you quickly stated, this repository comes with a preconfigured
+development environment. To be able to use this environment you need 2 things installed on your computer:
+
+- docker
+- visual studio code (vscode)
+
+To start developing clone this repository, open the folder in vscode and use the _development container_ feature. The command is called _Reopen in container_. Please note that this quick start setup does not work if you want to develop directly on a 32bit raspberry pi os because docker is only available for 64bit arm plattform. Please use the regular development setup for that.
+
+For a more detailed description of a development setup without the _development container_ feature see the documentation page:
+[gitbook.io](https://openbrewing.gitbook.io/craftbeerpi4_support/)
+
+### Contributors
 Thanks to all the people who have contributed
 
 [![contributors](https://contributors-img.web.app/image?repo=craftbeerpi/craftbeerpi4)](https://github.com/craftbeerpi/craftbeerpi4/graphs/contributors)

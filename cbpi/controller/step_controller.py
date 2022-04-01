@@ -19,7 +19,7 @@ class StepController:
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
-        self.path = os.path.join(".", 'config', "step_data.json")
+        self.path = self.cbpi.config_folder.get_file_path("step_data.json")
         #self._loop = asyncio.get_event_loop() 
         self.basic_data = {}
         self.step = None
@@ -324,7 +324,7 @@ class StepController:
 
     async def savetobook(self):
         name = shortuuid.uuid()
-        path = os.path.join(".", 'config', "recipes", "{}.yaml".format(name))
+        path = os.path.join(self.cbpi.config_folder.get_file_path("recipes"), "{}.yaml".format(name))
         data = dict(basic=self.basic_data, steps=list(map(lambda item: item.to_dict(), self.profile)))
         with open(path, "w") as file:
             yaml.dump(data, file)

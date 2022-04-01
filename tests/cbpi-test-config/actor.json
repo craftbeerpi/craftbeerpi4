@@ -1,0 +1,12 @@
+{
+    "data": [
+        {
+            "id": "3CUJte4bkxDMFCtLX8eqsX",
+            "name": "SomeActor",
+            "power": 100,
+            "props": {},
+            "state": false,
+            "type": "DummyActor"
+        }
+    ]
+}

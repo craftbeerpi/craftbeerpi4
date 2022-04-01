@@ -1,0 +1,30 @@
+version: '3.4'
+services:
+  mqtt:
+    image: eclipse-mosquitto:2
+    volumes:
+      - "./mosquitto/config:/mosquitto/config"
+    restart: unless-stopped
+
+  craftbeerpi4-development:
+    build:
+      context: ../
+      dockerfile: .devcontainer/Dockerfile
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    user: vscode
+    depends_on:
+      - mqtt
+    volumes:
+      # Update this to wherever you want VS Code to mount the folder of your project
+      - ../:/workspace:cached
+
+  mqtt-explorer:
+    image: smeagolworms4/mqtt-explorer
+    environment:
+      HTTP_PORT: 4000
+      CONFIG_PATH: /mqtt-explorer/config
+    volumes:
+      - "./mqtt-explorer/config:/mqtt-explorer/config"
+    depends_on:
+      - mqtt
+    restart: unless-stopped

@@ -1,21 +1,16 @@
 import asyncio
 import glob
 
-from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
+from aiohttp.test_utils import unittest_run_loop
+from tests.cbpi_config_fixture import CraftBeerPiTestCase
+import os
 
-from cbpi.craftbeerpi import CraftBeerPi, load_config
-
-
-class UtilsTestCase(AioHTTPTestCase):
-
-    async def get_application(self):
-        self.cbpi = CraftBeerPi()
-        await self.cbpi.init_serivces()
-        return self.cbpi.app
+class LoggerTestCase(CraftBeerPiTestCase):
 
     @unittest_run_loop
     async def test_log_data(self):
 
+        os.makedirs("./logs", exist_ok=True)
         log_name = "test"
         #clear all logs
         self.cbpi.log.clear_log(log_name)

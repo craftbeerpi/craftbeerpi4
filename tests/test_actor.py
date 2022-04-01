@@ -1,66 +1,39 @@
 import logging
 from unittest import mock
-from unittest.mock import MagicMock, Mock
-from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from cbpi.craftbeerpi import CraftBeerPi
+from aiohttp.test_utils import unittest_run_loop
+from tests.cbpi_config_fixture import CraftBeerPiTestCase
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
 
 
-class ActorTestCase(AioHTTPTestCase):
-
-    async def get_application(self):
-        self.cbpi = CraftBeerPi()
-        await self.cbpi.init_serivces()
-        return self.cbpi.app
-
-    @unittest_run_loop
-    async def test_actor_mock(self):
-        with mock.patch.object(self.cbpi.bus, 'fire', wraps=self.cbpi.bus.fire) as mock_obj:
-            # Send HTTP POST
-            resp = await self.client.request("POST", "/actor/1/on")
-            # Check Result
-            assert resp.status == 204
-            # Check if Event are fired
-            assert mock_obj.call_count == 2
-
+class ActorTestCase(CraftBeerPiTestCase):
 
     @unittest_run_loop
     async def test_actor_switch(self):
 
         resp = await self.client.post(path="/login", data={"username": "cbpi", "password": "123"})
-        assert resp.status == 200
+        assert resp.status == 200, "login should be successful"
 
-        resp = await self.client.request("POST", "/actor/1/on")
-        assert resp.status == 204
-        i = await self.cbpi.actor.get_one(1)
+        resp = await self.client.request("POST", "/actor/3CUJte4bkxDMFCtLX8eqsX/on")
+        assert resp.status == 204, "switching actor on should work"
+        i = self.cbpi.actor.find_by_id("3CUJte4bkxDMFCtLX8eqsX")
 
         assert i.instance.state is True
 
-        resp = await self.client.request("POST", "/actor/1/off")
+        resp = await self.client.request("POST", "/actor/3CUJte4bkxDMFCtLX8eqsX/off")
         assert resp.status == 204
-        i = await self.cbpi.actor.get_one(1)
-        assert i.instance.state is False
-
-        resp = await self.client.request("POST", "/actor/1/toggle")
-
-        assert resp.status == 204
-        i = await self.cbpi.actor.get_one(1)
-        assert i.instance.state is True
-
-        resp = await self.client.request("POST", "/actor/1/toggle")
-        assert resp.status == 204
-        i = await self.cbpi.actor.get_one(1)
+        i = self.cbpi.actor.find_by_id("3CUJte4bkxDMFCtLX8eqsX")
         assert i.instance.state is False
 
     @unittest_run_loop
     async def test_crud(self):
         data = {
-            "name": "CustomActor",
-            "type": "CustomActor",
-            "config": {
-                "interval": 5
-            }
+            "name": "SomeActor",
+            "power": 100,
+            "props": {
+            },
+            "state": False,
+            "type": "DummyActor"
         }
 
         # Add new sensor
