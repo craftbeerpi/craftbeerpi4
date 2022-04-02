@@ -12,7 +12,7 @@ class SensorController(BasicController):
             instance = data.get("instance")
             state =instance.get_state()
         except Exception as e:
-            logging.error("Faild to create sensor dict {} ".format(e))
+            logging.error("Failed to create sensor dict {} ".format(e))
             state = dict() 
 
         return dict(name=data.get("name"), id=data.get("id"), type=data.get("type"), state=state,props=data.get("props", []))
@@ -21,5 +21,5 @@ class SensorController(BasicController):
         try:
             return self.find_by_id(id).instance.get_state()
         except Exception as e:
-            logging.error("Faild read sensor value {} {} ".format(id, e))
+            logging.error("Failed read sensor value {} {} ".format(id, e))
             return None

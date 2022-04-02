@@ -279,7 +279,7 @@ class StepController:
             await step.instance.start()
             step.status = StepState.ACTIVE
         except Exception as e:
-            logging.error("Faild to start step %s" % step)
+            logging.error("Failed to start step %s" % step)
 
     async def save_basic(self, data):
         logging.info("SAVE Basic Data")

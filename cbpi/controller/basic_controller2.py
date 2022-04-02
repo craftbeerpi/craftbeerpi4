@@ -151,4 +151,4 @@ class BasicController:
             item = self.find_by_id(id)
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
-            logging.error("{} Faild to call action on {} {} {}".format(self.name, id, action, e))
+            logging.error("{} Failed to call action on {} {} {}".format(self.name, id, action, e))
