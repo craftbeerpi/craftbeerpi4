@@ -230,7 +230,7 @@ class StepController:
         await self.save()
     
     async def shutdown(self, app=None):    
-        logging.info("Mash Profile Shutdonw")
+        logging.info("Mash Profile Shutdown")
         for p in self.profile:
             instance = p.instance
             # Stopping all running task
@@ -293,7 +293,7 @@ class StepController:
             item = self.find_by_id(id)
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
-            logging.error("Step Controller -Faild to call action on {} {} {}".format(id, action, e))
+            logging.error("Step Controller -Failed to call action on {} {} {}".format(id, action, e))
 
     async def load_recipe(self, data):
         try:
