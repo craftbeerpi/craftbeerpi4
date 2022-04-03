@@ -126,21 +126,23 @@ class Fermenter:
     id: str = None
     name: str = None
     sensor: Sensor = None
+    pressure_sensor : Sensor = None
     heater: Actor = None
     cooler: Actor = None
+    valve: Actor = None
     brewname: str = None
     description : str = None
     props: Props = Props()
     target_temp: float = 0 
+    target_pressure: float = 0
     type: str = None
     steps: List[Step]= field(default_factory=list)
     instance: str = None
 
 
     def __str__(self):
-        return "name={} props={} temp={}".format(self.name, self.props, self.target_temp)
+        return "name={} props={} temp={}".format(self.name, self.props, self.target_temp, self.target_pressure)
 
-#        return "id={} name={} sensor={} heater={} cooler={} brewname={} props={} temp={} type={} steps={}".format(self.id, self.name, self.sensor, self.heater, self.cooler, self.brewname, self.props, self.target_temp, self.type, self.steps)
     def to_dict(self):
 
         if self.instance is not None:
@@ -151,7 +153,7 @@ class Fermenter:
             state = False
 
         steps = list(map(lambda item: item.to_dict(), self.steps))
-        return dict(id=self.id, name=self.name, state=state, sensor=self.sensor, heater=self.heater, cooler=self.cooler, brewname=self.brewname, description=self.description, props=self.props.to_dict() if self.props is not None else None, target_temp=self.target_temp, type=self.type, steps=steps)
+        return dict(id=self.id, name=self.name, state=state, sensor=self.sensor, pressure_sensor=self.pressure_sensor, heater=self.heater, cooler=self.cooler, valve=self.valve, brewname=self.brewname, description=self.description, props=self.props.to_dict() if self.props is not None else None, target_temp=self.target_temp, target_pressure=self.target_pressure, type=self.type, steps=steps)
 
 
 @dataclass

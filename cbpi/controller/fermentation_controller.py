@@ -114,14 +114,17 @@ class FermentationController:
             id = data.get("id")
             name = data.get("name")
             sensor = data.get("sensor")
+            pressure_sensor = data.get("pressure_sensor")
             heater = data.get("heater")
             cooler = data.get("cooler")
+            valve = data.get("valve")
             logictype = data.get("type")
             temp = data.get("target_temp")
+            pressure = data.get("target_pressure")
             brewname = data.get("brewname")
             description = data.get("description")
             props = Props(data.get("props", {}))
-            fermenter = Fermenter(id, name, sensor, heater, cooler, brewname, description, props, temp, logictype)
+            fermenter = Fermenter(id, name, sensor, pressure_sensor, heater, cooler, valve, brewname, description, props, temp, pressure, logictype)
             fermenter.steps = list(map(lambda item: self._create_step(fermenter, item), data.get("steps", [])))
             self.push_update()
             return fermenter
@@ -197,13 +200,16 @@ class FermentationController:
         def _update(old_item: Fermenter, item: Fermenter):
             old_item.name = item.name
             old_item.sensor = item.sensor
+            old_item.pressure_sensor = item.pressure_sensor
             old_item.heater = item.heater
             old_item.cooler = item.cooler
+            old_item.valve = item.valve
             old_item.type = item.type
             old_item.brewname = item.brewname
             old_item.description = item.description
             old_item.props = item.props
             old_item.target_temp = item.target_temp
+            old_item.target_pressure = item.target_pressure
             return old_item
 
         self.data = list(map(lambda old: _update(old, item) if old.id == item.id else old, self.data))
@@ -221,6 +227,17 @@ class FermentationController:
                 self.push_update()
         except Exception as e:
             logging.error("Failed to set Target Temp {} {}".format(id, e))
+
+    async def set_target_pressure(self, id: str, target_pressure):
+        try:
+            item = self._find_by_id(id)
+            logging.info(item.target_pressure)
+            if item:
+                item.target_pressure = target_pressure
+                self.save()
+                self.push_update()
+        except Exception as e:
+            logging.error("Failed to set Target Pressure {} {}".format(id, e))
 
     async def delete(self, id: str ):
         item = self._find_by_id(id)
