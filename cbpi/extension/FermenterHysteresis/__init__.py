@@ -114,6 +114,8 @@ class FermenterHysteresis(CBPiFermenterLogic):
              Property.Number(label="CoolerOffsetOn", configurable=True, description="Offset as decimal number when the cooler is switched on. Should be greater then 'CoolerOffsetOff'. For example a value of 2 switches on the cooler if the current temperature is 2 degrees below the target temperature"),
              Property.Number(label="CoolerOffsetOff", configurable=True, description="Offset as decimal number when the cooler is switched off. Should be smaller then 'CoolerOffsetOn'. For example a value of 1 switches off the cooler if the current temperature is 1 degree below the target temperature"),
              Property.Number(label="SpundingOffsetOpen", configurable=True, description="Offset above target pressure as decimal number when the valve is opened"),
+             Property.Select(label="ValveRelease", options=[1,2,3,4,5],description="Valve Release time in seconds"),
+             Property.Select(label="Pause", options=[1,2,3,4,5],description="Pause time in seconds between valve release"),
              Property.Select(label="AutoStart", options=["Yes","No"],description="Autostart Fermenter on cbpi start"),
              Property.Sensor(label="sensor2",description="Optional Sensor for LCDisplay(e.g. iSpindle)")])
 
@@ -123,6 +125,8 @@ class FermenterSpundingHysteresis(CBPiFermenterLogic):
         self.fermenter = self.get_fermenter(self.id)
         self.valve = self.fermenter.valve
         self.spunding_offset=float(self.props.get("SpundingOffsetOpen",0))
+        self.valverelease=int(self.props.get("ValveRelease",1))
+        self.pause=int(self.props.get("Pause",2))
         if self.valve and self.fermenter.pressure_sensor:
             valve = self.cbpi.actor.find_by_id(self.valve)
 
@@ -136,9 +140,9 @@ class FermenterSpundingHysteresis(CBPiFermenterLogic):
                 if current_pressure >= (target_pressure + self.spunding_offset):
                     while current_pressure >= target_pressure:
                         await self.actor_on(self.valve) 
-                        await asyncio.sleep(1)
+                        await asyncio.sleep(self.valverelease)
                         await self.actor_off(self.valve) 
-                        await asyncio.sleep(2)
+                        await asyncio.sleep(self.pause)
                         current_pressure = float(self.get_sensor_value(self.fermenter.pressure_sensor).get("value"))
                         logging.info("Value higher than target: Spunding loop is running")
 
