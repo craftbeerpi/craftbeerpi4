@@ -138,6 +138,7 @@ class FermenterSpundingHysteresis(CBPiFermenterLogic):
                         await self.actor_on(self.valve) 
                         await asyncio.sleep(1)
                         await self.actor_off(self.valve) 
+                        await asyncio.sleep(2)
                         current_pressure = float(self.get_sensor_value(self.fermenter.pressure_sensor).get("value"))
                         logging.info("Value higher than target: Spunding loop is running")
 
