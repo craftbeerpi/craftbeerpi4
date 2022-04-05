@@ -117,7 +117,7 @@ class FermentationController:
             pressure_sensor = data.get("pressure_sensor")
             heater = data.get("heater")
             cooler = data.get("cooler")
-            valve = data.get("valve")
+            valve = data.get("valve","") 
             logictype = data.get("type")
             temp = data.get("target_temp")
             pressure = data.get("target_pressure")
