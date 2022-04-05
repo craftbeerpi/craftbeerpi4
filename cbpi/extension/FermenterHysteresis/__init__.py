@@ -128,23 +128,23 @@ class FermenterSpundingHysteresis(CBPiFermenterLogic):
         self.valverelease=int(self.props.get("ValveRelease",1))
         self.pause=int(self.props.get("Pause",2))
         if self.valve and self.fermenter.pressure_sensor:
-            valve = self.cbpi.actor.find_by_id(self.valve)
+            #valve = self.cbpi.actor.find_by_id(self.valve)
 
             await self.actor_off(self.valve)
-            logging.info("Closing Spunding Valve")
+            #logging.info("Closing Spunding Valve")
 
             while self.running:
                 target_pressure=float(self.fermenter.target_pressure)
                 current_pressure = float(self.get_sensor_value(self.fermenter.pressure_sensor).get("value"))
-                logging.info(f'Target: {target_pressure} | Current: {current_pressure}')
-                if current_pressure >= (target_pressure + self.spunding_offset):
+                #logging.info(f'Target: {target_pressure} | Current: {current_pressure}')
+                if current_pressure >= (target_pressure + self.spunding_offset) and target_pressure !=0:
                     while current_pressure >= target_pressure:
                         await self.actor_on(self.valve) 
                         await asyncio.sleep(self.valverelease)
                         await self.actor_off(self.valve) 
                         await asyncio.sleep(self.pause)
                         current_pressure = float(self.get_sensor_value(self.fermenter.pressure_sensor).get("value"))
-                        logging.info("Value higher than target: Spunding loop is running")
+                        #logging.info("Value higher than target: Spunding loop is running")
 
                 await asyncio.sleep(1)
         else:
