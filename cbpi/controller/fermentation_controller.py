@@ -133,7 +133,7 @@ class FermentationController:
 
         
     def _find_by_id(self, id):
-         return next((item for item in self.data if item.id == id), None)
+        return next((item for item in self.data if item.id == id), None)
 
     async def get_all(self):
         return list(map(lambda x: x.to_dict(), self.data))

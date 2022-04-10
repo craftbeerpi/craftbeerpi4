@@ -289,6 +289,7 @@ class CraftBeerPi:
         self._setup_http_index()
         self.plugin.load_plugins()
         self.plugin.load_plugins_from_evn()
+        await self.fermenter.init()
         await self.sensor.init()
         await self.step.init()
         
@@ -296,8 +297,8 @@ class CraftBeerPi:
         await self.kettle.init()
         await self.call_initializer(self.app)
         await self.dashboard.init()
-        await self.fermenter.init()
-        
+    
+
         self._swagger_setup()
 
         level = logging.INFO
