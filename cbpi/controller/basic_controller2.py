@@ -36,6 +36,7 @@ class BasicController:
         logging.info("{} Load ".format(self.name))
         with open(self.path) as json_file:
             data = json.load(json_file)
+            data['data'].sort(key=lambda x: x.get('name').upper())
             
             for i in data["data"]:
                 self.data.append(self.create(i))
