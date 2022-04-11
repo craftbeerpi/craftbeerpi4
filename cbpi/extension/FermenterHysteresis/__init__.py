@@ -122,8 +122,6 @@ class FermenterHysteresis(CBPiFermenterLogic):
 class FermenterSpundingHysteresis(CBPiFermenterLogic):
     # subroutine that controls pressure
     async def pressure_control(self):
-        self.fermenter = self.get_fermenter(self.id)
-        self.valve = self.fermenter.valve
         self.spunding_offset=float(self.props.get("SpundingOffsetOpen",0))
         self.valverelease=int(self.props.get("ValveRelease",1))
         self.pause=int(self.props.get("Pause",2))
@@ -149,25 +147,15 @@ class FermenterSpundingHysteresis(CBPiFermenterLogic):
                 await asyncio.sleep(1)
         else:
             logging.info("No valve or pressure sensor defined")
-    
-    async def run(self):
-        try:
+
+    async def temperature_control(self):
             self.heater_offset_min = float(self.props.get("HeaterOffsetOn", 0))
             self.heater_offset_max = float(self.props.get("HeaterOffsetOff", 0))
             self.cooler_offset_min = float(self.props.get("CoolerOffsetOn", 0))
             self.cooler_offset_max = float(self.props.get("CoolerOffsetOff", 0))
         
-            self.fermenter = self.get_fermenter(self.id)
-            self.heater = self.fermenter.heater
-            self.cooler = self.fermenter.cooler
-
-
             heater = self.cbpi.actor.find_by_id(self.heater)
             cooler = self.cbpi.actor.find_by_id(self.cooler)
-
-            pressure_controller = asyncio.create_task(self.pressure_control())
-
-            await pressure_controller
 
             while self.running == True:
                 
@@ -200,6 +188,19 @@ class FermenterSpundingHysteresis(CBPiFermenterLogic):
                         await self.actor_off(self.cooler)
 
                 await asyncio.sleep(1)
+    
+    async def run(self):
+        try:
+            self.fermenter = self.get_fermenter(self.id)
+            self.heater = self.fermenter.heater
+            self.cooler = self.fermenter.cooler
+            self.valve = self.fermenter.valve
+
+            pressure_controller = asyncio.create_task(self.pressure_control())
+            temperature_controller = asyncio.create_task(self.temperature_control())
+
+            await pressure_controller
+            await temperature_controller
 
         except asyncio.CancelledError as e:
             pass
@@ -211,6 +212,8 @@ class FermenterSpundingHysteresis(CBPiFermenterLogic):
                 await self.actor_off(self.heater)
             if self.cooler:
                 await self.actor_off(self.cooler)
+            if self.valve:
+                await self.actor_off(self.valve)
 
 def setup(cbpi):
 
