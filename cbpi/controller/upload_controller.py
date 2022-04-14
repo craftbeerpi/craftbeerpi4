@@ -32,7 +32,7 @@ class UploadController:
    
     async def get_kbh_recipes(self):
         try:
-            path = os.path.join(".", 'config', "upload", "kbh.db")
+            path = self.cbpi.config_folder.get_upload_file("kbh.db")
             conn = sqlite3.connect(path)
             c = conn.cursor()
             c.execute('SELECT ID, Sudname, Status FROM Sud')
@@ -47,7 +47,7 @@ class UploadController:
 
     async def get_xml_recipes(self):
         try:
-            path = os.path.join(".", 'config', "upload", "beer.xml")
+            path = self.cbpi.config_folder.get_upload_file("beer.xml")
             e = xml.etree.ElementTree.parse(path).getroot()
             result =[] 
             counter = 1
@@ -61,7 +61,7 @@ class UploadController:
 
     async def get_json_recipes(self):
         try:
-            path = os.path.join(".", 'config', "upload", "mmum.json")
+            path = self.cbpi.config_folder.get_upload_file("mmum.json")
             e = json.load(open(path))
             result =[] 
             result.append({'value': str(1), 'label': e['Name']})
@@ -123,7 +123,7 @@ class UploadController:
             try:
                 beer_xml = recipe_file.read().decode('utf-8','replace')
                 if recipe_file and self.allowed_file(filename, 'xml'):
-                    self.path = os.path.join(".", 'config', "upload", "beer.xml")
+                    self.path = self.cbpi.config_folder.get_upload_file("beer.xml")
     
                     f = open(self.path, "w")
                     f.write(beer_xml)
@@ -137,7 +137,7 @@ class UploadController:
             try:
                 mmum_json = recipe_file.read().decode('utf-8','replace')
                 if recipe_file and self.allowed_file(filename, 'json'):
-                    self.path = os.path.join(".", 'config', "upload", "mmum.json")
+                    self.path = self.cbpi.config_folder.get_upload_file("mmum.json")
     
                     f = open(self.path, "w")
                     f.write(mmum_json)
@@ -151,7 +151,7 @@ class UploadController:
             try:
                 content = recipe_file.read()
                 if recipe_file and self.allowed_file(filename, 'sqlite'):
-                    self.path = os.path.join(".", 'config', "upload", "kbh.db")
+                    self.path = self.cbpi.config_folder.get_upload_file("kbh.db")
 
                     f=open(self.path, "wb")
                     f.write(content)
@@ -168,7 +168,7 @@ class UploadController:
         config = self.get_config_values()
         if self.kettle is not None:
             # load beerxml file located in upload folder
-            self.path = os.path.join(".", 'config', "upload", "kbh.db")
+            self.path = self.cbpi.config_folder.get_upload_file("kbh.db")
             if os.path.exists(self.path) is False:
                 self.cbpi.notify("File Not Found", "Please upload a kbh V2 databsel file", NotificationType.ERROR)
                 
@@ -318,7 +318,7 @@ class UploadController:
             self.cbpi.notify('Recipe Upload', 'No default Kettle defined. Please specify default Kettle in settings', NotificationType.ERROR)
 
     def findMax(self, string):
-        self.path = os.path.join(".", 'config', "upload", "mmum.json")
+        self.path = self.cbpi.config_folder.get_upload_file("mmum.json")
         e = json.load(open(self.path))
         for idx in range(1,20):
             search_string = string.replace("%%",str(idx))
@@ -328,7 +328,7 @@ class UploadController:
         return i
 
     def getJsonMashin(self, id):
-        self.path = os.path.join(".", 'config', "upload", "mmum.json")
+        self.path = self.cbpi.config_folder.get_upload_file("mmum.json")
         e = json.load(open(self.path))
         return float(e['Infusion_Einmaischtemperatur'])
 
@@ -337,7 +337,7 @@ class UploadController:
 
         if self.kettle is not None:
             # load mmum-json file located in upload folder
-            self.path = os.path.join(".", 'config', "upload", "mmum.json")
+            self.path = self.cbpi.config_folder.get_upload_file("mmum.json")
             if os.path.exists(self.path) is False:
                 self.cbpi.notify("File Not Found", "Please upload a MMuM-JSON File", NotificationType.ERROR)
 
@@ -551,7 +551,7 @@ class UploadController:
 
         if self.kettle is not None:
             # load beerxml file located in upload folder
-            self.path = os.path.join(".", 'config', "upload", "beer.xml")
+            self.path = self.cbpi.config_folder.get_upload_file("beer.xml")
             if os.path.exists(self.path) is False:
                 self.cbpi.notify("File Not Found", "Please upload a Beer.xml File", NotificationType.ERROR)
 
@@ -692,7 +692,7 @@ class UploadController:
                     temp = round(9.0 / 5.0 * float(e.find("STEP_TEMP").text) + 32, 2)
                 steps.append({"name": e.find("NAME").text, "temp": temp, "timer": float(e.find("STEP_TIME").text)})
         elif recipe_type == "json":
-            self.path = os.path.join(".", 'config', "upload", "mmum.json")
+            self.path = self.cbpi.config_folder.get_upload_file("mmum.json")
             e = json.load(open(self.path))
             for idx in range(1,self.findMax("Infusion_Rastzeit%%")):
                 if self.cbpi.config.get("TEMP_UNIT", "C") == "C":

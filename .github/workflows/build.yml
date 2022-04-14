@@ -27,8 +27,11 @@ jobs:
       - name: Clean
         run: python setup.py clean --all
 
-#      - name: Run tests
-#        run: python -m unittest tests
+      - name: Install Requirements
+        run: pip3 install -r requirements.txt
+
+      - name: Run tests
+        run: coverage run --source cbpi -m pytest tests
 
       - name: Build source distribution package for CraftBeerPi
         run: python setup.py sdist

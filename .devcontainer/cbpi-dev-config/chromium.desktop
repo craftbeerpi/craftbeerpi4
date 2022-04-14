@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Chromium
+Comment=Chromium Webbrowser
+NoDisplay=false
+Exec=chromium-browser --noerrordialogs --disable-session-crashed-bubble --disable-infobars --force-device-scale-factor=1.00 --start-fullscreen "http://localhost:8000"

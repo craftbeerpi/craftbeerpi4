@@ -22,7 +22,7 @@ class NotificationController:
         try:
             del self.listener[listener_id] 
         except:
-            self.logger.error("Faild to remove listener {}".format(listener_id))
+            self.logger.error("Failed to remove listener {}".format(listener_id))
 
     async def _call_listener(self, title, message, type, action):
         for id, method in self.listener.items():
@@ -60,5 +60,5 @@ class NotificationController:
                 asyncio.create_task(action.method())
             del self.callback_cache[notification_id]
         except Exception as e:
-            self.logger.error("Faild to call notificatoin callback")
+            self.logger.error("Failed to call notificatoin callback")
         

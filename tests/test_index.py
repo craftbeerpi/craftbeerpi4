@@ -1,14 +1,8 @@
-from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
+from aiohttp.test_utils import unittest_run_loop
+from tests.cbpi_config_fixture import CraftBeerPiTestCase
 
-from cbpi.craftbeerpi import CraftBeerPi
 
-
-class IndexTestCase(AioHTTPTestCase):
-
-    async def get_application(self):
-        self.cbpi = CraftBeerPi()
-        await self.cbpi.init_serivces()
-        return self.cbpi.app
+class IndexTestCase(CraftBeerPiTestCase):
 
     @unittest_run_loop
     async def test_index(self):

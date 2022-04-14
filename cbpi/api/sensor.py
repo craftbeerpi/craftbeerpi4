@@ -39,7 +39,7 @@ class CBPiSensor(CBPiBase, metaclass=ABCMeta):
                 self.cbpi.push_update("cbpi/sensordata/{}".format(self.id), dict(id=self.id, value=value), retain=True)
 #            self.cbpi.push_update("cbpi/sensor/{}/udpate".format(self.id), dict(id=self.id, value=value), retain=True)
         except:
-            logging.error("Faild to push sensor update")
+            logging.error("Failed to push sensor update")
 
     async def start(self):
         pass

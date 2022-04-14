@@ -1,7 +1,7 @@
 FROM alpine:latest as download
 RUN apk --no-cache add curl && mkdir /downloads
 # Download installation files
-RUN curl https://github.com/avollkopf/craftbeerpi4-ui/archive/main.zip -L -o ./downloads/cbpi-ui.zip
+RUN curl https://github.com/craftbeerpi/craftbeerpi4-ui/archive/main.zip -L -o ./downloads/cbpi-ui.zip
 
 FROM python:3.9 as base
 

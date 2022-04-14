@@ -1,0 +1,335 @@
+{
+    "AUTHOR": {
+        "description": "Author",
+        "name": "AUTHOR",
+        "options": null,
+        "type": "string",
+        "value": "John Doe"
+    },
+    "AddMashInStep": {
+        "description": "Add MashIn Step automatically if not defined in recipe",
+        "name": "AddMashInStep",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
+    "AutoMode": {
+        "description": "Use AutoMode in steps",
+        "name": "AutoMode",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
+    "BREWERY_NAME": {
+        "description": "Brewery Name",
+        "name": "BREWERY_NAME",
+        "options": null,
+        "type": "string",
+        "value": "CraftBeerPi Brewery"
+    },
+    "BoilKettle": {
+        "description": "Define Kettle that is used for Boil, Whirlpool and Cooldown. If not selected, MASH_TUN will be used",
+        "name": "BoilKettle",
+        "options": null,
+        "type": "kettle",
+        "value": ""
+    },
+    "CBPI_TEST_3": {
+        "description": "test",
+        "name": "CBPI_TEST_3",
+        "options": null,
+        "type": "string",
+        "value": "1"
+    },
+    "CSVLOGFILES": {
+        "description": "Write sensor data to csv logfiles",
+        "name": "CSVLOGFILES",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
+    "INFLUXDB": {
+        "description": "Write sensor data to influxdb",
+        "name": "INFLUXDB",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "No"
+    },
+    "INFLUXDBADDR": {
+        "description": "IP Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)",
+        "name": "INFLUXDBADDR",
+        "options": null,
+        "type": "string",
+        "value": "localhost"
+    },
+    "INFLUXDBCLOUD": {
+        "description": "Write sensor data to influxdb cloud (INFLUXDB must set to Yes)",
+        "name": "INFLUXDBCLOUD",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "No"
+    },
+    "INFLUXDBNAME": {
+        "description": "Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)",
+        "name": "INFLUXDBNAME",
+        "options": null,
+        "type": "string",
+        "value": "cbpi4"
+    },
+    "INFLUXDBPORT": {
+        "description": "Port of your influxdb server",
+        "name": "INFLUXDBPORT",
+        "options": null,
+        "type": "string",
+        "value": "8086"
+    },
+    "INFLUXDBPWD": {
+        "description": "Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)",
+        "name": "INFLUXDBPWD",
+        "options": null,
+        "type": "string",
+        "value": " "
+    },
+    "INFLUXDBUSER": {
+        "description": "User name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)",
+        "name": "INFLUXDBUSER",
+        "options": null,
+        "type": "string",
+        "value": " "
+    },
+    "MASH_TUN": {
+        "description": "Default Mash Tun",
+        "name": "MASH_TUN",
+        "options": null,
+        "type": "kettle",
+        "value": ""
+    },
+    "MQTTUpdate": {
+        "description": "Forced MQTT Update frequency in s for Kettle and Fermenter (no changes in payload required). Restart required after change",
+        "name": "MQTTUpdate",
+        "options": [
+            {
+                "label": "30",
+                "value": 30
+            },
+            {
+                "label": "60",
+                "value": 60
+            },
+            {
+                "label": "120",
+                "value": 120
+            },
+            {
+                "label": "300",
+                "value": 300
+            },
+            {
+                "label": "Never",
+                "value": 0
+            }
+        ],
+        "type": "select",
+        "value": 0
+    },
+    "RECIPE_CREATION_PATH": {
+        "description": "API path to creation plugin. Default: upload . CHANGE ONLY IF USING A RECIPE CREATION PLUGIN",
+        "name": "RECIPE_CREATION_PATH",
+        "options": null,
+        "type": "string",
+        "value": "upload"
+    },
+    "TEMP_UNIT": {
+        "description": "Temperature Unit",
+        "name": "TEMP_UNIT",
+        "options": [
+            {
+                "label": "C",
+                "value": "C"
+            },
+            {
+                "label": "F",
+                "value": "F"
+            }
+        ],
+        "type": "select",
+        "value": "C"
+    },
+    "brewfather_api_key": {
+        "description": "Brewfather API Key",
+        "name": "brewfather_api_key",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
+    "brewfather_user_id": {
+        "description": "Brewfather User ID",
+        "name": "brewfather_user_id",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
+    "current_dashboard_number": {
+        "description": "Number of current Dashboard",
+        "name": "current_dashboard_number",
+        "options": null,
+        "type": "number",
+        "value": 1
+    },
+    "max_dashboard_number": {
+        "description": "Max Number of Dashboards",
+        "name": "max_dashboard_number",
+        "options": [
+            {
+                "label": "1",
+                "value": 1
+            },
+            {
+                "label": "2",
+                "value": 2
+            },
+            {
+                "label": "3",
+                "value": 3
+            },
+            {
+                "label": "4",
+                "value": 4
+            },
+            {
+                "label": "5",
+                "value": 5
+            },
+            {
+                "label": "6",
+                "value": 6
+            },
+            {
+                "label": "7",
+                "value": 7
+            },
+            {
+                "label": "8",
+                "value": 8
+            },
+            {
+                "label": "9",
+                "value": 9
+            },
+            {
+                "label": "10",
+                "value": 10
+            }
+        ],
+        "type": "select",
+        "value": 4
+    },
+    "steps_boil": {
+        "description": "Boil step type",
+        "name": "steps_boil",
+        "options": null,
+        "type": "step",
+        "value": "BoilStep"
+    },
+    "steps_boil_temp": {
+        "description": "Default Boil Temperature for Recipe Creation",
+        "name": "steps_boil_temp",
+        "options": null,
+        "type": "number",
+        "value": "99"
+    },
+    "steps_cooldown": {
+        "description": "Cooldown step type",
+        "name": "steps_cooldown",
+        "options": null,
+        "type": "step",
+        "value": "CooldownStep"
+    },
+    "steps_cooldown_actor": {
+        "description": "Actor to trigger cooldown water on and off (default: None)",
+        "name": "steps_cooldown_actor",
+        "options": null,
+        "type": "actor",
+        "value": ""
+    },
+    "steps_cooldown_sensor": {
+        "description": "Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)",
+        "name": "steps_cooldown_sensor",
+        "options": null,
+        "type": "sensor",
+        "value": ""
+    },
+    "steps_cooldown_temp": {
+        "description": "Cooldown temp will send notification when this temeprature is reached",
+        "name": "steps_cooldown_temp",
+        "options": null,
+        "type": "number",
+        "value": "20"
+    },
+    "steps_mash": {
+        "description": "Mash step type",
+        "name": "steps_mash",
+        "options": null,
+        "type": "step",
+        "value": "MashStep"
+    },
+    "steps_mashin": {
+        "description": "MashIn step type",
+        "name": "steps_mashin",
+        "options": null,
+        "type": "step",
+        "value": "MashInStep"
+    },
+    "steps_mashout": {
+        "description": "MashOut step type",
+        "name": "steps_mashout",
+        "options": null,
+        "type": "step",
+        "value": "NotificationStep"
+    }
+}

@@ -22,7 +22,7 @@ class FermentationController:
         self.update_key = "fermenterupdate"
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
-        self.path = os.path.join(".", 'config', "fermenter_data.json")
+        self.path = self.cbpi.config_folder.get_file_path("fermenter_data.json")
         self.data = []
         self.types = {}
         self.steptypes = {}
@@ -35,18 +35,18 @@ class FermentationController:
         pass
 
     def check_fermenter_file(self):
-        if os.path.exists(os.path.join(".", 'config', "fermenter_data.json")) is False:
+        if os.path.exists(self.cbpi.config_folder.get_file_path("fermenter_data.json")) is False:
             logging.info("INIT fermenter_data.json file")
             data = {
                     "data": [
                             ]
                     }
-            destfile = os.path.join(".", 'config', "fermenter_data.json")
+            destfile = self.cbpi.config_folder.get_file_path("fermenter_data.json")
             json.dump(data,open(destfile,'w'),indent=4, sort_keys=True)
         
-        pathlib.Path(os.path.join(".", 'config/fermenterrecipes')).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(self.cbpi.config_folder.get_file_path("fermenterrecipes")).mkdir(parents=True, exist_ok=True)
 
-    async def shutdown(self, app=None, fermenterid=None):    
+    async def shutdown(self, app=None, fermenterid=None):
         self.save()
         if (fermenterid == None):
             for fermenter in self.data:
@@ -114,14 +114,17 @@ class FermentationController:
             id = data.get("id")
             name = data.get("name")
             sensor = data.get("sensor")
+            pressure_sensor = data.get("pressure_sensor")
             heater = data.get("heater")
             cooler = data.get("cooler")
+            valve = data.get("valve","") 
             logictype = data.get("type")
             temp = data.get("target_temp")
+            pressure = data.get("target_pressure")
             brewname = data.get("brewname")
             description = data.get("description")
             props = Props(data.get("props", {}))
-            fermenter = Fermenter(id, name, sensor, heater, cooler, brewname, description, props, temp, logictype)
+            fermenter = Fermenter(id, name, sensor, pressure_sensor, heater, cooler, valve, brewname, description, props, temp, pressure, logictype)
             fermenter.steps = list(map(lambda item: self._create_step(fermenter, item), data.get("steps", [])))
             self.push_update()
             return fermenter
@@ -130,7 +133,7 @@ class FermentationController:
 
         
     def _find_by_id(self, id):
-         return next((item for item in self.data if item.id == id), None)
+        return next((item for item in self.data if item.id == id), None)
 
     async def get_all(self):
         return list(map(lambda x: x.to_dict(), self.data))
@@ -197,13 +200,16 @@ class FermentationController:
         def _update(old_item: Fermenter, item: Fermenter):
             old_item.name = item.name
             old_item.sensor = item.sensor
+            old_item.pressure_sensor = item.pressure_sensor
             old_item.heater = item.heater
             old_item.cooler = item.cooler
+            old_item.valve = item.valve
             old_item.type = item.type
             old_item.brewname = item.brewname
             old_item.description = item.description
             old_item.props = item.props
             old_item.target_temp = item.target_temp
+            old_item.target_pressure = item.target_pressure
             return old_item
 
         self.data = list(map(lambda old: _update(old, item) if old.id == item.id else old, self.data))
@@ -221,6 +227,17 @@ class FermentationController:
                 self.push_update()
         except Exception as e:
             logging.error("Failed to set Target Temp {} {}".format(id, e))
+
+    async def set_target_pressure(self, id: str, target_pressure):
+        try:
+            item = self._find_by_id(id)
+            logging.info(item.target_pressure)
+            if item:
+                item.target_pressure = target_pressure
+                self.save()
+                self.push_update()
+        except Exception as e:
+            logging.error("Failed to set Target Pressure {} {}".format(id, e))
 
     async def delete(self, id: str ):
         item = self._find_by_id(id)
@@ -525,7 +542,7 @@ class FermentationController:
     
     async def savetobook(self, fermenterid):
         name = shortuuid.uuid()
-        path = os.path.join(".", 'config', "fermenterrecipes", "{}.yaml".format(name))
+        path = self.cbpi.config_folder.get_fermenter_recipe_by_id(name)
         fermenter=self._find_by_id(fermenterid)
         try:
             brewname = fermenter.brewname

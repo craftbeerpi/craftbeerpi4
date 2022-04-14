@@ -94,6 +94,7 @@ class FermenterTargetTempStep(CBPiFermentationStep):
         self.AutoMode = True if self.props.get("AutoMode","No") == "Yes" else False
         if self.fermenter is not None:
             self.fermenter.target_temp = float(self.props.get("Temp", 0))
+            self.fermenter.target_pressure = 0
         if self.AutoMode == True:
             await self.setAutoMode(True)
         self.summary = "Waiting for Target Temp"
@@ -150,8 +151,9 @@ class FermenterTargetTempStep(CBPiFermentationStep):
 @parameters([Property.Number(label="TimerD", description="Timer Days", configurable=True),
              Property.Number(label="TimerH", description="Timer Hours", configurable=True),
              Property.Number(label="TimerM", description="Timer Minutes", configurable=True), 
-             Property.Number(label="Temp", configurable=True),
-             Property.Sensor(label="Sensor"),
+             Property.Number(label="Temp", configurable=True, description="Step Temperature"),
+             Property.Number(label="Pressure", configurable=True, description="Step Pressure"),
+             Property.Sensor(label="Sensor", description="Temperature Sensor"),
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Fermenterlogic automatically on and off -> Yes")])
 class FermenterStep(CBPiFermentationStep):
 
@@ -206,6 +208,7 @@ class FermenterStep(CBPiFermentationStep):
         self.AutoMode = True if self.props.get("AutoMode", "No") == "Yes" else False
         if self.fermenter is not None:
             self.fermenter.target_temp = float(self.props.get("Temp", 0))
+            self.fermenter.target_pressure = float(self.props.get("Pressure", 0))
         if self.AutoMode == True:
             await self.setAutoMode(True)
         await self.push_update()
@@ -293,8 +296,9 @@ class FermenterStep(CBPiFermentationStep):
             logging.error("Failed to switch on FermenterLogic {} {}".format(self.fermenter.id, e))
 
 @parameters([Property.Number(label="Temp", configurable=True, description = "Ramp to this temp"),
+             Property.Number(label="Pressure", configurable=True, description="Step Pressure"),
              Property.Number(label="RampRate", configurable=True, description = "Ramp x °C/F per  day. Default: 1"),
-             Property.Sensor(label="Sensor"),
+             Property.Sensor(label="Sensor", description="Temperature Sensor"),
              Property.Text(label="Notification",configurable = True, description = "Text for notification when Temp is reached"),
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Fermenterlogic automatically on and off -> Yes")])
 class FermenterRampTempStep(CBPiFermentationStep):
@@ -324,6 +328,7 @@ class FermenterRampTempStep(CBPiFermentationStep):
         logging.info(self.rate)
         self.target_temp = round(float(self.props.get("Temp", 0))*10)/10
         logging.info(self.target_temp)
+        self.fermenter.target_pressure = float(self.props.get("Pressure", 0))
         while self.get_sensor_value(self.props.get("Sensor", None)).get("value") > 900:
             await asyncio.sleep(1)
         self.starttemp = self.get_sensor_value(self.props.get("Sensor", None)).get("value")
