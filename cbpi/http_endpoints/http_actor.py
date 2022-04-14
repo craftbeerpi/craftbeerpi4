@@ -23,6 +23,32 @@ class ActorHttpEndpoints():
                 description: successful operation
         """
         return web.json_response(data=self.controller.get_state())
+
+    @request_mapping(path="/{id:\w+}", auth_required=False)
+    async def http_get_one(self, request):
+        """
+        ---
+        description: Get one Actor
+        tags:
+        - Actor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+            "200":
+                description: successful operation
+            "404":
+                description: Actor not found
+        """
+        actor = self.controller.find_by_id(request.match_info['id'])
+        if (actor is None):
+          return web.json_response(status=404)
+
+        return web.json_response(data=actor.to_dict(), status=200)
         
 
     @request_mapping(path="/", method="POST", auth_required=False)

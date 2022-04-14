@@ -48,7 +48,7 @@ class CBPiExtension():
 
             return data
         except:
-            logger.warning("Faild to load config %s/config.yaml" % path)
+            logger.warning("Failed to load config %s/config.yaml" % path)
 
     
 

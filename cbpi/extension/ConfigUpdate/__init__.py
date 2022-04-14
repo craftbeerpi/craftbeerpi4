@@ -46,7 +46,7 @@ class ConfigUpdate(CBPiExtension):
         influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
         influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", None)
         mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
-
+        PRESSURE_UNIT = self.cbpi.config.get("PRESSURE_UNIT", None)
 
 
         if boil_temp is None:
@@ -276,6 +276,15 @@ class ConfigUpdate(CBPiExtension):
             except:
                 logger.warning('Unable to update database')
 
+       ## Check if PRESSURE_UNIT is in config
+        if PRESSURE_UNIT is None:
+            logger.info("INIT PRESSURE_UNIT")
+            try:
+                await self.cbpi.config.add("PRESSURE_UNIT", "kPa", ConfigType.SELECT, "Set unit for pressure", 
+                                                                                                [{"label": "kPa", "value": "kPa"},
+                                                                                                {"label": "PSI", "value": "PSI"}])
+            except:
+                logger.warning('Unable to update config')
 
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)

@@ -38,7 +38,7 @@ class SystemController:
 
     async def backupConfig(self):
         output_filename = "cbpi4_config"
-        dir_name = pathlib.Path(os.path.join(".", 'config'))
+        dir_name = pathlib.Path(self.cbpi.config_folder.get_file_path(''))
         shutil.make_archive(output_filename, 'zip', dir_name)
 
     async def downloadlog(self, logtime):
@@ -153,7 +153,7 @@ class SystemController:
             try:
                 content = svg_file.read().decode('utf-8','replace')
                 if svg_file and self.allowed_file(filename, 'svg'):
-                    self.path = os.path.join(".","config","dashboard","widgets", filename)
+                    self.path = os.path.join(self.cbpi.config_folder.get_file_path("dashboard"),"widgets", filename)
                     logging.info(self.path)
 
                     f=open(self.path, "w")

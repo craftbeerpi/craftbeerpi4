@@ -14,8 +14,8 @@ class ConfigController:
         self.logger = logging.getLogger(__name__)
         self.cbpi = cbpi
         self.cbpi.register(self)
-        self.path = os.path.join(".", 'config', "config.json")
-        self.path_static = os.path.join(".", 'config', "config.yaml")
+        self.path = cbpi.config_folder.get_file_path("config.json")
+        self.path_static = cbpi.config_folder.get_file_path("config.yaml")
 
     def get_state(self):
         

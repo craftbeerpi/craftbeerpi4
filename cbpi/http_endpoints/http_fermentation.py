@@ -77,7 +77,9 @@ class FermentationHttpEndpoints():
                 description: successful operation
         """
         data = await request.json()
-        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), cooler=data.get("cooler"), brewname=data.get("brewname"), description=data.get("description"), target_temp=data.get("target_temp"), props=Props(data.get("props", {})), type=data.get("type"))
+        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), pressure_sensor=data.get("pressure_sensor"), heater=data.get("heater"), 
+                              cooler=data.get("cooler"), valve=data.get("valve"), brewname=data.get("brewname"), description=data.get("description"), 
+                              target_temp=data.get("target_temp"), target_pressure=data.get("target_pressure"), props=Props(data.get("props", {})), type=data.get("type"))
         response_data = await self.controller.create(fermenter)
         return web.json_response(data=response_data.to_dict())
         
@@ -115,7 +117,9 @@ class FermentationHttpEndpoints():
         """
         id = request.match_info['id']
         data = await request.json()
-        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), heater=data.get("heater"), cooler=data.get("cooler"), brewname=data.get("brewname"), description=data.get("description"), target_temp=data.get("target_temp"), props=Props(data.get("props", {})), type=data.get("type"))
+        fermenter = Fermenter(id=id, name=data.get("name"), sensor=data.get("sensor"), pressure_sensor=data.get("pressure_sensor"), heater=data.get("heater"), 
+                              cooler=data.get("cooler"), valve=data.get("valve"), brewname=data.get("brewname"), description=data.get("description"), 
+                              target_temp=data.get("target_temp"), target_pressure=data.get("target_pressure"), props=Props(data.get("props", {})), type=data.get("type"))        
         return web.json_response(data=(await self.controller.update(fermenter)).to_dict())
     
     @request_mapping(path="/{id}", method="DELETE", auth_required=False)
@@ -283,6 +287,40 @@ class FermentationHttpEndpoints():
         data = await request.json()
         await self.controller.set_target_temp(id,data.get("temp"))
         return web.Response(status=204)
+
+    @request_mapping(path="/{id}/target_pressure", method="POST", auth_required=auth)
+    async def http_target_pressure(self, request) -> web.Response:
+        """
+
+        ---
+        description: Set Target pressure for Fermenter
+        tags:
+        - Fermenter
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Fermenter ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: Update Pressure
+          required: true
+          schema:
+            type: object
+            properties:
+              temp:
+                type: integer
+        responses:
+            "204":
+                description: successful operation
+        """
+        id = request.match_info['id']
+        data = await request.json()
+        await self.controller.set_target_pressure(id,data.get("pressure"))
+        return web.Response(status=204)
+
 
     @request_mapping(path="/{id}/addstep", method="POST", auth_required=False)
     async def http_add_step(self, request):

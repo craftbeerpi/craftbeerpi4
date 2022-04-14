@@ -23,7 +23,7 @@ class BasicController:
         self.data = []
         self.autostart = True
         #self._loop = asyncio.get_event_loop() 
-        self.path = os.path.join(".", 'config', file)
+        self.path = self.cbpi.config_folder.get_file_path(file)
         self.cbpi.app.on_cleanup.append(self.shutdown)
         
     async def init(self):
@@ -36,6 +36,7 @@ class BasicController:
         logging.info("{} Load ".format(self.name))
         with open(self.path) as json_file:
             data = json.load(json_file)
+            data['data'].sort(key=lambda x: x.get('name').upper())
             
             for i in data["data"]:
                 self.data.append(self.create(i))
@@ -151,4 +152,4 @@ class BasicController:
             item = self.find_by_id(id)
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
-            logging.error("{} Faild to call action on {} {} {}".format(self.name, id, action, e))
+            logging.error("{} Failed to call action on {} {} {}".format(self.name, id, action, e))
