@@ -7,6 +7,7 @@ class ActorController(BasicController):
     def __init__(self, cbpi):
         super(ActorController, self).__init__(cbpi, Actor,"actor.json")
         self.update_key = "actorupdate"
+        self.sorting=True
 
     async def on(self, id, power=None):
         try:
@@ -20,7 +21,7 @@ class ActorController(BasicController):
             if item.instance.state is False:
                 await item.instance.on(power)
                 #await self.push_udpate()
-                self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
+                self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))),self.sorting)
                 self.cbpi.push_update("cbpi/actorupdate/{}".format(id), item.to_dict(), True)
             else:
                 await self.set_power(id, power)
@@ -34,7 +35,7 @@ class ActorController(BasicController):
             if item.instance.state is True:
                 await item.instance.off()
                 #await self.push_udpate()
-                self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
+                self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))),self.sorting)
                 self.cbpi.push_update("cbpi/actorupdate/{}".format(id), item.to_dict())
         except Exception as e:
             logging.error("Failed to switch on Actor {} {}".format(id, e), True)
@@ -44,7 +45,7 @@ class ActorController(BasicController):
             item = self.find_by_id(id)
             instance = item.get("instance")
             await instance.toggle()
-            self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
+            self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))),self.sorting)
             self.cbpi.push_update("cbpi/actorupdate/{}".format(id), item.to_dict())
         except Exception as e:
             logging.error("Failed to toggle Actor {} {}".format(id, e))
@@ -61,7 +62,7 @@ class ActorController(BasicController):
             item = self.find_by_id(id)
             item.power = round(power)
             #await self.push_udpate()
-            self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
+            self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))),self.sorting)
             self.cbpi.push_update("cbpi/actorupdate/{}".format(id), item.to_dict())
         except Exception as e:
             logging.error("Failed to update Actor {} {}".format(id, e))

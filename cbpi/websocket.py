@@ -28,15 +28,16 @@ class CBPiWebSocket:
         self.send(data)
 
 
-    def send(self, data):
+    def send(self, data, sorting=False):
         self.logger.debug("broadcast to ws clients. Data: %s" % data)
         for ws in self._clients:
             async def send_data(ws, data):
                 try:
-                    try:
-                        data['data'].sort(key=lambda x: x.get('name').upper())
-                    except:
-                        pass
+                    if sorting:
+                        try:
+                            data['data'].sort(key=lambda x: x.get('name').upper())
+                        except:
+                            pass
                     await ws.send_json(data=data, dumps=json_dumps)
                 except Exception as e:
                     self.logger.error("Error with client %s: %s" % (ws, str(e)))
