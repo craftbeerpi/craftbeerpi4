@@ -6,6 +6,7 @@ class SensorController(BasicController):
     def __init__(self, cbpi):
         super(SensorController, self).__init__(cbpi, Sensor, "sensor.json")
         self.update_key = "sensorupdate"
+        self.sorting = True
 
     def create_dict(self, data):
         try:
