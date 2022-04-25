@@ -14,6 +14,7 @@ class BasicController:
     def __init__(self, cbpi, resource, file):
         self.resource = resource
         self.update_key = ""
+        self.sorting = False
         self.name = self.__class__.__name__
         self.cbpi = cbpi
         self.cbpi.register(self)
@@ -23,7 +24,7 @@ class BasicController:
         self.data = []
         self.autostart = True
         #self._loop = asyncio.get_event_loop() 
-        self.path = os.path.join(".", 'config', file)
+        self.path = self.cbpi.config_folder.get_file_path(file)
         self.cbpi.app.on_cleanup.append(self.shutdown)
         
     async def init(self):
@@ -36,6 +37,7 @@ class BasicController:
         logging.info("{} Load ".format(self.name))
         with open(self.path) as json_file:
             data = json.load(json_file)
+            data['data'].sort(key=lambda x: x.get('name').upper())
             
             for i in data["data"]:
                 self.data.append(self.create(i))
@@ -54,7 +56,7 @@ class BasicController:
         await self.push_udpate()
         
     async def push_udpate(self):
-        self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))))
+        self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda item: item.to_dict(), self.data))),self.sorting)
         #self.cbpi.push_update("cbpi/{}".format(self.update_key), list(map(lambda item: item.to_dict(), self.data)))
         for item in self.data:
             self.cbpi.push_update("cbpi/{}/{}".format(self.update_key,item.id), item.to_dict())
@@ -151,4 +153,4 @@ class BasicController:
             item = self.find_by_id(id)
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
-            logging.error("{} Faild to call action on {} {} {}".format(self.name, id, action, e))
+            logging.error("{} Failed to call action on {} {} {}".format(self.name, id, action, e))

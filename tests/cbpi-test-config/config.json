@@ -1,0 +1,148 @@
+{
+    "AUTHOR": {
+        "description": "Author",
+        "name": "AUTHOR",
+        "options": null,
+        "type": "string",
+        "value": "John Doe"
+    },
+    "BREWERY_NAME": {
+        "description": "Brewery Name",
+        "name": "BREWERY_NAME",
+        "options": null,
+        "type": "string",
+        "value": "CraftBeerPi Brewery"
+    },
+    "MASH_TUN": {
+        "description": "Default Mash Tun",
+        "name": "MASH_TUN",
+        "options": null,
+        "type": "kettle",
+        "value": ""
+    },
+    "AddMashInStep": {
+        "description": "Add MashIn Step automatically if not defined in recipe",
+        "name": "AddMashInStep",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
+    "RECIPE_CREATION_PATH": {
+        "description": "API path to creation plugin. Default: empty",
+        "name": "RECIPE_CREATION_PATH",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
+    "brewfather_api_key": {
+        "description": "Brewfather API Kay",
+        "name": "brewfather_api_key",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
+    "brewfather_user_id": {
+        "description": "Brewfather User ID",
+        "name": "brewfather_user_id",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
+    "TEMP_UNIT": {
+        "description": "Temperature Unit",
+        "name": "TEMP_UNIT",
+        "options": [
+            {
+                "label": "C",
+                "value": "C"
+            },
+            {
+                "label": "F",
+                "value": "F"
+            }
+        ],
+        "type": "select",
+        "value": "C"
+    },
+    "AutoMode": {
+        "description": "Use AutoMode in steps",
+        "name": "AutoMode",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
+    "steps_boil": {
+        "description": "Boil step type",
+        "name": "steps_boil",
+        "options": null,
+        "type": "step",
+        "value": "BoilStep"
+    },
+    "steps_boil_temp": {
+        "description": "Default Boil Temperature for Recipe Creation",
+        "name": "steps_boil_temp",
+        "options": null,
+        "type": "number",
+        "value": "99"
+    },
+    "steps_cooldown": {
+        "description": "Cooldown step type",
+        "name": "steps_cooldown",
+        "options": null,
+        "type": "step",
+        "value": "CooldownStep"
+    },
+    "steps_cooldown_sensor": {
+        "description": "Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)",
+        "name": "steps_cooldown_sensor",
+        "options": null,
+        "type": "sensor",
+        "value": ""
+    },
+    "steps_cooldown_temp": {
+        "description": "Cooldown temp will send notification when this temeprature is reached",
+        "name": "steps_cooldown_temp",
+        "options": null,
+        "type": "number",
+        "value": "20"
+    },
+    "steps_mash": {
+        "description": "Mash step type",
+        "name": "steps_mash",
+        "options": null,
+        "type": "step",
+        "value": "MashStep"
+    },
+    "steps_mashin": {
+        "description": "MashIn step type",
+        "name": "steps_mashin",
+        "options": null,
+        "type": "step",
+        "value": "MashInStep"
+    },
+    "steps_mashout": {
+        "description": "MashOut step type",
+        "name": "steps_mashout",
+        "options": null,
+        "type": "step",
+        "value": "NotificationStep"
+    }
+}

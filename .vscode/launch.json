@@ -1,0 +1,16 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Run CraftBeerPi4",
+            "type": "python",
+            "request": "launch",
+            "module": "run",
+            "args": ["--config-folder-path=./.devcontainer/cbpi-dev-config", "start"]
+        }
+    ]
+}

@@ -19,7 +19,7 @@ class StepController:
     def __init__(self, cbpi):
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
-        self.path = os.path.join(".", 'config', "step_data.json")
+        self.path = self.cbpi.config_folder.get_file_path("step_data.json")
         #self._loop = asyncio.get_event_loop() 
         self.basic_data = {}
         self.step = None
@@ -199,8 +199,8 @@ class StepController:
     def get_types(self):
         result = {}
         for key, value in self.types.items():
-            if "ferment" not in str(value.get("class")).lower():
-                result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
+            #if "ferment" not in str(value.get("class")).lower():
+            result[key] = dict(name=value.get("name"), properties=value.get("properties"), actions=value.get("actions"))
         return result
 
     def get_state(self):
@@ -230,7 +230,7 @@ class StepController:
         await self.save()
     
     async def shutdown(self, app=None):    
-        logging.info("Mash Profile Shutdonw")
+        logging.info("Mash Profile Shutdown")
         for p in self.profile:
             instance = p.instance
             # Stopping all running task
@@ -279,7 +279,7 @@ class StepController:
             await step.instance.start()
             step.status = StepState.ACTIVE
         except Exception as e:
-            logging.error("Faild to start step %s" % step)
+            logging.error("Failed to start step %s" % step)
 
     async def save_basic(self, data):
         logging.info("SAVE Basic Data")
@@ -293,7 +293,7 @@ class StepController:
             item = self.find_by_id(id)
             await item.instance.__getattribute__(action)(**parameter)
         except Exception as e:
-            logging.error("Step Controller -Faild to call action on {} {} {}".format(id, action, e))
+            logging.error("Step Controller -Failed to call action on {} {} {}".format(id, action, e))
 
     async def load_recipe(self, data):
         try:
@@ -324,7 +324,7 @@ class StepController:
 
     async def savetobook(self):
         name = shortuuid.uuid()
-        path = os.path.join(".", 'config', "recipes", "{}.yaml".format(name))
+        path = os.path.join(self.cbpi.config_folder.get_file_path("recipes"), "{}.yaml".format(name))
         data = dict(basic=self.basic_data, steps=list(map(lambda item: item.to_dict(), self.profile)))
         with open(path, "w") as file:
             yaml.dump(data, file)

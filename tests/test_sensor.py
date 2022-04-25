@@ -1,14 +1,8 @@
-import asyncio
-from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from cbpi.craftbeerpi import CraftBeerPi
+from aiohttp.test_utils import unittest_run_loop
+from tests.cbpi_config_fixture import CraftBeerPiTestCase
 
 
-class SensorTestCase(AioHTTPTestCase):
-
-    async def get_application(self):
-        self.cbpi = CraftBeerPi()
-        await self.cbpi.init_serivces()
-        return self.cbpi.app
+class SensorTestCase(CraftBeerPiTestCase):
 
     @unittest_run_loop
     async def test_crud(self):
@@ -28,12 +22,11 @@ class SensorTestCase(AioHTTPTestCase):
         m = await resp.json()
         sensor_id = m["id"]
 
-        # Get sensor
+        # Get sensor value
         resp = await self.client.get(path="/sensor/%s"% sensor_id)
         assert resp.status == 200
 
         m2 = await resp.json()
-        sensor_id = m2["id"]
 
         # Update Sensor
         resp = await self.client.put(path="/sensor/%s"  % sensor_id, json=m)

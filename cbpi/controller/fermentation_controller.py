@@ -22,7 +22,7 @@ class FermentationController:
         self.update_key = "fermenterupdate"
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
-        self.path = os.path.join(".", 'config', "fermenter_data.json")
+        self.path = self.cbpi.config_folder.get_file_path("fermenter_data.json")
         self.data = []
         self.types = {}
         self.steptypes = {}
@@ -35,18 +35,18 @@ class FermentationController:
         pass
 
     def check_fermenter_file(self):
-        if os.path.exists(os.path.join(".", 'config', "fermenter_data.json")) is False:
+        if os.path.exists(self.cbpi.config_folder.get_file_path("fermenter_data.json")) is False:
             logging.info("INIT fermenter_data.json file")
             data = {
                     "data": [
                             ]
                     }
-            destfile = os.path.join(".", 'config', "fermenter_data.json")
+            destfile = self.cbpi.config_folder.get_file_path("fermenter_data.json")
             json.dump(data,open(destfile,'w'),indent=4, sort_keys=True)
         
-        pathlib.Path(os.path.join(".", 'config/fermenterrecipes')).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(self.cbpi.config_folder.get_file_path("fermenterrecipes")).mkdir(parents=True, exist_ok=True)
 
-    async def shutdown(self, app=None, fermenterid=None):    
+    async def shutdown(self, app=None, fermenterid=None):
         self.save()
         if (fermenterid == None):
             for fermenter in self.data:
@@ -54,10 +54,7 @@ class FermentationController:
                 for step in fermenter.steps:
                     try:
                         self.logger.info("Stop {}".format(step.name))
-                        try:
-                            step.instance.shutdown = True
-                        except:
-                            pass
+                        step.instance.shutdown = True
                         await step.instance.stop()
                     except Exception as e:
                         self.logger.error(e)
@@ -67,10 +64,7 @@ class FermentationController:
             for step in fermenter.steps:
                 try:
                     self.logger.info("Stop {}".format(step.name))
-                    try:
-                        step.instance.shutdown = True
-                    except:
-                        pass
+                    step.instance.shutdown = True
                     await step.instance.stop()
                 except Exception as e:
                     self.logger.error(e)
@@ -109,6 +103,7 @@ class FermentationController:
         return step
 
     def _done(self, step_instance, result, fermenter):
+        logging.info(result)
         step_instance.step["status"] = "D"
         self.save()
         if result == StepResult.NEXT:
@@ -119,14 +114,17 @@ class FermentationController:
             id = data.get("id")
             name = data.get("name")
             sensor = data.get("sensor")
+            pressure_sensor = data.get("pressure_sensor")
             heater = data.get("heater")
             cooler = data.get("cooler")
+            valve = data.get("valve","") 
             logictype = data.get("type")
             temp = data.get("target_temp")
+            pressure = data.get("target_pressure")
             brewname = data.get("brewname")
             description = data.get("description")
             props = Props(data.get("props", {}))
-            fermenter = Fermenter(id, name, sensor, heater, cooler, brewname, description, props, temp, logictype)
+            fermenter = Fermenter(id, name, sensor, pressure_sensor, heater, cooler, valve, brewname, description, props, temp, pressure, logictype)
             fermenter.steps = list(map(lambda item: self._create_step(fermenter, item), data.get("steps", [])))
             self.push_update()
             return fermenter
@@ -135,7 +133,7 @@ class FermentationController:
 
         
     def _find_by_id(self, id):
-         return next((item for item in self.data if item.id == id), None)
+        return next((item for item in self.data if item.id == id), None)
 
     async def get_all(self):
         return list(map(lambda x: x.to_dict(), self.data))
@@ -202,13 +200,16 @@ class FermentationController:
         def _update(old_item: Fermenter, item: Fermenter):
             old_item.name = item.name
             old_item.sensor = item.sensor
+            old_item.pressure_sensor = item.pressure_sensor
             old_item.heater = item.heater
             old_item.cooler = item.cooler
+            old_item.valve = item.valve
             old_item.type = item.type
             old_item.brewname = item.brewname
             old_item.description = item.description
             old_item.props = item.props
             old_item.target_temp = item.target_temp
+            old_item.target_pressure = item.target_pressure
             return old_item
 
         self.data = list(map(lambda old: _update(old, item) if old.id == item.id else old, self.data))
@@ -227,6 +228,17 @@ class FermentationController:
         except Exception as e:
             logging.error("Failed to set Target Temp {} {}".format(id, e))
 
+    async def set_target_pressure(self, id: str, target_pressure):
+        try:
+            item = self._find_by_id(id)
+            logging.info(item.target_pressure)
+            if item:
+                item.target_pressure = target_pressure
+                self.save()
+                self.push_update()
+        except Exception as e:
+            logging.error("Failed to set Target Pressure {} {}".format(id, e))
+
     async def delete(self, id: str ):
         item = self._find_by_id(id)
         self.data = list(filter(lambda item: item.id != id, self.data))
@@ -234,7 +246,7 @@ class FermentationController:
         self.push_update()
 
     def save(self):
-        data = dict(data=list(map(lambda item: item.to_dict(), self.data))) 
+        data = dict(data=list(map(lambda item: item.to_dict(), self.data)))         
         with open(self.path, "w") as file:
             json.dump(data, file, indent=4, sort_keys=True)
 
@@ -304,6 +316,8 @@ class FermentationController:
         item = self._find_by_id(id)
         # might require later check if step is active
         item.steps = []
+        item.brewname = ""
+        self.push_update()
         self.save()
         self.push_update("fermenterstepupdate")
 
@@ -323,6 +337,17 @@ class FermentationController:
     def _find_step_by_id(self, data, id):
         return next((item for item in data if item.id == id), None)
 
+    async def update_endtime(self, id, stepid, endtime):
+        try:
+            item = self._find_by_id(id)
+            step = self._find_step_by_id(item.steps, stepid)
+            step.endtime = int(endtime)
+            self.save()
+            self.push_update("fermenterstepupdate")          
+        except Exception as e:
+            self.logger.error(e)
+
+
     async def start(self, id):
         self.logger.info("Start {}".format(id))
         try:
@@ -338,7 +363,9 @@ class FermentationController:
                 endtime = step.endtime
                 await step.instance.start()
                 logging.info("Restarting step {}".format(step.name))
-                step.status = StepState.ACTIVE
+                if endtime != 0:
+                    logging.info("Need to change timer")
+                step.status = StepState.ACTIVE             
                 self.save()
                 self.push_update()
                 self.push_update("fermenterstepupdate")
@@ -364,8 +391,8 @@ class FermentationController:
         try:
             item = self._find_by_id(id)
             step = self._find_by_status(item.steps, StepState.ACTIVE)
-            logging.info(step)
-            logging.info(step.status)
+            #logging.info(step)
+            #logging.info(step.status)
             if step != None:
                 logging.info("CALLING STOP STEP")
                 try:
@@ -396,7 +423,6 @@ class FermentationController:
             await item.instance.start()
             item.instance.running = True
             item.instance.task = asyncio.get_event_loop().create_task(item.instance._run())
-
             
             logging.info("{} started {}".format(item.name, id))
             
@@ -516,7 +542,7 @@ class FermentationController:
     
     async def savetobook(self, fermenterid):
         name = shortuuid.uuid()
-        path = os.path.join(".", 'config', "fermenterrecipes", "{}.yaml".format(name))
+        path = self.cbpi.config_folder.get_fermenter_recipe_by_id(name)
         fermenter=self._find_by_id(fermenterid)
         try:
             brewname = fermenter.brewname
@@ -549,11 +575,17 @@ class FermentationController:
             item["props"]["Sensor"] = fermenter.sensor
 
         list(map(lambda item: add_runtime_data(item), data.get("steps")))
-        fermenter.description = data['basic']['desc']
+        try:
+            fermenter.description = data['basic'].get("desc")
+        except:
+            fermenter.description = "No Description"
         if name is not None:
             fermenter.brewname = name
         else:
-            fermenter.brewname = data['basic']['name']
+            try:
+                fermenter.brewname = data['basic'].get("name")
+            except:
+                fermenter.brewname = "Fermentation"
         await self.update(fermenter)
         fermenter.steps=[]
         for item in data.get("steps"):
