@@ -14,7 +14,7 @@ import importlib
 from importlib_metadata import metadata
 from tabulate import tabulate
 from PyInquirer import prompt, print_json
-
+import platform
 
 class CraftBeerPiCli():
     def __init__(self, config) -> None:
@@ -263,7 +263,7 @@ def plugins(context):
     '''List active plugins'''
     context.obj.plugins_list()
 
-@click.command()
+@main.command()
 @click.pass_context
 def create(context):
     '''Create New Plugin'''
