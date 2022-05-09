@@ -14,7 +14,7 @@ if localsystem == "Linux":
         raspberrypi=True
 
 
-setup(name='cbpi',
+setup(name='cbpi4',
       version=__version__,
       description='CraftBeerPi',
       author='Manuel Fritsch',
@@ -49,7 +49,7 @@ setup(name='cbpi',
           'PyInquirer==1.0.3',
           'colorama==0.4.4',
           'psutil==5.9.0',
-          'cbpi4ui',
+          'cbpi4gui',
           'importlib_metadata',
           'numpy==1.22.2',
           'pandas==1.4.1'] + (
