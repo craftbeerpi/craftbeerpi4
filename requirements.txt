@@ -14,7 +14,7 @@ pandas==1.4.1
 shortuuid==1.0.8
 tabulate==0.8.9
 numpy==1.22.2
-cbpi4ui
+cbpi4gui
 click==8.0.4
 importlib_metadata==4.11.1
 asyncio-mqtt
