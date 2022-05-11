@@ -44,7 +44,7 @@ class HTTPSensorEndpoint(CBPiExtension):
 
         :param cbpi:
         '''
-        self.pattern_check = re.compile("^[a-zA-Z0-9,.]{0,10}$")
+        self.pattern_check = re.compile("^[a-zA-Z0-9,._-]{0,10}$")
 
         self.cbpi = cbpi
         # register component for http, events
@@ -80,10 +80,10 @@ class HTTPSensorEndpoint(CBPiExtension):
         key = request.match_info['key']
         value = request.match_info['value']
         if self.pattern_check.match(key) is None:
-            return web.json_response(status=422, data={'error': "Key not matching pattern ^[a-zA-Z0-9,.]{0,10}$"})
+            return web.json_response(status=422, data={'error': "Key not matching pattern ^[a-zA-Z0-9,._-]{0,10}$"})
 
         if self.pattern_check.match(value) is None:
-            return web.json_response(status=422, data={'error': "Data not matching pattern ^[a-zA-Z0-9,.]{0,10}$"})
+            return web.json_response(status=422, data={'error': "Data not matching pattern ^[a-zA-Z0-9,._-]{0,10}$"})
 
         
         cache[key] = value
