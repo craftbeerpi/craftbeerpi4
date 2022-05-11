@@ -3,7 +3,7 @@ from cbpi import __version__
 import platform
 
 # read the contents of your README file
-from os import popen
+from os import popen, path
 
 localsystem = platform.system()
 raspberrypi=False
@@ -13,13 +13,19 @@ if localsystem == "Linux":
     if len(model) != 0:
         raspberrypi=True
 
+# read the contents of your README file
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
-setup(name='cbpi',
+setup(name='cbpi4',
       version=__version__,
-      description='CraftBeerPi',
-      author='Manuel Fritsch',
+      description='CraftBeerPi4 Brewing Software',
+      author='Manuel Fritsch / Alexander Vollkopf',
       author_email='manuel@craftbeerpi.com',
       url='http://web.craftbeerpi.com',
+      project_urls={
+	    'Documentation': 'https://openbrewing.gitbook.io/craftbeerpi4_support/'},
       packages=find_packages(),
       include_package_data=True,
       package_data={
@@ -28,7 +34,8 @@ setup(name='cbpi',
       'cbpi': ['*','*.txt', '*.rst', '*.yaml']},
 
       python_requires='>=3.9',
-
+      long_description=long_description,
+	    long_description_content_type='text/markdown',
       install_requires=[
           "aiohttp==3.8.1",
           "aiohttp-auth==0.1.1",
@@ -49,7 +56,7 @@ setup(name='cbpi',
           'PyInquirer==1.0.3',
           'colorama==0.4.4',
           'psutil==5.9.0',
-          'cbpi4ui',
+          'cbpi4gui',
           'importlib_metadata',
           'numpy==1.22.2',
           'pandas==1.4.1'] + (
