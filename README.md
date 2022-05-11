@@ -7,7 +7,7 @@
 ![Happy Brewing](https://img.shields.io/badge/CraftBeerPi%204-Happy%20Brewing-%23FBB117)
 
 <p align="center">
-  <img src="https://github.com/avollkopf/craftbeerpi4-ui/blob/main/cbpi4ui/public/logo192.png?raw=true" alt="CraftBeerPi Logo"/>
+  <img src="https://github.com/avollkopf/craftbeerpi4-ui/blob/main/cbpi4gui/public/logo192.png?raw=true" alt="CraftBeerPi Logo"/>
 </p>
 
 CraftBeerPi 4 is an open source software solution to control the brewing and
