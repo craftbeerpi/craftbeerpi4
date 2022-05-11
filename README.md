@@ -1,13 +1,13 @@
 # CraftBeerPi 4
 
-[![Build](https://github.com/craftbeerpi/craftbeerpi4/actions/workflows/build.yml/badge.svg)](https://github.com/craftbeerpi/craftbeerpi4/actions/workflows/build.yml)
-[![GitHub license](https://img.shields.io/github/license/craftbeerpi/craftbeerpi4)](https://github.com/craftbeerpi/craftbeerpi4/blob/master/LICENSE)
-![GitHub issues](https://img.shields.io/github/issues-raw/craftbeerpi/craftbeerpi4)
-![PyPI](https://img.shields.io/pypi/v/cbpi)
+[![Build](https://github.com/avollkopf/craftbeerpi4/actions/workflows/build.yml/badge.svg)](https://github.com/avollkopf/craftbeerpi4/actions/workflows/build.yml)
+[![GitHub license](https://img.shields.io/github/license/avollkopf/craftbeerpi4)](https://github.com/avollkopf/craftbeerpi4/blob/master/LICENSE)
+![GitHub issues](https://img.shields.io/github/issues-raw/avollkopf/craftbeerpi4)
+![PyPI](https://img.shields.io/pypi/v/cbpi4)
 ![Happy Brewing](https://img.shields.io/badge/CraftBeerPi%204-Happy%20Brewing-%23FBB117)
 
 <p align="center">
-  <img src="https://github.com/craftbeerpi/craftbeerpi4-ui/blob/main/cbpi4gui/public/logo192.png?raw=true" alt="CraftBeerPi Logo"/>
+  <img src="https://github.com/avollkopf/craftbeerpi4-ui/blob/main/cbpi4gui/public/logo192.png?raw=true" alt="CraftBeerPi Logo"/>
 </p>
 
 CraftBeerPi 4 is an open source software solution to control the brewing and
@@ -36,4 +36,4 @@ For a more detailed description of a development setup without the _development 
 ### Contributors
 Thanks to all the people who have contributed
 
-[![contributors](https://contributors-img.web.app/image?repo=craftbeerpi/craftbeerpi4)](https://github.com/craftbeerpi/craftbeerpi4/graphs/contributors)
+[![contributors](https://contributors-img.web.app/image?repo=avollkopf/craftbeerpi4)](https://github.com/avollkopf/craftbeerpi4/graphs/contributors)
