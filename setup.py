@@ -24,6 +24,7 @@ setup(name='cbpi4',
       author='Manuel Fritsch / Alexander Vollkopf',
       author_email='manuel@craftbeerpi.com',
       url='http://web.craftbeerpi.com',
+      license='GPLv3',
       project_urls={
 	    'Documentation': 'https://openbrewing.gitbook.io/craftbeerpi4_support/'},
       packages=find_packages(),
