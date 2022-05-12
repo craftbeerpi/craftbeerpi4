@@ -15,6 +15,6 @@ RUN pip3 install --no-cache-dir -r /workspace/requirements.txt
 
 # Install current version of cbpi-ui
 RUN mkdir /opt/downloads \
-    && curl https://github.com/craftbeerpi/craftbeerpi4-ui/archive/development.zip -L -o /opt/downloads/cbpi-ui.zip \
+    && curl https://github.com/avollkopf/craftbeerpi4-ui/archive/main.zip -L -o /opt/downloads/cbpi-ui.zip \
     && pip3 install --no-cache-dir /opt/downloads/cbpi-ui.zip \
     && rm -rf /opt/downloads
