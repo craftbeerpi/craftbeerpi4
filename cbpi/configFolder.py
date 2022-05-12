@@ -126,7 +126,7 @@ class ConfigFolder:
         pathlib.Path(os.path.join(self._rawPath, 'recipes')).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self._rawPath, 'upload')).mkdir(parents=True, exist_ok=True)
 
-    def recursive_chown(path, owner, group):
+    def recursive_chown(self, path, owner, group):
         for dirpath, dirnames, filenames in os.walk(path):
             shutil.chown(dirpath, owner, group)
             for filename in filenames:
