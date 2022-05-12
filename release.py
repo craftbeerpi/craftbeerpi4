@@ -47,7 +47,7 @@ def release():
         match = re.search('.*\"(.*)\"', reader.readline())
         version = match.group(1)
         
-        path = "dist/cbpi-{}.tar.gz".format(version)
+        path = "dist/cbpi4-{}.tar.gz".format(version)
         print("Uploading File {} ".format(path))
         subprocess.run(["twine", "upload", path])
           
