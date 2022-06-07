@@ -39,7 +39,7 @@ class MQTTActor(CBPiActor):
     async def off(self):
         self.state = False
         await self.cbpi.satellite.publish(self.topic, json.dumps(
-            {"state": "off", "power": self.power}), True)
+            {"state": "off", "power": 0}), True)
         pass
 
     async def run(self):
