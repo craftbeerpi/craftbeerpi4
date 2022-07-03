@@ -42,7 +42,7 @@ class LogController:
                 self.datalogger[name] = data_logger
 
             formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-            self.datalogger[name].info("%s,%s" % (formatted_time, value))
+            self.datalogger[name].info("%s,%s" % (formatted_time, str(value)))
         if self.influxdb == "Yes":
             self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
             self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
