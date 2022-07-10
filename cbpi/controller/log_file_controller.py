@@ -42,7 +42,7 @@ class LogController:
                 self.datalogger[name] = data_logger
 
             formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-            self.datalogger[name].info("%s,%s" % (formatted_time, value))
+            self.datalogger[name].info("%s,%s" % (formatted_time, str(value)))
         if self.influxdb == "Yes":
             self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
             self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
@@ -116,28 +116,36 @@ class LogController:
         for name in names:
             # get all log names
             all_filenames = glob.glob('./logs/sensor_%s.log*' % name)
-
             # concat all logs
             df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', name], header=None) for f in all_filenames])
             logging.info("Read all files for {}".format(names))
             # resample if rate provided
-            if sample_rate is not None:
-                df = df[name].resample(sample_rate).max()
-            logging.info("Sampled now for {}".format(names))
-            df = df.dropna()
+            # if sample_rate is not None:
+            #     df = df[name].resample(sample_rate).max()
+            # logging.info("Sampled now for {}".format(names))
+            df = df[name].dropna()
+            # take every nth row so that total number of rows does not exceed max_rows * 2
+            max_rows = 500
+            total_rows = df.shape[0]
+            if (total_rows > 0) and (total_rows > max_rows):
+                nth = int(total_rows/max_rows)
+                if nth > 1:
+                    df = df.iloc[::nth]
+                    
             if result is None:
                 result = df
             else:
                 result = pd.merge(result, df, how='outer', left_index=True, right_index=True)
 
         data = {"time": df.index.tolist()}
-
         if len(names) > 1:
             for name in names:
                 data[name] = result[name].interpolate(limit_direction='both', limit=10).tolist()
         else:
             data[name] = result.interpolate().tolist()
+
         logging.info("Send Log for {}".format(names))
+        
         return data
 
     async def get_data2(self, ids) -> dict:
@@ -146,7 +154,10 @@ class LogController:
         
         result = dict()
         for id in ids:
-            df = pd.read_csv("./logs/sensor_%s.log" % id, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime',"Values"], header=None) 
+            # df = pd.read_csv("./logs/sensor_%s.log" % id, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime',"Values"], header=None) 
+            # concat all logs
+            all_filenames = glob.glob('./logs/sensor_%s.log*' % id)
+            df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
             result[id] = {"time": df.index.astype(str).tolist(), "value":df.Values.tolist()}
         return result
 
