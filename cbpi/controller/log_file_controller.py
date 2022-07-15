@@ -31,8 +31,8 @@ class LogController:
         self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
         if self.logfiles == "Yes":
             if name not in self.datalogger:
-                max_bytes = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 1048576)
-                backup_count = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3)
+                max_bytes = int(self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 131072))
+                backup_count = int(self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3))
     
                 data_logger = logging.getLogger('cbpi.sensor.%s' % name)
                 data_logger.propagate = False
@@ -120,10 +120,10 @@ class LogController:
             df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', name], header=None) for f in all_filenames])
             logging.info("Read all files for {}".format(names))
             # resample if rate provided
-            # if sample_rate is not None:
-            #     df = df[name].resample(sample_rate).max()
-            # logging.info("Sampled now for {}".format(names))
-            df = df[name].dropna()
+            if sample_rate is not None:
+                df = df[name].resample(sample_rate).max()
+            logging.info("Sampled now for {}".format(names))
+            df = df.dropna()
             # take every nth row so that total number of rows does not exceed max_rows * 2
             max_rows = 500
             total_rows = df.shape[0]
@@ -138,6 +138,7 @@ class LogController:
                 result = pd.merge(result, df, how='outer', left_index=True, right_index=True)
 
         data = {"time": df.index.tolist()}
+        
         if len(names) > 1:
             for name in names:
                 data[name] = result[name].interpolate(limit_direction='both', limit=10).tolist()
@@ -158,6 +159,8 @@ class LogController:
             # concat all logs
             all_filenames = glob.glob('./logs/sensor_%s.log*' % id)
             df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
+            df = df.resample('60s').max()
+            df = df.dropna()
             result[id] = {"time": df.index.astype(str).tolist(), "value":df.Values.tolist()}
         return result
 

@@ -144,5 +144,19 @@
         "options": null,
         "type": "step",
         "value": "NotificationStep"
-    }
+    },
+    "SENSOR_LOG_BACKUP_COUNT": {
+        "description": "Max. number of backup logs",
+        "name": "SENSOR_LOG_BACKUP_COUNT",
+        "options": null,
+        "type": "number",
+        "value": 3
+    },
+    "SENSOR_LOG_MAX_BYTES": {
+        "description": "Max. number of bytes in sensor logs",
+        "name": "SENSOR_LOG_MAX_BYTES",
+        "options": null,
+        "type": "number",
+        "value": "100000"
+    }    
 }
