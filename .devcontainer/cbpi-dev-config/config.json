@@ -177,6 +177,22 @@
         "type": "select",
         "value": 0
     },
+    "PRESSURE_UNIT": {
+        "description": "Set unit for pressure",
+        "name": "PRESSURE_UNIT",
+        "options": [
+            {
+                "label": "kPa",
+                "value": "kPa"
+            },
+            {
+                "label": "PSI",
+                "value": "PSI"
+            }
+        ],
+        "type": "select",
+        "value": "kPa"
+    },
     "RECIPE_CREATION_PATH": {
         "description": "API path to creation plugin. Default: upload . CHANGE ONLY IF USING A RECIPE CREATION PLUGIN",
         "name": "RECIPE_CREATION_PATH",
