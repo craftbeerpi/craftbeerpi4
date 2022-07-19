@@ -31,7 +31,7 @@ class LogController:
         self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
         if self.logfiles == "Yes":
             if name not in self.datalogger:
-                max_bytes = int(self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 131072))
+                max_bytes = int(self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 100000))
                 backup_count = int(self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3))
     
                 data_logger = logging.getLogger('cbpi.sensor.%s' % name)
