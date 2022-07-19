@@ -47,7 +47,8 @@ class ConfigUpdate(CBPiExtension):
         influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", None)
         mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
         PRESSURE_UNIT = self.cbpi.config.get("PRESSURE_UNIT", None)
-
+        SENSOR_LOG_BACKUP_COUNT = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", None)
+        SENSOR_LOG_MAX_BYTES = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", None)
 
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
