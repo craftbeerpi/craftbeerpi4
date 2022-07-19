@@ -47,9 +47,8 @@ class ConfigUpdate(CBPiExtension):
         influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", None)
         mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
         PRESSURE_UNIT = self.cbpi.config.get("PRESSURE_UNIT", None)
-        SENSOR_LOG_BACKUP_COUNT = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", None)
-        SENSOR_LOG_MAX_BYTES = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", None)
-        
+
+
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
             try:
@@ -286,23 +285,6 @@ class ConfigUpdate(CBPiExtension):
                                                                                                 {"label": "PSI", "value": "PSI"}])
             except:
                 logger.warning('Unable to update config')
-        
-        # check if SENSOR_LOG_BACKUP_COUNT exists in config
-        if SENSOR_LOG_BACKUP_COUNT is None:
-            logger.info("INIT SENSOR_LOG_BACKUP_COUNT")
-            try:
-                await self.cbpi.config.add("SENSOR_LOG_BACKUP_COUNT", 3, ConfigType.NUMBER, "Max. number of backup logs")
-            except:
-                logger.warning('Unable to update database')
-                
-        # check if SENSOR_LOG_MAX_BYTES exists in config
-        if SENSOR_LOG_MAX_BYTES is None:
-            logger.info("INIT SENSOR_LOG_MAX_BYTES")
-            try:
-                await self.cbpi.config.add("SENSOR_LOG_MAX_BYTES", 100000, ConfigType.NUMBER, "Max. number of bytes in sensor logs")
-            except:
-                logger.warning('Unable to update database')
-                
 
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)
