@@ -297,9 +297,9 @@ class ConfigUpdate(CBPiExtension):
                 
         # check if SENSOR_LOG_MAX_BYTES exists in config
         if SENSOR_LOG_MAX_BYTES is None:
-            logger.info("INIT SENSOR_LOG_MAX_BYTES")
+            logger.info("Init maximum size of sensor logfiles")
             try:
-                await self.cbpi.config.add("SENSOR_LOG_MAX_BYTES", 100000, ConfigType.NUMBER, "Max. number of bytes in sensor logs")
+                await self.cbpi.config.add("SENSOR_LOG_MAX_BYTES", 100000, ConfigType.NUMBER, "Max. number of bytes in sensor logfiles")
             except:
                 logger.warning('Unable to update database')
                 
