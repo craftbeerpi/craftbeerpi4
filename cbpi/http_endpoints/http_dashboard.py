@@ -157,3 +157,15 @@ class DashBoardHttpEndpoints:
         dashboard_id = int(request.match_info['id'])
         return web.json_response(await self.cbpi.dashboard.set_current_dashboard(dashboard_id))
 
+    @request_mapping(path="/slowPipeAnimation", method="GET", auth_required=False)
+    async def get_slow_pipe_animation(self, request):
+        """
+        ---
+        description: Get slow down dashboard pipe animation (Yes/No)
+        tags:
+        - Dashboard
+        responses:
+            "200":
+                description: successful operation
+        """
+        return web.json_response(await self.cbpi.dashboard.get_slow_pipe_animation(), dumps=json_dumps)

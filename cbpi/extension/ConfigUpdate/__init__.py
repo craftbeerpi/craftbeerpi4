@@ -49,7 +49,8 @@ class ConfigUpdate(CBPiExtension):
         PRESSURE_UNIT = self.cbpi.config.get("PRESSURE_UNIT", None)
         SENSOR_LOG_BACKUP_COUNT = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", None)
         SENSOR_LOG_MAX_BYTES = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", None)
-
+        slow_pipe_animation = self.cbpi.config.get("slow_pipe_animation", None)
+        
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
             try:
@@ -299,11 +300,20 @@ class ConfigUpdate(CBPiExtension):
         if SENSOR_LOG_MAX_BYTES is None:
             logger.info("Init maximum size of sensor logfiles")
             try:
-                await self.cbpi.config.add("SENSOR_LOG_MAX_BYTES", 100000, ConfigType.NUMBER, "Max. number of bytes in sensor logfiles")
+                await self.cbpi.config.add("SENSOR_LOG_MAX_BYTES", 100000, ConfigType.NUMBER, "Max. number of bytes in sensor logs")
             except:
                 logger.warning('Unable to update database')
                 
-
+        # Check if slow_pipe_animation is in config 
+        if slow_pipe_animation is None:
+            logger.info("INIT slow_pipe_animation")
+            try:
+                await self.cbpi.config.add("slow_pipe_animation", "Yes", ConfigType.SELECT, "Slow down dashboard pipe animation taking up close to 100% of the CPU's capacity", 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+            except:
+                logger.warning('Unable to update config')
+                
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)
     pass
