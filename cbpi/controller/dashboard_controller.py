@@ -64,3 +64,7 @@ class DashboardController:
     async def set_current_dashboard(self, dashboard_id=1):
         await self.cbpi.config.set("current_dashboard_number", dashboard_id)
         return {"status": "OK"}
+
+    async def get_slow_pipe_animation(self):
+        slow_pipe_animation = self.cbpi.config.get("slow_pipe_animation", "Yes")
+        return slow_pipe_animation
