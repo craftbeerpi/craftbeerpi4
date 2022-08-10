@@ -193,7 +193,7 @@ class UploadController:
                     pass
 
                 # get the hop addition times
-                c.execute('SELECT Zeit FROM Hopfengaben WHERE Vorderwuerze = 0 AND SudID = ?', (Recipe_ID,))
+                c.execute('SELECT Zeit FROM Hopfengaben WHERE Vorderwuerze <> 1 AND SudID = ?', (Recipe_ID,))
                 hops = c.fetchall()
 
                 # get the misc addition times
