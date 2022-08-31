@@ -24,6 +24,21 @@ class ActorHttpEndpoints():
         """
         return web.json_response(data=self.controller.get_state())
 
+    @request_mapping(path="/ws_update", auth_required=False)
+    async def http_get_all(self, request):
+        """
+
+        ---
+        description: Update WS actors
+        tags:
+        - Actor
+        responses:
+            "204":
+                description: successful operation
+        """
+        return web.json_response(data=await self.controller.ws_actor_update())
+        
+
     @request_mapping(path="/{id:\w+}", auth_required=False)
     async def http_get_one(self, request):
         """
