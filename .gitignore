@@ -18,3 +18,4 @@ node_modules
 config/*
 logs/
 .coverage
+.devcontainer/cbpi-dev-config/*

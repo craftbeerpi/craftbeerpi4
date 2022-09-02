@@ -1,3 +1,4 @@
+from ast import If, Try
 import os
 from os import listdir
 from os.path import isfile, join
@@ -33,25 +34,8 @@ class ConfigFolder:
         return fermenter_recipe_ids
 
     def check_for_setup(self):
-        if self.config_file_exists("config.yaml") is False:
-            print("***************************************************")
-            print("CraftBeerPi Config File not found: %s" % self.get_file_path("config.yaml"))
-            print("Please run 'cbpi setup' before starting the server ")
-            print("***************************************************")
-            return False
-        if self.config_file_exists("upload") is False:
-            print("***************************************************")
-            print("CraftBeerPi upload folder not found: %s" % self.get_file_path("upload"))
-            print("Please run 'cbpi setup' before starting the server ")
-            print("***************************************************")
-            return False
-    #    if os.path.exists(os.path.join(".", "config", "fermenterrecipes")) is False:
-    #        print("***************************************************")
-    #        print("CraftBeerPi fermenterrecipes folder not found: %s" % os.path.join(".", "config/fermenterrecipes"))
-    #        print("Please run 'cbpi setup' before starting the server ")
-    #        print("***************************************************")
-    #        return False
-        backupfile = os.path.join(".", "restored_config.zip")
+        # is there a restored_config.zip file? if yes restore it first then delte the zip.
+        backupfile = os.path.join(self._rawPath, "restored_config.zip")
         if os.path.exists(os.path.join(backupfile)) is True:
             print("***************************************************")
             print("Found backup of config. Starting restore")
@@ -75,7 +59,7 @@ class ConfigFolder:
                     owner = output_path.owner()
                     group = output_path.group()
                 print("Removing old config folder")
-                shutil.rmtree(output_path, ignore_errors=True) 
+                shutil.rmtree(output_path, ignore_errors=True)
                 print("Extracting zip file to config folder")
                 zip.extractall(output_path)
                 zip.close()
@@ -83,12 +67,79 @@ class ConfigFolder:
                     print(f"Changing owner and group of config folder recursively to {owner}:{group}")
                     self.recursive_chown(output_path, owner, group)
                 print("Removing backup file")
-                os.remove(backupfile)
+                print("contents of restored_config.zip file have been restored.")
+                print("in case of a partial backup you will still be prompted to run 'cbpi setup'.")
+                # os.remove(backupfile) # since the zip was inside the config folder and the config folder was deleted 10 lines ago this file doesnt exist anymore
             else:
                 print("Wrong Content in zip file. No restore possible")
-                print("Removing zip file")
-                os.remove(backupfile)
+                print("renaming zip file so it will be ignored on the next start")
+                try:
+                    os.rename(backupfile, os.path.join(self._rawPath, "UNRESTORABLE_restored_config.zip"))
+                except:
+                    print("renamed file does exist - deleting instead") 
+                    os.remove(backupfile)
             print("***************************************************")
+        # possible restored_config.zip has been handeled now lets check if files and folders exist
+        required_config_content = [
+            ['config.yaml', 'file'],
+            ['actor.json', 'file'],
+            ['sensor.json', 'file'],
+            ['kettle.json', 'file'],
+            ['fermenter_data.json', 'file'],
+            ['step_data.json', 'file'],
+            ['config.json', 'file'],
+            ['craftbeerpi.service', 'file'],
+            ['chromium.desktop', 'file'],
+            ['dashboard/cbpi_dashboard_1.json', 'file'],
+            ['dashboard', 'folder'],
+            ['dashboard/widgets', 'folder'],
+            ['fermenterrecipes', 'folder'],
+            ['logs', 'folder'],
+            ['logs/sensors', 'folder'],
+            ['recipes', 'folder'],
+            ['upload', 'folder']
+        ]
+        for checking in required_config_content:
+            if self.inform_missing_content(self.check_for_file_or_folder(os.path.join(self._rawPath, checking[0]), checking[1])):
+                # since there is no complete config we now check if the config folde rmay be completely empty to show hints:
+                if len(os.listdir(os.path.join(self._rawPath))) == 0 :
+                    print("***************************************************")
+                    print(f"the config folder '{self._rawPath}' seems to be completely empty")
+                    print("you might want to run 'cbpi setup'.print")
+                    print("but you could also place your zipped config backup named")
+                    print("'restored_config.zip' inside the mentioned config folder for")
+                    print("cbpi4 to automatically unpack it")
+                    print("of course you can also place your config files manually")
+                    print("***************************************************")
+                return False
+    
+    def inform_missing_content(self, whatsmissing : str):
+        if whatsmissing == "":
+            return False
+        print("***************************************************")
+        print(f"CraftBeerPi config content not found: {whatsmissing}")
+        print("Please run 'cbpi setup' before starting the server ")
+        print("***************************************************")
+        return True
+
+
+    def check_for_file_or_folder(self, path : str, file_or_folder : str = ""): # file_or_folder should be "file" or "folder" or "" if both is ok
+        if (file_or_folder == ""): # file and folder is ok
+            if os.path.exists(path):
+                return ""
+            else:
+                return "file or folder missing: " + path
+        if (file_or_folder == "file"): # only file is ok
+            if (os.path.isfile(path)):
+                return ""
+            else:
+                return "file missing: " + path
+        if (file_or_folder == "folder"): # oly folder is ok
+            if (os.path.isdir(path)):
+                return ""
+            else:
+                return "folder missing: " + path
+        return "usage of check_file_or_folder() function wrong. second Argument must either be 'file' or 'folder' or an empty string"
 
     def copyDefaultFileIfNotExists(self, file):
         if self.config_file_exists(file) is False:
@@ -115,7 +166,7 @@ class ConfigFolder:
         print("Config Folder created")
 
     def create_home_folder_structure(configFolder):
-        pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
+        # pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
         
         configFolder.create_folders()
         print("Folder created")
@@ -123,11 +174,18 @@ class ConfigFolder:
     def create_folders(self):
         pathlib.Path(self._rawPath).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self._rawPath, 'dashboard', 'widgets')).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(os.path.join(self._rawPath, 'logs', 'sensors')).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self._rawPath, 'recipes')).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(os.path.join(self._rawPath, 'fermenterrecipes')).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self._rawPath, 'upload')).mkdir(parents=True, exist_ok=True)
 
     def recursive_chown(self, path, owner, group):
-        for dirpath, dirnames, filenames in os.walk(path):
-            shutil.chown(dirpath, owner, group)
-            for filename in filenames:
-                shutil.chown(os.path.join(dirpath, filename), owner, group)
+        try:
+            for dirpath, dirnames, filenames in os.walk(path):
+                shutil.chown(dirpath, owner, group)
+                for filename in filenames:
+                    shutil.chown(os.path.join(dirpath, filename), owner, group)
+        except:
+            print("problems assigning file or folder permissions")
+            print("if this happend on windows its fine")
+            print("if this happend in the dev container running inside windows its also fine but you might have to rebuild the container if you run into further problems")
