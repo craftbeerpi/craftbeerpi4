@@ -69,7 +69,6 @@ class ConfigFolder:
                 print("Removing backup file")
                 print("contents of restored_config.zip file have been restored.")
                 print("in case of a partial backup you will still be prompted to run 'cbpi setup'.")
-                # os.remove(backupfile) # since the zip was inside the config folder and the config folder was deleted 10 lines ago this file doesnt exist anymore
             else:
                 print("Wrong Content in zip file. No restore possible")
                 print("renaming zip file so it will be ignored on the next start")
@@ -166,8 +165,6 @@ class ConfigFolder:
         print("Config Folder created")
 
     def create_home_folder_structure(configFolder):
-        # pathlib.Path(os.path.join(".", 'logs/sensors')).mkdir(parents=True, exist_ok=True)
-        
         configFolder.create_folders()
         print("Folder created")
 
