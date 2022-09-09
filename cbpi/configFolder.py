@@ -90,11 +90,10 @@ class ConfigFolder:
             ['craftbeerpi.service', 'file'],
             ['chromium.desktop', 'file'],
             ['dashboard/cbpi_dashboard_1.json', 'file'],
-            ['dashboard', 'folder'],
             ['dashboard/widgets', 'folder'],
+            ['dashboard', 'folder'],
             ['fermenterrecipes', 'folder'],
-            ['logs', 'folder'],
-            ['logs/sensors', 'folder'],
+            ['../logs', 'folder'],
             ['recipes', 'folder'],
             ['upload', 'folder']
         ]
@@ -171,7 +170,7 @@ class ConfigFolder:
     def create_folders(self):
         pathlib.Path(self._rawPath).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self._rawPath, 'dashboard', 'widgets')).mkdir(parents=True, exist_ok=True)
-        pathlib.Path(os.path.join(self._rawPath, 'logs', 'sensors')).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(os.path.join(self._rawPath, '..','logs')).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self._rawPath, 'recipes')).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self._rawPath, 'fermenterrecipes')).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self._rawPath, 'upload')).mkdir(parents=True, exist_ok=True)

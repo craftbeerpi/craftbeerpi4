@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 import requests
 from cbpi.configFolder import ConfigFolder
 from cbpi.utils.utils import load_config
@@ -230,7 +231,16 @@ def main(context, config_folder_path):
     print("Welcome to CBPi")
     print("---------------------")
     level = logging.INFO
-    logging.basicConfig(level=level, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    logger = logging.getLogger()
+    logger.setLevel(level)
+    try:
+        logger.addHandler(logging.handlers.RotatingFileHandler(os.path.join(Path(config_folder_path).parent, 'logs', f"cbpi.log"), maxBytes=1000000, backupCount=3))
+    except:
+        print("there seems to be no log folder - continueing without (maybe you should run 'cbpi setup')")
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    for handler in logger.handlers:
+        handler.setLevel(level)
+        handler.setFormatter(formatter)
     cbpi_cli = CraftBeerPiCli(ConfigFolder(config_folder_path))
     context.obj = cbpi_cli
     pass
