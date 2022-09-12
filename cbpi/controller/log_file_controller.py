@@ -26,7 +26,7 @@ class LogController:
         self.logger = logging.getLogger(__name__)
         self.configuration = False
         self.datalogger = {}
-        self.logsFolderPath = os.path.join(Path(self.cbpi.config_folder._rawPath).parent.absolute(), 'logs')
+        self.logsFolderPath = self.cbpi.config_folder.logsFolderPath
         self.logger.info("Log folder path  : " + self.logsFolderPath)
 
     def log_data(self, name: str, value: str) -> None:

@@ -116,7 +116,7 @@ class SystemController:
             try:
                 content = backup_file.read()
                 if backup_file and self.allowed_file(filename, 'zip'):
-                    self.path = os.path.join(self.cbpi.config_folder._rawPath, "restored_config.zip")
+                    self.path = os.path.join(self.cbpi.config_folder.configFolderPath, "restored_config.zip")
                     
                     f=open(self.path, "wb")
                     f.write(content)
