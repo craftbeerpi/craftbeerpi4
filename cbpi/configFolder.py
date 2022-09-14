@@ -14,7 +14,8 @@ class ConfigFolder:
     def __init__(self, configFolderPath, logsFolderPath):
         self.configFolderPath = configFolderPath
         self.logsFolderPath = logsFolderPath
-        self.logger.info("Config folder path : " + os.path.join(Path(self.cbpi.config_folder.configFolderPath).absolute()))
+        print("config folder path :   " + configFolderPath)
+        print("logs folder path   :   " + logsFolderPath)
 
     def config_file_exists(self, path):
         return os.path.exists(self.get_file_path(path))

@@ -10,7 +10,8 @@
             "type": "python",
             "request": "launch",
             "module": "run",
-            "args": ["--config-folder-path=./.devcontainer/cbpi-dev-config", "start"]
+            "args": ["--config-folder-path=./.devcontainer/cbpi-dev-config", "start"],
+            "preLaunchTask": "copy default cbpi config files if dev config files dont exist"
         },
 
         {
