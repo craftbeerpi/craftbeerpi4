@@ -202,11 +202,6 @@ class UploadController:
                 for whirl in whirlpool:
                     hops.remove(whirl)
 
-                print(whirlpool)
-                print(hops)
-                
-
-
                 # get the misc addition times
                 c.execute('SELECT Zugabedauer FROM WeitereZutatenGaben WHERE Zeitpunkt = 1 AND SudID = ?', (Recipe_ID,))
                 miscs = c.fetchall()
@@ -318,8 +313,11 @@ class UploadController:
 
                 await self.create_step(step_string)
 
-                await self.create_Whirlpool_Cooldown(str(abs(whirlpool[0][0]))) # from kbh this value comes as negative but must be positive
- 
+                if not whirlpool:
+                    await self.create_Whirlpool_Cooldown()
+                else :
+                    await self.create_Whirlpool_Cooldown(str(abs(whirlpool[0][0]))) # from kbh this value comes as negative but must be positive
+
                 self.cbpi.notify('KBH Recipe created', name, NotificationType.INFO)
 
             except:
