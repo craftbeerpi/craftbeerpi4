@@ -56,9 +56,9 @@ class SystemController:
         output_filename="cbpi4_log.zip"
 
         if logtime == "b":
-            os.system('journalctl -b -u craftbeerpi.service > {}'.format(fullname))
+            os.system('journalctl -b -u craftbeerpi.service --output cat > {}'.format(fullname))
         else:
-            os.system('journalctl --since \"{} hours ago\" -u craftbeerpi.service > {}'.format(logtime, fullname))
+            os.system('journalctl --since \"{} hours ago\" -u craftbeerpi.service --output cat > {}'.format(logtime, fullname))
 
         os.system('cbpi plugins > {}'.format(fullpluginname))
 

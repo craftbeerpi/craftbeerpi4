@@ -17,7 +17,6 @@ from importlib_metadata import metadata
 from tabulate import tabulate
 from PyInquirer import prompt, print_json
 import platform
-import subprocess
 
 class CraftBeerPiCli():
     def __init__(self, config) -> None:
@@ -239,15 +238,6 @@ def main(context, config_folder_path, logs_folder_path, debug_log_level):
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(name)s - %(message)s')
     logging.basicConfig(format=formatter,level=debug_log_level, stream=logging.StreamHandler())
     logger = logging.getLogger()
-    try:
-        result = subprocess.run(['journalctl', '--since', '2 hours ago', '-u', 'craftbeerpi.service' ], stdout=subprocess.PIPE)
-        # journalctl is present, we assume we are running in production.
-        # We therefore omit the timestamp from the stdout log handler formatter because timestamps are added to the logs by journalctl anyway
-        logger.handlers[0].setFormatter('%(levelname)s - %(name)s - %(message)s')
-    except:
-        # journalctl command seems to not be present.
-        # We assume we are in the dev container and keep writing timestampts to stdout for vscode terminal output
-        logger.warning("journalctl command error - assuming dev container execution and writing timestamps to stdout")        
     try:
         if not os.path.isdir(logs_folder_path):
             logger.info(f"logs folder '{logs_folder_path}' doesnt exist and we are trying to create it")
