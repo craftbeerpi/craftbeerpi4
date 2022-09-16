@@ -160,7 +160,7 @@ class LogController:
         for id in ids:
             # df = pd.read_csv("./logs/sensor_%s.log" % id, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime',"Values"], header=None) 
             # concat all logs
-            all_filenames = glob.glob(os.path.join(self.logsFolderPath,f"./logs/sensor_{id}.log*"))
+            all_filenames = glob.glob(os.path.join(self.logsFolderPath,f"sensor_{id}.log*"))
             df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
             df = df.resample('60s').max()
             df = df.dropna()
@@ -179,8 +179,7 @@ class LogController:
         return [os.path.basename(x) for x in os.path.join(self.logsFolderPath, f"sensor_{name}.log*")]
 
     def clear_log(self, name:str ) -> str:
-        
-        all_filenames = os.path.join(self.logsFolderPath, f"sensor_{name}.log*")
+        all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
         for f in all_filenames:
             os.remove(f)
 
@@ -216,7 +215,7 @@ class LogController:
         """
 
         formatted_time = strftime("%Y-%m-%d-%H_%M_%S", localtime())
-        file_name = os.path.join(self.logsFolderPath, f"./logs/{formatted_time}-sensor-{name}.zip" % (formatted_time, name))
+        file_name = os.path.join(self.logsFolderPath, f"{formatted_time}-sensor-{name}.zip" % (formatted_time, name))
         zip = zipfile.ZipFile(file_name, 'w', zipfile.ZIP_DEFLATED)
         all_filenames = os.path.join(self.logsFolderPath, f"sensor_{name}.log*")
         for f in all_filenames:
