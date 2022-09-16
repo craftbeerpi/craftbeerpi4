@@ -87,7 +87,7 @@ class CraftBeerPiCli():
 
         answers = prompt(questions)
 
-        name = "cbpi4_" + answers["name"]
+        name = "cbpi4-" + str(answers["name"]).replace('_', '-').replace(' ', '-')
         if os.path.exists(os.path.join(".", name)) is True:
             print("Cant create Plugin. Folder {} already exists ".format(name))
             return

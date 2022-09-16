@@ -19,3 +19,5 @@ config/*
 logs/
 .coverage
 .devcontainer/cbpi-dev-config/*
+cbpi4-*
+temp*

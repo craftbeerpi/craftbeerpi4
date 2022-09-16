@@ -97,6 +97,7 @@ class ConfigFolder:
             ['dashboard/widgets', 'folder'],
             ['dashboard', 'folder'],
             ['fermenterrecipes', 'folder'],
+            [self.logsFolderPath, 'folder'],
             ['recipes', 'folder'],
             ['upload', 'folder']
         ]
@@ -172,6 +173,7 @@ class ConfigFolder:
 
     def create_folders(self):
         pathlib.Path(self.configFolderPath).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(self.logsFolderPath).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self.configFolderPath, 'dashboard', 'widgets')).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self.configFolderPath, 'recipes')).mkdir(parents=True, exist_ok=True)
         pathlib.Path(os.path.join(self.configFolderPath, 'fermenterrecipes')).mkdir(parents=True, exist_ok=True)
