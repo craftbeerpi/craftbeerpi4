@@ -17,6 +17,7 @@ from importlib_metadata import metadata
 from tabulate import tabulate
 from PyInquirer import prompt, print_json
 import platform
+import time
 
 class CraftBeerPiCli():
     def __init__(self, config) -> None:
@@ -99,8 +100,10 @@ class CraftBeerPiCli():
 
         with ZipFile('temp.zip', 'r') as repo_zip:
             repo_zip.extractall()
+        
+        time.sleep(1) # windows dev container permissions problem otherwise
 
-        os.rename("./craftbeerpi4-plugin-template-main", os.path.join(".", name))
+        os.rename(os.path.join(".","craftbeerpi4-plugin-template-main"), os.path.join(".", name))
         os.rename(os.path.join(".", name, "src"), os.path.join(".", name, name))
 
         import jinja2
