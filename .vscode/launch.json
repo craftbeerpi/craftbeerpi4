@@ -28,6 +28,14 @@
             "request": "launch",
             "module": "run",
             "args": ["--config-folder-path=./.devcontainer/cbpi-dev-config", "setup"]
+        },
+
+        {
+            "name": "run tests",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["tests"]
         }
     ]
 }

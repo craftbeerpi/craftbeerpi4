@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 class CLITest(unittest.TestCase):
 
     def test_list(self):
-        cli = CraftBeerPiCli(ConfigFolder("./cbpi-test-config"))
+        cli = CraftBeerPiCli(ConfigFolder("./cbpi-test-config", './logs')) # inside tests folder
         cli.plugins_list()
 
 if __name__ == '__main__':

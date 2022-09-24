@@ -118,7 +118,7 @@ class LogController:
 
         for name in names:
             # get all log names
-            all_filenames = os.path.join(self.logsFolderPath, f"sensor_{name}.log*")
+            all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
             # concat all logs
             df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', name], header=None) for f in all_filenames])
             logging.info("Read all files for {}".format(names))
@@ -176,7 +176,7 @@ class LogController:
         :return: list of log file names
         '''
 
-        return [os.path.basename(x) for x in os.path.join(self.logsFolderPath, f"sensor_{name}.log*")]
+        return [os.path.basename(x) for x in glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))]
 
     def clear_log(self, name:str ) -> str:
         all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
@@ -215,9 +215,9 @@ class LogController:
         """
 
         formatted_time = strftime("%Y-%m-%d-%H_%M_%S", localtime())
-        file_name = os.path.join(self.logsFolderPath, f"{formatted_time}-sensor-{name}.zip" % (formatted_time, name))
+        file_name = os.path.join(self.logsFolderPath, f"{formatted_time}-sensor-{name}.zip")
         zip = zipfile.ZipFile(file_name, 'w', zipfile.ZIP_DEFLATED)
-        all_filenames = os.path.join(self.logsFolderPath, f"sensor_{name}.log*")
+        all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
         for f in all_filenames:
             zip.write(os.path.join(f))
         zip.close()

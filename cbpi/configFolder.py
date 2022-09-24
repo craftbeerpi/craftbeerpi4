@@ -22,6 +22,9 @@ class ConfigFolder:
     
     def get_file_path(self, file):
         return os.path.join(self.configFolderPath, file)
+    
+    def get_dashboard_path(self, file):
+        return os.path.join(self.configFolderPath, "dashboard", file)
 
     def get_upload_file(self, file):
         return os.path.join(self.configFolderPath, 'upload', file)
