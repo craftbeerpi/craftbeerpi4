@@ -323,11 +323,17 @@ class ActorStep(CBPiStep):
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Kettlelogic automatically on and off -> Yes"),
              Property.Select("First_Wort", options=["Yes","No"], description="First Wort Hop alert if set to Yes"),
              Property.Number("Hop_1", configurable = True, description="First Hop alert (minutes before finish)"),
+             Property.Text("Hop_1_text", configurable = True, description="First Hop alert text"),
              Property.Number("Hop_2", configurable=True, description="Second Hop alert (minutes before finish)"),
+             Property.Text("Hop_2_text", configurable = True, description="Second Hop alert text"),
              Property.Number("Hop_3", configurable=True, description="Third Hop alert (minutes before finish)"),
+             Property.Text("Hop_3_text", configurable = True, description="Third Hop alert text"),
              Property.Number("Hop_4", configurable=True, description="Fourth Hop alert (minutes before finish)"),
+             Property.Text("Hop_4_text", configurable = True, description="Fourth Hop alert text"),
              Property.Number("Hop_5", configurable=True, description="Fifth Hop alert (minutes before finish)"),
-             Property.Number("Hop_6", configurable=True, description="Sixth Hop alert (minutes before finish)")])
+             Property.Text("Hop_5_text", configurable = True, description="Fifth Hop alert text"),
+             Property.Number("Hop_6", configurable=True, description="Sixth Hop alert (minutes before finish)"),
+             Property.Text("Hop_6_text", configurable = True, description="Sixth Hop alert text")])
 class BoilStep(CBPiStep):
 
     @action("Start Timer", [])
@@ -389,11 +395,14 @@ class BoilStep(CBPiStep):
             await self.setAutoMode(True)
         await self.push_update()
 
-    async def check_hop_timer(self, number, value):
+    async def check_hop_timer(self, number, value, text):
         if value is not None and self.hops_added[number-1] is not True:
             if self.remaining_seconds != None and self.remaining_seconds <= (int(value) * 60 + 1):
                 self.hops_added[number-1]= True
-                self.cbpi.notify('Hop Alert', "Please add Hop %s" % number, NotificationType.INFO)
+                if text is not None and text != "":
+                    self.cbpi.notify('Hop Alert', "Please add %s (%s)" % (text, number), NotificationType.INFO)
+                else:
+                    self.cbpi.notify('Hop Alert', "Please add Hop %s" % number, NotificationType.INFO)
 
     async def on_stop(self):
         await self.timer.stop()
@@ -426,7 +435,7 @@ class BoilStep(CBPiStep):
                 self.cbpi.notify(self.name, 'Timer started. Estimated completion: {}'.format(estimated_completion_time.strftime("%H:%M")), NotificationType.INFO)
             else:
                 for x in range(1, 6):
-                    await self.check_hop_timer(x, self.props.get("Hop_%s" % x, None))
+                    await self.check_hop_timer(x, self.props.get("Hop_%s" % x, None), self.props.get("Hop_%s_text" % x, None))
 
         return StepResult.DONE
 

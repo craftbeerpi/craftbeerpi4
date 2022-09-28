@@ -193,15 +193,15 @@ class UploadController:
                     pass
 
                 # get the hop addition times
-                c.execute('SELECT Zeit FROM Hopfengaben WHERE Vorderwuerze <> 1 AND Vorderwuerze <> 5 AND SudID = ?', (Recipe_ID,))
+                c.execute('SELECT Zeit, Name FROM Hopfengaben WHERE Vorderwuerze <> 1 AND Vorderwuerze <> 5 AND SudID = ?', (Recipe_ID,))
                 hops = c.fetchall()
 
                 # get the misc addition times
-                c.execute('SELECT Zugabedauer FROM WeitereZutatenGaben WHERE Zeitpunkt = 1 AND SudID = ?', (Recipe_ID,))
+                c.execute('SELECT Zugabedauer, Name FROM WeitereZutatenGaben WHERE Zeitpunkt = 1 AND SudID = ?', (Recipe_ID,))
                 miscs = c.fetchall()
 
                 try:
-                    c.execute('SELECT Zeit FROM Hopfengaben WHERE Vorderwuerze = 1 AND SudID = ?', (Recipe_ID,))
+                    c.execute('SELECT Zeit, Name FROM Hopfengaben WHERE Vorderwuerze = 1 AND SudID = ?', (Recipe_ID,))
                     FW_Hops = c.fetchall()
                     FirstWort = self.getFirstWort(FW_Hops,"kbh")
                 except:
@@ -293,12 +293,18 @@ class UploadController:
                                 "Timer": BoilTime,
                                 "First_Wort": FirstWort,
                                 "LidAlert": "Yes",
-                                "Hop_1": Hops[0],
-                                "Hop_2": Hops[1],
-                                "Hop_3": Hops[2],
-                                "Hop_4": Hops[3],
-                                "Hop_5": Hops[4],
-                                "Hop_6": Hops[5]
+                                "Hop_1": Hops[0][0],
+                                "Hop_1_text": Hops[0][1],
+                                "Hop_2": Hops[1][0],
+                                "Hop_2_text": Hops[1][1],
+                                "Hop_3": Hops[2][0],
+                                "Hop_3_text": Hops[2][1],
+                                "Hop_4": Hops[3][0],
+                                "Hop_4_text": Hops[3][1],
+                                "Hop_5": Hops[4][0],
+                                "Hop_5_text": Hops[4][1],
+                                "Hop_6": Hops[5][0],
+                                "Hop_6_text": Hops[5][1]
                                 },
                             "status_text": "",
                             "status": "I",
@@ -512,12 +518,18 @@ class UploadController:
                                 "Timer": step_time,
                                 "First_Wort": FirstWort,
                                 "LidAlert": LidAlert,
-                                "Hop_1": Hops[0],
-                                "Hop_2": Hops[1],
-                                "Hop_3": Hops[2],
-                                "Hop_4": Hops[3],
-                                "Hop_5": Hops[4],
-                                "Hop_6": Hops[5]
+                                "Hop_1": Hops[0][0],
+                                "Hop_1_text": Hops[0][1],
+                                "Hop_2": Hops[1][0],
+                                "Hop_2_text": Hops[1][1],
+                                "Hop_3": Hops[2][0],
+                                "Hop_3_text": Hops[2][1],
+                                "Hop_4": Hops[3][0],
+                                "Hop_4_text": Hops[3][1],
+                                "Hop_5": Hops[4][0],
+                                "Hop_5_text": Hops[4][1],
+                                "Hop_6": Hops[5][0],
+                                "Hop_6_text": Hops[5][1]
                                 },
                             "status_text": "",
                             "status": "I",
@@ -658,12 +670,18 @@ class UploadController:
                                 "Timer": step_time,
                                 "First_Wort": FirstWort,
                                 "LidAlert": LidAlert,
-                                "Hop_1": Hops[0],
-                                "Hop_2": Hops[1],
-                                "Hop_3": Hops[2],
-                                "Hop_4": Hops[3],
-                                "Hop_5": Hops[4],
-                                "Hop_6": Hops[5]
+                                "Hop_1": Hops[0][0],
+                                "Hop_1_text": Hops[0][1],
+                                "Hop_2": Hops[1][0],
+                                "Hop_2_text": Hops[1][1],
+                                "Hop_3": Hops[2][0],
+                                "Hop_3_text": Hops[2][1],
+                                "Hop_4": Hops[3][0],
+                                "Hop_4_text": Hops[3][1],
+                                "Hop_5": Hops[4][0],
+                                "Hop_5_text": Hops[4][1],
+                                "Hop_6": Hops[5][0],
+                                "Hop_6_text": Hops[5][1]
                                 },
                             "status_text": "",
                             "status": "I",
@@ -860,12 +878,18 @@ class UploadController:
                                 "Timer": step_time,
                                 "First_Wort": FirstWort,
                                 "LidAlert": LidAlert,
-                                "Hop_1": Hops[0],
-                                "Hop_2": Hops[1],
-                                "Hop_3": Hops[2],
-                                "Hop_4": Hops[3],
-                                "Hop_5": Hops[4],
-                                "Hop_6": Hops[5]
+                                "Hop_1": Hops[0][0],
+                                "Hop_1_text": Hops[0][1],
+                                "Hop_2": Hops[1][0],
+                                "Hop_2_text": Hops[1][1],
+                                "Hop_3": Hops[2][0],
+                                "Hop_3_text": Hops[2][1],
+                                "Hop_4": Hops[3][0],
+                                "Hop_4_text": Hops[3][1],
+                                "Hop_5": Hops[4][0],
+                                "Hop_5_text": Hops[4][1],
+                                "Hop_6": Hops[5][0],
+                                "Hop_6_text": Hops[5][1]
                                 },
                             "status_text": "",
                             "status": "I",
@@ -888,41 +912,40 @@ class UploadController:
                 ## Hops which are not used in the boil step should not cause alerts
                 if use != 'Aroma' and use != 'Boil':
                     continue
-                alerts.append(float(hop.find('TIME').text))
+                alerts.append([float(hop.find('TIME').text), hop.find('NAME').text])
             elif recipe_type == "bf":
                 use = hop['use']
                 if use != 'Aroma' and use != 'Boil':
                     continue
-                alerts.append(float(hop['time']))
+                alerts.append([float(hop['time']), hop['name']]) ## TODO: Testing
             elif recipe_type == "kbh":
-                alerts.append(float(hop[0]))
+                alerts.append([float(hop[0]), hop[1]])
             elif  recipe_type == "json":
-                alerts.append(float(hop['time']))
+                alerts.append([float(hop['time']), hop['name']])
                 
         ## There might also be miscelaneous additions during boild time
         if miscs is not None:
             for misc in miscs:
                 if recipe_type == "xml":
-                    alerts.append(float(misc.find('TIME').text))
+                    alerts.append([float(misc.find('TIME').text), misc.find('NAME').text])
                 elif recipe_type == "bf":
                     use = misc['use']
                     if use != 'Aroma' and use != 'Boil':
                         continue
-                    alerts.append(float(misc['time']))
+                    alerts.append([float(misc['time']), misc['name']]) ## TODO: Testing
                 elif recipe_type == "kbh":
-                    alerts.append(float(misc[0]))
+                    alerts.append([float(misc[0]), misc[1]])
                 elif  recipe_type == "json":
-                    alerts.append(float(misc['time']))
-        ## Dedupe and order the additions by their time, to prevent multiple alerts at the same time
-        alerts = sorted(list(set(alerts)))
+                    alerts.append([float(misc['time']), misc['name']])
+        ## Dedupe and order the additions by their time, to prevent? multiple alerts at the same time
         ## CBP should have these additions in reverse
-        alerts.reverse()
+        alerts = sorted(alerts, key=lambda x:x[0], reverse=True)
         hop_alerts = []
         for i in range(0,6):
             try:
-                hop_alerts.append(str(int(alerts[i])))
+                hop_alerts.append(alerts[i])
             except:
-                hop_alerts.append(None)
+                hop_alerts.append([None, None])
         return hop_alerts
 
     def getFirstWort(self, hops, recipe_type):
