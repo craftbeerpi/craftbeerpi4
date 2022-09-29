@@ -291,7 +291,8 @@ class UploadController:
                                 "Sensor": self.boilkettle.sensor,
                                 "Temp": int(self.BoilTemp),
                                 "Timer": BoilTime,
-                                "First_Wort": FirstWort,
+                                "First_Wort": FirstWort[0],
+                                "First_Wort_text": FirstWort[1],
                                 "LidAlert": "Yes",
                                 "Hop_1": Hops[0][0],
                                 "Hop_1_text": Hops[0][1],
@@ -363,7 +364,7 @@ class UploadController:
                 elif e["Hopfen_{}_Kochzeit".format(idx)] == "Whirlpool":
                     alert = float(1)
                 else:
-                    self.api.notify(headline="No Number at Hoptime", message="Please change json-File at Hopfen_{}_Kochzeit".format(idx), type="danger")
+                    self.cbpi.notify("No Number at Hoptime", "Please change json-File at Hopfen_{}_Kochzeit".format(idx), NotificationType.ERROR)
                     alert = float(1)
                 hops.append({"name":hops_name,"time":alert})
                 
@@ -516,7 +517,8 @@ class UploadController:
                                 "Sensor": sensor,
                                 "Temp": step_temp,
                                 "Timer": step_time,
-                                "First_Wort": FirstWort,
+                                "First_Wort": FirstWort[0],
+                                "First_Wort_text": FirstWort[1],
                                 "LidAlert": LidAlert,
                                 "Hop_1": Hops[0][0],
                                 "Hop_1_text": Hops[0][1],
@@ -668,7 +670,8 @@ class UploadController:
                                 "Sensor": sensor,
                                 "Temp": step_temp,
                                 "Timer": step_time,
-                                "First_Wort": FirstWort,
+                                "First_Wort": FirstWort[0],
+                                "First_Wort_text": FirstWort[1],
                                 "LidAlert": LidAlert,
                                 "Hop_1": Hops[0][0],
                                 "Hop_1_text": Hops[0][1],
@@ -876,7 +879,8 @@ class UploadController:
                                 "Sensor": sensor,
                                 "Temp": step_temp,
                                 "Timer": step_time,
-                                "First_Wort": FirstWort,
+                                "First_Wort": FirstWort[0],
+                                "First_Wort_text": FirstWort[1],
                                 "LidAlert": LidAlert,
                                 "Hop_1": Hops[0][0],
                                 "Hop_1_text": Hops[0][1],
@@ -937,7 +941,7 @@ class UploadController:
                     alerts.append([float(misc[0]), misc[1]])
                 elif  recipe_type == "json":
                     alerts.append([float(misc['time']), misc['name']])
-        ## Dedupe and order the additions by their time, to prevent? multiple alerts at the same time
+        ## Dedupe and order the additions by their time
         ## CBP should have these additions in reverse
         alerts = sorted(alerts, key=lambda x:x[0], reverse=True)
         hop_alerts = []
@@ -950,9 +954,12 @@ class UploadController:
 
     def getFirstWort(self, hops, recipe_type):
         alert = "No"
+        names = []
         if recipe_type == "kbh":
             if len(hops) != 0:
                 alert = "Yes"
+                for hop in hops:
+                    names.append(hop[1])
         elif recipe_type == "xml":
             for hop in hops:
                 use = hop.find('USE').text
@@ -960,14 +967,19 @@ class UploadController:
                 if use != 'First Wort':
                     continue
                 alert = "Yes"
+                names.append(hop.find('NAME').text)
         elif recipe_type == "bf":
             for hop in hops:
                 if hop['use'] == "First Wort":
                     alert="Yes"
+                    names.append(hop['name']) ## TODO: Testing
         elif recipe_type == "json":
-            for hop in hops:
-                alert="Yes"
-        return alert
+          if len(hops) != 0:
+                alert = "Yes"
+                for hop in hops:
+                    names.append(hop['name'])
+        
+        return [alert, " and ".join(names)]
 
     async def create_Whirlpool_Cooldown(self):
         # Add Waitstep as Whirlpool

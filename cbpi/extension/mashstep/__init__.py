@@ -1,4 +1,5 @@
 import asyncio
+from pickle import NONE
 
 from cbpi.api import parameters, Property, action
 from cbpi.api.step import StepResult, CBPiStep
@@ -322,6 +323,7 @@ class ActorStep(CBPiStep):
              Property.Select(label="LidAlert",options=["Yes","No"], description="Trigger Alert to remove lid if temp is close to boil"),
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Kettlelogic automatically on and off -> Yes"),
              Property.Select("First_Wort", options=["Yes","No"], description="First Wort Hop alert if set to Yes"),
+             Property.Text("First_Wort_text", configurable = True, description="First Wort Hop alert text"),
              Property.Number("Hop_1", configurable = True, description="First Hop alert (minutes before finish)"),
              Property.Text("Hop_1_text", configurable = True, description="First Hop alert text"),
              Property.Number("Hop_2", configurable=True, description="Second Hop alert (minutes before finish)"),
@@ -373,6 +375,7 @@ class BoilStep(CBPiStep):
         self.AutoMode = True if self.props.get("AutoMode", "No") == "Yes" else False
         self.first_wort_hop_flag = False 
         self.first_wort_hop=self.props.get("First_Wort", "No")
+        self.first_wort_hop_text=self.props.get("First_Wort_text", None)
         self.hops_added=["","","","","",""]
         self.remaining_seconds = None
 
@@ -418,7 +421,10 @@ class BoilStep(CBPiStep):
     async def run(self):
         if self.first_wort_hop_flag == False and self.first_wort_hop == "Yes":
             self.first_wort_hop_flag = True
-            self.cbpi.notify('First Wort Hop Addition!', 'Please add hops for first wort', NotificationType.INFO)
+            if self.first_wort_hop_text is not None and self.first_wort_hop_text != "":
+                self.cbpi.notify('First Wort Hop Addition!', 'Please add %s for first wort' % self.first_wort_hop_text, NotificationType.INFO)
+            else:
+                self.cbpi.notify('First Wort Hop Addition!', 'Please add hops for first wort', NotificationType.INFO)
 
         while self.running == True:
             await asyncio.sleep(1)
