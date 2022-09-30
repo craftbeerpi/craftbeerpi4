@@ -1,5 +1,4 @@
 import asyncio
-from pickle import NONE
 
 from cbpi.api import parameters, Property, action
 from cbpi.api.step import StepResult, CBPiStep
