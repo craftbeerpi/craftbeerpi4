@@ -170,11 +170,6 @@ class ConfigFolder:
         self.copyDefaultFileIfNotExists("craftbeerpi.service")
         self.copyDefaultFileIfNotExists("chromium.desktop")
 
-        if os.path.exists(os.path.join(self.configFolderPath, "dashboard", "cbpi_dashboard_1.json")) is False:
-            srcfile = os.path.join(os.path.dirname(__file__), "config", "dashboard", "cbpi_dashboard_1.json")
-            destfile = os.path.join(self.configFolderPath, "dashboard")
-            shutil.copy(srcfile, destfile)
-
         print("Config Folder created")
 
     def create_home_folder_structure(configFolder):
