@@ -1,0 +1,20 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "copy default cbpi config files if dev config files dont exist",
+      "type": "shell",
+      "command": "cp -ru ${workspaceFolder}/.devcontainer/cbpi-default-dev-config/. ${workspaceFolder}/.devcontainer/cbpi-dev-config",
+      "windows": {
+        "command": "echo 'this pre debug task should only be run inside the docker dev container - doing nothing instead'"
+      },
+      "group": "build",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      }
+    }
+  ]
+}

@@ -56,9 +56,9 @@ class SystemController:
         output_filename="cbpi4_log.zip"
 
         if logtime == "b":
-            os.system('journalctl -b -u craftbeerpi.service > {}'.format(fullname))
+            os.system('journalctl -b -u craftbeerpi.service --output cat > {}'.format(fullname))
         else:
-            os.system('journalctl --since \"{} hours ago\" -u craftbeerpi.service > {}'.format(logtime, fullname))
+            os.system('journalctl --since \"{} hours ago\" -u craftbeerpi.service --output cat > {}'.format(logtime, fullname))
 
         os.system('cbpi plugins > {}'.format(fullpluginname))
 
@@ -116,8 +116,8 @@ class SystemController:
             try:
                 content = backup_file.read()
                 if backup_file and self.allowed_file(filename, 'zip'):
-                    self.path = os.path.join(".", "restored_config.zip")
-
+                    self.path = os.path.join(self.cbpi.config_folder.configFolderPath, "restored_config.zip")
+                    
                     f=open(self.path, "wb")
                     f.write(content)
                     f.close()
