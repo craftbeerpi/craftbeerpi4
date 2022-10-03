@@ -1,4 +1,5 @@
 import asyncio
+from email import message
 from cbpi.api.dataclasses import NotificationType
 import logging
 import shortuuid
@@ -10,8 +11,22 @@ class NotificationController:
         '''
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
+        logging.root.addFilter(self.notify_log_event)
         self.callback_cache = {}    
         self.listener = {}
+    
+    def notify_log_event(self, record):
+        try:
+            if record.levelno > 20:
+                # on log events higher then INFO we want to notify all clients
+                type = NotificationType.WARNING
+                if record.levelno > 30:
+                    type = NotificationType.ERROR
+                self.cbpi.notify(title=f"{record.levelname}", message=record.msg, type = type)
+        except Exception as e:
+            pass
+        finally:
+            return True
     
     def add_listener(self, method):
         listener_id = shortuuid.uuid()

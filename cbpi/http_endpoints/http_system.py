@@ -44,7 +44,7 @@ class SystemHttpEndpoints:
     async def http_get_log(self, request):
         result = []
         file_pattern = re.compile("^(\w+.).log(.?\d*)")
-        for filename in sorted(os.listdir("./logs"), reverse=True):  #
+        for filename in sorted(os.listdir(self.cbpi.logsFolderPath), reverse=True):
             if file_pattern.match(filename):
                 result.append(filename)
         return web.json_response(result)

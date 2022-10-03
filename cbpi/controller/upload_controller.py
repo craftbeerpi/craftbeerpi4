@@ -193,8 +193,15 @@ class UploadController:
                     pass
 
                 # get the hop addition times
-                c.execute('SELECT Zeit, Name FROM Hopfengaben WHERE Vorderwuerze <> 1 AND Vorderwuerze <> 5 AND SudID = ?', (Recipe_ID,))
+
+                c.execute('SELECT Zeit FROM Hopfengaben WHERE Vorderwuerze <> 1 AND SudID = ?', (Recipe_ID,))
                 hops = c.fetchall()
+                whirlpool = []
+                for hop in hops:
+                    if hop[0] < 0:
+                        whirlpool.append(hop)
+                for whirl in whirlpool:
+                    hops.remove(whirl)
 
                 # get the misc addition times
                 c.execute('SELECT Zugabedauer, Name FROM WeitereZutatenGaben WHERE Zeitpunkt = 1 AND SudID = ?', (Recipe_ID,))
@@ -314,8 +321,11 @@ class UploadController:
 
                 await self.create_step(step_string)
 
-                await self.create_Whirlpool_Cooldown()
- 
+                if not whirlpool:
+                    await self.create_Whirlpool_Cooldown()
+                else :
+                    await self.create_Whirlpool_Cooldown(str(abs(whirlpool[0][0]))) # from kbh this value comes as negative but must be positive
+
                 self.cbpi.notify('KBH Recipe created', name, NotificationType.INFO)
 
             except:
@@ -981,13 +991,13 @@ class UploadController:
         
         return [alert, " and ".join(names)]
 
-    async def create_Whirlpool_Cooldown(self):
+    async def create_Whirlpool_Cooldown(self, time : str = "15"):
         # Add Waitstep as Whirlpool
         if self.cooldown != "WaiStep" and self.cooldown !="":
             step_string = { "name": "Whirlpool",
                             "props": {
                                 "Kettle": self.boilid,
-                                "Timer": "15"
+                                "Timer": time
                                 },
                             "status_text": "",
                             "status": "I",
@@ -1000,7 +1010,7 @@ class UploadController:
         step_name = "CoolDown"
         cooldown_sensor = ""
         step_temp = ""
-        step_timer = "15"
+        step_timer = time
         if step_type == "CooldownStep":
             cooldown_sensor = self.cbpi.config.get("steps_cooldown_sensor", None)
             if cooldown_sensor is None or cooldown_sensor == '':
