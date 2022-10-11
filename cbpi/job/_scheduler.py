@@ -21,9 +21,9 @@ class Scheduler(*bases):
         self._close_timeout = close_timeout
         self._limit = limit
         self._exception_handler = exception_handler
-        self._failed_tasks = asyncio.Queue(loop=loop)
+        self._failed_tasks = asyncio.Queue()
         self._failed_task = loop.create_task(self._wait_failed())
-        self._pending = asyncio.Queue(maxsize=pending_limit, loop=loop)
+        self._pending = asyncio.Queue(maxsize=pending_limit)
         self._closed = False
 
     def __iter__(self):
