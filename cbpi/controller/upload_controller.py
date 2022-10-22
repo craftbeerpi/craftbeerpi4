@@ -193,7 +193,7 @@ class UploadController:
                     pass
 
                 # get the hop addition times
-                c.execute('SELECT Zeit FROM Hopfengaben WHERE Vorderwuerze <> 1 AND SudID = ?', (Recipe_ID,))
+                c.execute('SELECT Zeit, Name FROM Hopfengaben WHERE Vorderwuerze <> 1 AND SudID = ?', (Recipe_ID,))
                 hops = c.fetchall()
                 whirlpool = []
                 for hop in hops:
