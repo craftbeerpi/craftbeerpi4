@@ -19,6 +19,8 @@ class SensorController(BasicController):
         return dict(name=data.get("name"), id=data.get("id"), type=data.get("type"), state=state,props=data.get("props", []))
     
     def get_sensor_value(self, id):
+        if id is None:
+            return None
         try:
             return self.find_by_id(id).instance.get_state()
         except Exception as e:
