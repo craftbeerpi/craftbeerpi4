@@ -38,6 +38,7 @@ setup(name='cbpi4',
       long_description=long_description,
 	    long_description_content_type='text/markdown',
       install_requires=[
+          "typing-extensions>=4",
           "aiohttp==3.8.1",
           "aiohttp-auth==0.1.1",
           "aiohttp-route-decorator==0.1.4",
