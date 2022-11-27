@@ -1,3 +1,3 @@
-__version__ = "4.0.7.a10"
+__version__ = "4.0.7.rc1"
 __codename__ = "November Rain"
 
