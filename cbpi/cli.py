@@ -239,8 +239,9 @@ def main(context, config_folder_path, logs_folder_path, debug_log_level):
     if logs_folder_path == "":
         logs_folder_path = os.path.join(Path(config_folder_path).absolute().parent, 'logs')
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(name)s - %(message)s')
-    logging.basicConfig(format=formatter,level=debug_log_level, stream=logging.StreamHandler())
+    logging.basicConfig(format=formatter, stream=logging.StreamHandler())
     logger = logging.getLogger()
+    logger.setLevel(debug_log_level)
     try:
         if not os.path.isdir(logs_folder_path):
             logger.info(f"logs folder '{logs_folder_path}' doesnt exist and we are trying to create it")

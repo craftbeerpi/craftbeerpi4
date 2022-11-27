@@ -297,7 +297,7 @@ class CraftBeerPi:
         await self.kettle.init()
         await self.call_initializer(self.app)
         await self.dashboard.init()
-    
+
 
         self._swagger_setup()
 
