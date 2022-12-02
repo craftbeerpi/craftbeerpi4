@@ -50,6 +50,7 @@ class ConfigUpdate(CBPiExtension):
         SENSOR_LOG_BACKUP_COUNT = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", None)
         SENSOR_LOG_MAX_BYTES = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", None)
         slow_pipe_animation = self.cbpi.config.get("slow_pipe_animation", None)
+        NOTIFY_ON_ERROR = self.cbpi.config.get("NOTIFY_ON_ERROR", None)
         
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
@@ -313,7 +314,17 @@ class ConfigUpdate(CBPiExtension):
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
-                
+
+       ## Check if NOTIFY_ON_ERROR is in config
+        if NOTIFY_ON_ERROR is None:
+            logger.info("INIT NOTIFY_ON_ERROR")
+            try:
+                await self.cbpi.config.add("NOTIFY_ON_ERROR", "No", ConfigType.SELECT, "Send Notification on Logging Error", 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+            except:
+                logger.warning('Unable to update config')
+
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)
     pass

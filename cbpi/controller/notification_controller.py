@@ -1,6 +1,7 @@
 import asyncio
 from email import message
 from cbpi.api.dataclasses import NotificationType
+from cbpi.api import *
 import logging
 import shortuuid
 class NotificationController:
@@ -11,7 +12,9 @@ class NotificationController:
         '''
         self.cbpi = cbpi
         self.logger = logging.getLogger(__name__)
-        logging.root.addFilter(self.notify_log_event)
+        NOTIFY_ON_ERROR = self.cbpi.config.get("NOTIFY_ON_ERROR", "No")
+        if NOTIFY_ON_ERROR == "Yes":
+            logging.root.addFilter(self.notify_log_event)
         self.callback_cache = {}    
         self.listener = {}
     
