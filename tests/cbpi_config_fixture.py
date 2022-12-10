@@ -19,5 +19,6 @@ class CraftBeerPiTestCase(AioHTTPTestCase):
     def configuration(self):
         test_directory = os.path.dirname(__file__)
         test_config_directory = os.path.join(test_directory, 'cbpi-test-config')
-        configFolder = ConfigFolder(test_config_directory)
+        test_logs_directory = os.path.join(test_directory, 'logs')
+        configFolder = ConfigFolder(test_config_directory, test_logs_directory)
         return configFolder

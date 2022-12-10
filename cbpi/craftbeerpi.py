@@ -297,15 +297,9 @@ class CraftBeerPi:
         await self.kettle.init()
         await self.call_initializer(self.app)
         await self.dashboard.init()
-    
+
 
         self._swagger_setup()
-
-        level = logging.INFO
-        logger = logging.getLogger()
-        logger.setLevel(level)
-        for handler in logger.handlers:
-            handler.setLevel(level)
 
         return self.app
 

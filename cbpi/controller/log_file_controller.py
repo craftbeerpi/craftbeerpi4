@@ -8,6 +8,7 @@ import pandas as pd
 import zipfile
 import base64
 import urllib3
+from pathlib import Path
 from cbpi.api import *
 from cbpi.api.config import ConfigType
 from cbpi.api.base import CBPiBase
@@ -25,24 +26,26 @@ class LogController:
         self.logger = logging.getLogger(__name__)
         self.configuration = False
         self.datalogger = {}
+        self.logsFolderPath = self.cbpi.config_folder.logsFolderPath
+        self.logger.info("Log folder path  : " + self.logsFolderPath)
 
     def log_data(self, name: str, value: str) -> None:
         self.logfiles = self.cbpi.config.get("CSVLOGFILES", "Yes")
         self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
         if self.logfiles == "Yes":
             if name not in self.datalogger:
-                max_bytes = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 1048576)
-                backup_count = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3)
+                max_bytes = int(self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 100000))
+                backup_count = int(self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3))
     
                 data_logger = logging.getLogger('cbpi.sensor.%s' % name)
                 data_logger.propagate = False
                 data_logger.setLevel(logging.DEBUG)
-                handler = RotatingFileHandler('./logs/sensor_%s.log' % name, maxBytes=max_bytes, backupCount=backup_count)
+                handler = RotatingFileHandler(os.path.join(self.logsFolderPath, f"sensor_{name}.log"), maxBytes=max_bytes, backupCount=backup_count)
                 data_logger.addHandler(handler)
                 self.datalogger[name] = data_logger
 
             formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-            self.datalogger[name].info("%s,%s" % (formatted_time, value))
+            self.datalogger[name].info("%s,%s" % (formatted_time, str(value)))
         if self.influxdb == "Yes":
             self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
             self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
@@ -115,8 +118,7 @@ class LogController:
 
         for name in names:
             # get all log names
-            all_filenames = glob.glob('./logs/sensor_%s.log*' % name)
-
+            all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
             # concat all logs
             df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', name], header=None) for f in all_filenames])
             logging.info("Read all files for {}".format(names))
@@ -125,19 +127,29 @@ class LogController:
                 df = df[name].resample(sample_rate).max()
             logging.info("Sampled now for {}".format(names))
             df = df.dropna()
+            # take every nth row so that total number of rows does not exceed max_rows * 2
+            max_rows = 500
+            total_rows = df.shape[0]
+            if (total_rows > 0) and (total_rows > max_rows):
+                nth = int(total_rows/max_rows)
+                if nth > 1:
+                    df = df.iloc[::nth]
+                    
             if result is None:
                 result = df
             else:
                 result = pd.merge(result, df, how='outer', left_index=True, right_index=True)
 
         data = {"time": df.index.tolist()}
-
+        
         if len(names) > 1:
             for name in names:
                 data[name] = result[name].interpolate(limit_direction='both', limit=10).tolist()
         else:
             data[name] = result.interpolate().tolist()
+
         logging.info("Send Log for {}".format(names))
+        
         return data
 
     async def get_data2(self, ids) -> dict:
@@ -146,7 +158,12 @@ class LogController:
         
         result = dict()
         for id in ids:
-            df = pd.read_csv("./logs/sensor_%s.log" % id, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime',"Values"], header=None) 
+            # df = pd.read_csv("./logs/sensor_%s.log" % id, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime',"Values"], header=None) 
+            # concat all logs
+            all_filenames = glob.glob(os.path.join(self.logsFolderPath,f"sensor_{id}.log*"))
+            df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
+            df = df.resample('60s').max()
+            df = df.dropna()
             result[id] = {"time": df.index.astype(str).tolist(), "value":df.Values.tolist()}
         return result
 
@@ -159,11 +176,10 @@ class LogController:
         :return: list of log file names
         '''
 
-        return [os.path.basename(x) for x in glob.glob('./logs/sensor_%s.log*' % name)]
+        return [os.path.basename(x) for x in glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))]
 
     def clear_log(self, name:str ) -> str:
-        
-        all_filenames = glob.glob('./logs/sensor_%s.log*' % name)
+        all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
         for f in all_filenames:
             os.remove(f)
 
@@ -179,7 +195,7 @@ class LogController:
         :return: 
         '''
 
-        return [os.path.basename(x) for x in glob.glob('./logs/*-sensor-%s.zip' % name)]
+        return [os.path.basename(x) for x in glob.glob(os.path.join(self.logsFolderPath, f"*-sensor-{name}.zip"))]
 
     def clear_zip(self, name:str ) -> None:
         """
@@ -188,7 +204,7 @@ class LogController:
         :return: None
         """
 
-        all_filenames = glob.glob('./logs/*-sensor-%s.zip' % name)
+        all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"*-sensor-{name}.zip"))
         for f in all_filenames:
             os.remove(f)
 
@@ -199,9 +215,9 @@ class LogController:
         """
 
         formatted_time = strftime("%Y-%m-%d-%H_%M_%S", localtime())
-        file_name = './logs/%s-sensor-%s.zip' % (formatted_time, name)
+        file_name = os.path.join(self.logsFolderPath, f"{formatted_time}-sensor-{name}.zip")
         zip = zipfile.ZipFile(file_name, 'w', zipfile.ZIP_DEFLATED)
-        all_filenames = glob.glob('./logs/sensor_%s.log*' % name)
+        all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
         for f in all_filenames:
             zip.write(os.path.join(f))
         zip.close()

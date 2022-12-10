@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 import requests
 from cbpi.configFolder import ConfigFolder
 from cbpi.utils.utils import load_config
@@ -8,6 +9,7 @@ import os
 import pkgutil
 import shutil
 import click
+import pathlib
 from subprocess import call
 from colorama import Fore, Back, Style
 import importlib
@@ -15,6 +17,7 @@ from importlib_metadata import metadata
 from tabulate import tabulate
 from PyInquirer import prompt, print_json
 import platform
+import time
 
 class CraftBeerPiCli():
     def __init__(self, config) -> None:
@@ -85,7 +88,7 @@ class CraftBeerPiCli():
 
         answers = prompt(questions)
 
-        name = "cbpi4_" + answers["name"]
+        name = "cbpi4-" + str(answers["name"]).replace('_', '-').replace(' ', '-')
         if os.path.exists(os.path.join(".", name)) is True:
             print("Cant create Plugin. Folder {} already exists ".format(name))
             return
@@ -97,8 +100,10 @@ class CraftBeerPiCli():
 
         with ZipFile('temp.zip', 'r') as repo_zip:
             repo_zip.extractall()
+        
+        time.sleep(1) # windows dev container permissions problem otherwise
 
-        os.rename("./craftbeerpi4-plugin-template-main", os.path.join(".", name))
+        os.rename(os.path.join(".","craftbeerpi4-plugin-template-main"), os.path.join(".", name))
         os.rename(os.path.join(".", name, "src"), os.path.join(".", name, name))
 
         import jinja2
@@ -225,15 +230,29 @@ class CraftBeerPiCli():
 @click.group()
 @click.pass_context
 @click.option('--config-folder-path', '-c', default="./config", type=click.Path(), help="Specify where the config folder is located. Defaults to './config'.")
-def main(context, config_folder_path):
+@click.option('--logs-folder-path', '-l', default="", type=click.Path(), help="Specify where the log folder is located. Defaults to '../logs' relative from the config folder.")
+@click.option('--debug-log-level', '-d', default="30", type=int,  help="Specify the log level you want to write to all logs. 0=ALL, 10=DEBUG, 20=INFO 30(default)=WARNING, 40=ERROR, 50=CRITICAL")
+def main(context, config_folder_path, logs_folder_path, debug_log_level):
     print("---------------------")
     print("Welcome to CBPi")
     print("---------------------")
-    level = logging.INFO
-    logging.basicConfig(level=level, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
-    cbpi_cli = CraftBeerPiCli(ConfigFolder(config_folder_path))
+    if logs_folder_path == "":
+        logs_folder_path = os.path.join(Path(config_folder_path).absolute().parent, 'logs')
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    logging.basicConfig(format=formatter, stream=logging.StreamHandler())
+    logger = logging.getLogger()
+    logger.setLevel(debug_log_level)
+    try:
+        if not os.path.isdir(logs_folder_path):
+            logger.info(f"logs folder '{logs_folder_path}' doesnt exist and we are trying to create it")
+            pathlib.Path(logs_folder_path).mkdir(parents=True, exist_ok=True)
+            logger.info(f"logs folder '{logs_folder_path}' successfully created")
+        logger.addHandler(logging.handlers.RotatingFileHandler(os.path.join(logs_folder_path, f"cbpi.log"), maxBytes=1000000, backupCount=3))
+    except Exception as e:
+        logger.warning("log folder or log file could not be created or accessed. check folder and file permissions or create the logs folder somewhere you have access with a start option like '--log-folder-path=./logs'")
+        logging.critical(e, exc_info=True)
+    cbpi_cli = CraftBeerPiCli(ConfigFolder(config_folder_path, logs_folder_path))
     context.obj = cbpi_cli
-    pass
 
 @main.command()
 @click.pass_context

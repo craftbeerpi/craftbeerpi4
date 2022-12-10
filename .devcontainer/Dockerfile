@@ -9,9 +9,10 @@ RUN apt-get install --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/*
 RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
-# Install craftbeerpi requirements for better caching
-COPY ./requirements.txt /workspace/requirements.txt
-RUN pip3 install --no-cache-dir -r /workspace/requirements.txt
+# Install craftbeerpi requirements and additional-dev-requirements for better caching
+COPY ./requirements.txt ./.devcontainer/cbpi-default-dev-config/additional-dev-requirements.txt /workspace/
+RUN cat /workspace/additional-dev-requirements.txt 2>/dev/null 1>> /workspace/requirements.txt \
+    && pip3 install --no-cache-dir -r /workspace/requirements.txt
 
 # Install current version of cbpi-ui
 RUN mkdir /opt/downloads \

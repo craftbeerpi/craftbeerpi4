@@ -2,6 +2,7 @@ from cbpi.utils.encoder import ComplexEncoder
 from aiohttp import web
 from cbpi.utils.utils import json_dumps
 from cbpi.api import request_mapping
+import os
 import json
 class LogHttpEndpoints:
 
@@ -83,7 +84,7 @@ class LogHttpEndpoints:
         )
         await response.prepare(request)
         log_name = request.match_info['name']
-        with open('./logs/%s.zip' % log_name, 'rb') as file:
+        with open(os.path.join(self.cbpi.logsFolderPath, '%s.zip' % log_name), 'rb') as file:
             for line in file.readlines():
                 await response.write(line)
 

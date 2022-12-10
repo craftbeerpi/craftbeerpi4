@@ -1,0 +1,1 @@
+cbpi4-SimulatedSensor==0.0.2

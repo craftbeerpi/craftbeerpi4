@@ -66,3 +66,11 @@ class ActorController(BasicController):
             self.cbpi.push_update("cbpi/actorupdate/{}".format(id), item.to_dict())
         except Exception as e:
             logging.error("Failed to update Actor {} {}".format(id, e))
+
+    async def ws_actor_update(self):
+        try:
+            #await self.push_udpate()
+            self.cbpi.ws.send(dict(topic=self.update_key, data=list(map(lambda x: x.to_dict(), self.data))),self.sorting)
+#            self.cbpi.push_update("cbpi/actorupdate/{}".format(id), item.to_dict())
+        except Exception as e:
+            logging.error("Failed to update Actors {}".format(e))

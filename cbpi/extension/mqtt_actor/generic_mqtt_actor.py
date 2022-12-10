@@ -32,6 +32,6 @@ class GenericMqttActor(MQTTActor):
         self.state = True
 
     async def off(self):
-        formatted_payload = self.payload.format(switch_onoff = "off", switch_10 = 0, power = self.power)
+        formatted_payload = self.payload.format(switch_onoff = "off", switch_10 = 0, power = 0)
         await self.publish_mqtt_message(self.topic, formatted_payload)
         self.state = False

@@ -47,8 +47,11 @@ class ConfigUpdate(CBPiExtension):
         influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", None)
         mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
         PRESSURE_UNIT = self.cbpi.config.get("PRESSURE_UNIT", None)
-
-
+        SENSOR_LOG_BACKUP_COUNT = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", None)
+        SENSOR_LOG_MAX_BYTES = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", None)
+        slow_pipe_animation = self.cbpi.config.get("slow_pipe_animation", None)
+        NOTIFY_ON_ERROR = self.cbpi.config.get("NOTIFY_ON_ERROR", None)
+        
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
             try:
@@ -283,6 +286,42 @@ class ConfigUpdate(CBPiExtension):
                 await self.cbpi.config.add("PRESSURE_UNIT", "kPa", ConfigType.SELECT, "Set unit for pressure", 
                                                                                                 [{"label": "kPa", "value": "kPa"},
                                                                                                 {"label": "PSI", "value": "PSI"}])
+            except:
+                logger.warning('Unable to update config')
+        
+        # check if SENSOR_LOG_BACKUP_COUNT exists in config
+        if SENSOR_LOG_BACKUP_COUNT is None:
+            logger.info("INIT SENSOR_LOG_BACKUP_COUNT")
+            try:
+                await self.cbpi.config.add("SENSOR_LOG_BACKUP_COUNT", 3, ConfigType.NUMBER, "Max. number of backup logs")
+            except:
+                logger.warning('Unable to update database')
+                
+        # check if SENSOR_LOG_MAX_BYTES exists in config
+        if SENSOR_LOG_MAX_BYTES is None:
+            logger.info("Init maximum size of sensor logfiles")
+            try:
+                await self.cbpi.config.add("SENSOR_LOG_MAX_BYTES", 100000, ConfigType.NUMBER, "Max. number of bytes in sensor logs")
+            except:
+                logger.warning('Unable to update database')
+                
+        # Check if slow_pipe_animation is in config 
+        if slow_pipe_animation is None:
+            logger.info("INIT slow_pipe_animation")
+            try:
+                await self.cbpi.config.add("slow_pipe_animation", "Yes", ConfigType.SELECT, "Slow down dashboard pipe animation taking up close to 100% of the CPU's capacity", 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+            except:
+                logger.warning('Unable to update config')
+
+       ## Check if NOTIFY_ON_ERROR is in config
+        if NOTIFY_ON_ERROR is None:
+            logger.info("INIT NOTIFY_ON_ERROR")
+            try:
+                await self.cbpi.config.add("NOTIFY_ON_ERROR", "No", ConfigType.SELECT, "Send Notification on Logging Error", 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
 
