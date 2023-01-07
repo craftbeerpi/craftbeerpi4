@@ -15,7 +15,7 @@ from colorama import Fore, Back, Style
 import importlib
 from importlib_metadata import metadata
 from tabulate import tabulate
-from PyInquirer import prompt, print_json
+from inquirer import prompt
 import platform
 import time
 

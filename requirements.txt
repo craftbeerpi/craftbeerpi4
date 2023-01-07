@@ -21,7 +21,7 @@ importlib_metadata==4.11.1
 asyncio-mqtt
 psutil==5.9.4
 zipp>=0.5
-PyInquirer==1.0.3
 colorama==0.4.6
 pytest-aiohttp
 coverage==6.3.1
+inquirer==3.1.1
