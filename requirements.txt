@@ -18,7 +18,7 @@ numpy==1.22.2
 cbpi4gui
 click==8.1.3
 importlib_metadata==4.11.1
-asyncio-mqtt
+asyncio-mqtt==0.16.1
 psutil==5.9.4
 zipp>=0.5
 colorama==0.4.6
