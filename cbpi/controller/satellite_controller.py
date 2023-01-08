@@ -120,10 +120,11 @@ class SatelliteController:
         while True:
             try:
                 if self.client._connected.done():
-                    async with self.client.filtered_messages(topic) as messages:
+                    async with self.client.messages() as messages:
                         await self.client.subscribe(topic)
                         async for message in messages:
-                            await method(message.payload.decode())
+                            if message.topic.matches(topic):
+                                await method(message.payload.decode())
             except asyncio.CancelledError:
                 # Cancel
                 self.logger.warning("Sub Cancelled")
@@ -147,7 +148,9 @@ class SatelliteController:
                 except asyncio.CancelledError:
                     pass
 
+        # This part needs to be updated in future as filtered_messages() is depracted and will be removed in future from asyncio-mqtt
         while True:
+
             try:
                 async with AsyncExitStack() as stack:
                     self.tasks = set()
@@ -158,9 +161,13 @@ class SatelliteController:
 
                     for topic_filter in self.topic_filters:
                         topic = topic_filter[0]
+                        logging.info("Topic: "+topic)
                         method = topic_filter[1]
+                        logging.info("Method: "+str(method))
                         manager = self.client.filtered_messages(topic)
+                        logging.info("Manager: " +str(manager))
                         messages = await stack.enter_async_context(manager)
+                        logging.info("Messages: " +str(messages))
                         task = asyncio.create_task(method(messages))
                         self.tasks.add(task)
 
