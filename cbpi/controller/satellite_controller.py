@@ -6,10 +6,12 @@ from asyncio_mqtt import Client, MqttError, Will
 from contextlib import AsyncExitStack, asynccontextmanager
 from cbpi import __version__
 import logging
+import shortuuid
 
 class SatelliteController:
 
     def __init__(self, cbpi):
+        self.client_id = shortuuid.uuid()
         self.cbpi = cbpi
         self.kettlecontroller = cbpi.kettle
         self.fermentercontroller = cbpi.fermenter
@@ -47,7 +49,7 @@ class SatelliteController:
                 except asyncio.CancelledError:
                     pass
         
-        self.client = Client(self.host, port=self.port, username=self.username, password=self.password, will=Will(topic="cbpi/disconnect", payload="CBPi Server Disconnected"))
+        self.client = Client(self.host, port=self.port, username=self.username, password=self.password, will=Will(topic="cbpi/disconnect", payload="CBPi Server Disconnected"),client_id=self.client_id)
         self.loop = asyncio.get_event_loop()
         ## Listen for mqtt messages in an (unawaited) asyncio task
         task = self.loop.create_task(self.listen())
