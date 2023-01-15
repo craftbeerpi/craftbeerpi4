@@ -60,7 +60,7 @@ setup(name='cbpi4',
           'psutil==5.9.4',
           'cbpi4gui',
           'importlib_metadata',
-          'numpy==1.22.2',
+          'numpy==1.24.1',
           'pandas==1.4.1'] + (
           ['RPi.GPIO==0.7.1'] if raspberrypi else [] ),
 

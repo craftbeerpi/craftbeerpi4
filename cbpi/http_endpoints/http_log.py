@@ -189,7 +189,6 @@ class LogHttpEndpoints:
                 description: successful operation.
         """
         data = await request.json()
-        print(data)
         return web.json_response(await self.cbpi.log.get_data2(data), dumps=json_dumps)
 
 
