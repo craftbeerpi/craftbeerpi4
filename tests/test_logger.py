@@ -7,7 +7,6 @@ import os
 
 class LoggerTestCase(CraftBeerPiTestCase):
 
-    @unittest_run_loop
     async def test_log_data(self):
 
         os.makedirs(os.path.join(".", "tests", "logs"), exist_ok=True)

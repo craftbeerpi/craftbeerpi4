@@ -45,6 +45,7 @@ class ConfigUpdate(CBPiExtension):
         influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
         influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
         influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", None)
+        influxdbmeasurement = self.cbpi.config.get("INFLUXDBMEASUREMENT", None)
         mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
         PRESSURE_UNIT = self.cbpi.config.get("PRESSURE_UNIT", None)
         SENSOR_LOG_BACKUP_COUNT = self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", None)
@@ -264,6 +265,14 @@ class ConfigUpdate(CBPiExtension):
                 await self.cbpi.config.add("INFLUXDBCLOUD", "No", ConfigType.SELECT, "Write sensor data to influxdb cloud (INFLUXDB must set to Yes)", 
                                                                                                 [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
+            except:
+                logger.warning('Unable to update config')
+
+                ## Check if influxdbname is in config
+        if influxdbmeasurement is None:
+            logger.info("INIT Influxdb measurementname")
+            try:
+                await self.cbpi.config.add("INFLUXDBMEASUREMENT", "measurement", ConfigType.STRING, "Name of the measurement in your INFLUXDB database (default: measurement)")
             except:
                 logger.warning('Unable to update config')
 

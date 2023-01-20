@@ -53,6 +53,7 @@ class LogController:
             self.influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
             self.influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
             self.influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
+            self.influxdbmeasurement = self.cbpi.config.get("INFLUXDBMEASUREMENT", "measurement")
             
             id = name
             try:
@@ -62,7 +63,7 @@ class LogController:
                     itemname=sensor.name.replace(" ", "_")
                     for char in chars:
                         itemname = itemname.replace(char,chars[char])
-                    out="measurement,source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
+                    out=str(self.influxdbmeasurement)+",source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
             except Exception as e:
                 logging.error("InfluxDB ID Error: {}".format(e))
 

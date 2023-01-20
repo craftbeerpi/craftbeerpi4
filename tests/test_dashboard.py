@@ -6,7 +6,6 @@ from cbpi.craftbeerpi import CraftBeerPi
 
 class DashboardTestCase(CraftBeerPiTestCase):
 
-    @unittest_run_loop
     async def test_crud(self):
         data = {
             "name": "MyDashboard",
