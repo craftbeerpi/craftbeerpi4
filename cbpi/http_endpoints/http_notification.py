@@ -35,6 +35,6 @@ class NotificationHttpEndpoints:
 
         notification_id = request.match_info['id']
         action_id = request.match_info['action_id']
-        print(notification_id, action_id)
+        #print(notification_id, action_id)
         self.cbpi.notification.notify_callback(notification_id, action_id)  
         return web.Response(status=204)

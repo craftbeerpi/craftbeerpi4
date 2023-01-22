@@ -239,7 +239,7 @@ class LogHttpEndpoints:
         data = await request.json()
         
         result = await self.cbpi.log.get_data(data)
-        print("JSON")
-        print(json.dumps(result, cls=ComplexEncoder))
-        print("JSON----")
+        #print("JSON")
+        #print(json.dumps(result, cls=ComplexEncoder))
+        #print("JSON----")
         return web.json_response(result, dumps=json_dumps)

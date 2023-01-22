@@ -40,7 +40,6 @@ class SatelliteController:
         #not sure if required like done in the old routine
         async def cancel_tasks(tasks):
             for task in tasks:
-                print("3232")
                 if task.done():
                     continue
                 task.cancel()

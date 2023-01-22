@@ -45,7 +45,7 @@ class NotificationController:
 
     async def _call_listener(self, title, message, type, action):
         for id, method in self.listener.items():
-            print(id, method)
+            #print(id, method)
             asyncio.create_task(method(self.cbpi, title, message, type, action ))
 
 
