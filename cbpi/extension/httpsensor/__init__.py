@@ -10,7 +10,7 @@ from cbpi.api.dataclasses import NotificationAction, NotificationType
 cache = {}
 
 @parameters([Property.Text(label="Key", configurable=True, description="Http Key"),
-             Property.Number(label="Timeout", configurable="True",unit="sec",description="Timeout in seconds to send notification (default:60)")
+             Property.Number(label="Timeout", configurable="True",unit="sec",description="Timeout in seconds to send notification (default:60 | deactivated: 0)")
 ])
 class HTTPSensor(CBPiSensor):
     def __init__(self, cbpi, id, props):
@@ -37,17 +37,19 @@ class HTTPSensor(CBPiSensor):
         In this example the code is executed every second
         '''
         while self.running is True:
-            currenttime=time.time()            
-            if currenttime > self.nextchecktime and self.notificationsend == False:   
-                await self.message()
-                self.notificationsend=True
+            if self.timeout !=0:
+                currenttime=time.time()            
+                if currenttime > self.nextchecktime and self.notificationsend == False:   
+                    await self.message()
+                    self.notificationsend=True
             try:
                 cache_value = cache.pop(self.props.get("Key"), None)
                 if cache_value is not None:
                     self.value = float(cache_value)
                     self.push_update(self.value)
-                    self.nextchecktime = currenttime + self.timeout
-                    self.notificationsend = False
+                    if self.timeout !=0:
+                        self.nextchecktime = currenttime + self.timeout
+                        self.notificationsend = False
             except Exception as e:
                 logging.error(e)
                 pass
