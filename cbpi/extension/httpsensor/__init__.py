@@ -3,6 +3,7 @@ import asyncio
 from aiohttp import web
 from cbpi.api import *
 import time
+from datetime import datetime
 import re
 import logging
 from cbpi.api.dataclasses import NotificationAction, NotificationType
@@ -21,6 +22,8 @@ class HTTPSensor(CBPiSensor):
         self.starttime = time.time()
         self.notificationsend = False
         self.nextchecktime=self.starttime+self.timeout
+        self.sensor=self.get_sensor(self.id)
+        self.lastdata=time.time()
 
     async def Confirm(self, **kwargs):
         self.nextchecktime = time.time() + self.timeout
@@ -28,7 +31,8 @@ class HTTPSensor(CBPiSensor):
         pass
 
     async def message(self):
-        self.cbpi.notify("HTTPSensor Timeout", "Sensor " + str(self.id) + " did not respond", NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
+        target_timestring= datetime.fromtimestamp(self.lastdata)
+        self.cbpi.notify("HTTPSensor Timeout", "Sensor '" + str(self.sensor.name) + "' did not respond.  Last data received: "+target_timestring.strftime("%D %H:%M"), NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
         pass
 
     async def run(self):
@@ -50,6 +54,7 @@ class HTTPSensor(CBPiSensor):
                     if self.timeout !=0:
                         self.nextchecktime = currenttime + self.timeout
                         self.notificationsend = False
+                        self.lastdata=time.time()
             except Exception as e:
                 logging.error(e)
                 pass

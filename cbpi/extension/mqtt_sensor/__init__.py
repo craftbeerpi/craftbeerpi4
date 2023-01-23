@@ -6,6 +6,7 @@ from cbpi.api import *
 import logging
 import json
 import time
+from datetime import datetime
 
 @parameters([Property.Text(label="Topic", configurable=True, description="MQTT Topic"),
              Property.Text(label="PayloadDictionary", configurable=True, default_value="",
@@ -26,6 +27,8 @@ class MQTTSensor(CBPiSensor):
         self.starttime = time.time()
         self.notificationsend = False
         self.nextchecktime=self.starttime+self.timeout
+        self.lastdata=time.time()
+        self.sensor=self.get_sensor(self.id)
 
     async def Confirm(self, **kwargs):
         self.nextchecktime = time.time() + self.timeout
@@ -33,7 +36,8 @@ class MQTTSensor(CBPiSensor):
         pass
 
     async def message(self):
-        self.cbpi.notify("MQTTSensor Timeout", "Sensor " + str(self.Topic) + " did not respond", NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
+        target_timestring= datetime.fromtimestamp(self.lastdata)
+        self.cbpi.notify("MQTTSensor Timeout", "Sensor '" + str(self.sensor.name) + "' did not respond. Last data received: "+target_timestring.strftime("%D %H:%M"), NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
         pass
 
     async def on_message(self, message):
@@ -50,6 +54,7 @@ class MQTTSensor(CBPiSensor):
                 if self.timeout !=0:
                     self.nextchecktime = time.time() + self.timeout
                     self.notificationsend = False
+                    self.lastdata=time.time()
         except Exception as e:
             logging.info("MQTT Sensor Error {}".format(e))
 
