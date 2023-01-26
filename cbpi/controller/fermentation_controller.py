@@ -36,7 +36,7 @@ class FermentationController:
 
     def check_fermenter_file(self):
         if os.path.exists(self.cbpi.config_folder.get_file_path("fermenter_data.json")) is False:
-            logging.info("INIT fermenter_data.json file")
+            logging.warning("Missing fermenter_data.json file. INIT empty file")
             data = {
                     "data": [
                             ]
@@ -71,11 +71,23 @@ class FermentationController:
 
 
     async def load(self):
-        with open(self.path) as json_file:
-            data = json.load(json_file)
+        try:
+            with open(self.path) as json_file:
+                data = json.load(json_file)
 
+                for i in data["data"]:
+                    self.data.append(self._create(i))
+        except:
+            logging.warning("Invalid fermenter_data.json file - Creating empty file")
+            os.remove(self.path)
+            data = {
+                    "data": [
+                            ]
+                    }
+            destfile = self.cbpi.config_folder.get_file_path("fermenter_data.json")
+            json.dump(data,open(destfile,'w'),indent=4, sort_keys=True)
             for i in data["data"]:
-                self.data.append(self._create(i))
+                    self.data.append(self._create(i))
                  
     def _create_step(self, fermenter, item):
         id = item.get("id")

@@ -91,8 +91,8 @@ class ConfigFolder:
             ['actor.json', 'file'],
             ['sensor.json', 'file'],
             ['kettle.json', 'file'],
-            ['fermenter_data.json', 'file'],
-            ['step_data.json', 'file'],
+            #['fermenter_data.json', 'file'], created by fermentation_controller @ start if not available
+            #['step_data.json', 'file'],  created by step_controller @ start if not available
             ['config.json', 'file'],
             ['craftbeerpi.service', 'file'],
             ['chromium.desktop', 'file'],
