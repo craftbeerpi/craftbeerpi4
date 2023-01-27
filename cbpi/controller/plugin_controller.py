@@ -190,14 +190,14 @@ class PluginController():
 
         return result
 
-    async def load_plugin_list(self):
+    async def load_plugin_list(self, filter="cbpi"):
         result = []
         try:
             discovered_plugins = {
                 name: importlib.import_module(name)
                 for finder, name, ispkg
                 in pkgutil.iter_modules()
-                if name.startswith('cbpi') and len(name) > 4
+                if name.startswith(filter) and len(name) > 4
             }
             for key, module in discovered_plugins.items():
                 from importlib.metadata import version
