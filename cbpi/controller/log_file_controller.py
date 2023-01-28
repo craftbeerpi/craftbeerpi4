@@ -181,11 +181,17 @@ class LogController:
 
     def clear_log(self, name:str ) -> str:
         all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
-        for f in all_filenames:
-            os.remove(f)
 
         if name in self.datalogger:
+            self.datalogger[name].removeHandler(self.datalogger[name].handlers[0])
             del self.datalogger[name]
+
+        for f in all_filenames:
+            try:
+                os.remove(f)
+            except Exception as e:
+                logging.warning(e)
+
 
 
     def get_all_zip_file_names(self, name: str) -> list:
