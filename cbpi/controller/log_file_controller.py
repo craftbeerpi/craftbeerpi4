@@ -154,15 +154,12 @@ class LogController:
         return data
 
     async def get_data2(self, ids) -> dict:
-        def dateparse(time_in_secs):
-            return datetime.datetime.strptime(time_in_secs, '%Y-%m-%d %H:%M:%S')
         
+        dateparse = lambda dates: [datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S') for d in dates]       
         result = dict()
         for id in ids:
-            # df = pd.read_csv("./logs/sensor_%s.log" % id, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime',"Values"], header=None) 
-            # concat all logs
             all_filenames = glob.glob(os.path.join(self.logsFolderPath,f"sensor_{id}.log*"))
-            df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
+            df = pd.concat([pd.read_csv(f, parse_dates=['DateTime'], date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
             df = df.resample('60s').max()
             df = df.dropna()
             result[id] = {"time": df.index.astype(str).tolist(), "value":df.Values.tolist()}

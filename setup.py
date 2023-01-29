@@ -61,7 +61,7 @@ setup(name='cbpi4',
           'cbpi4gui',
           'importlib_metadata',
           'numpy==1.24.1',
-          'pandas==1.4.1'] + (
+          'pandas==1.5.3'] + (
           ['RPi.GPIO==0.7.1'] if raspberrypi else [] ),
 
         dependency_links=[
