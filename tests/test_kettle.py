@@ -4,15 +4,13 @@ from tests.cbpi_config_fixture import CraftBeerPiTestCase
 
 class KettleTestCase(CraftBeerPiTestCase):
 
-    @unittest_run_loop
     async def test_get(self):
 
         resp = await self.client.request("GET", "/kettle")
         assert resp.status == 200
-        kettle = resp.json()
+        kettle = await resp.json()
         assert kettle != None
 
-    @unittest_run_loop
     async def test_crud(self):
         data = {
             "name": "Test",

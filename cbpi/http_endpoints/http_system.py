@@ -28,6 +28,12 @@ class SystemHttpEndpoints:
             "200":
                 description: successful operation
         """
+        plugin_list = await self.cbpi.plugin.load_plugin_list("cbpi4gui")
+        try:
+            version= plugin_list[0].get("Version", "not detected")
+        except:
+            version="not detected"
+
         return web.json_response(data=dict(
             actor=self.cbpi.actor.get_state(),
             fermenter=self.cbpi.fermenter.get_state(),
@@ -37,6 +43,7 @@ class SystemHttpEndpoints:
             fermentersteps=self.cbpi.fermenter.get_fermenter_steps(),
             config=self.cbpi.config.get_state(),
             version=__version__,
+            guiversion=version,
             codename=__codename__)
             , dumps=json_dumps)
 

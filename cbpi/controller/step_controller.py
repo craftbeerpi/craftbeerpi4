@@ -6,6 +6,7 @@ import yaml
 import logging
 import os.path
 from os import listdir
+import os
 from os.path import isfile, join
 import shortuuid
 from cbpi.api.dataclasses import NotificationAction, Props, Step
@@ -54,23 +55,42 @@ class StepController:
         
         # create file if not exists
         if os.path.exists(self.path) is False:
+            logging.warning("Missing step_data.json file. INIT empty file")
             with open(self.path, "w") as file:
                 json.dump(dict(basic={}, steps=[]), file, indent=4, sort_keys=True)
 
         #load from json file
-        with open(self.path) as json_file:
-            data = json.load(json_file)
-            self.basic_data  = data["basic"]
-            self.profile = data["steps"]
+        try:
+            with open(self.path) as json_file:
+                data = json.load(json_file)
+                self.basic_data  = data["basic"]
+                self.profile = data["steps"]
 
+            # Start step after start up
+            self.profile = list(map(lambda item: self.create(item), self.profile))
+            if startActive is True:
+                active_step = self.find_by_status("A")
+                if active_step is not None:
+                    asyncio.get_event_loop().create_task(self.start_step(active_step))
+                    #self._loop.create_task(self.start_step(active_step))
+        except:
+            logging.warning("Invalid step_data.json file - Creating empty file")
+            os.remove(self.path)
+            with open(self.path, "w") as file:
+                json.dump(dict(basic={"name": ""}, steps=[]), file, indent=4, sort_keys=True)
+
+            with open(self.path) as json_file:
+                data = json.load(json_file)
+                self.basic_data  = data["basic"]
+                self.profile = data["steps"]
         
-        # Start step after start up
-        self.profile = list(map(lambda item: self.create(item), self.profile))
-        if startActive is True:
-            active_step = self.find_by_status("A")
-            if active_step is not None:
-                asyncio.get_event_loop().create_task(self.start_step(active_step))
-                #self._loop.create_task(self.start_step(active_step))
+            # Start step after start up
+            self.profile = list(map(lambda item: self.create(item), self.profile))
+            if startActive is True:
+                active_step = self.find_by_status("A")
+                if active_step is not None:
+                    asyncio.get_event_loop().create_task(self.start_step(active_step))
+                    #self._loop.create_task(self.start_step(active_step))
 
     async def add(self, item: Step):
         logging.debug("Add step")

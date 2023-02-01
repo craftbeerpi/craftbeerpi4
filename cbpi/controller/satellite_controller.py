@@ -2,14 +2,16 @@
 import asyncio
 import json
 from re import M
-from asyncio_mqtt import Client, MqttError, Will, client
+from asyncio_mqtt import Client, MqttError, Will
 from contextlib import AsyncExitStack, asynccontextmanager
 from cbpi import __version__
 import logging
+import shortuuid
 
 class SatelliteController:
 
     def __init__(self, cbpi):
+        self.client_id = shortuuid.uuid()
         self.cbpi = cbpi
         self.kettlecontroller = cbpi.kettle
         self.fermentercontroller = cbpi.fermenter
@@ -34,7 +36,46 @@ class SatelliteController:
         self.tasks = set()
 
     async def init(self):
-        asyncio.create_task(self.init_client(self.cbpi))
+
+        #not sure if required like done in the old routine
+        async def cancel_tasks(tasks):
+            for task in tasks:
+                if task.done():
+                    continue
+                task.cancel()
+                try:
+                    await task
+                except asyncio.CancelledError:
+                    pass
+        
+        self.client = Client(self.host, port=self.port, username=self.username, password=self.password, will=Will(topic="cbpi/disconnect", payload="CBPi Server Disconnected"),client_id=self.client_id)
+        self.loop = asyncio.get_event_loop()
+        ## Listen for mqtt messages in an (unawaited) asyncio task
+        task = self.loop.create_task(self.listen())
+        ## Save a reference to the task so it doesn't get garbage collected
+        self.tasks.add(task)
+        task.add_done_callback(self.tasks.remove)
+
+        self.logger.info("MQTT Connected to {}:{}".format(self.host, self.port))
+
+    async def listen(self):
+        while True:
+            try:
+                async with self.client as client:
+                    async with client.messages() as messages:
+                        await client.subscribe("#")
+                        async for message in messages:
+                            for topic_filter in self.topic_filters:
+                                topic = topic_filter[0]
+                                method = topic_filter[1]
+                                if message.topic.matches(topic):
+                                    await (method(message))
+            except MqttError as e:
+                self.logger.error("MQTT Exception: {}".format(e))
+            except Exception as e:
+                self.logger.error("MQTT General Exception: {}".format(e))
+            await asyncio.sleep(5)
+
 
     async def publish(self, topic, message, retain=False):
         if self.client is not None and self.client._connected:
@@ -43,26 +84,25 @@ class SatelliteController:
             except Exception as e:
                 self.logger.warning("Failed to push data via mqtt: {}".format(e))
 
-    async def _actor_on(self, messages):
-        async for message in messages:
+    async def _actor_on(self, message):
             try:
-                topic_key = message.topic.split("/")
+                topic_key = str(message.topic).split("/")
                 await self.cbpi.actor.on(topic_key[2])
+                self.logger.warning("Processed actor {} on via mqtt".format(topic_key[2]))
             except Exception as e:
                 self.logger.warning("Failed to process actor on via mqtt: {}".format(e))
 
-    async def _actor_off(self, messages):
-        async for message in messages:
+    async def _actor_off(self, message):
             try:
-                topic_key = message.topic.split("/")
+                topic_key = str(message.topic).split("/")
                 await self.cbpi.actor.off(topic_key[2])
+                self.logger.warning("Processed actor {} off via mqtt".format(topic_key[2]))
             except Exception as e:
                 self.logger.warning("Failed to process actor off via mqtt: {}".format(e))
 
-    async def _actor_power(self, messages):
-        async for message in messages:
+    async def _actor_power(self, message):
             try:
-                topic_key = message.topic.split("/")
+                topic_key = str(message.topic).split("/")
                 try:
                     power=int(message.payload.decode())
                     if power > 100: 
@@ -76,8 +116,7 @@ class SatelliteController:
             except:
                 self.logger.warning("Failed to set actor power via mqtt")
 
-    async def _kettleupdate(self, messages):
-        async for message in messages:
+    async def _kettleupdate(self, message):
             try:
                 self.kettle=self.kettlecontroller.get_state()
                 for item in self.kettle['data']:
@@ -85,8 +124,7 @@ class SatelliteController:
             except Exception as e:
                 self.logger.warning("Failed to send kettleupdate via mqtt: {}".format(e))
 
-    async def _fermenterupdate(self, messages):
-        async for message in messages:
+    async def _fermenterupdate(self, message):
             try:
                 self.fermenter=self.fermentercontroller.get_state()
                 for item in self.fermenter['data']:
@@ -94,8 +132,7 @@ class SatelliteController:
             except Exception as e:
                 self.logger.warning("Failed to send fermenterupdate via mqtt: {}".format(e))
 
-    async def _actorupdate(self, messages):
-        async for message in messages:
+    async def _actorupdate(self, message):
             try:
                 self.actor=self.actorcontroller.get_state()
                 for item in self.actor['data']:
@@ -103,8 +140,7 @@ class SatelliteController:
             except Exception as e:
                 self.logger.warning("Failed to send actorupdate via mqtt: {}".format(e))
 
-    async def _sensorupdate(self, messages):
-        async for message in messages:
+    async def _sensorupdate(self, message):
             try:
                 self.sensor=self.sensorcontroller.get_state()
                 for item in self.sensor['data']:
@@ -120,10 +156,11 @@ class SatelliteController:
         while True:
             try:
                 if self.client._connected.done():
-                    async with self.client.filtered_messages(topic) as messages:
+                    async with self.client.messages() as messages:
                         await self.client.subscribe(topic)
                         async for message in messages:
-                            await method(message.payload.decode())
+                            if message.topic.matches(topic):
+                                await method(message.payload.decode())
             except asyncio.CancelledError:
                 # Cancel
                 self.logger.warning("Sub Cancelled")
@@ -133,46 +170,4 @@ class SatelliteController:
                 self.logger.error("Sub Exception: {}".format(e))
 
             # wait before try to resubscribe
-            await asyncio.sleep(5)
-
-    async def init_client(self, cbpi):
-
-        async def cancel_tasks(tasks):
-            for task in tasks:
-                if task.done():
-                    continue
-                task.cancel()
-                try:
-                    await task
-                except asyncio.CancelledError:
-                    pass
-
-        while True:
-            try:
-                async with AsyncExitStack() as stack:
-                    self.tasks = set()
-                    stack.push_async_callback(cancel_tasks, self.tasks)
-                    self.client = Client(self.host, port=self.port, username=self.username, password=self.password, will=Will(topic="cbpi/disconnect", payload="CBPi Server Disconnected"))
-
-                    await stack.enter_async_context(self.client)
-
-                    for topic_filter in self.topic_filters:
-                        topic = topic_filter[0]
-                        method = topic_filter[1]
-                        manager = self.client.filtered_messages(topic)
-                        messages = await stack.enter_async_context(manager)
-                        task = asyncio.create_task(method(messages))
-                        self.tasks.add(task)
-
-                    for topic_filter in self.topic_filters:
-                        topic = topic_filter[0]
-                        await self.client.subscribe(topic)
-
-                    self.logger.info("MQTT Connected to {}:{}".format(self.host, self.port))
-                    await asyncio.gather(*self.tasks)
-
-            except MqttError as e:
-                self.logger.error("MQTT Exception: {}".format(e))
-            except Exception as e:
-                self.logger.error("MQTT General Exception: {}".format(e))
             await asyncio.sleep(5)

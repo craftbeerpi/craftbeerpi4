@@ -45,11 +45,11 @@ class NotificationController:
 
     async def _call_listener(self, title, message, type, action):
         for id, method in self.listener.items():
-            print(id, method)
+            #print(id, method)
             asyncio.create_task(method(self.cbpi, title, message, type, action ))
 
 
-    def notify(self, title, message: str, type: NotificationType = NotificationType.INFO, action=[]) -> None:
+    def notify(self, title, message: str, type: NotificationType = NotificationType.INFO, action=[], timeout: int=5000) -> None:
         '''
         This is a convinience method to send notification to the client
         
@@ -66,8 +66,8 @@ class NotificationController:
 
         actions = list(map(lambda item: prepare_action(item), action))
         self.callback_cache[notifcation_id] = action
-        self.cbpi.ws.send(dict(id=notifcation_id, topic="notifiaction", type=type.value, title=title, message=message, action=actions))
-        data = dict(type=type.value, title=title, message=message, action=actions)
+        self.cbpi.ws.send(dict(id=notifcation_id, topic="notifiaction", type=type.value, title=title, message=message, action=actions, timeout=timeout))
+        data = dict(type=type.value, title=title, message=message, action=actions, timeout=timeout)
         self.cbpi.push_update(topic="cbpi/notification", data=data)
         asyncio.create_task(self._call_listener(title, message, type, action))
 

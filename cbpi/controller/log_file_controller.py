@@ -53,6 +53,7 @@ class LogController:
             self.influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
             self.influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
             self.influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
+            self.influxdbmeasurement = self.cbpi.config.get("INFLUXDBMEASUREMENT", "measurement")
             
             id = name
             try:
@@ -62,7 +63,7 @@ class LogController:
                     itemname=sensor.name.replace(" ", "_")
                     for char in chars:
                         itemname = itemname.replace(char,chars[char])
-                    out="measurement,source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
+                    out=str(self.influxdbmeasurement)+",source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
             except Exception as e:
                 logging.error("InfluxDB ID Error: {}".format(e))
 
@@ -153,15 +154,12 @@ class LogController:
         return data
 
     async def get_data2(self, ids) -> dict:
-        def dateparse(time_in_secs):
-            return datetime.datetime.strptime(time_in_secs, '%Y-%m-%d %H:%M:%S')
         
+        dateparse = lambda dates: [datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S') for d in dates]       
         result = dict()
         for id in ids:
-            # df = pd.read_csv("./logs/sensor_%s.log" % id, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime',"Values"], header=None) 
-            # concat all logs
             all_filenames = glob.glob(os.path.join(self.logsFolderPath,f"sensor_{id}.log*"))
-            df = pd.concat([pd.read_csv(f, parse_dates=True, date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
+            df = pd.concat([pd.read_csv(f, parse_dates=['DateTime'], date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
             df = df.resample('60s').max()
             df = df.dropna()
             result[id] = {"time": df.index.astype(str).tolist(), "value":df.Values.tolist()}
@@ -180,11 +178,17 @@ class LogController:
 
     def clear_log(self, name:str ) -> str:
         all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
-        for f in all_filenames:
-            os.remove(f)
 
         if name in self.datalogger:
+            self.datalogger[name].removeHandler(self.datalogger[name].handlers[0])
             del self.datalogger[name]
+
+        for f in all_filenames:
+            try:
+                os.remove(f)
+            except Exception as e:
+                logging.warning(e)
+
 
 
     def get_all_zip_file_names(self, name: str) -> list:

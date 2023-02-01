@@ -8,7 +8,7 @@ import shutil
 import zipfile
 from pathlib import Path
 import glob
-
+import json
 
 class ConfigFolder:
     def __init__(self, configFolderPath, logsFolderPath):
@@ -91,8 +91,8 @@ class ConfigFolder:
             ['actor.json', 'file'],
             ['sensor.json', 'file'],
             ['kettle.json', 'file'],
-            ['fermenter_data.json', 'file'],
-            ['step_data.json', 'file'],
+            #['fermenter_data.json', 'file'], created by fermentation_controller @ start if not available
+            #['step_data.json', 'file'],  created by step_controller @ start if not available
             ['config.json', 'file'],
             ['craftbeerpi.service', 'file'],
             ['chromium.desktop', 'file'],
@@ -121,9 +121,23 @@ class ConfigFolder:
         # if cbpi_dashboard_1.json doesnt exist at the new location (configFolderPath/dashboard)
         # we move every cbpi_dashboard_n.json file from the old location (configFolderPath) there.
         # this could be a config zip file restore from version 4.0.7.a4 or prior.
-        if not (os.path.isfile(os.path.join(self.configFolderPath, 'dashboard', 'cbpi_dashboard_1.json'))):
+        dashboard_1_path = os.path.join(self.configFolderPath, 'dashboard', 'cbpi_dashboard_1.json')
+        if (not (os.path.isfile(dashboard_1_path))) or self.check_for_empty_dashboard_1(dashboard_1_path):
             for file in glob.glob(os.path.join(self.configFolderPath, 'cbpi_dashboard_*.json')):
-                shutil.move(file, os.path.join(self.configFolderPath, 'dashboard', os.path.basename(file)))
+                dashboardFile = os.path.basename(file)
+                print(f"Copy dashboard json file {dashboardFile} from config to config/dashboard folder")
+                shutil.move(file, os.path.join(self.configFolderPath, 'dashboard', dashboardFile))
+
+    def check_for_empty_dashboard_1(self, dashboard_1_path):
+        try:
+            with open(dashboard_1_path, 'r') as f:
+                data = json.load(f)
+            if (len(data['elements']) == 0):  # there may exist some pathes but pathes without elements in dashboard is not very likely
+                return True
+            else:
+                return False
+        except: # file missing or bad json format
+            return True
     
     def inform_missing_content(self, whatsmissing : str):
         if whatsmissing == "":

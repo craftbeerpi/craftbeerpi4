@@ -224,7 +224,7 @@ class SensorHttpEndpoints():
         """
         sensor_id = request.match_info['id']
         data = await request.json()
-        print(data)
+        #print(data)
         await self.controller.call_action(sensor_id, data.get("action"), data.get("parameter"))
 
         return web.Response(status=204)

@@ -6,20 +6,6 @@
         "type": "string",
         "value": "John Doe"
     },
-    "BREWERY_NAME": {
-        "description": "Brewery Name",
-        "name": "BREWERY_NAME",
-        "options": null,
-        "type": "string",
-        "value": "CraftBeerPi Brewery"
-    },
-    "MASH_TUN": {
-        "description": "Default Mash Tun",
-        "name": "MASH_TUN",
-        "options": null,
-        "type": "kettle",
-        "value": ""
-    },
     "AddMashInStep": {
         "description": "Add MashIn Step automatically if not defined in recipe",
         "name": "AddMashInStep",
@@ -36,26 +22,206 @@
         "type": "select",
         "value": "Yes"
     },
+    "AutoMode": {
+        "description": "Use AutoMode in steps",
+        "name": "AutoMode",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
+    "BREWERY_NAME": {
+        "description": "Brewery Name",
+        "name": "BREWERY_NAME",
+        "options": null,
+        "type": "string",
+        "value": "Some New Brewery Name"
+    },
+    "BoilKettle": {
+        "description": "Define Kettle that is used for Boil, Whirlpool and Cooldown. If not selected, MASH_TUN will be used",
+        "name": "BoilKettle",
+        "options": null,
+        "type": "kettle",
+        "value": ""
+    },
+    "CSVLOGFILES": {
+        "description": "Write sensor data to csv logfiles",
+        "name": "CSVLOGFILES",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "Yes"
+    },
+    "INFLUXDB": {
+        "description": "Write sensor data to influxdb",
+        "name": "INFLUXDB",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "No"
+    },
+    "INFLUXDBADDR": {
+        "description": "IP Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)",
+        "name": "INFLUXDBADDR",
+        "options": null,
+        "type": "string",
+        "value": "localhost"
+    },
+    "INFLUXDBCLOUD": {
+        "description": "Write sensor data to influxdb cloud (INFLUXDB must set to Yes)",
+        "name": "INFLUXDBCLOUD",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "No"
+    },
+    "INFLUXDBNAME": {
+        "description": "Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)",
+        "name": "INFLUXDBNAME",
+        "options": null,
+        "type": "string",
+        "value": "cbpi4"
+    },
+    "INFLUXDBPORT": {
+        "description": "Port of your influxdb server",
+        "name": "INFLUXDBPORT",
+        "options": null,
+        "type": "string",
+        "value": "8086"
+    },
+    "INFLUXDBPWD": {
+        "description": "Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)",
+        "name": "INFLUXDBPWD",
+        "options": null,
+        "type": "string",
+        "value": " "
+    },
+    "INFLUXDBUSER": {
+        "description": "User name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)",
+        "name": "INFLUXDBUSER",
+        "options": null,
+        "type": "string",
+        "value": " "
+    },
+    "MASH_TUN": {
+        "description": "Default Mash Tun",
+        "name": "MASH_TUN",
+        "options": null,
+        "type": "kettle",
+        "value": ""
+    },
+    "MQTTUpdate": {
+        "description": "Forced MQTT Update frequency in s for Kettle and Fermenter (no changes in payload required). Restart required after change",
+        "name": "MQTTUpdate",
+        "options": [
+            {
+                "label": "30",
+                "value": 30
+            },
+            {
+                "label": "60",
+                "value": 60
+            },
+            {
+                "label": "120",
+                "value": 120
+            },
+            {
+                "label": "300",
+                "value": 300
+            },
+            {
+                "label": "Never",
+                "value": 0
+            }
+        ],
+        "type": "select",
+        "value": 0
+    },
+    "NOTIFY_ON_ERROR": {
+        "description": "Send Notification on Logging Error",
+        "name": "NOTIFY_ON_ERROR",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "No"
+    },
+    "PRESSURE_UNIT": {
+        "description": "Set unit for pressure",
+        "name": "PRESSURE_UNIT",
+        "options": [
+            {
+                "label": "kPa",
+                "value": "kPa"
+            },
+            {
+                "label": "PSI",
+                "value": "PSI"
+            }
+        ],
+        "type": "select",
+        "value": "kPa"
+    },
     "RECIPE_CREATION_PATH": {
-        "description": "API path to creation plugin. Default: empty",
+        "description": "API path to creation plugin. Default: upload . CHANGE ONLY IF USING A RECIPE CREATION PLUGIN",
         "name": "RECIPE_CREATION_PATH",
         "options": null,
         "type": "string",
-        "value": ""
+        "value": "upload"
     },
-    "brewfather_api_key": {
-        "description": "Brewfather API Kay",
-        "name": "brewfather_api_key",
+    "SENSOR_LOG_BACKUP_COUNT": {
+        "description": "Max. number of backup logs",
+        "name": "SENSOR_LOG_BACKUP_COUNT",
         "options": null,
-        "type": "string",
-        "value": ""
+        "type": "number",
+        "value": 3
     },
-    "brewfather_user_id": {
-        "description": "Brewfather User ID",
-        "name": "brewfather_user_id",
+    "SENSOR_LOG_MAX_BYTES": {
+        "description": "Max. number of bytes in sensor logs",
+        "name": "SENSOR_LOG_MAX_BYTES",
         "options": null,
-        "type": "string",
-        "value": ""
+        "type": "number",
+        "value": 100000
     },
     "TEMP_UNIT": {
         "description": "Temperature Unit",
@@ -73,9 +239,78 @@
         "type": "select",
         "value": "C"
     },
-    "AutoMode": {
-        "description": "Use AutoMode in steps",
-        "name": "AutoMode",
+    "brewfather_api_key": {
+        "description": "Brewfather API Key",
+        "name": "brewfather_api_key",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
+    "brewfather_user_id": {
+        "description": "Brewfather User ID",
+        "name": "brewfather_user_id",
+        "options": null,
+        "type": "string",
+        "value": ""
+    },
+    "current_dashboard_number": {
+        "description": "Number of current Dashboard",
+        "name": "current_dashboard_number",
+        "options": null,
+        "type": "number",
+        "value": 1
+    },
+    "max_dashboard_number": {
+        "description": "Max Number of Dashboards",
+        "name": "max_dashboard_number",
+        "options": [
+            {
+                "label": "1",
+                "value": 1
+            },
+            {
+                "label": "2",
+                "value": 2
+            },
+            {
+                "label": "3",
+                "value": 3
+            },
+            {
+                "label": "4",
+                "value": 4
+            },
+            {
+                "label": "5",
+                "value": 5
+            },
+            {
+                "label": "6",
+                "value": 6
+            },
+            {
+                "label": "7",
+                "value": 7
+            },
+            {
+                "label": "8",
+                "value": 8
+            },
+            {
+                "label": "9",
+                "value": 9
+            },
+            {
+                "label": "10",
+                "value": 10
+            }
+        ],
+        "type": "select",
+        "value": 4
+    },
+    "slow_pipe_animation": {
+        "description": "Slow down dashboard pipe animation taking up close to 100% of the CPU's capacity",
+        "name": "slow_pipe_animation",
         "options": [
             {
                 "label": "Yes",
@@ -110,6 +345,13 @@
         "type": "step",
         "value": "CooldownStep"
     },
+    "steps_cooldown_actor": {
+        "description": "Actor to trigger cooldown water on and off (default: None)",
+        "name": "steps_cooldown_actor",
+        "options": null,
+        "type": "actor",
+        "value": ""
+    },
     "steps_cooldown_sensor": {
         "description": "Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)",
         "name": "steps_cooldown_sensor",
@@ -122,7 +364,7 @@
         "name": "steps_cooldown_temp",
         "options": null,
         "type": "number",
-        "value": "20"
+        "value": 35
     },
     "steps_mash": {
         "description": "Mash step type",

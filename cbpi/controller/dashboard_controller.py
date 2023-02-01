@@ -34,7 +34,7 @@ class DashboardController:
             return {'elements': [], 'pathes': []}
     
     async def add_content(self, dashboard_id, data):
-        print(data)
+        #print(data)
         self.path = self.cbpi.config_folder.get_dashboard_path("cbpi_dashboard_" + str(dashboard_id)+ ".json")
         with open(self.path, 'w') as outfile:
             json.dump(data, outfile, indent=4, sort_keys=True)
