@@ -317,10 +317,12 @@ class ActorStep(CBPiStep):
 
 @parameters([Property.Number(label="Timer", description="Time in Minutes", configurable=True), 
              Property.Number(label="Temp", description="Boil temperature", configurable=True),
+             #Property.Number(label="DwellTime", description="Time in minutes (Recommended: 5). If temp is not changing significantly within this time, Timer will start. Defaul:0 disabled", configurable=True),
              Property.Sensor(label="Sensor"),
              Property.Kettle(label="Kettle"),
              Property.Select(label="LidAlert",options=["Yes","No"], description="Trigger Alert to remove lid if temp is close to boil"),
              Property.Select(label="AutoMode",options=["Yes","No"], description="Switch Kettlelogic automatically on and off -> Yes"),
+             #Property.Select(label="AutoTimer",options=["Yes","No"], description="Start Timer automatically if Temp does not change for 5 Minutes and is above 95C/203F"),
              Property.Select("First_Wort", options=["Yes","No"], description="First Wort Hop alert if set to Yes"),
              Property.Text("First_Wort_text", configurable = True, description="First Wort Hop alert text"),
              Property.Number("Hop_1", configurable = True, description="First Hop alert (minutes before finish)"),
@@ -372,11 +374,17 @@ class BoilStep(CBPiStep):
         self.lid_temp = 95 if self.get_config_value("TEMP_UNIT", "C") == "C" else 203
         self.lid_flag = True if self.props.get("LidAlert", "No") == "Yes" else False
         self.AutoMode = True if self.props.get("AutoMode", "No") == "Yes" else False
+        self.AutoTimer = True if self.cbpi.config.get("BoilAutoTimer", "No") == "Yes" else False
         self.first_wort_hop_flag = False 
         self.first_wort_hop=self.props.get("First_Wort", "No")
         self.first_wort_hop_text=self.props.get("First_Wort_text", None)
         self.hops_added=["","","","","",""]
         self.remaining_seconds = None
+        self.temparray=np.array([])
+        #self.dwelltime=int(self.props.get("DwellTime", 0))*60
+        self.dwelltime=5*60 #tested with 5 minutes -> not exactly 5 min due to accuracy of asyncio.sleep
+        self.deviationlimit=0.3 # derived from a test
+        logging.warning(self.AutoTimer)
 
         self.kettle=self.get_kettle(self.props.get("Kettle", None))
         if self.kettle is not None:
@@ -428,7 +436,16 @@ class BoilStep(CBPiStep):
         while self.running == True:
             await asyncio.sleep(1)
             sensor_value = self.get_sensor_value(self.props.get("Sensor", None)).get("value")
-            
+            self.temparray = np.append(self.temparray,sensor_value)
+            if self.temparray.size > self.dwelltime:
+                self.temparray =np.delete(self.temparray,0)
+                deviation= np.std(self.temparray)
+                if (sensor_value >= self.lid_temp) and (deviation <= self.deviationlimit) and (self.AutoTimer is True) and (self.timer.is_running is not True):
+                    self.timer.start()
+                    self.timer.is_running = True
+                    estimated_completion_time = datetime.fromtimestamp(time.time()+ (int(self.props.get("Timer", 0)))*60)
+                    self.cbpi.notify(self.name, 'Timer started automatically. Estimated completion: {}'.format(estimated_completion_time.strftime("%H:%M")), NotificationType.INFO)            
+                logging.info("Current: "+str(sensor_value)+" | Dev: " + str(deviation))
             if self.lid_flag == True and sensor_value >= self.lid_temp:
                 self.cbpi.notify("Please remove lid!", "Reached temp close to boiling", NotificationType.INFO)
                 self.lid_flag = False

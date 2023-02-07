@@ -52,6 +52,8 @@ class ConfigUpdate(CBPiExtension):
         SENSOR_LOG_MAX_BYTES = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", None)
         slow_pipe_animation = self.cbpi.config.get("slow_pipe_animation", None)
         NOTIFY_ON_ERROR = self.cbpi.config.get("NOTIFY_ON_ERROR", None)
+        BoilAutoTimer = self.cbpi.config.get("BoilAutoTimer", None)
+        
         
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
@@ -333,6 +335,17 @@ class ConfigUpdate(CBPiExtension):
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
+
+        if BoilAutoTimer is None:
+            logging.info("INIT BoilAutoTimer")
+            try:
+                await self.cbpi.config.add('BoilAutoTimer', 'No', ConfigType.SELECT, 
+                                            'Start Boil timer automatically if Temp does not change for 5 Minutes and is above 95C/203F',                                                                                                 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+                BoilAutoTimer = self.cbpi.config.get("BoilAutoTimer", "No")
+            except:
+                logging.warning('Unable to update database')
 
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)
