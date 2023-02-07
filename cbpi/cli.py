@@ -15,7 +15,7 @@ from colorama import Fore, Back, Style
 import importlib
 from importlib_metadata import metadata
 from tabulate import tabulate
-from inquirer import prompt
+import inquirer
 import platform
 import time
 
@@ -74,19 +74,17 @@ class CraftBeerPiCli():
         print(Fore.LIGHTGREEN_EX, tabulate(result, headers="keys"), Style.RESET_ALL)
 
 
-    def plugin_create(self):
+    def plugin_create(self, pluginName):
         print("Plugin Creation")
         print("")
 
-        questions = [
-            {
-                'type': 'input',
-                'name': 'name',
-                'message': 'Plugin Name:',
-            }
-        ]
+        questions = [ inquirer.Text('name', message='Plugin Name (will be prefixed with "cbpi4-")', default=pluginName),]
 
-        answers = prompt(questions)
+        answers = inquirer.prompt(questions)
+
+        if answers["name"] == "":
+            print("you failed to provide a name for the new plugin - terminating")
+            return
 
         name = "cbpi4-" + str(answers["name"]).replace('_', '-').replace(' ', '-')
         if os.path.exists(os.path.join(".", name)) is True:
@@ -284,9 +282,15 @@ def plugins(context):
 
 @main.command()
 @click.pass_context
-def create(context):
+@click.argument('pluginname', nargs=-1, required=False)
+def create(context, pluginname=[]):
     '''Create New Plugin'''
-    context.obj.plugin_create()
+    sentence = ""
+    for word in pluginname:
+        if sentence != "":
+            sentence += " "
+        sentence += word
+    context.obj.plugin_create(sentence)
 
 @main.command()
 @click.pass_context
