@@ -388,7 +388,7 @@ class BoilStep(CBPiStep):
 
         self.kettle=self.get_kettle(self.props.get("Kettle", None))
         if self.kettle is not None:
-            self.kettle.target_temp = int(self.props.get("Temp", 0))
+            self.kettle.target_temp = float(self.props.get("Temp", 0))
 
         if self.cbpi.kettle is not None and self.timer is None:
             self.timer = Timer(int(self.props.get("Timer", 0)) *60 ,on_update=self.on_timer_update, on_done=self.on_timer_done)
@@ -450,7 +450,7 @@ class BoilStep(CBPiStep):
                 self.cbpi.notify("Please remove lid!", "Reached temp close to boiling", NotificationType.INFO)
                 self.lid_flag = False
 
-            if sensor_value >= int(self.props.get("Temp", 0)) and self.timer.is_running is not True:
+            if sensor_value >= float(self.props.get("Temp", 0)) and self.timer.is_running is not True:
                 self.timer.start()
                 self.timer.is_running = True
                 estimated_completion_time = datetime.fromtimestamp(time.time()+ (int(self.props.get("Timer", 0)))*60)
@@ -496,7 +496,7 @@ class CooldownStep(CBPiStep):
         self.kettle = self.get_kettle(self.props.get("Kettle", None))
         self.actor = self.props.get("Actor", None)
         self.target_temp = int(self.props.get("Temp",0))
-        self.Interval = 15 # Interval in minutes on how often cooldwon end time is calculated
+        self.Interval = 10 # Interval in minutes on how often cooldwon end time is calculated
 
         self.cbpi.notify(self.name, 'Cool down to {}°'.format(self.target_temp), NotificationType.INFO)
         if self.timer is None:
@@ -526,7 +526,7 @@ class CooldownStep(CBPiStep):
         await self.push_update()
         while self.running == True:
             current_temp = self.get_sensor_value(self.props.get("Sensor", None)).get("value")
-            if self.count == 10:
+            if self.count == 3:
                 self.temp_array.append(current_temp)
                 current_time = time.time()
                 if self.initial_date == None:
@@ -541,6 +541,10 @@ class CooldownStep(CBPiStep):
                 target_timestring= datetime.fromtimestamp(target_time)
                 self.summary="ECT: {}".format(target_timestring.strftime("%H:%M"))
                 self.cbpi.notify("Cooldown Step","Current: {}°, reaching {}° at {}".format(round(current_temp,1), self.target_temp, target_timestring.strftime("%d.%m %H:%M")), NotificationType.INFO)
+                self.temp_array = []
+                self.time_array = []
+                self.temp_array.append(self.get_sensor_value(self.props.get("Sensor", None)).get("value"))
+                self.time_array.append(time.time())
                 await self.push_update()
 
             if current_temp <= self.target_temp and self.timer.is_running is not True:

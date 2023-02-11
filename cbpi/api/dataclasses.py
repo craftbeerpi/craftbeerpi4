@@ -89,7 +89,7 @@ class Kettle:
     heater: Actor = None
     sensor: Sensor = None
     type: str = None
-    target_temp: int = 0
+    target_temp: float = 0
 
     def __str__(self):
         return "name={} props={} temp={}".format(self.name, self.props, self.target_temp)
