@@ -13,6 +13,7 @@ class Hysteresis(CBPiKettleLogic):
             self.offset_off = float(self.props.get("OffsetOff", 0))
             self.kettle = self.get_kettle(self.id)
             self.heater = self.kettle.heater
+            heater = self.cbpi.actor.find_by_id(self.heater)
             logging.info("Hysteresis {} {} {} {}".format(self.offset_on, self.offset_off, self.id, self.heater))
 
             # self.get_actor_state()
@@ -22,10 +23,16 @@ class Hysteresis(CBPiKettleLogic):
                 
                 sensor_value = self.get_sensor_value(self.kettle.sensor).get("value")
                 target_temp = self.get_kettle_target_temp(self.id)
+                try:
+                    heater_state=heater.instance.state
+                except:
+                    heater_state = False
                 if sensor_value < target_temp - self.offset_on:
-                    await self.actor_on(self.heater)
+                    if self.heater and (heater_state == False):
+                        await self.actor_on(self.heater)
                 elif sensor_value >= target_temp - self.offset_off:
-                    await self.actor_off(self.heater)
+                    if self.heater and (heater_state == True):
+                        await self.actor_off(self.heater)
                 await asyncio.sleep(1)
 
         except asyncio.CancelledError as e:
