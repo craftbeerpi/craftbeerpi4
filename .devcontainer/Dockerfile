@@ -16,6 +16,6 @@ RUN cat /workspace/additional-dev-requirements.txt 2>/dev/null 1>> /workspace/re
 
 # Install current version of cbpi-ui
 RUN mkdir /opt/downloads \
-    && curl https://github.com/avollkopf/craftbeerpi4-ui/archive/main.zip -L -o /opt/downloads/cbpi-ui.zip \
+    && curl https://github.com/PiBrewing/craftbeerpi4-ui/archive/main.zip -L -o /opt/downloads/cbpi-ui.zip \
     && pip3 install --no-cache-dir /opt/downloads/cbpi-ui.zip \
     && rm -rf /opt/downloads
