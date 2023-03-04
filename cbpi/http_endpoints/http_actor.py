@@ -251,3 +251,36 @@ class ActorHttpEndpoints():
         await self.controller.call_action(actor_id, data.get("action"), data.get("parameter"))
 
         return web.Response(status=204)
+    
+    @request_mapping(path="/{id}/set_power", method="POST", auth_required=auth)
+    async def http_set_power(self, request) -> web.Response:
+        """
+
+        ---
+        description: Set actor power
+        tags:
+        - Actor
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Actor ID"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: body
+          name: body
+          description: Set Power
+          required: true
+          schema:
+            type: object
+            properties:
+              temp:
+                type: integer
+        responses:
+            "204":
+                description: successful operation
+        """
+        id = request.match_info['id']
+        data = await request.json()
+        await self.controller.set_power(id,data.get("power"))
+        return web.Response(status=204)
