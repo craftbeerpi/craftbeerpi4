@@ -64,6 +64,10 @@ class Actor:
     def to_dict(self):
         return dict(id=self.id, name=self.name, type=self.type, props=self.props.to_dict(), state=self.instance.get_state(), power=self.power)
 
+class DataType(Enum):
+    VALUE="value"
+    DATETIME="datetime"
+    STRING="string"
 
 @dataclass
 class Sensor:
@@ -73,6 +77,7 @@ class Sensor:
     state: bool = False
     type: str = None
     instance: str = None
+    datatype: DataType = DataType.VALUE
 
     def __str__(self):
         return "name={} props={}, state={}".format(self.name, self.props, self.state)

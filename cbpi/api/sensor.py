@@ -2,6 +2,7 @@ import asyncio
 import logging
 from abc import abstractmethod, ABCMeta
 from cbpi.api.extension import CBPiExtension
+from cbpi.api.dataclasses import DataType
 
 
 from cbpi.api.base import CBPiBase
@@ -16,6 +17,7 @@ class CBPiSensor(CBPiBase, metaclass=ABCMeta):
         self.data_logger = None
         self.state = False
         self.running = False
+        self.datatype=DataType.VALUE
 
     def init(self):
         pass
@@ -33,13 +35,14 @@ class CBPiSensor(CBPiBase, metaclass=ABCMeta):
         pass
 
     def push_update(self, value, mqtt = True):
+
         try:
-            self.cbpi.ws.send(dict(topic="sensorstate", id=self.id, value=value))
+            self.cbpi.ws.send(dict(topic="sensorstate", id=self.id, value=value, datatype=self.datatype.value))
             if mqtt:
-                self.cbpi.push_update("cbpi/sensordata/{}".format(self.id), dict(id=self.id, value=value), retain=True)
+                self.cbpi.push_update("cbpi/sensordata/{}".format(self.id), dict(id=self.id, value=value, datatype=self.datatype.value), retain=True)
 #            self.cbpi.push_update("cbpi/sensor/{}/udpate".format(self.id), dict(id=self.id, value=value), retain=True)
         except:
-            logging.error("Failed to push sensor update")
+            logging.error("Failed to push sensor update for sensor {}".format(self.id))
 
     async def start(self):
         pass

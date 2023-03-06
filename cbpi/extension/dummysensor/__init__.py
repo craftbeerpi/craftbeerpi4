@@ -4,7 +4,8 @@ import random
 import logging
 from cbpi.api import *
 from cbpi.api.base import CBPiBase
-from cbpi.api.dataclasses import Kettle, Props, Fermenter
+from cbpi.api.dataclasses import Kettle, Props, Fermenter, DataType
+import time
 
 @parameters([])
 class CustomSensor(CBPiSensor):
