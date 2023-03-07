@@ -63,7 +63,7 @@ jobs:
         run: |
 
           PUBLISH_IMAGE=false
-          TAGS="${{ env.steps.string.outputs.lowercase }}:dev"
+          TAGS="${{ env.image-name }}:dev"
 
           # Define the image that will be used as a cached image
           # to speed up the build process
