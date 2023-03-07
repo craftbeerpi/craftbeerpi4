@@ -10,11 +10,13 @@ on:
       - development
   pull_request:
 
-- id: string
-    with:
-     string: ${{ github.repository }}
-- run: |
-     echo "${{ steps.string.outputs.lowercase }}"
+steps:
+      - id: string
+        uses: ASzc/change-string-case-action@v5
+        with:
+          string: ${{ github.repository }}
+      - run: |
+          echo "${{ steps.string.outputs.lowercase }}"
 
 env:
   image-name: ghcr.io/${{ github.repository_owner }}/craftbeerpi4
