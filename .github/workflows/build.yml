@@ -16,6 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Builds the source distribution package
     steps:
+      - id: string
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository_owner }}
+      - run: |
+          echo "${{ steps.string.outputs.lowercase }}"
+
+
       - name: Checkout source
         uses: actions/checkout@v2
 
