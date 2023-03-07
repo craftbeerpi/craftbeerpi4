@@ -1,7 +1,5 @@
 name: 'Build CraftBeerPi4'
 
-  uses: ASzc/change-string-case-action@v5
-
 on:
   push:
     branches:
