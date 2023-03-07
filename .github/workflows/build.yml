@@ -1,7 +1,7 @@
 name: 'Build CraftBeerPi4'
 
   uses: ASzc/change-string-case-action@v5
-  
+
 on:
   push:
     branches:
@@ -9,6 +9,12 @@ on:
       - master
       - development
   pull_request:
+
+- id: string
+    with:
+     string: ${{ github.repository }}
+- run: |
+     echo "${{ steps.string.outputs.lowercase }}"
 
 env:
   image-name: ghcr.io/${{ github.repository_owner }}/craftbeerpi4
