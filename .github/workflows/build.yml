@@ -12,7 +12,7 @@ env:
     OWNER: '${{ github.repository_owner }}'
 
 env:
-  image-name: ghcr.io/${{ OWNER_LC }}/craftbeerpi4
+  image-name: ghcr.io/${{ OWNER }}/craftbeerpi4
 
 jobs:
   build:
