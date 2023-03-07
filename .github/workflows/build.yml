@@ -8,8 +8,14 @@ on:
       - development
   pull_request:
 
+
+run: |
+    echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
 env:
-  image-name: ghcr.io/${{ github.repository_owner }}/craftbeerpi4
+    OWNER: '${{ github.repository_owner }}'
+
+env:
+  image-name: ghcr.io/${{ OWNER_LC }}/craftbeerpi4
 
 jobs:
   build:
