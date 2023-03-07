@@ -19,7 +19,7 @@ jobs:
       - id: string
         uses: ASzc/change-string-case-action@v1
         with:
-          string: ${{ github.repository_owner }}
+          string: ${{ image-name }}
       - run: |
           echo "${{ steps.string.outputs.lowercase }}"
 
@@ -63,7 +63,7 @@ jobs:
         run: |
 
           PUBLISH_IMAGE=false
-          TAGS="${{ env.image-name }}:dev"
+          TAGS="${{ env.steps.string.outputs.lowercase }}:dev"
 
           # Define the image that will be used as a cached image
           # to speed up the build process
