@@ -9,7 +9,7 @@ on:
   pull_request:
 
 
-run: |
+run:
     echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
 env:
     OWNER: '${{ github.repository_owner }}'
