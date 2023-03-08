@@ -27,10 +27,9 @@ class AlarmTimer(CBPiSensor):
         self.stopped=False
         self.time = float(time)
         self.value=self.calculate_time(self.time)
-        await self.timer.stop()
+        if self.timer is None:
+            await self.timer.stop()
         self.timer = Timer(int(self.time * 60), on_update=self.on_timer_update, on_done=self.on_timer_done)
-        self.timer.start()
-        await self.timer.stop()
         self.timer.is_running = False
         logging.info("Set Timer")
 
@@ -56,11 +55,10 @@ class AlarmTimer(CBPiSensor):
     @action(key="Reset Timer", parameters=[])
     async def Reset(self , **kwargs):
         self.stopped=False
-        await self.timer.stop()
+        if self.timer is None:
+            await self.timer.stop()
         self.value=self.calculate_time(self.time)
         self.timer = Timer(int(self.time * 60), on_update=self.on_timer_update, on_done=self.on_timer_done)
-        self.timer.start()
-        await self.timer.stop()
         self.timer.is_running = False
         logging.info("Reset Timer")
 
