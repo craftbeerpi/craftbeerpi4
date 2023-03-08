@@ -4,6 +4,7 @@ from cbpi.utils.utils import json_dumps
 from cbpi.api import request_mapping
 import os
 import json
+import logging
 class LogHttpEndpoints:
 
     def __init__(self,cbpi):
@@ -189,7 +190,8 @@ class LogHttpEndpoints:
                 description: successful operation.
         """
         data = await request.json()
-        return web.json_response(await self.cbpi.log.get_data2(data), dumps=json_dumps)
+        values = await self.cbpi.log.get_data2(data)
+        return web.json_response(values, dumps=json_dumps)
 
 
     @request_mapping(path="/{name}", method="DELETE", auth_required=False)

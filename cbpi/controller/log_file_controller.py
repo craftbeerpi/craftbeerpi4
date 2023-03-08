@@ -158,11 +158,14 @@ class LogController:
         dateparse = lambda dates: [datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S') for d in dates]       
         result = dict()
         for id in ids:
-            all_filenames = glob.glob(os.path.join(self.logsFolderPath,f"sensor_{id}.log*"))
-            df = pd.concat([pd.read_csv(f, parse_dates=['DateTime'], date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
-            df = df.resample('60s').max()
-            df = df.dropna()
-            result[id] = {"time": df.index.astype(str).tolist(), "value":df.Values.tolist()}
+            try:
+                all_filenames = glob.glob(os.path.join(self.logsFolderPath,f"sensor_{id}.log*"))
+                df = pd.concat([pd.read_csv(f, parse_dates=['DateTime'], date_parser=dateparse, index_col='DateTime', names=['DateTime', 'Values'], header=None) for f in all_filenames])
+                df = df.resample('60s').max()
+                df = df.dropna()
+                result[id] = {"time": df.index.astype(str).tolist(), "value":df.Values.tolist()}
+            except:
+                pass
         return result
 
 
