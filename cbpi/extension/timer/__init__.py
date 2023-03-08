@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
-import os
 from aiohttp import web
 import logging
 import asyncio
 from cbpi.api import *
 from cbpi.api import base
 from time import strftime, gmtime
-import datetime
 from cbpi.api.timer import Timer
 from cbpi.api.dataclasses import DataType
 from cbpi.api.dataclasses import NotificationAction, NotificationType
 
 logger = logging.getLogger(__name__)
-
-
 @parameters([])
 class AlarmTimer(CBPiSensor):
 
@@ -44,7 +40,6 @@ class AlarmTimer(CBPiSensor):
             self.timer = Timer(int(self.time * 60), on_update=self.on_timer_update, on_done=self.on_timer_done)
 
         if self.timer.is_running is not True:
-            self.cbpi.notify(self.sensor.name,'Timer started', NotificationType.INFO)
             self.timer.start()
             self.stopped=False
             self.timer.is_running = True
@@ -56,7 +51,6 @@ class AlarmTimer(CBPiSensor):
         self.stopped=False
         await self.timer.stop()
         self.timer.is_running = False
-        self.cbpi.notify(self.sensor.name,'Timer stopped', NotificationType.INFO)
         logging.info("Stop Timer")
 
     @action(key="Reset Timer", parameters=[])
@@ -73,7 +67,7 @@ class AlarmTimer(CBPiSensor):
     async def on_timer_done(self, timer):
         #self.value = "Stopped"
         if self.stopped is True:
-            self.cbpi.notify(self.sensor.name,'Timer done', NotificationType.INFO)
+            self.cbpi.notify(self.sensor.name,'Timer done', NotificationType.SUCCESS)
 
         self.timer.is_running = False
         pass
@@ -81,11 +75,6 @@ class AlarmTimer(CBPiSensor):
     async def on_timer_update(self, timer, seconds):
         self.stopped=True
         self.value = Timer.format_time(seconds)
-        #await self.push_update()
-
-    async def NextStep(self):
-        self.next = True
-        pass
 
     async def run(self):   
         while self.running is True:
@@ -98,7 +87,6 @@ class AlarmTimer(CBPiSensor):
     
     def calculate_time(self, time):
         return strftime("%H:%M:%S", gmtime(time*60))
-
 
 def setup(cbpi):
     cbpi.plugin.register("AlarmTimer", AlarmTimer)
