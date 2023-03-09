@@ -45,6 +45,22 @@
         "type": "string",
         "value": "Some New Brewery Name"
     },
+    "BoilAutoTimer": {
+        "description": "Start Boil timer automatically if Temp does not change for 5 Minutes and is above 95C/203F",
+        "name": "BoilAutoTimer",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "type": "select",
+        "value": "No"
+    },
     "BoilKettle": {
         "description": "Define Kettle that is used for Boil, Whirlpool and Cooldown. If not selected, MASH_TUN will be used",
         "name": "BoilKettle",
@@ -106,6 +122,13 @@
         ],
         "type": "select",
         "value": "No"
+    },
+    "INFLUXDBMEASUREMENT": {
+        "description": "Name of the measurement in your INFLUXDB database (default: measurement)",
+        "name": "INFLUXDBMEASUREMENT",
+        "options": null,
+        "type": "string",
+        "value": "measurement"
     },
     "INFLUXDBNAME": {
         "description": "Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)",
