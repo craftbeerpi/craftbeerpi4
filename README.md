@@ -36,4 +36,4 @@ For a more detailed description of a development setup without the _development 
 ### Contributors
 Thanks to all the people who have contributed
 
-[![contributors](https://contributors-img.web.app/image?repo=avollkopf/craftbeerpi4)](https://github.com/avollkopf/craftbeerpi4/graphs/contributors)
+[![contributors](https://contributors-img.web.app/image?repo=PiBrewing/craftbeerpi4)](https://github.com/PiBrewing/craftbeerpi4/graphs/contributors)
