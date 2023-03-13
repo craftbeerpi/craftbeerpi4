@@ -49,7 +49,7 @@ class LogController:
         if self.influxdb == "Yes":
             self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
             self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
-            self.influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
+            #self.influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
             self.influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
             self.influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
             self.influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
@@ -68,7 +68,7 @@ class LogController:
                 logging.error("InfluxDB ID Error: {}".format(e))
 
             if self.influxdbcloud == "Yes":
-                self.influxdburl="https://" + self.influxdbaddr + "/api/v2/write?org=" + self.influxdbuser + "&bucket=" + self.influxdbname + "&precision=s"
+                self.influxdburl=self.influxdbaddr + "/api/v2/write?org=" + self.influxdbuser + "&bucket=" + self.influxdbname + "&precision=s"
                 try:
                     header = {'User-Agent': name, 'Authorization': "Token {}".format(self.influxdbpwd)}
                     http = urllib3.PoolManager()
@@ -78,7 +78,7 @@ class LogController:
 
             else:
                 self.base64string = base64.b64encode(('%s:%s' % (self.influxdbuser,self.influxdbpwd)).encode())
-                self.influxdburl='http://' + self.influxdbaddr + ':' + str(self.influxdbport) + '/write?db=' + self.influxdbname
+                self.influxdburl= self.influxdbaddr + '/write?db=' + self.influxdbname
                 try:
                     header = {'User-Agent': name, 'Content-Type': 'application/x-www-form-urlencoded','Authorization': 'Basic %s' % self.base64string.decode('utf-8')}
                     http = urllib3.PoolManager()

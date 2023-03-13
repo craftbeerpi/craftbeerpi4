@@ -40,7 +40,7 @@ class ConfigUpdate(CBPiExtension):
         logfiles = self.cbpi.config.get("CSVLOGFILES", None)
         influxdb = self.cbpi.config.get("INFLUXDB", None)
         influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
-        influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
+        #influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
         influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
         influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
         influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
@@ -229,12 +229,12 @@ class ConfigUpdate(CBPiExtension):
                 logger.warning('Unable to update config')
 
         ## Check if influxdbport is in config
-        if influxdbport is None:
-            logger.info("INIT Influxdbport")
-            try:
-                await self.cbpi.config.add("INFLUXDBPORT", "8086", ConfigType.STRING, "Port of your influxdb server")
-            except:
-                logger.warning('Unable to update config')
+        #if influxdbport is None:
+        #    logger.info("INIT Influxdbport")
+        #    try:
+        #        await self.cbpi.config.add("INFLUXDBPORT", "8086", ConfigType.STRING, "Port of your influxdb server")
+        #    except:
+        #        logger.warning('Unable to update config')
 
         ## Check if influxdbname is in config
         if influxdbname is None:
