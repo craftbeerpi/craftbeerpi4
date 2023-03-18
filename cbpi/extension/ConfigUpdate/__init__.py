@@ -52,6 +52,7 @@ class ConfigUpdate(CBPiExtension):
         SENSOR_LOG_MAX_BYTES = self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", None)
         slow_pipe_animation = self.cbpi.config.get("slow_pipe_animation", None)
         NOTIFY_ON_ERROR = self.cbpi.config.get("NOTIFY_ON_ERROR", None)
+        PLAY_BUZZER = self.cbpi.config.get("PLAY_BUZZER", None)
         BoilAutoTimer = self.cbpi.config.get("BoilAutoTimer", None)
         
         
@@ -331,6 +332,16 @@ class ConfigUpdate(CBPiExtension):
             logger.info("INIT NOTIFY_ON_ERROR")
             try:
                 await self.cbpi.config.add("NOTIFY_ON_ERROR", "No", ConfigType.SELECT, "Send Notification on Logging Error", 
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+            except:
+                logger.warning('Unable to update config')
+
+       ## Check if PLAY_BUZZER is in config
+        if PLAY_BUZZER is None:
+            logger.info("INIT PLAY_BUZZER")
+            try:
+                await self.cbpi.config.add("PLAY_BUZZER", "No", ConfigType.SELECT, "Play buzzer sound in Web interface on Notifications", 
                                                                                                 [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:
