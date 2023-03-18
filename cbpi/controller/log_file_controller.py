@@ -57,12 +57,9 @@ class LogController:
             
             id = name
             try:
-                chars = {'ö':'oe','ä':'ae','ü':'ue','Ö':'Oe','Ä':'Ae','Ü':'Ue'}
                 sensor=self.cbpi.sensor.find_by_id(name)
                 if sensor is not None:
                     itemname=sensor.name.replace(" ", "_")
-                    for char in chars:
-                        itemname = itemname.replace(char,chars[char])
                     out=str(self.influxdbmeasurement)+",source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
             except Exception as e:
                 logging.error("InfluxDB ID Error: {}".format(e))
@@ -82,7 +79,7 @@ class LogController:
                 try:
                     header = {'User-Agent': name, 'Content-Type': 'application/x-www-form-urlencoded','Authorization': 'Basic %s' % self.base64string.decode('utf-8')}
                     http = urllib3.PoolManager()
-                    req = http.request('POST',self.influxdburl, body=out, headers = header)
+                    req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
                 except Exception as e:
                     logging.error("InfluxDB write Error: {}".format(e))
 
