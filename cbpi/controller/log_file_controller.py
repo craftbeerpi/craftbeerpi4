@@ -69,7 +69,7 @@ class LogController:
                 try:
                     header = {'User-Agent': name, 'Authorization': "Token {}".format(self.influxdbpwd)}
                     http = urllib3.PoolManager()
-                    req = http.request('POST',self.influxdburl, body=out, headers = header)
+                    req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
                 except Exception as e:
                     logging.error("InfluxDB cloud write Error: {}".format(e))
 
