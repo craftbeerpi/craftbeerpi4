@@ -225,17 +225,9 @@ class ConfigUpdate(CBPiExtension):
         if influxdbaddr is None:
             logger.info("INIT Influxdbaddr")
             try:
-                await self.cbpi.config.add("INFLUXDBADDR", "localhost", ConfigType.STRING, "IP Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)")
+                await self.cbpi.config.add("INFLUXDBADDR", "http://localhost:8086", ConfigType.STRING, "URL Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)")
             except:
                 logger.warning('Unable to update config')
-
-        ## Check if influxdbport is in config
-        #if influxdbport is None:
-        #    logger.info("INIT Influxdbport")
-        #    try:
-        #        await self.cbpi.config.add("INFLUXDBPORT", "8086", ConfigType.STRING, "Port of your influxdb server")
-        #    except:
-        #        logger.warning('Unable to update config')
 
         ## Check if influxdbname is in config
         if influxdbname is None:
