@@ -158,6 +158,10 @@ cbpi/extension/onewire/__pycache__/__init__.cpython-310.pyc
 cbpi/extension/onewire/__pycache__/__init__.cpython-311.pyc
 cbpi/extension/onewire/__pycache__/__init__.cpython-37.pyc
 cbpi/extension/onewire/__pycache__/__init__.cpython-39.pyc
+cbpi/extension/timer/__init__.py
+cbpi/extension/timer/config.yaml
+cbpi/extension/timer/__pycache__/__init__.cpython-311.pyc
+cbpi/extension/timer/__pycache__/__init__.cpython-39.pyc
 cbpi/http_endpoints/__init__.py
 cbpi/http_endpoints/http_actor.py
 cbpi/http_endpoints/http_config.py

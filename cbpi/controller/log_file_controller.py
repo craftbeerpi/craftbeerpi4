@@ -7,7 +7,7 @@ from time import strftime, localtime
 import pandas as pd
 import zipfile
 import base64
-import urllib3
+from urllib3 import Timeout, PoolManager
 from pathlib import Path
 from cbpi.api import *
 from cbpi.api.config import ConfigType
@@ -46,16 +46,20 @@ class LogController:
 
             formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
             self.datalogger[name].info("%s,%s" % (formatted_time, str(value)))
+
         if self.influxdb == "Yes":
+            ## Write to influxdb in an asyncio task
+            self._task = asyncio.create_task(self.log_influx(name,value))            
+
+    async def log_influx(self, name:str, value:str):
             self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
             self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
-            #self.influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
             self.influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
             self.influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
             self.influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
             self.influxdbmeasurement = self.cbpi.config.get("INFLUXDBMEASUREMENT", "measurement")
-            
             id = name
+            timeout = Timeout(connect=5.0, read=None)
             try:
                 sensor=self.cbpi.sensor.find_by_id(name)
                 if sensor is not None:
@@ -68,7 +72,7 @@ class LogController:
                 self.influxdburl=self.influxdbaddr + "/api/v2/write?org=" + self.influxdbuser + "&bucket=" + self.influxdbname + "&precision=s"
                 try:
                     header = {'User-Agent': name, 'Authorization': "Token {}".format(self.influxdbpwd)}
-                    http = urllib3.PoolManager()
+                    http = PoolManager(timeout=timeout)
                     req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
                 except Exception as e:
                     logging.error("InfluxDB cloud write Error: {}".format(e))
@@ -78,7 +82,7 @@ class LogController:
                 self.influxdburl= self.influxdbaddr + '/write?db=' + self.influxdbname
                 try:
                     header = {'User-Agent': name, 'Content-Type': 'application/x-www-form-urlencoded','Authorization': 'Basic %s' % self.base64string.decode('utf-8')}
-                    http = urllib3.PoolManager()
+                    http = PoolManager(timeout=timeout)
                     req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
                 except Exception as e:
                     logging.error("InfluxDB write Error: {}".format(e))
