@@ -11,8 +11,11 @@ from cbpi.api.dataclasses import NotificationAction, NotificationType
 cache = {}
 
 @parameters([Property.Text(label="Key", configurable=True, description="Http Key"),
-             Property.Number(label="Timeout", configurable="True",unit="sec",description="Timeout in seconds to send notification (default:60 | deactivated: 0)")
-])
+             Property.Number(label="Timeout", configurable="True",unit="sec",description="Timeout in seconds to send notification (default:60 | deactivated: 0)"),
+             Property.Kettle(label="Kettle", description="Reduced logging if Kettle is inactive (only Kettle or Fermenter to be selected)"),
+             Property.Fermenter(label="Fermenter", description="Reduced logging in seconds if Fermenter is inactive (only Kettle or Fermenter to be selected)"),
+             Property.Number(label="ReducedLogging", configurable=True, description="Reduced logging frequency in seconds if selected Kettle or Fermenter is inactive (default is 60 sec)")])
+
 class HTTPSensor(CBPiSensor):
     def __init__(self, cbpi, id, props):
         super(HTTPSensor, self).__init__(cbpi, id, props)
@@ -24,6 +27,21 @@ class HTTPSensor(CBPiSensor):
         self.nextchecktime=self.starttime+self.timeout
         self.sensor=self.get_sensor(self.id)
         self.lastdata=time.time()
+
+        self.lastlog=0
+        self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
+        
+        self.kettleid=self.props.get("Kettle", None)
+        self.reducedlogging=True
+        self.fermenterid=self.props.get("Fermenter", None)
+
+        if self.kettleid is not None and self.fermenterid is not None:
+            self.reducedlogging=False
+            self.cbpi.notify("HTTPSensor", "Sensor '" + str(self.sensor.name) + "' cant't have Fermenter and Kettle defined for reduced logging.", NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
+        
+        self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
+        self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
+
 
     async def Confirm(self, **kwargs):
         self.nextchecktime = time.time() + self.timeout
@@ -51,6 +69,13 @@ class HTTPSensor(CBPiSensor):
                 if cache_value is not None:
                     self.value = float(cache_value)
                     self.push_update(self.value)
+
+                    if self.reducedlogging:
+                        await self.logvalue()
+                    else:
+                        self.log_data(self.value)
+                        self.lastlog = time.time()
+
                     if self.timeout !=0:
                         self.nextchecktime = currenttime + self.timeout
                         self.notificationsend = False
@@ -60,12 +85,47 @@ class HTTPSensor(CBPiSensor):
                 pass
             await asyncio.sleep(1)
 
+    async def logvalue(self):
+        now=time.time()            
+        if self.kettle is not None:
+            try:
+                kettlestatus=self.kettle.instance.state
+            except:
+                kettlestatus=False
+            if kettlestatus:
+                self.log_data(self.value)
+                logging.info("Kettle Active")
+                self.lastlog = time.time()
+            else:
+                logging.info("Kettle Inactive")
+                if now >= self.lastlog + self.reducedfrequency:
+                    self.log_data(self.value)
+                    self.lastlog = time.time()
+                    logging.info("Logged with reduced freqency")
+                    pass   
+
+        if self.fermenter is not None:
+            try:
+                fermenterstatus=self.fermenter.instance.state
+            except:
+                fermenterstatus=False
+            if fermenterstatus:
+                self.log_data(self.value)
+                logging.info("Fermenter Active")
+                self.lastlog = time.time()
+            else:
+                logging.info("Fermenter Inactive")
+                if now >= self.lastlog + self.reducedfrequency:
+                    self.log_data(self.value)
+                    self.lastlog = time.time()
+                    logging.info("Logged with reduced freqency")
+                    pass            
+
     def get_state(self):
         # return the current state of the sensor
         return dict(value=self.value)
 
 class HTTPSensorEndpoint(CBPiExtension):
-
 
     def __init__(self, cbpi):
         '''
