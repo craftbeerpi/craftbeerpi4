@@ -62,6 +62,14 @@ class OneWire(CBPiSensor):
         super(OneWire, self).__init__(cbpi, id, props)
         self.value = 200
         self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
+
+    async def start(self):
+        await super().start()
+        self.name = self.props.get("Sensor")
+        self.interval = int(self.props.get("Interval", 60))
+        self.offset = float(self.props.get("offset",0))
+
+        self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
         self.lastlog=0
         self.sensor=self.get_sensor(self.id)       
         self.kettleid=self.props.get("Kettle", None)
@@ -77,12 +85,6 @@ class OneWire(CBPiSensor):
 
         self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
         self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
-
-    async def start(self):
-        await super().start()
-        self.name = self.props.get("Sensor")
-        self.interval = int(self.props.get("Interval", 60))
-        self.offset = float(self.props.get("offset",0))
 
         self.t = ReadThread(self.name)
         self.t.daemon = True
