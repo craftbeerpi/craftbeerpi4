@@ -25,6 +25,9 @@ class MQTTSensor(CBPiSensor):
         if self.payload_text != None:
             self.payload_text = self.payload_text.split('.')
         self.mqtt_task = self.cbpi.satellite.subcribe(self.Topic, self.on_message)
+
+    async def start(self):
+        await super().start()
         self.value: float = 999
         self.timeout=int(self.props.get("Timeout", 60))
         self.starttime = time.time()
