@@ -126,12 +126,15 @@ class MQTTSensor(CBPiSensor):
         return dict(value=self.value)
 
     async def on_stop(self):
-        if self.mqtt_task.done() is False:
+        if not self.mqtt_task.done():
+            logging.warning("Task not done -> cancelling")
             self.mqtt_task.cancel()
-            try:
-                await self.mqtt_task
-            except asyncio.CancelledError:
-                pass
+        try:            
+            logging.warning("trying to call cancelled task")
+            await self.mqtt_task
+        except asyncio.CancelledError:
+            logging.warning("Task has been Cancelled")
+            pass
 
 
 def setup(cbpi):
