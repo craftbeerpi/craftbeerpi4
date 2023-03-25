@@ -153,6 +153,7 @@ class SatelliteController:
         return task
 
     async def _subcribe(self, topic, method):
+        self.error=False
         while True:
             try:
                 if self.client._connected.done():
@@ -164,10 +165,13 @@ class SatelliteController:
             except asyncio.CancelledError:
                 # Cancel
                 self.logger.warning("Sub Cancelled")
-                break
+                self.error=True
             except MqttError as e:
                 self.logger.error("Sub MQTT Exception: {}".format(e))
             except Exception as e:
                 self.logger.error("Sub Exception: {}".format(e))
             # wait before try to resubscribe
-            await asyncio.sleep(5)
+            if self.error == True:
+                break
+            else:
+                await asyncio.sleep(5)
