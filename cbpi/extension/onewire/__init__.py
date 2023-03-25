@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 import asyncio
-import random
-import re
-import random
+import logging
 from aiohttp import web
 from cbpi.api import *
-import os, re, threading, time
+import os, threading, time
 from subprocess import call
-import random
+from cbpi.api.dataclasses import NotificationAction, NotificationType
 
 def getSensors():
     try:
@@ -53,7 +51,11 @@ class ReadThread (threading.Thread):
 
 @parameters([Property.Select(label="Sensor", options=getSensors()), 
              Property.Number(label="offset",configurable = True, default_value = 0, description="Sensor Offset (Default is 0)"),
-             Property.Select(label="Interval", options=[1,5,10,30,60], description="Interval in Seconds")])
+             Property.Select(label="Interval", options=[1,5,10,30,60], description="Interval in Seconds"),
+             Property.Kettle(label="Kettle", description="Reduced logging if Kettle is inactive (only Kettle or Fermenter to be selected)"),
+             Property.Fermenter(label="Fermenter", description="Reduced logging in seconds if Fermenter is inactive (only Kettle or Fermenter to be selected)"),
+             Property.Number(label="ReducedLogging", configurable=True, description="Reduced logging frequency in seconds if selected Kettle or Fermenter is inactive (default is 60 sec)")
+             ])
 class OneWire(CBPiSensor):
     
     def __init__(self, cbpi, id, props):
@@ -63,15 +65,37 @@ class OneWire(CBPiSensor):
     async def start(self):
         await super().start()
         self.name = self.props.get("Sensor")
-        self.interval = self.props.get("Interval", 60)
+        self.interval = int(self.props.get("Interval", 60))
         self.offset = float(self.props.get("offset",0))
+        self.lastlog=0
+        self.sensor=self.get_sensor(self.id)
+        self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
+        
+        self.kettleid=self.props.get("Kettle", None)
+        self.reducedlogging=True
+        self.fermenterid=self.props.get("Fermenter", None)
+
+        if self.kettleid is not None and self.fermenterid is not None:
+            self.reducedlogging=False
+            self.cbpi.notify("OneWire Sensor", "Sensor '" + str(self.sensor.name) + "' cant't have Fermenter and Kettle defined for reduced logging.", NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
+        if self.interval >= self.reducedfrequency:
+            self.reducedlogging=False
+            self.cbpi.notify("OneWire Sensor", "Sensor '" + str(self.sensor.name) + "' has shorter or equal 'reduced logging' compared to regular interval.", NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
+
+        self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
+        self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
+
 
         self.t = ReadThread(self.name)
         self.t.daemon = True
-        def shudown():
-            shudown.cb.shutdown()
-        shudown.cb = self.t
+        def shutdown():
+            shutdown.cb.shutdown()
+        shutdown.cb = self.t
         self.t.start()
+
+
+    async def Confirm(self, **kwargs):
+        pass
     
     async def stop(self):
         try:
@@ -86,11 +110,51 @@ class OneWire(CBPiSensor):
             if self.TEMP_UNIT == "C": # Report temp in C if nothing else is selected in settings
                 self.value = round((self.t.value + self.offset),2)
             else: # Report temp in F if unit selected in settings
-                self.value = round((9.0 / 5.0 * self.t.value + 32 + self.offset), 2)
-            
-            self.log_data(self.value)
+                self.value = round((9.0 / 5.0 * self.t.value + 32 + self.offset), 2)           
             self.push_update(self.value)
+            if self.reducedlogging:
+                await self.logvalue()
+            else:
+                    self.log_data(self.value)
+                    self.lastlog = time.time()
             await asyncio.sleep(self.interval)
+
+    async def logvalue(self):
+        now=time.time()            
+        if self.kettle is not None:
+            try:
+                kettlestatus=self.kettle.instance.state
+            except:
+                kettlestatus=False
+            if kettlestatus:
+                self.log_data(self.value)
+                logging.info("Kettle Active")
+                self.lastlog = time.time()
+            else:
+                logging.info("Kettle Inactive")
+                if now >= self.lastlog + self.reducedfrequency:
+                    self.log_data(self.value)
+                    self.lastlog = time.time()
+                    logging.info("Logged with reduced freqency")
+                    pass   
+
+        if self.fermenter is not None:
+            try:
+                fermenterstatus=self.fermenter.instance.state
+            except:
+                fermenterstatus=False
+            if fermenterstatus:
+                self.log_data(self.value)
+                logging.info("Fermenter Active")
+                self.lastlog = time.time()
+            else:
+                logging.info("Fermenter Inactive")
+                if now >= self.lastlog + self.reducedfrequency:
+                    self.log_data(self.value)
+                    self.lastlog = time.time()
+                    logging.info("Logged with reduced freqency")
+                    pass            
+
     
     def get_state(self):
         return dict(value=self.value)
