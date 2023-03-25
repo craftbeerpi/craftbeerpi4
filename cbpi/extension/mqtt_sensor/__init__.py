@@ -25,9 +25,6 @@ class MQTTSensor(CBPiSensor):
         if self.payload_text != None:
             self.payload_text = self.payload_text.split('.')
         self.mqtt_task = self.cbpi.satellite.subcribe(self.Topic, self.on_message)
-
-    async def start(self):
-        await super().start()
         self.value: float = 999
         self.timeout=int(self.props.get("Timeout", 60))
         self.starttime = time.time()
@@ -39,8 +36,6 @@ class MQTTSensor(CBPiSensor):
         self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
         self.kettleid=self.props.get("Kettle", None)
         self.fermenterid=self.props.get("Fermenter", None)
-        logging.info(self.kettleid)
-        logging.info(self.fermenterid)
         self.reducedlogging = True if self.kettleid or self.fermenterid else False
 
         if self.kettleid is not None and self.fermenterid is not None:
