@@ -82,9 +82,6 @@ class OneWire(CBPiSensor):
             self.reducedlogging=False
             self.cbpi.notify("OneWire Sensor", "Sensor '" + str(self.sensor.name) + "' has shorter or equal 'reduced logging' compared to regular interval.", NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
 
-        self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
-        self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
-
         self.t = ReadThread(self.name)
         self.t.daemon = True
         def shutdown():
@@ -104,6 +101,10 @@ class OneWire(CBPiSensor):
             pass
 
     async def run(self):
+
+        self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
+        self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
+        
         while self.running == True:
             self.TEMP_UNIT=self.get_config_value("TEMP_UNIT", "C")
             if self.TEMP_UNIT == "C": # Report temp in C if nothing else is selected in settings
