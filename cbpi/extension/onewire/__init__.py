@@ -61,16 +61,9 @@ class OneWire(CBPiSensor):
     def __init__(self, cbpi, id, props):
         super(OneWire, self).__init__(cbpi, id, props)
         self.value = 200
-
-    async def start(self):
-        await super().start()
-        self.name = self.props.get("Sensor")
-        self.interval = int(self.props.get("Interval", 60))
-        self.offset = float(self.props.get("offset",0))
-        self.lastlog=0
-        self.sensor=self.get_sensor(self.id)
         self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
-        
+        self.lastlog=0
+        self.sensor=self.get_sensor(self.id)       
         self.kettleid=self.props.get("Kettle", None)
         self.fermenterid=self.props.get("Fermenter", None)
         self.reducedlogging=True if self.kettleid or self.fermenterid else False
@@ -85,6 +78,11 @@ class OneWire(CBPiSensor):
         self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
         self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
 
+    async def start(self):
+        await super().start()
+        self.name = self.props.get("Sensor")
+        self.interval = int(self.props.get("Interval", 60))
+        self.offset = float(self.props.get("offset",0))
 
         self.t = ReadThread(self.name)
         self.t.daemon = True
@@ -121,7 +119,8 @@ class OneWire(CBPiSensor):
             await asyncio.sleep(self.interval)
 
     async def logvalue(self):
-        now=time.time()            
+        now=time.time()        
+        logging.info("OneWire {} logging subroutine".format(self.sensor.name))    
         if self.kettle is not None:
             try:
                 kettlestatus=self.kettle.instance.state
