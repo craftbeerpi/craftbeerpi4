@@ -164,10 +164,10 @@ class SatelliteController:
             except asyncio.CancelledError:
                 # Cancel
                 self.logger.warning("Sub Cancelled")
+                break
             except MqttError as e:
                 self.logger.error("Sub MQTT Exception: {}".format(e))
             except Exception as e:
                 self.logger.error("Sub Exception: {}".format(e))
-
             # wait before try to resubscribe
             await asyncio.sleep(5)
