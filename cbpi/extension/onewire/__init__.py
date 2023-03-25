@@ -72,8 +72,8 @@ class OneWire(CBPiSensor):
         self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
         
         self.kettleid=self.props.get("Kettle", None)
-        self.reducedlogging=True
         self.fermenterid=self.props.get("Fermenter", None)
+        self.reducedlogging=True if self.kettleid or self.fermenterid else False
 
         if self.kettleid is not None and self.fermenterid is not None:
             self.reducedlogging=False
@@ -115,6 +115,7 @@ class OneWire(CBPiSensor):
             if self.reducedlogging:
                 await self.logvalue()
             else:
+                    logging.info("OneWire {} regular logging".format(self.sensor.name))
                     self.log_data(self.value)
                     self.lastlog = time.time()
             await asyncio.sleep(self.interval)

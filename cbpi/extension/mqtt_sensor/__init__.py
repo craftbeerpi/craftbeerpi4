@@ -34,10 +34,9 @@ class MQTTSensor(CBPiSensor):
         self.lastlog=0
         self.sensor=self.get_sensor(self.id)
         self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
-        
         self.kettleid=self.props.get("Kettle", None)
-        self.reducedlogging=True
         self.fermenterid=self.props.get("Fermenter", None)
+        self.reducedlogging=True if self.kettleid or self.fermenterid else False
 
         if self.kettleid is not None and self.fermenterid is not None:
             self.reducedlogging=False
