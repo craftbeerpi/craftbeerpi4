@@ -32,16 +32,12 @@ class HTTPSensor(CBPiSensor):
         self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
         
         self.kettleid=self.props.get("Kettle", None)
-        self.reducedlogging=True
         self.fermenterid=self.props.get("Fermenter", None)
+        self.reducedlogging = True if self.kettleid or self.fermenterid else False
 
         if self.kettleid is not None and self.fermenterid is not None:
             self.reducedlogging=False
             self.cbpi.notify("HTTPSensor", "Sensor '" + str(self.sensor.name) + "' cant't have Fermenter and Kettle defined for reduced logging.", NotificationType.WARNING, action=[NotificationAction("OK", self.Confirm)])
-        
-        self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
-        self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
-
 
     async def Confirm(self, **kwargs):
         self.nextchecktime = time.time() + self.timeout
@@ -59,6 +55,8 @@ class HTTPSensor(CBPiSensor):
         In this example the code is executed every second
         '''
         while self.running is True:
+            self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
+            self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
             if self.timeout !=0:
                 currenttime=time.time()            
                 if currenttime > self.nextchecktime and self.notificationsend == False:   
