@@ -89,10 +89,10 @@ class MQTTSensor(CBPiSensor):
                 kettlestatus=False
             if kettlestatus:
                 self.log_data(self.value)
-                logging.info("Kettle Active")
+                logging.info("MQTTSensor {} Kettle Active".format(self.sensor.name))
                 self.lastlog = time.time()
             else:
-                logging.info("Kettle Inactive")
+                logging.info("MQTTSensor {} Kettle Inactive".format(self.sensor.name))
                 if now >= self.lastlog + self.reducedfrequency:
                     self.log_data(self.value)
                     self.lastlog = time.time()
@@ -106,10 +106,10 @@ class MQTTSensor(CBPiSensor):
                 fermenterstatus=False
             if fermenterstatus:
                 self.log_data(self.value)
-                logging.info("Fermenter Active")
+                logging.info("MQTTSensor {} Fermenter Active".format(self.sensor.name))
                 self.lastlog = time.time()
             else:
-                logging.info("Fermenter Inactive")
+                logging.info("MQTTSensor {} Fermenter Inactive".format(self.sensor.name))
                 if now >= self.lastlog + self.reducedfrequency:
                     self.log_data(self.value)
                     self.lastlog = time.time()
