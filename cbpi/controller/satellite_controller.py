@@ -70,6 +70,10 @@ class SatelliteController:
                                 method = topic_filter[1]
                                 if message.topic.matches(topic):
                                     await (method(message))
+            except asyncio.CancelledError:
+                # Cancel
+                self.logger.warning("MQTT Listening Cancelled")
+                break
             except MqttError as e:
                 self.logger.error("MQTT Exception: {}".format(e))
             except Exception as e:
@@ -164,7 +168,7 @@ class SatelliteController:
                                 await method(message.payload.decode())
             except asyncio.CancelledError:
                 # Cancel
-                self.logger.warning("Sub Cancelled")
+                self.logger.warning("Subscription {} Cancelled".format(topic))
                 self.error=True
             except MqttError as e:
                 self.logger.error("Sub MQTT Exception: {}".format(e))
