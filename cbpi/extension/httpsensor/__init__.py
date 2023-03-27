@@ -14,7 +14,7 @@ cache = {}
              Property.Number(label="Timeout", configurable="True",unit="sec",description="Timeout in seconds to send notification (default:60 | deactivated: 0)"),
              Property.Kettle(label="Kettle", description="Reduced logging if Kettle is inactive (only Kettle or Fermenter to be selected)"),
              Property.Fermenter(label="Fermenter", description="Reduced logging in seconds if Fermenter is inactive (only Kettle or Fermenter to be selected)"),
-             Property.Number(label="ReducedLogging", configurable=True, description="Reduced logging frequency in seconds if selected Kettle or Fermenter is inactive (default is 60 sec)")])
+             Property.Number(label="ReducedLogging", configurable=True, description="Reduced logging frequency in seconds if selected Kettle or Fermenter is inactive (default: 60 sec | disabled: 0)")])
 
 class HTTPSensor(CBPiSensor):
     def __init__(self, cbpi, id, props):
@@ -30,6 +30,8 @@ class HTTPSensor(CBPiSensor):
 
         self.lastlog=0
         self.reducedfrequency=int(self.props.get("ReducedLogging", 60))
+        if self.reducedfrequency < 0:
+            self.reducedfrequency = 0
         
         self.kettleid=self.props.get("Kettle", None)
         self.fermenterid=self.props.get("Fermenter", None)
@@ -84,40 +86,44 @@ class HTTPSensor(CBPiSensor):
             await asyncio.sleep(1)
 
     async def logvalue(self):
-        now=time.time()            
-        if self.kettle is not None:
-            try:
-                kettlestatus=self.kettle.instance.state
-            except:
-                kettlestatus=False
-            if kettlestatus:
-                self.log_data(self.value)
-                logging.info("Kettle Active")
-                self.lastlog = time.time()
-            else:
-                logging.info("Kettle Inactive")
-                if now >= self.lastlog + self.reducedfrequency:
+        if self.reducedfrequency != 0:
+            now=time.time()            
+            if self.kettle is not None:
+                try:
+                    kettlestatus=self.kettle.instance.state
+                except:
+                    kettlestatus=False
+                if kettlestatus:
                     self.log_data(self.value)
+                    logging.info("Kettle Active")
                     self.lastlog = time.time()
-                    logging.info("Logged with reduced freqency")
-                    pass   
+                else:
+                    logging.info("Kettle Inactive")
+                    if now >= self.lastlog + self.reducedfrequency:
+                        self.log_data(self.value)
+                        self.lastlog = time.time()
+                        logging.info("Logged with reduced freqency")
+                        pass   
 
-        if self.fermenter is not None:
-            try:
-                fermenterstatus=self.fermenter.instance.state
-            except:
-                fermenterstatus=False
-            if fermenterstatus:
-                self.log_data(self.value)
-                logging.info("Fermenter Active")
-                self.lastlog = time.time()
-            else:
-                logging.info("Fermenter Inactive")
-                if now >= self.lastlog + self.reducedfrequency:
+            if self.fermenter is not None:
+                try:
+                    fermenterstatus=self.fermenter.instance.state
+                except:
+                    fermenterstatus=False
+                if fermenterstatus:
                     self.log_data(self.value)
+                    logging.info("Fermenter Active")
                     self.lastlog = time.time()
-                    logging.info("Logged with reduced freqency")
-                    pass            
+                else:
+                    logging.info("Fermenter Inactive")
+                    if now >= self.lastlog + self.reducedfrequency:
+                        self.log_data(self.value)
+                        self.lastlog = time.time()
+                        logging.info("Logged with reduced freqency")
+                        pass
+        else:
+            logging.warning("No logging")
+            pass
 
     def get_state(self):
         # return the current state of the sensor

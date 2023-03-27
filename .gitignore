@@ -4,8 +4,7 @@ build
 dist
 .idea
 *.log
-cbpi.egg-info
-cbpi4.egg-info
+/cbpi4.egg-info
 log
 venv
 cbpi/extension/ui
