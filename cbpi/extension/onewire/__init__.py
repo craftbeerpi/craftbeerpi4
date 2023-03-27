@@ -123,7 +123,7 @@ class OneWire(CBPiSensor):
             await asyncio.sleep(self.interval)
 
     async def logvalue(self):
-        if self.reducedfrequency == 0:
+        if self.reducedfrequency != 0:
             now=time.time()        
             logging.info("OneWire {} logging subroutine".format(self.sensor.name))    
             if self.kettle is not None:

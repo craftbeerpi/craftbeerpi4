@@ -79,7 +79,7 @@ class MQTTSensor(CBPiSensor):
             logging.error("MQTT Sensor Error {}".format(e))
 
     async def logvalue(self):
-        if self.reducedfrequency == 0:
+        if self.reducedfrequency != 0:
             self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
             self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
             now=time.time()            
