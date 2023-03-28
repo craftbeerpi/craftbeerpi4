@@ -79,38 +79,39 @@ class MQTTSensor(CBPiSensor):
             logging.error("MQTT Sensor Error {}".format(e))
 
     async def logvalue(self):
-        if self.reducedfrequency != 0:
-            self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
-            self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
-            now=time.time()            
-            if self.kettle is not None:
-                try:
-                    kettlestatus=self.kettle.instance.state
-                except:
-                    kettlestatus=False
-                if kettlestatus:
-                    self.log_data(self.value)
-                    logging.info("MQTTSensor {} Kettle Active".format(self.sensor.name))
-                    self.lastlog = time.time()
-                else:
-                    logging.info("MQTTSensor {} Kettle Inactive".format(self.sensor.name))
+        self.kettle = self.get_kettle(self.kettleid) if self.kettleid is not None else None 
+        self.fermenter = self.get_fermenter(self.fermenterid) if self.fermenterid is not None else None
+        now=time.time()            
+        if self.kettle is not None:
+            try:
+                kettlestatus=self.kettle.instance.state
+            except:
+                kettlestatus=False
+            if kettlestatus:
+                self.log_data(self.value)
+                logging.info("MQTTSensor {} Kettle Active".format(self.sensor.name))
+                self.lastlog = time.time()
+            else:
+                logging.info("MQTTSensor {} Kettle Inactive".format(self.sensor.name))
+                if self.reducedfrequency != 0:
                     if now >= self.lastlog + self.reducedfrequency:
                         self.log_data(self.value)
                         self.lastlog = time.time()
                         logging.info("Logged with reduced freqency")
                         pass   
 
-            if self.fermenter is not None:
-                try:
-                    fermenterstatus=self.fermenter.instance.state
-                except:
-                    fermenterstatus=False
-                if fermenterstatus:
-                    self.log_data(self.value)
-                    logging.info("MQTTSensor {} Fermenter Active".format(self.sensor.name))
-                    self.lastlog = time.time()
-                else:
-                    logging.info("MQTTSensor {} Fermenter Inactive".format(self.sensor.name))
+        if self.fermenter is not None:
+            try:
+                fermenterstatus=self.fermenter.instance.state
+            except:
+                fermenterstatus=False
+            if fermenterstatus:
+                self.log_data(self.value)
+                logging.info("MQTTSensor {} Fermenter Active".format(self.sensor.name))
+                self.lastlog = time.time()
+            else:
+                logging.info("MQTTSensor {} Fermenter Inactive".format(self.sensor.name))
+                if self.reducedfrequency != 0:
                     if now >= self.lastlog + self.reducedfrequency:
                         self.log_data(self.value)
                         self.lastlog = time.time()

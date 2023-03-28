@@ -86,44 +86,42 @@ class HTTPSensor(CBPiSensor):
             await asyncio.sleep(1)
 
     async def logvalue(self):
-        if self.reducedfrequency != 0:
-            now=time.time()            
-            if self.kettle is not None:
-                try:
-                    kettlestatus=self.kettle.instance.state
-                except:
-                    kettlestatus=False
-                if kettlestatus:
-                    self.log_data(self.value)
-                    logging.info("Kettle Active")
-                    self.lastlog = time.time()
-                else:
-                    logging.info("Kettle Inactive")
+        now=time.time()            
+        if self.kettle is not None:
+            try:
+                kettlestatus=self.kettle.instance.state
+            except:
+                kettlestatus=False
+            if kettlestatus:
+                self.log_data(self.value)
+                logging.info("Kettle Active")
+                self.lastlog = time.time()
+            else:
+                logging.info("Kettle Inactive")
+                if self.reducedfrequency != 0:
                     if now >= self.lastlog + self.reducedfrequency:
                         self.log_data(self.value)
                         self.lastlog = time.time()
                         logging.info("Logged with reduced freqency")
                         pass   
 
-            if self.fermenter is not None:
-                try:
-                    fermenterstatus=self.fermenter.instance.state
-                except:
-                    fermenterstatus=False
-                if fermenterstatus:
-                    self.log_data(self.value)
-                    logging.info("Fermenter Active")
-                    self.lastlog = time.time()
-                else:
-                    logging.info("Fermenter Inactive")
+        if self.fermenter is not None:
+            try:
+                fermenterstatus=self.fermenter.instance.state
+            except:
+                fermenterstatus=False
+            if fermenterstatus:
+                self.log_data(self.value)
+                logging.info("Fermenter Active")
+                self.lastlog = time.time()
+            else:
+                logging.info("Fermenter Inactive")
+                if self.reducedfrequency != 0:                    
                     if now >= self.lastlog + self.reducedfrequency:
                         self.log_data(self.value)
                         self.lastlog = time.time()
                         logging.info("Logged with reduced freqency")
                         pass
-        else:
-            logging.warning("No logging")
-            pass
 
     def get_state(self):
         # return the current state of the sensor

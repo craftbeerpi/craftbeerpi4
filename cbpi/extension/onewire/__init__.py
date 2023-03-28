@@ -123,37 +123,38 @@ class OneWire(CBPiSensor):
             await asyncio.sleep(self.interval)
 
     async def logvalue(self):
-        if self.reducedfrequency != 0:
-            now=time.time()        
-            logging.info("OneWire {} logging subroutine".format(self.sensor.name))    
-            if self.kettle is not None:
-                try:
-                    kettlestatus=self.kettle.instance.state
-                except:
-                    kettlestatus=False
-                if kettlestatus:
-                    self.log_data(self.value)
-                    logging.info("OneWire {} Kettle Active".format(self.sensor.name))
-                    self.lastlog = time.time()
-                else:
-                    logging.info("OneWire {} Kettle Inactive".format(self.sensor.name))
+        now=time.time()        
+        logging.info("OneWire {} logging subroutine".format(self.sensor.name))    
+        if self.kettle is not None:
+            try:
+                kettlestatus=self.kettle.instance.state
+            except:
+                kettlestatus=False
+            if kettlestatus:
+                self.log_data(self.value)
+                logging.info("OneWire {} Kettle Active".format(self.sensor.name))
+                self.lastlog = time.time()
+            else:
+                logging.info("OneWire {} Kettle Inactive".format(self.sensor.name))
+                if self.reducedfrequency != 0:
                     if now >= self.lastlog + self.reducedfrequency:
                         self.log_data(self.value)
                         self.lastlog = time.time()
                         logging.info("Logged with reduced freqency")
                         pass   
 
-            if self.fermenter is not None:
-                try:
-                    fermenterstatus=self.fermenter.instance.state
-                except:
-                    fermenterstatus=False
-                if fermenterstatus:
-                    self.log_data(self.value)
-                    logging.info("OneWire {} Fermenter Active".format(self.sensor.name))
-                    self.lastlog = time.time()
-                else:
-                    logging.info("OneWire {} Fermenter Inactive".format(self.sensor.name))
+        if self.fermenter is not None:
+            try:
+                fermenterstatus=self.fermenter.instance.state
+            except:
+                fermenterstatus=False
+            if fermenterstatus:
+                self.log_data(self.value)
+                logging.info("OneWire {} Fermenter Active".format(self.sensor.name))
+                self.lastlog = time.time()
+            else:
+                logging.info("OneWire {} Fermenter Inactive".format(self.sensor.name))
+                if self.reducedfrequency != 0:                    
                     if now >= self.lastlog + self.reducedfrequency:
                         self.log_data(self.value)
                         self.lastlog = time.time()
