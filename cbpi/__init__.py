@@ -1,3 +1,3 @@
-__version__ = "4.1.7.rc3"
+__version__ = "4.1.7"
 __codename__ = "Groundhog Day"
 
