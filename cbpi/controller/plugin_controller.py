@@ -205,6 +205,7 @@ class PluginController():
                     from importlib.metadata import (distribution, metadata,
                                                     version)
                     meta = metadata(key)
+                    logging.warning(key)
                     result.append({row: meta[row]
                                   for row in list(metadata(key))})
                 except Exception as e:
@@ -214,4 +215,27 @@ class PluginController():
         except Exception as e:
             logger.error(e)
             return []
+        return result
+    
+    async def load_plugin_names(self, filter="cbpi"):
+        result = []
+        result.append(dict(Name="craftbeerpi"))
+        try:
+            discovered_plugins = {
+            name: importlib.import_module(name)
+            for finder, name, ispkg
+            in pkgutil.iter_modules()
+            if name.startswith('cbpi') and len(name) > 4
+            }
+            for key, module in discovered_plugins.items():
+                try:
+                    meta = metadata(key)
+                    result.append(dict(Name=meta["Name"]))
+                            
+                except Exception as e:
+                    logger.error("FAILED to load plugin {} ".format(key))
+                    logger.error(e)
+        except Exception as e:
+            logger.error(e)
+            return result
         return result

@@ -199,11 +199,12 @@ class Config:
     description: str = None
     type: ConfigType = ConfigType.STRING
     options: Any = None
+    source: str = None
 
     def __str__(self):
         return "....name={} value={}".format(self.name, self.value)
     def to_dict(self):  
-        return dict(name=self.name, value=self.value, type=self.type.value, description=self.description, options=self.options)
+        return dict(name=self.name, value=self.value, type=self.type.value, description=self.description, options=self.options, source=self.source)
 
 @dataclass  
 class NotificationAction:

@@ -19,21 +19,18 @@ class ConfigController:
         self.path_static = cbpi.config_folder.get_file_path("config.yaml")
         self.logger.info("Config folder path : " + os.path.join(Path(self.cbpi.config_folder.configFolderPath).absolute()))
 
-    def get_state(self):
-        
+    def get_state(self):  
         result = {}
         for key, value in self.cache.items():
             result[key] = value.to_dict()
-        
-        return result
-        
+        return result    
 
     async def init(self):
         self.static = load_config(self.path_static)
         with open(self.path) as json_file:
             data = json.load(json_file)
             for key, value in data.items():
-                self.cache[key] = Config(name=value.get("name"), value=value.get("value"), description=value.get("description"), type=ConfigType(value.get("type", "string")), options=value.get("options", None) )
+                self.cache[key] = Config(name=value.get("name"), value=value.get("value"), description=value.get("description"), type=ConfigType(value.get("type", "string")), options=value.get("options", None), source=value.get("source", "craftbeerpi") )
 
     def get(self, name, default=None):
         self.logger.debug("GET CONFIG VALUE %s (default %s)" % (name, default))
