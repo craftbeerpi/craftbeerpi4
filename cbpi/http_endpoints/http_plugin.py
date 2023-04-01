@@ -86,3 +86,21 @@ class PluginHttpEndpoints:
             """
         plugin_list = await self.cbpi.plugin.load_plugin_list()
         return web.json_response(plugin_list, dumps=json_dumps)
+    
+    @request_mapping(path="/names", method="GET", auth_required=False)
+    async def list(self, request):
+        """
+            ---
+            description: Get a list of avialable plugin names
+            tags:
+            - Plugin
+            produces:
+            - application/json
+            responses:
+                "200":
+                    description: successful operation. Return "pong" text
+                "405":
+                    description: invalid HTTP Method
+            """
+        plugin_names = await self.cbpi.plugin.load_plugin_names()
+        return web.json_response(plugin_names, dumps=json_dumps)

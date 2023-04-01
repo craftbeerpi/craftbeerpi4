@@ -230,7 +230,8 @@ class PluginController():
             for key, module in discovered_plugins.items():
                 try:
                     meta = metadata(key)
-                    result.append(dict(Name=meta["Name"]))
+                    if meta["Name"] != "cbpi4gui":
+                        result.append(dict(Name=meta["Name"]))
                             
                 except Exception as e:
                     logger.error("FAILED to load plugin {} ".format(key))
