@@ -198,8 +198,8 @@ class Config:
     value: Any = None
     description: str = None
     type: ConfigType = ConfigType.STRING
-    options: Any = None
     source: str = None
+    options: Any = None
 
     def __str__(self):
         return "....name={} value={}".format(self.name, self.value)

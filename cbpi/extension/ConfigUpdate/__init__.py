@@ -40,7 +40,6 @@ class ConfigUpdate(CBPiExtension):
         logfiles = self.cbpi.config.get("CSVLOGFILES", None)
         influxdb = self.cbpi.config.get("INFLUXDB", None)
         influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
-        #influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
         influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
         influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
         influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
@@ -54,76 +53,112 @@ class ConfigUpdate(CBPiExtension):
         NOTIFY_ON_ERROR = self.cbpi.config.get("NOTIFY_ON_ERROR", None)
         PLAY_BUZZER = self.cbpi.config.get("PLAY_BUZZER", None)
         BoilAutoTimer = self.cbpi.config.get("BoilAutoTimer", None)
-        
-        
+        MASH_TUN = self.cbpi.config.get("MASH_TUN", None)
+        AutoMode = self.cbpi.config.get("AutoMode", None)
+        AddMashIn = self.cbpi.config.get("AddMashInStep", None)
+        bfuserid = self.cbpi.config.get("brewfather_user_id", None)
+        bfapikey = self.cbpi.config.get("brewfather_api_key", None)
+        RecipeCreationPath = self.cbpi.config.get("RECIPE_CREATION_PATH", None)
+        BoilKettle = self.cbpi.config.get("BoilKettle", None)
+        CONFIG_STATUS = self.cbpi.config.get("CONFIG_STATUS", None)
+
+
         if boil_temp is None:
             logger.info("INIT Boil Temp Setting")
             try:
-                await self.cbpi.config.add("steps_boil_temp", default_boil_temp, ConfigType.NUMBER, "Default Boil Temperature for Recipe Creation")
+                await self.cbpi.config.add("steps_boil_temp", default_boil_temp, type=ConfigType.NUMBER, description="Default Boil Temperature for Recipe Creation", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:
+                await self.cbpi.config.add("steps_boil_temp", boil_temp, type=ConfigType.NUMBER, description="Default Boil Temperature for Recipe Creation", source="steps")
 
         if cooldown_sensor is None:
             logger.info("INIT Cooldown Sensor Setting")
             try:
-                await self.cbpi.config.add("steps_cooldown_sensor", "", ConfigType.SENSOR, "Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)")
+                await self.cbpi.config.add("steps_cooldown_sensor", "", type=ConfigType.SENSOR, description="Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:
+                await self.cbpi.config.add("steps_cooldown_sensor", cooldown_sensor, type=ConfigType.SENSOR, description="Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)", source="steps")
 
         if cooldown_actor is None:
             logger.info("INIT Cooldown Actor Setting")
             try:
-                await self.cbpi.config.add("steps_cooldown_actor", "", ConfigType.ACTOR, "Actor to trigger cooldown water on and off (default: None)")
+                await self.cbpi.config.add("steps_cooldown_actor", "", type=ConfigType.ACTOR, description="Actor to trigger cooldown water on and off (default: None)", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:
+                await self.cbpi.config.add("steps_cooldown_actor", cooldown_actor, type=ConfigType.ACTOR, description="Actor to trigger cooldown water on and off (default: None)", source="steps")
 
         if cooldown_temp is None:
             logger.info("INIT Cooldown Temp Setting")
             try:
-                await self.cbpi.config.add("steps_cooldown_temp", default_cool_temp, ConfigType.NUMBER, "Cooldown temp will send notification when this temeprature is reached")
+                await self.cbpi.config.add("steps_cooldown_temp", default_cool_temp, type=ConfigType.NUMBER, description="Cooldown temp will send notification when this temeprature is reached", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:    
+                await self.cbpi.config.add("steps_cooldown_temp", cooldown_temp, type=ConfigType.NUMBER, description="Cooldown temp will send notification when this temeprature is reached", source="steps")                            
 
         if cooldown_step is None:
             logger.info("INIT Cooldown Step Type")
             try:
-                await self.cbpi.config.add("steps_cooldown", "", ConfigType.STEP, "Cooldown step type")
+                await self.cbpi.config.add("steps_cooldown", "", type=ConfigType.STEP, description="Cooldown step type", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:
+                await self.cbpi.config.add("steps_cooldown", cooldown_step, type=ConfigType.STEP, description="Cooldown step type", source="steps")                
 
         if mashin_step is None:
             logger.info("INIT MashIn Step Type")
             try:
-                await self.cbpi.config.add("steps_mashin", "", ConfigType.STEP, "MashIn step type")
+                await self.cbpi.config.add("steps_mashin", "", type=ConfigType.STEP, description="MashIn step type", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:                
+                await self.cbpi.config.add("steps_mashin", mashin_step, type=ConfigType.STEP, description="MashIn step type", source="steps")
 
         if mash_step is None:
             logger.info("INIT Mash Step Type")
             try:
-                await self.cbpi.config.add("steps_mash", "", ConfigType.STEP, "Mash step type")
+                await self.cbpi.config.add("steps_mash", "", type=ConfigType.STEP, description="Mash step type", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:                
+                await self.cbpi.config.add("steps_mash", mash_step, type=ConfigType.STEP, description="Mash step type", source="steps")                
 
         if mashout_step is None:
             logger.info("INIT MashOut Step Type")
             try:
-                await self.cbpi.config.add("steps_mashout", "", ConfigType.STEP, "MashOut step type")
+                await self.cbpi.config.add("steps_mashout", "", type=ConfigType.STEP, description="MashOut step type", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:                
+                await self.cbpi.config.add("steps_mashout", mashout_step, type=ConfigType.STEP, description="MashOut step type", source="steps")                
 
         if boil_step is None:
             logger.info("INIT Boil Step Type")
             try:
-                await self.cbpi.config.add("steps_boil", "", ConfigType.STEP, "Boil step type")
+                await self.cbpi.config.add("steps_boil", "", type=ConfigType.STEP, description="Boil step type", source="steps")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:             
+                await self.cbpi.config.add("steps_boil", boil_step, type=ConfigType.STEP, description="Boil step type", source="steps")                   
 
         if max_dashboard_number is None:
             logger.info("INIT Max Dashboard Numbers for multiple dashboards")
             try:
-                await self.cbpi.config.add("max_dashboard_number", 4, ConfigType.SELECT, "Max Number of Dashboards",
-                                                                                                [{"label": "1", "value": 1},
+                await self.cbpi.config.add("max_dashboard_number", 4, type=ConfigType.SELECT, description="Max Number of Dashboards",
+                                            
+                                                                                               options= [{"label": "1", "value": 1},
                                                                                                 {"label": "2", "value": 2},
                                                                                                 {"label": "3", "value": 3},
                                                                                                 {"label": "4", "value": 4},
@@ -132,81 +167,109 @@ class ConfigUpdate(CBPiExtension):
                                                                                                 {"label": "7", "value": 7},
                                                                                                 {"label": "8", "value": 8},
                                                                                                 {"label": "9", "value": 9},
-                                                                                                {"label": "10", "value": 10}])
+                                                                                                {"label": "10", "value": 10}], 
+                                                                                                source="craftbeerpi")
             except:
                 logger.warning('Unable to update database')
 
         if current_dashboard_number is None:
             logger.info("INIT Current Dashboard Number")
             try:
-                await self.cbpi.config.add("current_dashboard_number", 1, ConfigType.NUMBER, "Number of current Dashboard")
+                await self.cbpi.config.add("current_dashboard_number", 1, type=ConfigType.NUMBER, description="Number of current Dashboard",source="hidden")
             except:
                 logger.warning('Unable to update database')
 
        ## Check if AtuoMode for Steps is in config
-        AutoMode = self.cbpi.config.get("AutoMode", None)
+
         if AutoMode is None:
             logger.info("INIT AutoMode")
             try:
-                await self.cbpi.config.add("AutoMode", "Yes", ConfigType.SELECT, "Use AutoMode in steps", 
-                                                                                                [{"label": "Yes", "value": "Yes"},
-                                                                                                {"label": "No", "value": "No"}])
+                await self.cbpi.config.add("AutoMode", "Yes", type=ConfigType.SELECT, description="Use AutoMode in steps", 
+                                                                                        options=[{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}],
+                                                                                                source="steps")
             except:
                 logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None:                
+                await self.cbpi.config.add("AutoMode", AutoMode, type=ConfigType.SELECT, description="Use AutoMode in steps", options=
+                                                                                                [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}],
+                                                                                                source="steps")                
 
         ## Check if AddMashInStep for Steps is in config
-        AddMashIn = self.cbpi.config.get("AddMashInStep", None)
+
         if AddMashIn is None:
             logger.info("INIT AddMashInStep")
             try:
-                await self.cbpi.config.add("AddMashInStep", "Yes", ConfigType.SELECT, "Add MashIn Step automatically if not defined in recipe", 
-                                                                                                [{"label": "Yes", "value": "Yes"},
-                                                                                                {"label": "No", "value": "No"}])
+                await self.cbpi.config.add("AddMashInStep", "Yes", type=ConfigType.SELECT, description= "Add MashIn Step automatically if not defined in recipe", 
+                                                                                               options = [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}],
+                                                                                                source="steps")
             except:
                 logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None:      
+                await self.cbpi.config.add("AddMashInStep", AddMashIn, type=ConfigType.SELECT, description="Add MashIn Step automatically if not defined in recipe", 
+                                                                                               options= [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}],
+                                                                                                source="steps")          
 
         ## Check if Brewfather UserID is in config
-        bfuserid = self.cbpi.config.get("brewfather_user_id", None)
+
         if bfuserid is None:
             logger.info("INIT Brewfather User ID")
             try:
-                await self.cbpi.config.add("brewfather_user_id", "", ConfigType.STRING, "Brewfather User ID")
+                await self.cbpi.config.add("brewfather_user_id", "", type=ConfigType.STRING, description="Brewfather User ID")
             except:
                 logger.warning('Unable to update config')
 
         ## Check if Brewfather API Key is in config
-        bfapikey = self.cbpi.config.get("brewfather_api_key", None)
+        
         if bfapikey is None:
             logger.info("INIT Brewfather API Key")
             try:
-                await self.cbpi.config.add("brewfather_api_key", "", ConfigType.STRING, "Brewfather API Key")
+                await self.cbpi.config.add("brewfather_api_key", "", type=ConfigType.STRING, description="Brewfather API Key")
             except:
                 logger.warning('Unable to update config')
 
         ## Check if Brewfather API Key is in config
-        RecipeCreationPath = self.cbpi.config.get("RECIPE_CREATION_PATH", None)
+        
         if RecipeCreationPath is None:
             logger.info("INIT Recipe Creation Path")
             try:
-                await self.cbpi.config.add("RECIPE_CREATION_PATH", "upload", ConfigType.STRING, "API path to creation plugin. Default: upload . CHANGE ONLY IF USING A RECIPE CREATION PLUGIN")
+                await self.cbpi.config.add("RECIPE_CREATION_PATH", "upload", type=ConfigType.STRING, description="API path to creation plugin. Default: upload . CHANGE ONLY IF USING A RECIPE CREATION PLUGIN")
             except:
                 logger.warning('Unable to update config')
 
         ## Check if  Kettle for Boil, Whirlpool and Cooldown is in config
-        BoilKettle = self.cbpi.config.get("BoilKettle", None)
+        
         if BoilKettle is None:
             logger.info("INIT BoilKettle")
             try:
-                await self.cbpi.config.add("BoilKettle", "", ConfigType.KETTLE, "Define Kettle that is used for Boil, Whirlpool and Cooldown. If not selected, MASH_TUN will be used") 
+                await self.cbpi.config.add("BoilKettle", "", type=ConfigType.KETTLE, description="Define Kettle that is used for Boil, Whirlpool and Cooldown. If not selected, MASH_TUN will be used",source="steps") 
             except:
                 logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None:                
+                await self.cbpi.config.add("BoilKettle", BoilKettle, type=ConfigType.KETTLE, description="Define Kettle that is used for Boil, Whirlpool and Cooldown. If not selected, MASH_TUN will be used",source="steps")                 
+
+        if MASH_TUN is None:
+            logger.info("INIT MASH_TUN")
+            try:
+                await self.cbpi.config.add("MASH_TUN", "", type=ConfigType.KETTLE, description="Default Mash Tun",source="steps") 
+            except:
+                logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None:                
+                await self.cbpi.config.add("MASH_TUN", MASH_TUN, type=ConfigType.KETTLE, description="Default Mash Tun",source="steps")                 
 
        ## Check if CSV logfiles is on config 
         if logfiles is None:
             logger.info("INIT CSV logfiles")
             try:
-                await self.cbpi.config.add("CSVLOGFILES", "Yes", ConfigType.SELECT, "Write sensor data to csv logfiles", 
-                                                                                                [{"label": "Yes", "value": "Yes"},
+                await self.cbpi.config.add("CSVLOGFILES", "Yes", type=ConfigType.SELECT, description="Write sensor data to csv logfiles", 
+                                                                                               options= [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
@@ -215,8 +278,8 @@ class ConfigUpdate(CBPiExtension):
         if influxdb is None:
             logger.info("INIT Influxdb")
             try:
-                await self.cbpi.config.add("INFLUXDB", "No", ConfigType.SELECT, "Write sensor data to influxdb", 
-                                                                                                [{"label": "Yes", "value": "Yes"},
+                await self.cbpi.config.add("INFLUXDB", "No", type=ConfigType.SELECT, description="Write sensor data to influxdb", 
+                                                                                              options=  [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
@@ -225,7 +288,7 @@ class ConfigUpdate(CBPiExtension):
         if influxdbaddr is None:
             logger.info("INIT Influxdbaddr")
             try:
-                await self.cbpi.config.add("INFLUXDBADDR", "http://localhost:8086", ConfigType.STRING, "URL Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)")
+                await self.cbpi.config.add("INFLUXDBADDR", "http://localhost:8086", type=ConfigType.STRING, description="URL Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)")
             except:
                 logger.warning('Unable to update config')
 
@@ -233,7 +296,7 @@ class ConfigUpdate(CBPiExtension):
         if influxdbname is None:
             logger.info("INIT Influxdbname")
             try:
-                await self.cbpi.config.add("INFLUXDBNAME", "cbpi4", ConfigType.STRING, "Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)")
+                await self.cbpi.config.add("INFLUXDBNAME", "cbpi4", type=ConfigType.STRING, description="Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)")
             except:
                 logger.warning('Unable to update config')
 
@@ -241,7 +304,7 @@ class ConfigUpdate(CBPiExtension):
         if influxdbuser is None:
             logger.info("INIT Influxdbuser")
             try:
-                await self.cbpi.config.add("INFLUXDBUSER", " ", ConfigType.STRING, "User name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)")
+                await self.cbpi.config.add("INFLUXDBUSER", " ", type=ConfigType.STRING, description="User name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)")
             except:
                 logger.warning('Unable to update config')
 
@@ -249,7 +312,7 @@ class ConfigUpdate(CBPiExtension):
         if influxdbpwd is None:
             logger.info("INIT Influxdbpwd")
             try:
-                await self.cbpi.config.add("INFLUXDBPWD", " ", ConfigType.STRING, "Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)")
+                await self.cbpi.config.add("INFLUXDBPWD", " ", type=ConfigType.STRING, description="Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)")
             except:
                 logger.warning('Unable to update config')
 
@@ -257,8 +320,8 @@ class ConfigUpdate(CBPiExtension):
         if influxdbcloud is None:
             logger.info("INIT influxdbcloud")
             try:
-                await self.cbpi.config.add("INFLUXDBCLOUD", "No", ConfigType.SELECT, "Write sensor data to influxdb cloud (INFLUXDB must set to Yes)", 
-                                                                                                [{"label": "Yes", "value": "Yes"},
+                await self.cbpi.config.add("INFLUXDBCLOUD", "No", type=ConfigType.SELECT, description="Write sensor data to influxdb cloud (INFLUXDB must set to Yes)", 
+                                                                                              options=  [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
@@ -267,15 +330,15 @@ class ConfigUpdate(CBPiExtension):
         if influxdbmeasurement is None:
             logger.info("INIT Influxdb measurementname")
             try:
-                await self.cbpi.config.add("INFLUXDBMEASUREMENT", "measurement", ConfigType.STRING, "Name of the measurement in your INFLUXDB database (default: measurement)")
+                await self.cbpi.config.add("INFLUXDBMEASUREMENT", "measurement", type=ConfigType.STRING, description="Name of the measurement in your INFLUXDB database (default: measurement)")
             except:
                 logger.warning('Unable to update config')
 
         if mqttupdate is None:
             logger.info("INIT MQTT update frequency for Kettles and Fermenters")
             try:
-                await self.cbpi.config.add("MQTTUpdate", 0, ConfigType.SELECT, "Forced MQTT Update frequency in s for Kettle and Fermenter (no changes in payload required). Restart required after change",
-                                                                                                [{"label": "30", "value": 30},
+                await self.cbpi.config.add("MQTTUpdate", 0, type=ConfigType.SELECT, description="Forced MQTT Update frequency in s for Kettle and Fermenter (no changes in payload required). Restart required after change",
+                                                                                              options=  [{"label": "30", "value": 30},
                                                                                                 {"label": "60", "value": 60},
                                                                                                 {"label": "120", "value": 120},
                                                                                                 {"label": "300", "value": 300},
@@ -287,8 +350,8 @@ class ConfigUpdate(CBPiExtension):
         if PRESSURE_UNIT is None:
             logger.info("INIT PRESSURE_UNIT")
             try:
-                await self.cbpi.config.add("PRESSURE_UNIT", "kPa", ConfigType.SELECT, "Set unit for pressure", 
-                                                                                                [{"label": "kPa", "value": "kPa"},
+                await self.cbpi.config.add("PRESSURE_UNIT", "kPa", type=ConfigType.SELECT, description="Set unit for pressure", 
+                                                                                             options=   [{"label": "kPa", "value": "kPa"},
                                                                                                 {"label": "PSI", "value": "PSI"}])
             except:
                 logger.warning('Unable to update config')
@@ -297,7 +360,7 @@ class ConfigUpdate(CBPiExtension):
         if SENSOR_LOG_BACKUP_COUNT is None:
             logger.info("INIT SENSOR_LOG_BACKUP_COUNT")
             try:
-                await self.cbpi.config.add("SENSOR_LOG_BACKUP_COUNT", 3, ConfigType.NUMBER, "Max. number of backup logs")
+                await self.cbpi.config.add("SENSOR_LOG_BACKUP_COUNT", 3, type=ConfigType.NUMBER, description="Max. number of backup logs")
             except:
                 logger.warning('Unable to update database')
                 
@@ -305,7 +368,7 @@ class ConfigUpdate(CBPiExtension):
         if SENSOR_LOG_MAX_BYTES is None:
             logger.info("Init maximum size of sensor logfiles")
             try:
-                await self.cbpi.config.add("SENSOR_LOG_MAX_BYTES", 100000, ConfigType.NUMBER, "Max. number of bytes in sensor logs")
+                await self.cbpi.config.add("SENSOR_LOG_MAX_BYTES", 100000, type=ConfigType.NUMBER, description="Max. number of bytes in sensor logs")
             except:
                 logger.warning('Unable to update database')
                 
@@ -313,8 +376,8 @@ class ConfigUpdate(CBPiExtension):
         if slow_pipe_animation is None:
             logger.info("INIT slow_pipe_animation")
             try:
-                await self.cbpi.config.add("slow_pipe_animation", "Yes", ConfigType.SELECT, "Slow down dashboard pipe animation taking up close to 100% of the CPU's capacity", 
-                                                                                                [{"label": "Yes", "value": "Yes"},
+                await self.cbpi.config.add("slow_pipe_animation", "Yes", type=ConfigType.SELECT, description="Slow down dashboard pipe animation taking up close to 100% of the CPU's capacity", 
+                                                                                               options= [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
@@ -323,8 +386,8 @@ class ConfigUpdate(CBPiExtension):
         if NOTIFY_ON_ERROR is None:
             logger.info("INIT NOTIFY_ON_ERROR")
             try:
-                await self.cbpi.config.add("NOTIFY_ON_ERROR", "No", ConfigType.SELECT, "Send Notification on Logging Error", 
-                                                                                                [{"label": "Yes", "value": "Yes"},
+                await self.cbpi.config.add("NOTIFY_ON_ERROR", "No", type=ConfigType.SELECT, description="Send Notification on Logging Error", 
+                                                                                               options= [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
@@ -333,8 +396,8 @@ class ConfigUpdate(CBPiExtension):
         if PLAY_BUZZER is None:
             logger.info("INIT PLAY_BUZZER")
             try:
-                await self.cbpi.config.add("PLAY_BUZZER", "No", ConfigType.SELECT, "Play buzzer sound in Web interface on Notifications", 
-                                                                                                [{"label": "Yes", "value": "Yes"},
+                await self.cbpi.config.add("PLAY_BUZZER", "No", type=ConfigType.SELECT, description="Play buzzer sound in Web interface on Notifications", 
+                                                                                               options= [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
@@ -342,13 +405,31 @@ class ConfigUpdate(CBPiExtension):
         if BoilAutoTimer is None:
             logging.info("INIT BoilAutoTimer")
             try:
-                await self.cbpi.config.add('BoilAutoTimer', 'No', ConfigType.SELECT, 
-                                            'Start Boil timer automatically if Temp does not change for 5 Minutes and is above 95C/203F',                                                                                                 
-                                                                                                [{"label": "Yes", "value": "Yes"},
-                                                                                                {"label": "No", "value": "No"}])
+                await self.cbpi.config.add('BoilAutoTimer', 'No', type=ConfigType.SELECT, 
+                                            description='Start Boil timer automatically if Temp does not change for 5 Minutes and is above 95C/203F',                                                                                                 
+                                                                                               options= [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}],
+                                                                                                source="steps")
                 BoilAutoTimer = self.cbpi.config.get("BoilAutoTimer", "No")
             except:
                 logging.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:
+                await self.cbpi.config.add('BoilAutoTimer', BoilAutoTimer, type=ConfigType.SELECT, 
+                                            description='Start Boil timer automatically if Temp does not change for 5 Minutes and is above 95C/203F',                                                                                                 
+                                                                                                options=[{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}],
+                                                                                                source="steps")
+
+
+        ## Check if influxdbname is in config
+        if CONFIG_STATUS is None:
+            logger.warning("Setting Config Status")
+            try:
+                await self.cbpi.config.add("CONFIG_STATUS", "4.1.8", type=ConfigType.STRING, description="Status of the cofig file. Internal use for maintenance", source="hidden")
+            except:
+                logger.warning('Unable to update config')
+
 
 def setup(cbpi):
     cbpi.plugin.register("ConfigUpdate", ConfigUpdate)

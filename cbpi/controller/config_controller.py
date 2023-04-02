@@ -50,8 +50,8 @@ class ConfigController:
             with open(self.path, "w") as file:
                 json.dump(data, file, indent=4, sort_keys=True)
 
-    async def add(self, name, value, type: ConfigType, description, options=None):
-        self.cache[name] = Config(name,value,description,type,options)
+    async def add(self, name, value, type: ConfigType, description, source="", options=None):
+        self.cache[name] = Config(name,value,description,type,source,options)
         data = {}
         for key, value in self.cache.items():
             data[key] = value.to_dict()
