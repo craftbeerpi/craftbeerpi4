@@ -219,7 +219,9 @@ class PluginController():
     
     async def load_plugin_names(self, filter="cbpi"):
         result = []
-        result.append(dict(Name="craftbeerpi"))
+        result.append(dict(label="All", value="All"))
+        result.append(dict(label="craftbeerpi", value="craftbeerpi"))
+        result.append(dict(label="steps", value="steps"))
         try:
             discovered_plugins = {
             name: importlib.import_module(name)
@@ -231,7 +233,7 @@ class PluginController():
                 try:
                     meta = metadata(key)
                     if meta["Name"] != "cbpi4gui":
-                        result.append(dict(Name=meta["Name"]))
+                        result.append(dict(label=meta["Name"], value=meta["Name"]))
                             
                 except Exception as e:
                     logger.error("FAILED to load plugin {} ".format(key))
