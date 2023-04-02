@@ -205,7 +205,6 @@ class PluginController():
                     from importlib.metadata import (distribution, metadata,
                                                     version)
                     meta = metadata(key)
-                    logging.warning(key)
                     result.append({row: meta[row]
                                   for row in list(metadata(key))})
                 except Exception as e:
