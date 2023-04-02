@@ -178,6 +178,9 @@ class ConfigUpdate(CBPiExtension):
                 await self.cbpi.config.add("current_dashboard_number", 1, type=ConfigType.NUMBER, description="Number of current Dashboard",source="hidden")
             except:
                 logger.warning('Unable to update database')
+        else: 
+            if CONFIG_STATUS is None:
+                await self.cbpi.config.add("current_dashboard_number", current_dashboard_number, type=ConfigType.NUMBER, description="Number of current Dashboard",source="hidden")
 
        ## Check if AtuoMode for Steps is in config
 
