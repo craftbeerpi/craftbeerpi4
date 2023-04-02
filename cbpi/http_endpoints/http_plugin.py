@@ -88,7 +88,7 @@ class PluginHttpEndpoints:
         return web.json_response(plugin_list, dumps=json_dumps)
     
     @request_mapping(path="/names", method="GET", auth_required=False)
-    async def list(self, request):
+    async def names(self, request):
         """
             ---
             description: Get a list of avialable plugin names
