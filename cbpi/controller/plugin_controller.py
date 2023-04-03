@@ -231,7 +231,7 @@ class PluginController():
             for key, module in discovered_plugins.items():
                 try:
                     meta = metadata(key)
-                    if meta["Name"] != "cbpi4gui":
+                    if meta["Name"] != "cbpi4gui" and meta["Keywords"] == "globalsettings":
                         result.append(dict(label=meta["Name"], value=meta["Name"]))
                             
                 except Exception as e:
