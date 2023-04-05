@@ -233,9 +233,8 @@ class PluginController():
                     meta = metadata(key)
                     if meta["Name"] != "cbpi4gui" and meta["Keywords"] == "globalsettings":
                         result.append(dict(label=meta["Name"], value=meta["Name"]))
-                            
                 except Exception as e:
-                    logger.error("FAILED to load plugin {} ".format(key))
+                    logger.error("FAILED to read metadata for plugin {} ".format(key))
                     logger.error(e)
         except Exception as e:
             logger.error(e)
