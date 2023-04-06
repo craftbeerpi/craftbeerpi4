@@ -78,5 +78,28 @@ class ConfigHttpEndpoints:
         name = request.match_info['name']
 #        if name not in self.cache:
 #            raise CBPiException("Parameter %s not found" % name)
-        data = self.controller.get(name)
+#        data = self.controller.get(name)
         return web.json_response(self.controller.get(name), dumps=json_dumps)
+
+    @request_mapping(path="/remove/{name}/", method="PUT", auth_required=False)
+    async def http_remove(self, request) -> web.Response:
+
+        """
+        ---
+        description: Remove config parameter
+        tags:
+        - Config
+        parameters:
+        - name: "name"
+          in: "path"
+          description: "Parameter name"
+          required: true
+          type: "string"
+        responses:
+            "200":
+                description: successful operation
+        """
+
+        name = request.match_info['name']
+        await self.controller.remove(name=name)
+        return web.Response(status=200)
