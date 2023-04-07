@@ -61,16 +61,20 @@ class ConfigController:
     async def remove(self, name):
         data = {}
         self.testcache={}
+        success=False
         for key, value in self.cache.items():
             try:
                 if key != name:
                     data[key] = value.to_dict()
                     self.testcache[key] = Config(name=data[key].get("name"), value=data[key].get("value"), description=data[key].get("description"), 
                                                  type=ConfigType(data[key].get("type", "string")), options=data[key].get("options", None), 
-                                                 source=data[key].get("source", "craftbeerpi") )
+                                                source=data[key].get("source", "craftbeerpi") )
+                    success=True   
             except Exception as e:
                 print(e)
-        with open(self.path, "w") as file:
-                json.dump(data, file, indent=4, sort_keys=True)
-        self.cache=self.testcache
+                success=False
+        if success == True:
+            with open(self.path, "w") as file:
+                    json.dump(data, file, indent=4, sort_keys=True)
+            self.cache=self.testcache
        
