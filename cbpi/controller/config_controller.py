@@ -78,3 +78,15 @@ class ConfigController:
                     json.dump(data, file, indent=4, sort_keys=True)
             self.cache=self.testcache
        
+    async def remove_obsolete(self):  
+        result = {}
+        for key, value in self.cache.items():
+            if (value.source not in ('craftbeerpi','steps','hidden')):
+                test = await self.cbpi.plugin.load_plugin_list(value.source)
+                if test == []:
+                    update=self.get(str(value.source)+'_update')
+                    if update:
+                        await self.remove(str(value.source)+'_update')
+                    await self.remove(key)
+                    result[key] = value.to_dict()
+        return result    

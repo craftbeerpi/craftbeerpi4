@@ -103,3 +103,16 @@ class ConfigHttpEndpoints:
         name = request.match_info['name']
         await self.controller.remove(name=name)
         return web.Response(status=200)
+    
+    @request_mapping(path="/obsolete", auth_required=False)
+    async def http_remove_obsolete(self, request) -> web.Response:
+        """
+        ---
+        description: Get all config parameters
+        tags:
+        - Config
+        responses:
+            "200":
+                description: successful operation
+        """
+        return web.json_response(await self.controller.remove_obsolete(), dumps=json_dumps)
