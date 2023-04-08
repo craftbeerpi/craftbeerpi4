@@ -108,7 +108,7 @@ class ConfigHttpEndpoints:
     async def http_remove_obsolete(self, request) -> web.Response:
         """
         ---
-        description: Get all config parameters
+        description: Remove obsolete config parameters
         tags:
         - Config
         responses:
