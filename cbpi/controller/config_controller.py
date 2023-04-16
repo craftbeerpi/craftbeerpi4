@@ -87,7 +87,7 @@ class ConfigController:
                 if test == []:
                     update=self.get(str(value.source)+'_update')
                     if update:
-                        logging.warning(update)
+                        result[str(value.source)+'_update']={"value": update}
                         if remove:
                             await self.remove(str(value.source)+'_update')
                     if remove:
