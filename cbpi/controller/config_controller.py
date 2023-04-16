@@ -31,7 +31,6 @@ class ConfigController:
             data = json.load(json_file)
             for key, value in data.items():
                 self.cache[key] = Config(name=value.get("name"), value=value.get("value"), description=value.get("description"), type=ConfigType(value.get("type", "string")), source=value.get("source", "craftbeerpi"), options=value.get("options", None))
-        logging.error(self.cache)
 
     def get(self, name, default=None):
         self.logger.debug("GET CONFIG VALUE %s (default %s)" % (name, default))

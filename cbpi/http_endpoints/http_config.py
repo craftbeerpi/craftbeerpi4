@@ -56,7 +56,7 @@ class ConfigHttpEndpoints:
             "200":
                 description: successful operation
         """
-        return web.json_response(self.controller.cache, dumps=json_dumps)
+        return web.json_response(self.controller.get_state(), dumps=json_dumps)
 
     @request_mapping(path="/{name}/", method="POST", auth_required=False)
     async def http_paramter(self, request) -> web.Response:
