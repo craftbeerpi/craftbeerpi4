@@ -1,3 +1,7 @@
 {
-    "elements": []
+    "config": {},
+    "dbid": 1,
+    "type": "Test",
+    "x": 0,
+    "y": 0
 }

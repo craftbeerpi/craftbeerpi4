@@ -104,7 +104,20 @@ class ConfigHttpEndpoints:
         await self.controller.remove(name=name)
         return web.Response(status=200)
     
-    @request_mapping(path="/obsolete", auth_required=False)
+    @request_mapping(path="/getobsolete", auth_required=False)
+    async def http_get_obsolete(self, request) -> web.Response:
+        """
+        ---
+        description: Get obsolete config parameters
+        tags:
+        - Config
+        responses:
+            "List of Obsolete Parameters":
+                description: successful operation
+        """
+        return web.json_response(await self.controller.obsolete(False), dumps=json_dumps)
+    
+    @request_mapping(path="/removeobsolete", auth_required=False)
     async def http_remove_obsolete(self, request) -> web.Response:
         """
         ---
@@ -115,4 +128,5 @@ class ConfigHttpEndpoints:
             "200":
                 description: successful operation
         """
-        return web.json_response(await self.controller.remove_obsolete(), dumps=json_dumps)
+        await self.controller.obsolete(True)
+        return web.Response(status=200)

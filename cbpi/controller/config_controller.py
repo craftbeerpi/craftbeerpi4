@@ -30,7 +30,8 @@ class ConfigController:
         with open(self.path) as json_file:
             data = json.load(json_file)
             for key, value in data.items():
-                self.cache[key] = Config(name=value.get("name"), value=value.get("value"), description=value.get("description"), type=ConfigType(value.get("type", "string")), options=value.get("options", None), source=value.get("source", "craftbeerpi") )
+                self.cache[key] = Config(name=value.get("name"), value=value.get("value"), description=value.get("description"), type=ConfigType(value.get("type", "string")), source=value.get("source", "craftbeerpi"), options=value.get("options", None))
+        logging.error(self.cache)
 
     def get(self, name, default=None):
         self.logger.debug("GET CONFIG VALUE %s (default %s)" % (name, default))
@@ -78,7 +79,7 @@ class ConfigController:
                     json.dump(data, file, indent=4, sort_keys=True)
             self.cache=self.testcache
        
-    async def remove_obsolete(self):  
+    async def obsolete(self, remove=False):
         result = {}
         for key, value in self.cache.items():
             if (value.source not in ('craftbeerpi','steps','hidden')):
@@ -86,7 +87,10 @@ class ConfigController:
                 if test == []:
                     update=self.get(str(value.source)+'_update')
                     if update:
-                        await self.remove(str(value.source)+'_update')
-                    await self.remove(key)
+                        logging.warning(update)
+                        if remove:
+                            await self.remove(str(value.source)+'_update')
+                    if remove:
+                        await self.remove(key)
                     result[key] = value.to_dict()
         return result    

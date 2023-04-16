@@ -204,7 +204,7 @@ class Config:
     def __str__(self):
         return "....name={} value={}".format(self.name, self.value)
     def to_dict(self):  
-        return dict(name=self.name, value=self.value, type=self.type.value, description=self.description, options=self.options, source=self.source)
+        return dict(name=self.name, value=self.value, type=self.type.value, description=self.description, source=self.source, options=self.options)
 
 @dataclass  
 class NotificationAction:
