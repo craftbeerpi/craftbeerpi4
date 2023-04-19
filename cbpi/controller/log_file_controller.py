@@ -13,6 +13,7 @@ from cbpi.api import *
 from cbpi.api.config import ConfigType
 from cbpi.api.base import CBPiBase
 import asyncio
+import shortuuid
 
 
 class LogController:
@@ -28,28 +29,59 @@ class LogController:
         self.datalogger = {}
         self.logsFolderPath = self.cbpi.config_folder.logsFolderPath
         self.logger.info("Log folder path  : " + self.logsFolderPath)
+        self.sensor_data_listeners = {}
+    
+    def add_sensor_data_listener(self, method):
+        listener_id = shortuuid.uuid()
+        self.sensor_data_listeners[listener_id] = method
+        return listener_id
+    
+    def remove_sensor_data_listener(self, listener_id):
+        try:
+            del self.sensor_data_listener[listener_id] 
+        except:
+            self.logger.error("Failed to remove listener {}".format(listener_id))
 
-    def log_data(self, name: str, value: str) -> None:
+    async def _call_sensor_data_listeners(self, id, value, formatted_time, name):
+        for id, method in self.sensor_data_listeners.items():
+            asyncio.create_task(method(self.cbpi, id, value, formatted_time, name))
+
+    def log_data(self, id: str, value: str) -> None:
+        # check which default log targets are enabled:
         self.logfiles = self.cbpi.config.get("CSVLOGFILES", "Yes")
         self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
+        formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
+        # ^^ both legacy log targets should probably be implemented as a core plugin each unsing the hook instead
+
+        # CSV target:
         if self.logfiles == "Yes":
-            if name not in self.datalogger:
+            if id not in self.datalogger:
                 max_bytes = int(self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 100000))
                 backup_count = int(self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3))
     
-                data_logger = logging.getLogger('cbpi.sensor.%s' % name)
+                data_logger = logging.getLogger('cbpi.sensor.%s' % id)
                 data_logger.propagate = False
                 data_logger.setLevel(logging.DEBUG)
-                handler = RotatingFileHandler(os.path.join(self.logsFolderPath, f"sensor_{name}.log"), maxBytes=max_bytes, backupCount=backup_count)
+                handler = RotatingFileHandler(os.path.join(self.logsFolderPath, f"sensor_{id}.log"), maxBytes=max_bytes, backupCount=backup_count)
                 data_logger.addHandler(handler)
-                self.datalogger[name] = data_logger
+                self.datalogger[id] = data_logger
 
-            formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-            self.datalogger[name].info("%s,%s" % (formatted_time, str(value)))
-
+            self.datalogger[id].info("%s,%s" % (formatted_time, str(value)))
+        
+        # influx target:
         if self.influxdb == "Yes":
             ## Write to influxdb in an asyncio task
-            self._task = asyncio.create_task(self.log_influx(name,value))            
+            self._task = asyncio.create_task(self.log_influx(id,value))
+        
+        # all plugin targets:
+        if self.sensor_data_listeners: # true if there are listners
+            try:
+                sensor=self.cbpi.sensor.find_by_id(id)
+                if sensor is not None:
+                    name = sensor.name.replace(" ", "_")
+                    asyncio.create_task(self._call_sensor_data_listeners(id, value, formatted_time, name))
+            except Exception as e:
+                logging.error("sensor logging listener exception: {}".format(e))        
 
     async def log_influx(self, name:str, value:str):
             self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
