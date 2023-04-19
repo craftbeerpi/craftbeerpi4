@@ -205,7 +205,7 @@ class ConfigUpdate(CBPiExtension):
         if logfiles is None:
             logger.info("INIT CSV logfiles")
             try:
-                await self.cbpi.config.add("CSVLOGFILES", "Yes", ConfigType.SELECT, "Write sensor data to csv logfiles", 
+                await self.cbpi.config.add("CSVLOGFILES", "Yes", ConfigType.SELECT, "Write sensor data to csv logfiles (enabling requires restart)", 
                                                                                                 [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:
@@ -215,7 +215,7 @@ class ConfigUpdate(CBPiExtension):
         if influxdb is None:
             logger.info("INIT Influxdb")
             try:
-                await self.cbpi.config.add("INFLUXDB", "No", ConfigType.SELECT, "Write sensor data to influxdb", 
+                await self.cbpi.config.add("INFLUXDB", "No", ConfigType.SELECT, "Write sensor data to influxdb (enabling requires restart)", 
                                                                                                 [{"label": "Yes", "value": "Yes"},
                                                                                                 {"label": "No", "value": "No"}])
             except:

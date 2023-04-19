@@ -39,6 +39,7 @@ class SensorLogTargetInfluxDB(CBPiExtension):
         if self.influxdb == "No":
             # We intentionally do not unsubscribe the listener here because then we had no way of resubscribing him without a restart of cbpi
             # as long as cbpi was STARTED with INFLUXDB set to Yes this function is still subscribed, so changes can be made on the fly.
+            # but after initially enabling this logging target a restart is required.
             return
         self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
         self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)

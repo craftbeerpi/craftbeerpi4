@@ -46,33 +46,14 @@ class LogController:
         for id, method in self.sensor_data_listeners.items():
             asyncio.create_task(method(self.cbpi, id, value, formatted_time, name))
 
-    def log_data(self, id: str, value: str) -> None:
-        # check which default log targets are enabled:
-        self.logfiles = self.cbpi.config.get("CSVLOGFILES", "Yes")
-        formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-        # ^^ both legacy log targets should probably be implemented as a core plugin each unsing the hook instead
-
-        # CSV target:
-        if self.logfiles == "Yes":
-            if id not in self.datalogger:
-                max_bytes = int(self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 100000))
-                backup_count = int(self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3))
-    
-                data_logger = logging.getLogger('cbpi.sensor.%s' % id)
-                data_logger.propagate = False
-                data_logger.setLevel(logging.DEBUG)
-                handler = RotatingFileHandler(os.path.join(self.logsFolderPath, f"sensor_{id}.log"), maxBytes=max_bytes, backupCount=backup_count)
-                data_logger.addHandler(handler)
-                self.datalogger[id] = data_logger
-
-            self.datalogger[id].info("%s,%s" % (formatted_time, str(value)))
-        
+    def log_data(self, id: str, value: str) -> None:        
         # all plugin targets:
         if self.sensor_data_listeners: # true if there are listners
             try:
                 sensor=self.cbpi.sensor.find_by_id(id)
                 if sensor is not None:
                     name = sensor.name.replace(" ", "_")
+                    formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
                     asyncio.create_task(self._call_sensor_data_listeners(id, value, formatted_time, name))
             except Exception as e:
                 logging.error("sensor logging listener exception: {}".format(e))
@@ -170,10 +151,6 @@ class LogController:
 
     def clear_log(self, name:str ) -> str:
         all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
-
-        if name in self.datalogger:
-            self.datalogger[name].removeHandler(self.datalogger[name].handlers[0])
-            del self.datalogger[name]
 
         for f in all_filenames:
             try:
