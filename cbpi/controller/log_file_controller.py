@@ -49,7 +49,6 @@ class LogController:
     def log_data(self, id: str, value: str) -> None:
         # check which default log targets are enabled:
         self.logfiles = self.cbpi.config.get("CSVLOGFILES", "Yes")
-        self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
         formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
         # ^^ both legacy log targets should probably be implemented as a core plugin each unsing the hook instead
 
@@ -68,11 +67,6 @@ class LogController:
 
             self.datalogger[id].info("%s,%s" % (formatted_time, str(value)))
         
-        # influx target:
-        if self.influxdb == "Yes":
-            ## Write to influxdb in an asyncio task
-            self._task = asyncio.create_task(self.log_influx(id,value))
-        
         # all plugin targets:
         if self.sensor_data_listeners: # true if there are listners
             try:
@@ -81,45 +75,7 @@ class LogController:
                     name = sensor.name.replace(" ", "_")
                     asyncio.create_task(self._call_sensor_data_listeners(id, value, formatted_time, name))
             except Exception as e:
-                logging.error("sensor logging listener exception: {}".format(e))        
-
-    async def log_influx(self, name:str, value:str):
-            self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
-            self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
-            self.influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
-            self.influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
-            self.influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
-            self.influxdbmeasurement = self.cbpi.config.get("INFLUXDBMEASUREMENT", "measurement")
-            id = name
-            timeout = Timeout(connect=5.0, read=None)
-            try:
-                sensor=self.cbpi.sensor.find_by_id(name)
-                if sensor is not None:
-                    itemname=sensor.name.replace(" ", "_")
-                    out=str(self.influxdbmeasurement)+",source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
-            except Exception as e:
-                logging.error("InfluxDB ID Error: {}".format(e))
-
-            if self.influxdbcloud == "Yes":
-                self.influxdburl=self.influxdbaddr + "/api/v2/write?org=" + self.influxdbuser + "&bucket=" + self.influxdbname + "&precision=s"
-                try:
-                    header = {'User-Agent': name, 'Authorization': "Token {}".format(self.influxdbpwd)}
-                    http = PoolManager(timeout=timeout)
-                    req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
-                except Exception as e:
-                    logging.error("InfluxDB cloud write Error: {}".format(e))
-
-            else:
-                self.base64string = base64.b64encode(('%s:%s' % (self.influxdbuser,self.influxdbpwd)).encode())
-                self.influxdburl= self.influxdbaddr + '/write?db=' + self.influxdbname
-                try:
-                    header = {'User-Agent': name, 'Content-Type': 'application/x-www-form-urlencoded','Authorization': 'Basic %s' % self.base64string.decode('utf-8')}
-                    http = PoolManager(timeout=timeout)
-                    req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
-                except Exception as e:
-                    logging.error("InfluxDB write Error: {}".format(e))
-
-
+                logging.error("sensor logging listener exception: {}".format(e))
 
     async def get_data(self, names, sample_rate='60s'):
         logging.info("Start Log for {}".format(names))
