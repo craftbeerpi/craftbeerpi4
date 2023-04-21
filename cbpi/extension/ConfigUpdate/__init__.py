@@ -45,6 +45,7 @@ class ConfigUpdate(CBPiExtension):
         influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
         influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
         influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", None)
+        influxdbport = self.cbpi.config.get("INFLUXDBPORT", None)
         influxdbmeasurement = self.cbpi.config.get("INFLUXDBMEASUREMENT", None)
         mqttupdate = self.cbpi.config.get("MQTTUpdate", None)
         PRESSURE_UNIT = self.cbpi.config.get("PRESSURE_UNIT", None)
@@ -295,13 +296,29 @@ class ConfigUpdate(CBPiExtension):
             except:
                 logger.warning('Unable to update config')
 
+
+        ## Check if influxdbport is in config and remove it as it is obsolete
+        if influxdbport is not None:
+            logger.warning("Remove obsolete Influxdbport config parameter")
+            try:
+                await self.cbpi.config.remove("INFLUXDBPORT")
+            except:
+                logger.warning('Unable to update config')
+
+
         ## Check if influxdbaddr is in config
         if influxdbaddr is None:
             logger.info("INIT Influxdbaddr")
             try:
-                await self.cbpi.config.add("INFLUXDBADDR", "http://localhost:8086", type=ConfigType.STRING, description="URL Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)", source="craftbeerpi")
+                await self.cbpi.config.add("INFLUXDBADDR", "http://localhost:8086", type=ConfigType.STRING, description="URL Address of your influxdb server incl. http:// and port, e.g. http://localhost:8086 (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)", source="craftbeerpi")
             except:
                 logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None or CONFIG_STATUS != self.version:  
+                try:
+                    await self.cbpi.config.add("INFLUXDBADDR", influxdbaddr, type=ConfigType.STRING, description="URL Address of your influxdb server incl. http:// and port, e.g. http://localhost:8086 (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)", source="craftbeerpi")
+                except:
+                    logger.warning('Unable to update config')
 
         ## Check if influxdbname is in config
         if influxdbname is None:
@@ -310,6 +327,12 @@ class ConfigUpdate(CBPiExtension):
                 await self.cbpi.config.add("INFLUXDBNAME", "cbpi4", type=ConfigType.STRING, description="Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)", source="craftbeerpi")
             except:
                 logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None or CONFIG_STATUS != self.version:  
+                try:
+                    await self.cbpi.config.add("INFLUXDBNAME", influxdbname, type=ConfigType.STRING, description="Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)", source="craftbeerpi")
+                except:
+                    logger.warning('Unable to update config')
 
         ## Check if influxduser is in config
         if influxdbuser is None:
@@ -318,6 +341,12 @@ class ConfigUpdate(CBPiExtension):
                 await self.cbpi.config.add("INFLUXDBUSER", " ", type=ConfigType.STRING, description="User name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)", source="craftbeerpi")
             except:
                 logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None or CONFIG_STATUS != self.version:  
+                try:
+                    await self.cbpi.config.add("INFLUXDBUSER", influxdbuser, type=ConfigType.STRING, description="User Name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)", source="craftbeerpi")
+                except:
+                    logger.warning('Unable to update config')                
 
         ## Check if influxdpwd is in config
         if influxdbpwd is None:
@@ -326,6 +355,12 @@ class ConfigUpdate(CBPiExtension):
                 await self.cbpi.config.add("INFLUXDBPWD", " ", type=ConfigType.STRING, description="Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)", source="craftbeerpi")
             except:
                 logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None or CONFIG_STATUS != self.version: 
+                try:
+                    await self.cbpi.config.add("INFLUXDBPWD", influxdbpwd, type=ConfigType.STRING, description="Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)", source="craftbeerpi")
+                except:
+                    logger.warning('Unable to update config')
 
        ## Check if influxdb cloud is on config 
         if influxdbcloud is None:
