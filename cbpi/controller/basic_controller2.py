@@ -34,19 +34,39 @@ class BasicController:
         return self.resource(data.get("id"), data.get("name"), type=data.get("type"), props=Props(data.get("props", {})) )
 
     async def load(self):
-        logging.info("{} Load ".format(self.name))
-        with open(self.path) as json_file:
-            data = json.load(json_file)
-            data['data'].sort(key=lambda x: x.get('name').upper())
+        try:
+            logging.info("{} Load ".format(self.name))
+            with open(self.path) as json_file:
+                data = json.load(json_file)
+                data['data'].sort(key=lambda x: x.get('name').upper())
             
-            for i in data["data"]:
-                self.data.append(self.create(i))
+                for i in data["data"]:
+                    self.data.append(self.create(i))
    
-            if self.autostart is True:
-                for item in self.data:
-                    logging.info("{} Starting ".format(self.name))
-                    await self.start(item.id)
-                await self.push_udpate()
+                if self.autostart is True:
+                    for item in self.data:
+                        logging.info("{} Starting ".format(self.name))
+                        await self.start(item.id)
+                    await self.push_udpate()
+        except Exception as e:
+            logging.warning("Invalid {} file - Creating empty file".format(self.path))
+            os.remove(self.path)
+            with open(self.path, "w") as file:
+                json.dump(dict( data=[]), file, indent=4, sort_keys=True)
+
+            with open(self.path) as json_file:
+                data = json.load(json_file)
+                data['data'].sort(key=lambda x: x.get('name').upper())
+            
+                for i in data["data"]:
+                    self.data.append(self.create(i))
+   
+                if self.autostart is True:
+                    for item in self.data:
+                        logging.info("{} Starting ".format(self.name))
+                        await self.start(item.id)
+                    await self.push_udpate()         
+
         
     async def save(self):
         logging.info("{} Save ".format(self.name))

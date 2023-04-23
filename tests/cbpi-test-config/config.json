@@ -3,6 +3,7 @@
         "description": "Author",
         "name": "AUTHOR",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": "John Doe"
     },
@@ -19,6 +20,7 @@
                 "value": "No"
             }
         ],
+        "source": "steps",
         "type": "select",
         "value": "Yes"
     },
@@ -35,6 +37,7 @@
                 "value": "No"
             }
         ],
+        "source": "steps",
         "type": "select",
         "value": "Yes"
     },
@@ -42,6 +45,7 @@
         "description": "Brewery Name",
         "name": "BREWERY_NAME",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": "Some New Brewery Name"
     },
@@ -58,6 +62,7 @@
                 "value": "No"
             }
         ],
+        "source": "steps",
         "type": "select",
         "value": "No"
     },
@@ -65,8 +70,17 @@
         "description": "Define Kettle that is used for Boil, Whirlpool and Cooldown. If not selected, MASH_TUN will be used",
         "name": "BoilKettle",
         "options": null,
+        "source": "steps",
         "type": "kettle",
         "value": ""
+    },
+    "CONFIG_STATUS": {
+        "description": "Status of the config file. Internal use for maintenance",
+        "name": "CONFIG_STATUS",
+        "options": null,
+        "source": "hidden",
+        "type": "string",
+        "value": "4.1.8.a11"
     },
     "CSVLOGFILES": {
         "description": "Write sensor data to csv logfiles",
@@ -81,6 +95,7 @@
                 "value": "No"
             }
         ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": "Yes"
     },
@@ -97,6 +112,7 @@
                 "value": "No"
             }
         ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": "No"
     },
@@ -104,6 +120,7 @@
         "description": "IP Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)",
         "name": "INFLUXDBADDR",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": "localhost"
     },
@@ -120,6 +137,7 @@
                 "value": "No"
             }
         ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": "No"
     },
@@ -127,6 +145,7 @@
         "description": "Name of the measurement in your INFLUXDB database (default: measurement)",
         "name": "INFLUXDBMEASUREMENT",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": "measurement"
     },
@@ -134,6 +153,7 @@
         "description": "Name of your influxdb database name (If INFLUXDBCLOUD set to Yes use bucket of your influxdb cloud database)",
         "name": "INFLUXDBNAME",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": "cbpi4"
     },
@@ -141,6 +161,7 @@
         "description": "Port of your influxdb server",
         "name": "INFLUXDBPORT",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": "8086"
     },
@@ -148,6 +169,7 @@
         "description": "Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)",
         "name": "INFLUXDBPWD",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": " "
     },
@@ -155,6 +177,7 @@
         "description": "User name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)",
         "name": "INFLUXDBUSER",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": " "
     },
@@ -162,6 +185,7 @@
         "description": "Default Mash Tun",
         "name": "MASH_TUN",
         "options": null,
+        "source": "steps",
         "type": "kettle",
         "value": ""
     },
@@ -190,6 +214,7 @@
                 "value": 0
             }
         ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": 0
     },
@@ -206,6 +231,24 @@
                 "value": "No"
             }
         ],
+        "source": "craftbeerpi",
+        "type": "select",
+        "value": "No"
+    },
+    "PLAY_BUZZER": {
+        "description": "Play buzzer sound in Web interface on Notifications",
+        "name": "PLAY_BUZZER",
+        "options": [
+            {
+                "label": "Yes",
+                "value": "Yes"
+            },
+            {
+                "label": "No",
+                "value": "No"
+            }
+        ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": "No"
     },
@@ -222,6 +265,7 @@
                 "value": "PSI"
             }
         ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": "kPa"
     },
@@ -229,6 +273,7 @@
         "description": "API path to creation plugin. Default: upload . CHANGE ONLY IF USING A RECIPE CREATION PLUGIN",
         "name": "RECIPE_CREATION_PATH",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": "upload"
     },
@@ -236,6 +281,7 @@
         "description": "Max. number of backup logs",
         "name": "SENSOR_LOG_BACKUP_COUNT",
         "options": null,
+        "source": "craftbeerpi",
         "type": "number",
         "value": 3
     },
@@ -243,6 +289,7 @@
         "description": "Max. number of bytes in sensor logs",
         "name": "SENSOR_LOG_MAX_BYTES",
         "options": null,
+        "source": "craftbeerpi",
         "type": "number",
         "value": 100000
     },
@@ -259,6 +306,7 @@
                 "value": "F"
             }
         ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": "C"
     },
@@ -266,6 +314,7 @@
         "description": "Brewfather API Key",
         "name": "brewfather_api_key",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": ""
     },
@@ -273,6 +322,7 @@
         "description": "Brewfather User ID",
         "name": "brewfather_user_id",
         "options": null,
+        "source": "craftbeerpi",
         "type": "string",
         "value": ""
     },
@@ -280,6 +330,7 @@
         "description": "Number of current Dashboard",
         "name": "current_dashboard_number",
         "options": null,
+        "source": "hidden",
         "type": "number",
         "value": 1
     },
@@ -328,6 +379,7 @@
                 "value": 10
             }
         ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": 4
     },
@@ -344,6 +396,7 @@
                 "value": "No"
             }
         ],
+        "source": "craftbeerpi",
         "type": "select",
         "value": "Yes"
     },
@@ -351,6 +404,7 @@
         "description": "Boil step type",
         "name": "steps_boil",
         "options": null,
+        "source": "steps",
         "type": "step",
         "value": "BoilStep"
     },
@@ -358,6 +412,7 @@
         "description": "Default Boil Temperature for Recipe Creation",
         "name": "steps_boil_temp",
         "options": null,
+        "source": "steps",
         "type": "number",
         "value": "99"
     },
@@ -365,6 +420,7 @@
         "description": "Cooldown step type",
         "name": "steps_cooldown",
         "options": null,
+        "source": "steps",
         "type": "step",
         "value": "CooldownStep"
     },
@@ -372,6 +428,7 @@
         "description": "Actor to trigger cooldown water on and off (default: None)",
         "name": "steps_cooldown_actor",
         "options": null,
+        "source": "steps",
         "type": "actor",
         "value": ""
     },
@@ -379,6 +436,7 @@
         "description": "Alternative Sensor to monitor temperature durring cooldown (if not selected, Kettle Sensor will be used)",
         "name": "steps_cooldown_sensor",
         "options": null,
+        "source": "steps",
         "type": "sensor",
         "value": ""
     },
@@ -386,6 +444,7 @@
         "description": "Cooldown temp will send notification when this temeprature is reached",
         "name": "steps_cooldown_temp",
         "options": null,
+        "source": "steps",
         "type": "number",
         "value": 35
     },
@@ -393,6 +452,7 @@
         "description": "Mash step type",
         "name": "steps_mash",
         "options": null,
+        "source": "steps",
         "type": "step",
         "value": "MashStep"
     },
@@ -400,6 +460,7 @@
         "description": "MashIn step type",
         "name": "steps_mashin",
         "options": null,
+        "source": "steps",
         "type": "step",
         "value": "MashInStep"
     },
@@ -407,6 +468,7 @@
         "description": "MashOut step type",
         "name": "steps_mashout",
         "options": null,
+        "source": "steps",
         "type": "step",
         "value": "NotificationStep"
     }
