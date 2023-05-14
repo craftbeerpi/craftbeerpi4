@@ -56,7 +56,7 @@ class ConfigHttpEndpoints:
             "200":
                 description: successful operation
         """
-        return web.json_response(self.controller.cache, dumps=json_dumps)
+        return web.json_response(self.controller.get_state(), dumps=json_dumps)
 
     @request_mapping(path="/{name}/", method="POST", auth_required=False)
     async def http_paramter(self, request) -> web.Response:
@@ -78,5 +78,55 @@ class ConfigHttpEndpoints:
         name = request.match_info['name']
 #        if name not in self.cache:
 #            raise CBPiException("Parameter %s not found" % name)
-        data = self.controller.get(name)
+#        data = self.controller.get(name)
         return web.json_response(self.controller.get(name), dumps=json_dumps)
+
+    @request_mapping(path="/remove/{name}/", method="PUT", auth_required=False)
+    async def http_remove(self, request) -> web.Response:
+
+        """
+        ---
+        description: Remove config parameter
+        tags:
+        - Config
+        parameters:
+        - name: "name"
+          in: "path"
+          description: "Parameter name"
+          required: true
+          type: "string"
+        responses:
+            "200":
+                description: successful operation
+        """
+
+        name = request.match_info['name']
+        await self.controller.remove(name=name)
+        return web.Response(status=200)
+    
+    @request_mapping(path="/getobsolete", auth_required=False)
+    async def http_get_obsolete(self, request) -> web.Response:
+        """
+        ---
+        description: Get obsolete config parameters
+        tags:
+        - Config
+        responses:
+            "List of Obsolete Parameters":
+                description: successful operation
+        """
+        return web.json_response(await self.controller.obsolete(False), dumps=json_dumps)
+    
+    @request_mapping(path="/removeobsolete", auth_required=False)
+    async def http_remove_obsolete(self, request) -> web.Response:
+        """
+        ---
+        description: Remove obsolete config parameters
+        tags:
+        - Config
+        responses:
+            "200":
+                description: successful operation
+        """
+        await self.controller.obsolete(True)
+        return web.Response(status=200)

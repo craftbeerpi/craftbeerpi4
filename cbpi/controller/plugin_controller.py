@@ -215,3 +215,28 @@ class PluginController():
             logger.error(e)
             return []
         return result
+    
+    async def load_plugin_names(self, filter="cbpi"):
+        result = []
+        result.append(dict(label="All", value="All"))
+        result.append(dict(label="craftbeerpi", value="craftbeerpi"))
+        result.append(dict(label="steps", value="steps"))
+        try:
+            discovered_plugins = {
+            name: importlib.import_module(name)
+            for finder, name, ispkg
+            in pkgutil.iter_modules()
+            if name.startswith('cbpi') and len(name) > 4
+            }
+            for key, module in discovered_plugins.items():
+                try:
+                    meta = metadata(key)
+                    if meta["Name"] != "cbpi4gui" and meta["Keywords"] == "globalsettings":
+                        result.append(dict(label=meta["Name"], value=meta["Name"]))
+                except Exception as e:
+                    logger.error("FAILED to read metadata for plugin {} ".format(key))
+                    logger.error(e)
+        except Exception as e:
+            logger.error(e)
+            return result
+        return result
