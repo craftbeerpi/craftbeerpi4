@@ -1,3 +1,11 @@
 {
-    "data": []
+    "data": [
+        {
+            "id": "unconfigured_test_sensor_ID",
+            "name": "unconfigured_mqtt_sensor",
+            "props": {},
+            "state": false,
+            "type": "MQTTSensor"
+        }
+    ]
 }
