@@ -42,7 +42,7 @@ class SensorLogTargetCSV(CBPiExtension):
             data_logger = logging.getLogger('cbpi.sensor.%s' % id)
             data_logger.propagate = False
             data_logger.setLevel(logging.DEBUG)
-            handler = RotatingFileHandler(os.path.join(self.logsFolderPath, f"sensor_{id}.log"), maxBytes=max_bytes, backupCount=backup_count)
+            handler = RotatingFileHandler(os.path.join(self.cbpi.log.logsFolderPath, f"sensor_{id}.log"), maxBytes=max_bytes, backupCount=backup_count)
             data_logger.addHandler(handler)
             self.datalogger[id] = data_logger
 

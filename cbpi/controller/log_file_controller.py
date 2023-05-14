@@ -42,9 +42,9 @@ class LogController:
         except:
             self.logger.error("Failed to remove listener {}".format(listener_id))
 
-    async def _call_sensor_data_listeners(self, id, value, formatted_time, name):
-        for id, method in self.sensor_data_listeners.items():
-            asyncio.create_task(method(self.cbpi, id, value, formatted_time, name))
+    async def _call_sensor_data_listeners(self, sensor_id, value, formatted_time, name):
+        for listener_id, method in self.sensor_data_listeners.items():
+            asyncio.create_task(method(self.cbpi, sensor_id, value, formatted_time, name))
 
     def log_data(self, id: str, value: str) -> None:        
         # all plugin targets:

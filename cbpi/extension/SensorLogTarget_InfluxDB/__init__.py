@@ -62,6 +62,8 @@ class SensorLogTargetInfluxDB(CBPiExtension):
                 header = {'User-Agent': id, 'Authorization': "Token {}".format(self.influxdbpwd)}
                 http = PoolManager(timeout=timeout)
                 req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
+                if req.status != 204:
+                    raise Exception(f'InfluxDB Status code {req.status}')
             except Exception as e:
                 logging.error("InfluxDB cloud write Error: {}".format(e))
 
@@ -72,6 +74,8 @@ class SensorLogTargetInfluxDB(CBPiExtension):
                 header = {'User-Agent': id, 'Content-Type': 'application/x-www-form-urlencoded','Authorization': 'Basic %s' % self.base64string.decode('utf-8')}
                 http = PoolManager(timeout=timeout)
                 req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
+                if req.status != 204:
+                    raise Exception(f'InfluxDB Status code {req.status}')
             except Exception as e:
                 logging.error("InfluxDB write Error: {}".format(e))
 
