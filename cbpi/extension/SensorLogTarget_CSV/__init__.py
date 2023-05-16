@@ -17,7 +17,6 @@ class SensorLogTargetCSV(CBPiExtension):
 
     def __init__(self, cbpi): # called from cbpi on start
         self.cbpi = cbpi
-        self.datalogger = {}
         self.logfiles = self.cbpi.config.get("CSVLOGFILES", "Yes")
         if self.logfiles == "No":
             return # never run()
@@ -35,7 +34,7 @@ class SensorLogTargetCSV(CBPiExtension):
             # as long as cbpi was STARTED with CSVLOGFILES set to Yes this function is still subscribed, so changes can be made on the fly.
             # but after initially enabling this logging target a restart is required.
             return
-        if id not in self.datalogger:
+        if id not in self.cbpi.log.datalogger:
             max_bytes = int(self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 100000))
             backup_count = int(self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3))
 
@@ -44,9 +43,9 @@ class SensorLogTargetCSV(CBPiExtension):
             data_logger.setLevel(logging.DEBUG)
             handler = RotatingFileHandler(os.path.join(self.cbpi.log.logsFolderPath, f"sensor_{id}.log"), maxBytes=max_bytes, backupCount=backup_count)
             data_logger.addHandler(handler)
-            self.datalogger[id] = data_logger
+            self.cbpi.log.datalogger[id] = data_logger
 
-        self.datalogger[id].info("%s,%s" % (formatted_time, str(value)))
+        self.cbpi.log.datalogger[id].info("%s,%s" % (formatted_time, str(value)))
 
 def setup(cbpi):
     cbpi.plugin.register("SensorLogTargetCSV", SensorLogTargetCSV)
