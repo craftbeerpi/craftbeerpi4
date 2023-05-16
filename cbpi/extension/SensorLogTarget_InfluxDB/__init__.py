@@ -13,13 +13,6 @@ import base64
 
 logger = logging.getLogger(__name__)
 
-# ToDo:
-# - make log_data(id, value) to use id explicitly so there is no abiguity
-# - create data legend for listener method call parameters including id, value, timestamp, name, cleanname
-# - clean up data preperations for universal use
-# - move influxDB logic to the plugin
-# - 
-
 class SensorLogTargetInfluxDB(CBPiExtension):
 
     def __init__(self, cbpi): # called from cbpi on start
