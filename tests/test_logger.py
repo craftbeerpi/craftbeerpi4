@@ -10,10 +10,10 @@ class LoggerTestCase(CraftBeerPiTestCase):
     async def test_log_data(self):
 
         os.makedirs(os.path.join(".", "tests", "logs"), exist_ok=True)
-        log_name = "test"
+        log_name = "unconfigured_test_sensor_ID"
         #clear all logs
         self.cbpi.log.clear_log(log_name)
-        assert len(glob.glob(os.path.join(".", "tests", "logs", f"sensor_{log_name}.log*"))) == 0
+        assert len(glob.glob(os.path.join(self.cbpi.log.logsFolderPath, f"sensor_{log_name}.log*"))) == 0
 
         # write log entries
         for i in range(5):

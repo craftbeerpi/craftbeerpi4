@@ -13,6 +13,7 @@ from cbpi.api import *
 from cbpi.api.config import ConfigType
 from cbpi.api.base import CBPiBase
 import asyncio
+import shortuuid
 
 
 class LogController:
@@ -28,66 +29,34 @@ class LogController:
         self.datalogger = {}
         self.logsFolderPath = self.cbpi.config_folder.logsFolderPath
         self.logger.info("Log folder path  : " + self.logsFolderPath)
-
-    def log_data(self, name: str, value: str) -> None:
-        self.logfiles = self.cbpi.config.get("CSVLOGFILES", "Yes")
-        self.influxdb = self.cbpi.config.get("INFLUXDB", "No")
-        if self.logfiles == "Yes":
-            if name not in self.datalogger:
-                max_bytes = int(self.cbpi.config.get("SENSOR_LOG_MAX_BYTES", 100000))
-                backup_count = int(self.cbpi.config.get("SENSOR_LOG_BACKUP_COUNT", 3))
+        self.sensor_data_listeners = {}
     
-                data_logger = logging.getLogger('cbpi.sensor.%s' % name)
-                data_logger.propagate = False
-                data_logger.setLevel(logging.DEBUG)
-                handler = RotatingFileHandler(os.path.join(self.logsFolderPath, f"sensor_{name}.log"), maxBytes=max_bytes, backupCount=backup_count)
-                data_logger.addHandler(handler)
-                self.datalogger[name] = data_logger
+    def add_sensor_data_listener(self, method):
+        listener_id = shortuuid.uuid()
+        self.sensor_data_listeners[listener_id] = method
+        return listener_id
+    
+    def remove_sensor_data_listener(self, listener_id):
+        try:
+            del self.sensor_data_listener[listener_id] 
+        except:
+            self.logger.error("Failed to remove listener {}".format(listener_id))
 
-            formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-            self.datalogger[name].info("%s,%s" % (formatted_time, str(value)))
+    async def _call_sensor_data_listeners(self, sensor_id, value, formatted_time, name):
+        for listener_id, method in self.sensor_data_listeners.items():
+            asyncio.create_task(method(self.cbpi, sensor_id, value, formatted_time, name))
 
-        if self.influxdb == "Yes":
-            ## Write to influxdb in an asyncio task
-            self._task = asyncio.create_task(self.log_influx(name,value))            
-
-    async def log_influx(self, name:str, value:str):
-            self.influxdbcloud = self.cbpi.config.get("INFLUXDBCLOUD", "No")
-            self.influxdbaddr = self.cbpi.config.get("INFLUXDBADDR", None)
-            self.influxdbname = self.cbpi.config.get("INFLUXDBNAME", None)
-            self.influxdbuser = self.cbpi.config.get("INFLUXDBUSER", None)
-            self.influxdbpwd = self.cbpi.config.get("INFLUXDBPWD", None)
-            self.influxdbmeasurement = self.cbpi.config.get("INFLUXDBMEASUREMENT", "measurement")
-            id = name
-            timeout = Timeout(connect=5.0, read=None)
+    def log_data(self, id: str, value: str) -> None:        
+        # all plugin targets:
+        if self.sensor_data_listeners: # true if there are listners
             try:
-                sensor=self.cbpi.sensor.find_by_id(name)
+                sensor=self.cbpi.sensor.find_by_id(id)
                 if sensor is not None:
-                    itemname=sensor.name.replace(" ", "_")
-                    out=str(self.influxdbmeasurement)+",source=" + itemname + ",itemID=" + str(id) + " value="+str(value)
+                    name = sensor.name.replace(" ", "_")
+                    formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
+                    asyncio.create_task(self._call_sensor_data_listeners(id, value, formatted_time, name))
             except Exception as e:
-                logging.error("InfluxDB ID Error: {}".format(e))
-
-            if self.influxdbcloud == "Yes":
-                self.influxdburl=self.influxdbaddr + "/api/v2/write?org=" + self.influxdbuser + "&bucket=" + self.influxdbname + "&precision=s"
-                try:
-                    header = {'User-Agent': name, 'Authorization': "Token {}".format(self.influxdbpwd)}
-                    http = PoolManager(timeout=timeout)
-                    req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
-                except Exception as e:
-                    logging.error("InfluxDB cloud write Error: {}".format(e))
-
-            else:
-                self.base64string = base64.b64encode(('%s:%s' % (self.influxdbuser,self.influxdbpwd)).encode())
-                self.influxdburl= self.influxdbaddr + '/write?db=' + self.influxdbname
-                try:
-                    header = {'User-Agent': name, 'Content-Type': 'application/x-www-form-urlencoded','Authorization': 'Basic %s' % self.base64string.decode('utf-8')}
-                    http = PoolManager(timeout=timeout)
-                    req = http.request('POST',self.influxdburl, body=out.encode(), headers = header)
-                except Exception as e:
-                    logging.error("InfluxDB write Error: {}".format(e))
-
-
+                logging.error("sensor logging listener exception: {}".format(e))
 
     async def get_data(self, names, sample_rate='60s'):
         logging.info("Start Log for {}".format(names))
@@ -182,7 +151,9 @@ class LogController:
 
     def clear_log(self, name:str ) -> str:
         all_filenames = glob.glob(os.path.join(self.logsFolderPath, f"sensor_{name}.log*"))
-
+        
+        logging.info(f'Deleting logfiles for sensor {name}.')
+        
         if name in self.datalogger:
             self.datalogger[name].removeHandler(self.datalogger[name].handlers[0])
             del self.datalogger[name]

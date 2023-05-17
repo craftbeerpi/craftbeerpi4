@@ -80,7 +80,7 @@
         "options": null,
         "source": "hidden",
         "type": "string",
-        "value": "4.1.8.a11"
+        "value": "4.1.10.a1"
     },
     "CSVLOGFILES": {
         "description": "Write sensor data to csv logfiles",
@@ -117,7 +117,7 @@
         "value": "No"
     },
     "INFLUXDBADDR": {
-        "description": "IP Address of your influxdb server (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)",
+        "description": "URL Address of your influxdb server incl. http:// and port, e.g. http://localhost:8086 (If INFLUXDBCLOUD set to Yes use URL Address of your influxdb cloud server)",
         "name": "INFLUXDBADDR",
         "options": null,
         "source": "craftbeerpi",
@@ -157,14 +157,6 @@
         "type": "string",
         "value": "cbpi4"
     },
-    "INFLUXDBPORT": {
-        "description": "Port of your influxdb server",
-        "name": "INFLUXDBPORT",
-        "options": null,
-        "source": "craftbeerpi",
-        "type": "string",
-        "value": "8086"
-    },
     "INFLUXDBPWD": {
         "description": "Password for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use token of your influxdb cloud database)",
         "name": "INFLUXDBPWD",
@@ -174,7 +166,7 @@
         "value": " "
     },
     "INFLUXDBUSER": {
-        "description": "User name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)",
+        "description": "User Name for your influxdb database (only if required)(If INFLUXDBCLOUD set to Yes use organisation of your influxdb cloud database)",
         "name": "INFLUXDBUSER",
         "options": null,
         "source": "craftbeerpi",
