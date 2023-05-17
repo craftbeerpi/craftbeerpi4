@@ -284,6 +284,16 @@ class ConfigUpdate(CBPiExtension):
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
+        else: 
+            if CONFIG_STATUS is None or CONFIG_STATUS != self.version:  
+                try:
+                    await self.cbpi.config.add("CSVLOGFILES", logfiles, type=ConfigType.SELECT, description="Write sensor data to csv logfiles (enabling requires restart)", 
+                                                                                                source="craftbeerpi",
+                                                                                               options= [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+                except:
+                    logger.warning('Unable to update config')
+
 
        ## Check if influxdb is on config 
         if influxdb is None:
@@ -295,7 +305,15 @@ class ConfigUpdate(CBPiExtension):
                                                                                                 {"label": "No", "value": "No"}])
             except:
                 logger.warning('Unable to update config')
-
+        else: 
+            if CONFIG_STATUS is None or CONFIG_STATUS != self.version:  
+                try:
+                    await self.cbpi.config.add("INFLUXDB", influxdb, type=ConfigType.SELECT, description="Write sensor data to influxdb (enabling requires restart)", 
+                                                                                             source="craftbeerpi",
+                                                                                              options=  [{"label": "Yes", "value": "Yes"},
+                                                                                                {"label": "No", "value": "No"}])
+                except:
+                    logger.warning('Unable to update config')
 
         ## Check if influxdbport is in config and remove it as it is obsolete
         if influxdbport is not None:
