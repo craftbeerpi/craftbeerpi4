@@ -91,7 +91,7 @@ class CraftBeerPiCli():
             print("Cant create Plugin. Folder {} already exists ".format(name))
             return
 
-        url = 'https://github.com/Manuel83/craftbeerpi4-plugin-template/archive/main.zip'
+        url = 'https://github.com/PiBrewing/craftbeerpi4-plugin-template/archive/main.zip'
         r = requests.get(url)
         with open('temp.zip', 'wb') as f:
             f.write(r.content)
