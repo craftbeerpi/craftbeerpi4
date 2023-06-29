@@ -7,7 +7,8 @@ aiohttp-session==2.12.0
 aiohttp-swagger==1.0.16 
 aiojobs==1.1.0 
 aiosqlite==0.17.0 
-cryptography==40.0.1 
+cryptography==41.0.1 
+pyopenssl==23.2.0
 requests==2.31.0 
 voluptuous==0.13.1 
 pyfiglet==0.8.post1 
@@ -18,7 +19,7 @@ numpy==1.24.1
 cbpi4gui
 click==8.1.3
 importlib_metadata==4.11.1
-asyncio-mqtt==0.16.1
+aiomqtt==1.0.0
 psutil==5.9.4
 zipp>=0.5
 colorama==0.4.6
